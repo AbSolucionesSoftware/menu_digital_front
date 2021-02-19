@@ -11,7 +11,7 @@ export default function Home() {
 			<Box>
 				<Banner />
 			</Box>
-			<Box>
+			<Box mt={8}>
 				<Consulta_platillos />
 			</Box>
 		</div>

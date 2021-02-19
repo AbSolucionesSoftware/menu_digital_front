@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Navegacion from '../Navbar/navegacion';
+import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
@@ -66,7 +67,7 @@ export default function LayoutUsers(props) {
 				</NavProvider>
 
 				<div>
-					{/* <Footer /> */}
+					<Footer />
 				</div>
 			</div>
 		</ThemeProvider>

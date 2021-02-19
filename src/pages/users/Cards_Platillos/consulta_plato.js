@@ -4,7 +4,7 @@ import Cards_Platos from './card_plato';
 
 export default function Consulta_platillos() {
     return (
-        <Container>
+        <Container maxWidth="xl">
             <Grid container lg={12}>
                 <Cards_Platos/>
             </Grid>

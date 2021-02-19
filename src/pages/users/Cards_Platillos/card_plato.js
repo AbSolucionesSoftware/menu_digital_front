@@ -28,6 +28,11 @@ export default function Cards_Platos() {
   return (
 	<Grid lg={5}>
 		<Card className={classes.root}>
+			<CardMedia
+				className={classes.cover}
+				image="/static/images/cards/live-from-space.jpg"
+				title="Live from space album cover"
+			/>
 			<div className={classes.details}>
 				<CardContent className={classes.content}>
 					<Typography component="h5" variant="h5">
@@ -54,12 +59,14 @@ export default function Cards_Platos() {
 					</Tooltip>
 				</div>
 			</div>
-			<CardMedia
-				className={classes.cover}
-				image="/static/images/cards/live-from-space.jpg"
-				title="Live from space album cover"
-			/>
+			
 		</Card>
 	</Grid>
   );
 }
+
+// <Container xl>
+// 	<Grid container lg={12}>
+// 		<Cards_Platos/>
+// 	</Grid>
+// </Container>
