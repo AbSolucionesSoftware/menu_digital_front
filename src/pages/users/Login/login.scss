@@ -1,0 +1,11 @@
+.fondo{
+    // background: #bdc3c7; 
+    // background: -webkit-linear-gradient(to right, #bdc3c7bc, #2c3e50), url(../../image/foto.jpg); 
+    // background: linear-gradient(to right, #bdc3c785, #2c3e50d5), url(../../image/foto.jpg);
+    background-image: url(../img/restaurante.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}

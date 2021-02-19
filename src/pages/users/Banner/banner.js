@@ -2,44 +2,26 @@ import React, { Fragment } from 'react'
 import { makeStyles, Grid, Box} from '@material-ui/core';
 import Carousel from 'react-material-ui-carousel'
 import imagen from '../img/BannerLogo.PNG'
+import { Link } from 'react-router-dom';
 
-// import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-    bannerOne:{
-        backgroundColor: '#08f',
-        width: '100%',
-		height: 650
+    containerImagen:{
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center"
+    }, 
+    containerBanner:{
+        height: 500,
+        // width: "100%",
+        display: "felx",
+        justifyContent: "center",
+        alignContent: "center"
     },
-    bannerTwo:{
-        backgroundColor: '#fff',
-        width: '100%',
-		height: 650
-    },
-    imagen: {
-        width: '85%',
-        height: 650
-    },
-    tipografia:{
-        color: '#fff',
-        fontSize: 120,
-    },
-    tipografiaTwo:{
-        color: '#08f',
-        fontSize: 55,
-    },
-    buttonOne:{
-        width: 'auto',
-        backgroundColor: 'white',
-        color: '#08f',
-        fontSize: 25
-    },
-    buttonTwo:{
-        width: 'auto',
-        backgroundColor: '#08f',
-        color: 'white',
-        fontSize: 25
-    },
+    imagen:{
+        maxWidth: "100%",
+        maxHeight:  "100%"   
+    }
     
 }))
 
@@ -50,16 +32,19 @@ export default function Banner() {
     return (
         <Fragment>
             <Grid>
-            <Carousel interval={4000} indicators={false} >
-                <Box display="flex" >
-                    <img alt="No imagen" src={imagen}/>
-                </Box>
+                <Carousel interval={4000} indicators={false} >
+                    <Grid className={classes.containerImagen}>
+                        <Box className={classes.containerBanner} >
+                            <img className={classes.imagen} alt="No imagen" src={imagen}/>
+                        </Box>
+                    </Grid>
 
-                <Box display="flex">
-                    <img alt="No imagen" src={imagen}/>
-                </Box>
-                
-            </Carousel>
+                    <Grid className={classes.containerImagen}>
+                        <Box className={classes.containerBanner} >
+                            <img className={classes.imagen} alt="No imagen" src={imagen}/>
+                        </Box>
+                    </Grid>
+                </Carousel>
             </Grid>
         </Fragment>
     )

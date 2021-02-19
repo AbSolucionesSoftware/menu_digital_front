@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Banner from './Banner/banner';
+import Consulta_platillos from './Cards_Platillos/consulta_plato';
 
 export default function Home() {
 	return (
@@ -10,7 +11,9 @@ export default function Home() {
 			<Box>
 				<Banner />
 			</Box>
-			
+			<Box>
+				<Consulta_platillos />
+			</Box>
 		</div>
 	);
 }
