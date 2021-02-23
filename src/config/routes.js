@@ -5,14 +5,14 @@ import LayoutUser from '../components/Layout_user/layout_user'
 import Panel_Admin from '../pages/admin/panel_admin'
 import Registro_Menu from '../pages/admin/Registro_Menus/registro_menu'
 
-import Publicidad from '../pages/Tiendas/Publicidad/publicidad';
-import PanelUser from '../pages/Tiendas/panel_usario';
-import Productos from '../pages/Tiendas/Productos/productos';
+import Publicidad from '../pages/Users/Publicidad/publicidad';
+import PanelUser from '../pages/Users/panel_usario';
+import Productos from '../pages/Users/Productos/productos';
 
-import Home from '../pages/users/home'
-import LoginAdmin from '../pages/users/Login/login';
-import Carrito from '../pages/users/Carrito/carrito'
-import Busqueda from '../pages/users/Busqueda/busqueda'
+import Home from '../pages/Frente_Users/home'
+import LoginAdmin from '../pages/Frente_Users/Login/login';
+import Carrito from '../pages/Frente_Users/Carrito/carrito'
+import Busqueda from '../pages/Frente_Users/Busqueda/busqueda'
 
 const routes = [
 	{

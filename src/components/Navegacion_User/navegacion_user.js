@@ -132,6 +132,12 @@ export default function Navegacion_User(props) {
 								Usuario
 							</Typography>
 						</ListItem>
+						<ListItem button component={Link} to="/user">
+							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Panel User
+							</Typography>
+						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
