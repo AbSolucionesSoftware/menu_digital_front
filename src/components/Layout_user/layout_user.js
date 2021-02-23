@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import Navegacion_Admin from '../Navegacion_Admin/navegacion_admin';
+import Navegacion_User from '../Navegacion_User/navegacion_user';
 import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -61,7 +61,7 @@ HideOnScroll.propTypes = {
 };
 
 
-export default function LayoutAdmin(props) {
+export default function LayoutUser(props) {
 	const classes = useStyles();
 	let thema = localStorage.getItem('tema');
 	let tema = JSON.parse(thema);
@@ -81,7 +81,7 @@ export default function LayoutAdmin(props) {
 		<div className={classes.root}>
 		<ThemeProvider >
 			<nav className={classes.drawer} aria-label="mailbox folders">
-				<Navegacion_Admin />
+				<Navegacion_User />
 			</nav>
 			<div className={classes.content}>
 				<NavProvider>

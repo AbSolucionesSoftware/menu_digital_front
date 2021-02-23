@@ -130,6 +130,12 @@ export default function Navegacion(props) {
 							<Button color="inherit" component={Link} to="/" className={classes.marginButton}>
 								Inicio
 							</Button>
+							<Button color="inherit" component={Link} to="/admin" className={classes.marginButton}>
+								Admin
+							</Button>
+							<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
+								User
+							</Button>
 							<Button color="inherit" component={Link} to="/login" className={classes.marginButton}>
 								Iniciar sesión
 							</Button>
