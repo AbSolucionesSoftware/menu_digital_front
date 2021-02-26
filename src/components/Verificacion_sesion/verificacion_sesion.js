@@ -13,7 +13,7 @@ function Sesion(props){
     var decoded = Jwt(token);
     
 	if(props.history){
-        if (!decoded || decoded.rol !== 'Maestro'){
+        if (!decoded || decoded.rol !== 'admin'){
             props.history.push('/');
         }else{
             return decoded

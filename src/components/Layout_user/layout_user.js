@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import Navegacion_User from '../Navegacion_User/navegacion_user';
 import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
 
 import { NavProvider } from '../../context/context_nav';
+import { ImageProvider } from '../../context/curso_context';
+import Navegacion_User from '../Navegacion_User/navegacion_user';
 
 const drawerWidth = 240;
 
@@ -80,6 +81,8 @@ export default function LayoutUser(props) {
 	return (
 		<div className={classes.root}>
 		<ThemeProvider >
+		<CssBaseline />
+		<ImageProvider>
 			<nav className={classes.drawer} aria-label="mailbox folders">
 				<Navegacion_User />
 			</nav>
@@ -93,6 +96,7 @@ export default function LayoutUser(props) {
 					<Footer />
 				</div>
 			</div>
+		</ImageProvider>
 		</ThemeProvider>
 		</div>
 

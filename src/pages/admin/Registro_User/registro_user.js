@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Spin from '../../../components/Spin/spin'
 
 import clienteAxios from '../../../config/axios'
+import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import jwt_decode from 'jwt-decode'
 
 import imagen from  '../../../img/Registro.png'
@@ -25,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Registro_Menu(props) {
+export default function Registro_User(props) {
 
-    // const token = localStorage.getItem('token')
-    // var decoded = Jwt(token) 
+    const token = localStorage.getItem('token')
+    // var decoded = Jwt(token);
 	
 	// function Jwt(token) {
 	// 	try {
@@ -47,6 +48,11 @@ export default function Registro_Menu(props) {
 	const classes = useStyles();
     const [ registro, setRegistro] = useState([]); 
     const [ loading, setLoading ] = useState(false);
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
 
     const array = {
         "nameCompany": registro.nombreCompania,
@@ -58,34 +64,52 @@ export default function Registro_Menu(props) {
     }
 
     const envianDatos = async () => {
-        // setLoading(true);
+        setLoading(true);
         await clienteAxios
-          .post('/company', array
-        //   {
-        //     headers: {
-        //       "Content-Type": "multipart/form-data",
-        //       Authorization: `bearer ${""}`,
-        //     },
-        //   }
+          .post('/company', array,
+          {
+            headers: {
+              Authorization: `bearer ${token}`,
+            },
+          }
           ).then((res) => {
+            setRegistro([])
             setLoading(false);
             console.log(res);
-            console.log(array);
+            setSnackbar({
+                open: true,
+                mensaje: res.data.message,
+                status: 'success'
+            });
           }
           ).catch((err) => {
-            if (err) {
-                console.log(array);
-                console.log(err);
-                console.log("No se guuardo nada");
-            } else {
-                console.log("regsistro exitoso");
-            }
+            if (err.response) {
+                setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: err.response.data.message,
+						status: 'error'
+					});
+				}  else {
+                    setLoading(false);
+                    setSnackbar({
+						open: true,
+						mensaje: 'Al parecer no se a podido conectar al servidor.',
+						status: 'error'
+					});
+                }
           });
     }
 
     return (
         <div>
-            {/* <Spin size="large" spinning={loading}> */}
+            <Spin size="large" spinning={loading} />
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Grid container>
                 <Grid lg={12}>
                     <Box textAlign="center" mt={6} pr={10} pl={10}>
@@ -104,6 +128,7 @@ export default function Registro_Menu(props) {
                                 <form className={classes.root} noValidate autoComplete="off">
                                     <Box p={2}>
                                         <TextField
+								            value={registro.nombreCompania ? registro.nombreCompania : ''}
                                             className={classes.text}
                                             id="nombreCompania"
                                             label="Nombre de Compania"
@@ -117,6 +142,7 @@ export default function Registro_Menu(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+								            value={registro.propietario ? registro.propietario : ''}
                                             className={classes.text}
                                             id="propietario"
                                             label="Propietario"
@@ -130,6 +156,7 @@ export default function Registro_Menu(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+								            value={registro.telefono ? registro.telefono : ''}
                                             className={classes.text}
                                             id="telefono"
                                             label="Telefono"
@@ -143,6 +170,7 @@ export default function Registro_Menu(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+								            value={registro.nameUser ? registro.nameUser : ''}
                                             className={classes.text}
                                             id="nameUser"
                                             label="Nombre de Usuario"
@@ -156,6 +184,7 @@ export default function Registro_Menu(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+								            value={registro.password ? registro.password : ''}
                                             className={classes.text}
                                             id="password"
                                             label="Contrasena"
@@ -169,6 +198,7 @@ export default function Registro_Menu(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+								            value={registro.repeatPassword ? registro.repeatPassword : ''}
                                             className={classes.text}
                                             id="repeatPassword"
                                             label="Repetir Contrasena"

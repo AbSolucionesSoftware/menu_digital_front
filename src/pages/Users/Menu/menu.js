@@ -1,19 +1,11 @@
-import { Box, Button, Drawer, Grid, Modal, ModalManager, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import Banner from './banner';
-import RegistroBanner from './services/registroBanner';
-import clienteAxios from '../../../config/axios';
+import { Box, Button, Grid, Typography, Drawer } from '@material-ui/core'
+import React, { useState } from 'react';
 
-import useStyles from './styles'
+import RegistroProducto from './registroProducto';
 
-export default function Publicidad() {
+export default function Menu() {
 
-	const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'))
-    
-
-	const [ open, setOpen ] = useState(false);
-    const classes = useStyles();
+    const [ open, setOpen ] = useState(false);
 
     const handleDrawerOpen = () => {
 		setOpen(true);
@@ -22,45 +14,38 @@ export default function Publicidad() {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-    
+
     return (
         <div>
             <Grid container>
                 <Grid item lg={12}>
                     <Box textAlign="center">
                         <Typography variant="h4">
-                            Publcidad
+                            Tus Platillos
                         </Typography>
-                        <Box mt={3}>
-                            <Typography variant="h6">
-                                En este apartado agrega publicidad a tu carrusel de Imagenes de Frente
-                            </Typography>
-                        </Box>
                     </Box>
                 </Grid>
                 <Grid item lg={12}>
-                    <Box textAlign="center" alignContent="center" mt={3}>
+                    <Box display="flex" justifyContent="flex-end">
                         <Button
-                            onClick={handleDrawerOpen}
                             variant="contained" 
                             color="primary"
+                            size="large"
+                            onClick={handleDrawerOpen}
                         >
                             Agregar Nuevo
                         </Button>
                     </Box>
                 </Grid>
-                <Grid item lg={12}>
-                    <Banner />
-                </Grid>
             </Grid>
 
             <Drawer
-                className={classes.drawer}
+                // className={classes.drawer}
                 anchor="right"
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner/>
+                <RegistroProducto />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 
@@ -72,10 +57,6 @@ export default function Publicidad() {
                     </Button>
                 </Box>
             </Drawer>
-
-
         </div>
     )
-
-    
 }

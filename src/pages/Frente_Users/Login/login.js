@@ -4,11 +4,11 @@ import { Box, TextField, Button, Typography, Grid, Hidden, Divider } from '@mate
 import './login.scss';
 import Imagen from '../img/restaurante.jpg'
 
-// import clienteAxios from '../../../config/axios';
+import clienteAxios from '../../../config/axios';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
 // import Firebase from '../../../components/Firebase/firebase';
-// import jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,8 +29,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function LoginAdmin() {
-	// const token = localStorage.getItem('token')
+export default function LoginAdmin(props) {
+	const token = localStorage.getItem('token')
+
 	const classes = useStyles();
 	const [ datos, setDatos ] = useState([]);
 	const [ validate, setValidate ] = useState(false);
@@ -41,60 +42,63 @@ export default function LoginAdmin() {
 		status: ''
 	});
 
-	// if(token){
-	// 	props.history.push('/')
-	// }
+	const datosU  = {
+		"nameUser": datos.userName,
+		"password": datos.password
+	}
 
-	// const obtenerCampos = (e) => {
-	// 	setDatos({
-	// 		...datos,
-	// 		[e.target.name]: e.target.value
-	// 	});
-	// };
+	const enviarDatosBD = async () => {
+		if (!datos.userName || !datos.password) {
+			setValidate(true);
+			return;
+		}
+		setLoading(true);
+		await clienteAxios
+			.post('/company/logIn/', datosU)
+			.then((res) => {
+				const decoded = jwt_decode(res.data.token);
+				setLoading(false);
+				const token = res.data.token;
+				localStorage.setItem('token', token);
+				localStorage.setItem('user', JSON.stringify(decoded));
+				const user = JSON.parse(localStorage.getItem('user'))
 
-	// const enviarDatosBD = async () => {
-	// 	if (!datos.email || !datos.password) {
-	// 		setValidate(true);
-	// 		return;
-	// 	}
-	// 	setLoading(true);
-	// 	await clienteAxios
-	// 		.post('/user/signIn', datos)
-	// 		.then((res) => {
-	// 			const decoded = jwt_decode(res.data.token);
-	// 			setLoading(false);
-	// 			const token = res.data.token;
-	// 			localStorage.setItem('token', token);
-	// 			localStorage.setItem('student', JSON.stringify(decoded));
-	// 			window.location.href = '/';
-	// 		})
-	// 		.catch((err) => {
-	// 			setLoading(false);
-	// 			if (err.response) {
-	// 				setSnackbar({
-	// 					open: true,
-	// 					mensaje: err.response.data.message,
-	// 					status: 'error'
-	// 				});
-	// 			} else {
-	// 				setSnackbar({
-	// 					open: true,
-	// 					mensaje: 'Al parecer no se a podido conectar al servidor.',
-	// 					status: 'error'
-	// 				});
-	// 			}
-	// 		});
-	// };
+				if (user.type === true) {
+					window.location.href = '/admin';
+				}else{
+					window.location.href = '/user';
+				}
+			})
+			.catch((err) => {
+				console.log(datos);
+				setLoading(false);
+				if (err.response){
+					console.log(err);
+					setSnackbar({
+						open: true,
+						mensaje: err.response.data.message,
+						status: 'error'
+					});
+				} else {
+					console.log(err);
+					setSnackbar({
+						open: true,
+						mensaje: 'Al parecer no se a podido conectar al servidor.',
+						status: 'error'
+					});
+				}
+			});
+	};
 
 	return (
         <Grid container className={classes.color}>
 			<Spin loading={loading} />
-			{/* <MessageSnackbar
+			<MessageSnackbar
 				open={snackbar.open}
 				mensaje={snackbar.mensaje}
 				status={snackbar.status}
 				setSnackbar={setSnackbar}
-			/> */}
+			/>
 			<Hidden xsDown>
 				<Grid item sm={6} md={6} lg={8}>
 					<img alt="registrate" src={Imagen} className={classes.imagen} />
@@ -106,14 +110,16 @@ export default function LoginAdmin() {
 
 					<Box my={2} className={classes.contaCampos}>
 						<TextField
-							error={!datos.email && validate}
-							helperText={!datos.email && validate ? 'Esta campo es requerido' : null}
+							error={!datos.userName && validate}
+							helperText={!datos.userName && validate ? 'Esta campo es requerido' : null}
 							fullWidth
 							required
-							id="email"
-							name="email"
-							label="Email"
-							// onChange={obtenerCampos}
+							id="userName"
+							name="Usuario"
+							label="Usuario"
+							onChange={(e) =>
+								setDatos({ ...datos, userName: e.target.value })
+							}
 						/>
 					</Box>
 					<Box my={2}>
@@ -126,12 +132,13 @@ export default function LoginAdmin() {
 							name="password"
 							label="Contraseña"
 							type="password"
-							// onChange={obtenerCampos}
+							onChange={(e) =>
+								setDatos({ ...datos, password: e.target.value })
+							}
 						/>
 					</Box>
 					<Box display="flex" justifyContent="center" mt={5}>
-						<Button variant="contained" color="primary" >
-                        {/* onClick={() => enviarDatosBD()} */}
+						<Button variant="contained" color="primary" onClick={() => enviarDatosBD()}>
 							Iniciar sesión
 						</Button>
 					</Box>

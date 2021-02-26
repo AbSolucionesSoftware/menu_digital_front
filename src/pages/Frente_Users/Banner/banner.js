@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     containerBanner:{
         height: 500,
         // width: "100%",
-        display: "felx",
+        display: "flex",
         justifyContent: "center",
         alignContent: "center"
     },

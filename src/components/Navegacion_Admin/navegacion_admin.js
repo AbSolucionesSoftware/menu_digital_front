@@ -7,6 +7,8 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
+// import Sesion from '../Verificacion_sesion/verificacion_sesion';
+
 import useStyles from './styles';
 
 import React, { useState } from 'react';
@@ -18,6 +20,7 @@ export default function Navegacion_Admin(props) {
 	const { window } = props;
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
+	// const sesion = Sesion(props, false);
 	const [ datos, setDatos ] = useState([]);
 	const [ busqueda, setBusqueda ] = useState('');
 
@@ -90,13 +93,14 @@ export default function Navegacion_Admin(props) {
 								Registro
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/">
-							<ListItemIcon><HomeIcon/></ListItemIcon>
-							<Typography>
-								Vista Principal
-							</Typography>
-						</ListItem>
-						<ListItem button component={Link} to="/">
+						<ListItem 
+							button 
+							component={Link} to="/"  
+							onClick={() => {
+								localStorage.removeItem('token');
+								localStorage.removeItem('admin');
+							}}
+						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>
 								Cerrar Sesión
@@ -137,12 +141,6 @@ export default function Navegacion_Admin(props) {
 							<ListItemIcon><PersonAddIcon/></ListItemIcon>
 							<Typography>
 								Registro
-							</Typography>
-						</ListItem>
-						<ListItem button component={Link} to="/">
-							<ListItemIcon><HomeIcon/></ListItemIcon>
-							<Typography>
-								Vista Principal
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/">

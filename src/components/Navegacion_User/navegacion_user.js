@@ -1,5 +1,6 @@
 import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography,} from '@material-ui/core'
 import { Link } from 'react-router-dom';
+import Sesion from '../Verificacion_sesion/verificacion_sesion';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -17,6 +18,7 @@ export default function Navegacion_User(props) {
 	const { window } = props;
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
+	const sesion = Sesion(props, false);
 	const [ datos, setDatos ] = useState([]);
 	const [ busqueda, setBusqueda ] = useState('');
 
@@ -156,7 +158,14 @@ export default function Navegacion_User(props) {
 								Vista Principal
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/">
+						<ListItem button 
+							component={Link} 
+							to="/"
+							onClick={() => {
+								localStorage.removeItem('token');
+								localStorage.removeItem('user');
+							}}
+						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>
 								Cerrar Sesión

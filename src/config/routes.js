@@ -3,11 +3,11 @@ import Layout_admin from '../components/Layout_admin/layout_admin';
 import LayoutUser from '../components/Layout_user/layout_user'
 
 import Panel_Admin from '../pages/admin/panel_admin'
-import Registro_Menu from '../pages/admin/Registro_Menus/registro_menu'
+import Registro_User from '../pages/admin/Registro_User/registro_user'
 
 import Publicidad from '../pages/Users/Publicidad/publicidad';
-import PanelUser from '../pages/Users/panel_usario';
-import Productos from '../pages/Users/Productos/productos';
+import PanelUser from '../pages/Users/PanelUsuario/panel_usario';
+import Menu from '../pages/Users/Menu/menu';
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
@@ -27,7 +27,7 @@ const routes = [
 			},
 			{
 				path: '/admin/registro',
-				component: Registro_Menu,
+				component: Registro_User,
 				exact: true,
 			}
 		]
@@ -44,7 +44,7 @@ const routes = [
 			},
 			{
 				path: '/user/menu',
-				component: Productos,
+				component: Menu,
 				exact: true,
 			},
 			{
@@ -73,12 +73,7 @@ const routes = [
 				path: '/carrito',
 				component: Carrito,
 				exact: true
-			},
-			{
-				path: '/busqueda/:url',
-				component: Busqueda,
-				exact: true
-            },
+			}
 		]
 	}
 ];

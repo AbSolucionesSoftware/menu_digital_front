@@ -1,5 +1,6 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom';
+import Sesion from '../Verificacion_sesion/verificacion_sesion';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,13 +13,14 @@ import useStyles from './styles';
 
 import React, { useState } from 'react';
 
-const drawerWidth = 240;
+// const drawerWidth = 240;
 
 export default function Navegacion(props) {
 
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
 	const [ datos, setDatos ] = useState([]);
+	const sesion = Sesion(props, false);
 	const [ busqueda, setBusqueda ] = useState('');
 
 	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
@@ -49,46 +51,6 @@ export default function Navegacion(props) {
     
 
 	const classes = useStyles();
-
-    // const menuId = 'primary-search-account-menu';
-    // const renderMenu = (
-	// 	<Popover
-	// 		id={menuId}
-	// 		open={isMenuOpen}
-	// 		anchorEl={anchorEl}
-	// 		onClose={handleMenuClose}
-	// 		anchorOrigin={{
-	// 			vertical: 'bottom',
-	// 			horizontal: 'center'
-	// 		}}
-	// 		transformOrigin={{
-	// 			vertical: 'top',
-	// 			horizontal: 'center'
-	// 		}}
-	// 	>
-	// 		<MenuItem onClick={handleMenuClose} component={Link} to="/perfil">
-	// 			<ListItemIcon>
-	// 				<AccountCircleIcon />
-	// 			</ListItemIcon>
-	// 			<ListItemText primary="Mi perfil" />
-	// 		</MenuItem>
-	// 		<MenuItem
-	// 			onClick={() => {
-	// 				// firebase.auth().signOut();
-	// 				// localStorage.removeItem('token');
-	// 				// localStorage.removeItem('student');
-	// 				setTimeout(() => {
-	// 					window.location.reload();
-	// 				}, 500);
-	// 			}}
-	// 		>
-	// 			<ListItemIcon>
-	// 				<ExitToAppIcon />
-	// 			</ListItemIcon>
-	// 			<ListItemText primary="Cerrar sesión" />
-	// 		</MenuItem>
-	// 	</Popover>
-	// );
 
     return (
         <div>
@@ -136,19 +98,44 @@ export default function Navegacion(props) {
 							<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
 								User
 							</Button>
-							<Button color="inherit" component={Link} to="/login" className={classes.marginButton}>
-								Iniciar sesión
-							</Button>
-							<IconButton
+							{sesion ? (
+								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
+									Mi cuenta
+								</Button>
+							) : (
+								<IconButton
 								aria-label="show 17 new notifications"
 								color="inherit"
 								component={Link}
 								to="/carrito"
-							>
-								<Badge badgeContent={17} color="secondary">
-									<ShoppingCartIcon />
-								</Badge>
-							</IconButton>
+								>
+									<Badge badgeContent={1} color="secondary">
+										<ShoppingCartIcon />
+									</Badge>
+								</IconButton>
+							)}
+							{sesion ? (
+								<div />
+							) : (
+								<div />
+							)}
+							{sesion ? (
+								<Button color="inherit" 
+									component={Link} to="/" 
+									className={classes.marginButton}
+									onClick={() => {
+										localStorage.removeItem('token');
+										localStorage.removeItem('user');
+									}}
+								>
+									Cerrar Sesion
+								</Button>
+							) : (
+								<Button color="inherit" component={Link} to="/login" className={classes.marginButton}>
+									Iniciar sesión
+								</Button>
+							)
+							}
 						</Hidden>
 						<Hidden mdUp>
 							<IconButton
@@ -181,13 +168,13 @@ export default function Navegacion(props) {
 					</div>
 					<Divider />
 					<List>
-						<ListItem button component={Link} to="/" onClick={handleDrawerClose}>
+						<ListItem button component={Link} to="/" >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
-                    </List>
+					</List>
                 </Drawer>
         </div>
     )
