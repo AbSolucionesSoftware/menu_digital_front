@@ -1,7 +1,7 @@
 import { Box, Button, Card, Grid, List, makeStyles } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import clienteAxios from '../../../config/axios';
-
+import Spin from '../../../components/Spin/spin';
 const useStyles = makeStyles((theme) => ({
     root:{
         marginTop: 10,
@@ -29,7 +29,7 @@ export default function Banner() {
 
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'))
-
+	const [ loading, setLoading ] = useState(false);
     const [ banners, setBanners ] = useState([]);
 
     const classes = useStyles();
@@ -48,6 +48,7 @@ export default function Banner() {
     };
 
     const eliminarBanner = async (idBanner) => {
+        setLoading(true);
         await clienteAxios
 			.delete(`/banner/${idBanner}`, {
                 headers: {
@@ -55,9 +56,11 @@ export default function Banner() {
 				}
             })
 			.then((res) => {
+                setLoading(false);
                 // console.log(res);
 			})
 			.catch((err) => {
+                setLoading(false);
                 console.log(err);
                 console.log("error al eliminado");
 			});
@@ -103,6 +106,7 @@ export default function Banner() {
         
     return (
         <div>
+            {/* <Spin loading={loading} /> */}
             {render}
         </div>
     )

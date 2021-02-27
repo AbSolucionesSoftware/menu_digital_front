@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography, Drawer } from '@material-ui/core'
 import React, { useState } from 'react';
 
 import RegistroProducto from './registroProducto';
+import CardPlato from './cardPlato';
 
 export default function Menu() {
 
@@ -17,7 +18,7 @@ export default function Menu() {
 
     return (
         <div>
-            <Grid container>
+            <Grid>
                 <Grid item lg={12}>
                     <Box textAlign="center">
                         <Typography variant="h4">
@@ -36,6 +37,11 @@ export default function Menu() {
                             Agregar Nuevo
                         </Button>
                     </Box>
+                </Grid>
+                <Grid container>
+                    <Grid lg={12}>
+                        <CardPlato />
+                    </Grid>
                 </Grid>
             </Grid>
 

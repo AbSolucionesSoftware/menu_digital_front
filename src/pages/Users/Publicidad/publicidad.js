@@ -10,7 +10,6 @@ export default function Publicidad() {
 
 	const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'))
-    
 
 	const [ open, setOpen ] = useState(false);
     const classes = useStyles();
@@ -25,6 +24,8 @@ export default function Publicidad() {
     
     return (
         <div>
+    
+
             <Grid container>
                 <Grid item lg={12}>
                     <Box textAlign="center">
@@ -55,12 +56,12 @@ export default function Publicidad() {
             </Grid>
 
             <Drawer
-                className={classes.drawer}
+                // className={classes.drawer}
                 anchor="right"
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner/>
+                <RegistroBanner close={handleDrawerClose}/>
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

@@ -1,5 +1,9 @@
-import { Grid, Typography, Box, Button, TextField, makeStyles } from '@material-ui/core'
-import React from 'react'
+import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select } from '@material-ui/core'
+import React, { useCallback, useContext, useState } from 'react'
+import { ImageContext } from '../../../context/curso_context';
+import clienteAxios from '../../../config/axios';
+import Spin from '../../../components/Spin/spin';
+import { useDropzone } from 'react-dropzone';
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -15,12 +19,47 @@ const useStyles = makeStyles((theme) => ({
         alignContent: "center",
         width: 500,
         height: 500
+    },
+    imagen: {
+        maxHeight: 300,
+        maxWidth: 300
+    },
+    dropZone: {
+    border: 'dashed 2px',
+    borderColor: '#aaaaaa'
     }
 }))
 
 export default function RegistroProducto() {
 
 	const classes = useStyles();
+    const { datos, setDatos, update, setUpdate, preview, setPreview } = useContext(ImageContext);
+	const [ loading, setLoading ] = useState(false);
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
+
+    // const handleChange = (event) => {
+    //     const name = event.target.name;
+    //     setState({
+    //     ...state,
+    //     [name]: event.target.value,
+    //     });
+    // };
+
+    const onDrop = useCallback(
+		(files) => {
+			setPreview(URL.createObjectURL(files[0]));
+			setDatos({
+				...datos,
+				imagen: files[0]
+			});
+		},
+		[ datos, setDatos, setPreview ]
+	);
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
         <div>
@@ -37,11 +76,28 @@ export default function RegistroProducto() {
                         <Box textAlign="center" display="flex" justifyContent="center">
                         <form className={classes.root} noValidate autoComplete="off">
                             <Box p={2}>
+                            <FormControl className={classes.text}>
+                                <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
+                                <Select
+                                    
+                                    native
+                                    // onChange={handleChange}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'age-native-simple',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={30}>Thirty</option>
+                                </Select>
+                            </FormControl>
+                            </Box>
+                            <Box p={2}>
                                 <TextField
                                     className={classes.text}
-                                    id="nombreCompania"
-                                    label="Nombre de Compania"
-                                    placeholder="Nombre de Compania"
+                                    id=""
+                                    label="Platillo"
+                                    placeholder="Platillo"
                                     multiline
                                     variant="outlined"
                                 />
@@ -49,9 +105,9 @@ export default function RegistroProducto() {
                             <Box p={2}>
                                 <TextField
                                     className={classes.text}
-                                    id="nombreCompania"
-                                    label="Nombre de Compania"
-                                    placeholder="Nombre de Compania"
+                                    id=""
+                                    label="Descripcion"
+                                    placeholder="Descripcion"
                                     multiline
                                     variant="outlined"
                                 />
@@ -59,22 +115,37 @@ export default function RegistroProducto() {
                             <Box p={2}>
                                 <TextField
                                     className={classes.text}
-                                    id="nombreCompania"
-                                    label="Nombre de Compania"
-                                    placeholder="Nombre de Compania"
+                                    id=""
+                                    label="Precio"
+                                    placeholder="Precio"
                                     multiline
                                     variant="outlined"
                                 />
                             </Box>
                             <Box p={2}>
-                                <TextField
-                                    className={classes.text}
-                                    id="nombreCompania"
-                                    label="Nombre de Compania"
-                                    placeholder="Nombre de Compania"
-                                    multiline
-                                    variant="outlined"
-                                />
+                                <Box
+                                    mt={3}
+                                    className={classes.dropZone}
+                                    {...getRootProps()}
+                                    height={100}
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    textAlign="center"
+                                >
+                                    <input {...getInputProps()} />
+                                    {datos.imagen || preview ? (
+                                        <Box height={200} display="flex" justifyContent="center" alignItems="center">
+                                            <img alt="imagen del banner" src={preview} className={classes.imagen} />
+                                        </Box>
+                                    ) : isDragActive ? (
+                                        <Typography>Suelta tu imagen aquí...</Typography>
+                                    ) : (
+                                        <Typography>
+                                            Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
+                                        </Typography>
+                                    )}
+                                </Box>
                             </Box>
                             </form>
                         </Box>

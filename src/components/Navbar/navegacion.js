@@ -22,6 +22,7 @@ export default function Navegacion(props) {
 	const [ datos, setDatos ] = useState([]);
 	const sesion = Sesion(props, false);
 	const [ busqueda, setBusqueda ] = useState('');
+	const pedido = JSON.parse(localStorage.getItem('usuario'))
 
 	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
 	const buscarBD = () => {
@@ -109,7 +110,7 @@ export default function Navegacion(props) {
 								component={Link}
 								to="/carrito"
 								>
-									<Badge badgeContent={1} color="secondary">
+									<Badge badgeContent={pedido.length} color="secondary">
 										<ShoppingCartIcon />
 									</Badge>
 								</IconButton>
@@ -144,7 +145,7 @@ export default function Navegacion(props) {
 								component={Link}
 								to="/carrito"
 							>
-								<Badge badgeContent={17} color="secondary">
+								<Badge badgeContent={pedido.length} color="secondary">
 									<ShoppingCartIcon />
 								</Badge>
 							</IconButton>

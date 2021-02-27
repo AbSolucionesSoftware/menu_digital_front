@@ -1,7 +1,7 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+      root: {
         '& > *': {
           margin: theme.spacing(1),
         },
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
       },
       imagen: {
-        maxHeight:  300,
+        maxHeight: 300,
         maxWidth: 300
       },
       dropZone: {

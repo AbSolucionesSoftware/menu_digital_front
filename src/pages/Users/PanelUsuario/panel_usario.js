@@ -39,8 +39,8 @@ export default function PanelUser() {
 
     return (
         <div>
-            <Grid container>
-                <Grid item lg={10}>
+            <Grid >
+                <Grid lg={12}>
                     <Box textAlign="center">
                         <Typography variant="h4">
                             Tu Empresa
@@ -52,7 +52,7 @@ export default function PanelUser() {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item lg={10}>
+                <Grid lg={10} >
                     <Box display="flex" justifyContent="flex-end" >
                         <Button
                             variant="contained" 
@@ -63,7 +63,7 @@ export default function PanelUser() {
                         </Button>
                     </Box>
                 </Grid>
-                <Grid item lg={10}>
+                <Grid lg={12}>
                     <Box display="flex" justifyContent="center">
                         <Box p={3}>
                             <Typography variant="h6">

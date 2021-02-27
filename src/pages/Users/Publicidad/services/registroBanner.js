@@ -3,11 +3,13 @@ import React, { useCallback, useContext, useState } from 'react'
 import useStyles from '../styles';
 import { ImageContext } from '../../../../context/curso_context';
 import clienteAxios from '../../../../config/axios';
+import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
 import { Alert } from '@material-ui/lab';
 
 
 export default function RegistroBanner( props ) {
+	const {handleDrawerClose} = props;
     const classes = useStyles();
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
@@ -35,7 +37,7 @@ export default function RegistroBanner( props ) {
 	console.log(datos.imagen);
 
     const subirImagen = async () => {
-
+		
 		if (!datos.imagen || !preview) {
 			return;
 		} else if (preview && preview.includes('https')) {
@@ -57,9 +59,8 @@ export default function RegistroBanner( props ) {
 				}
 			})
 			.then((res) => {
-				console.log("si jalo");
 				setLoading(false);
-                console.log(res.data.message);
+				handleDrawerClose();
 				setSnackbar({
 					open: true,
 					mensaje: res.data.message,
@@ -70,9 +71,6 @@ export default function RegistroBanner( props ) {
 			})
 			.catch((err) => {
 				setLoading(false);
-				console.log("no jalo");
-                console.log(err.response);
-				
 				if (err.response) {
 					setSnackbar({
 						open: true,
@@ -91,7 +89,7 @@ export default function RegistroBanner( props ) {
 
     return (
         <div>
-            <Grid container >
+			<Spin loading={loading} />
                 <Grid item lg={12}>
                     <Box textAlign="center"  mt={10}>
                         <Typography variant="h4">
@@ -99,6 +97,7 @@ export default function RegistroBanner( props ) {
                         </Typography>
                     </Box>
                 </Grid>
+
                 <Grid item lg={12}>
                     <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
                         <Alert severity="info">
@@ -107,12 +106,12 @@ export default function RegistroBanner( props ) {
                     </Box>
                 </Grid>
 
-                <Grid item lg={12}>
+                <Grid item lg={10}>
                     <Box
                         mt={3}
 						className={classes.dropZone}
 						{...getRootProps()}
-						height={300}
+						height={200}
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
@@ -120,8 +119,8 @@ export default function RegistroBanner( props ) {
 					>
 						<input {...getInputProps()} />
 						{datos.imagen || preview ? (
-							<Box height={300} display="flex" justifyContent="center" alignItems="center">
-								<img alt="imagen del curso" src={preview} className={classes.imagen} />
+							<Box height={200} display="flex" justifyContent="center" alignItems="center">
+								<img alt="imagen del banner" src={preview} className={classes.imagen} />
 							</Box>
 						) : isDragActive ? (
 							<Typography>Suelta tu imagen aquí...</Typography>
@@ -144,9 +143,7 @@ export default function RegistroBanner( props ) {
                             Registrar
                         </Button>
                     </Box>
-                   
                 </Grid>
-            </Grid>
         </div>
     )
 }
