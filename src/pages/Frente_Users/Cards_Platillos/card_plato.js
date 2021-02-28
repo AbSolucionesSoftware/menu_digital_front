@@ -29,20 +29,20 @@ export default function Cards_Platos() {
 		setContador(contador-1);
 	};
 
-	var platillos = [
+	var platillos = 
 		{ 
 			nombre: 'kevin11', 
 			cantidad:  contador, 
 			precio: 1200 
 		}
-	];
+	;
 	
 	const agregarCarrito = () => {
 		carrito.push(platillos)
-		localStorage.setItem('usuario', JSON.stringify(carrito));
+		localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
 	}
 
-	const pedido = JSON.parse(localStorage.getItem('usuario'))
+	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'))
 
 	return (
 		<Grid lg={5}>

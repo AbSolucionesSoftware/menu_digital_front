@@ -110,7 +110,7 @@ export default function Navegacion(props) {
 								component={Link}
 								to="/carrito"
 								>
-									<Badge badgeContent={pedido.length} color="secondary">
+									<Badge  color="secondary">
 										<ShoppingCartIcon />
 									</Badge>
 								</IconButton>
@@ -145,7 +145,7 @@ export default function Navegacion(props) {
 								component={Link}
 								to="/carrito"
 							>
-								<Badge badgeContent={pedido.length} color="secondary">
+								<Badge  color="secondary">
 									<ShoppingCartIcon />
 								</Badge>
 							</IconButton>
