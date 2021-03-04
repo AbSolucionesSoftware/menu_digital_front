@@ -1,28 +1,29 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List } from '@material-ui/core'
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Sesion from '../Verificacion_sesion/verificacion_sesion';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { MenuContext } from '../../context/carritoContext';
 import useStyles from './styles';
 
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 // const drawerWidth = 240;
 
 export default function Navegacion(props) {
-
+	// const { active, setActive } = useContext(MenuContext);
+	// const { loading, setLoading } = useContext(MenuContext);
+	
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
 	const [ datos, setDatos ] = useState([]);
 	const sesion = Sesion(props, false);
 	const [ busqueda, setBusqueda ] = useState('');
-	const pedido = JSON.parse(localStorage.getItem('usuario'))
+	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
 
 	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
 	const buscarBD = () => {
@@ -49,10 +50,15 @@ export default function Navegacion(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-    
+
+    // useEffect(
+	// 	() => {
+	// 		setActive(true);
+	// 	},
+	// 	[ active ]
+	// );
 
 	const classes = useStyles();
-
     return (
         <div>
             <AppBar  className={classes.appbar}>
@@ -99,22 +105,7 @@ export default function Navegacion(props) {
 							<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
 								User
 							</Button>
-							{sesion ? (
-								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
-									Mi cuenta
-								</Button>
-							) : (
-								<IconButton
-								aria-label="show 17 new notifications"
-								color="inherit"
-								component={Link}
-								to="/carrito"
-								>
-									<Badge  color="secondary">
-										<ShoppingCartIcon />
-									</Badge>
-								</IconButton>
-							)}
+							
 							{sesion ? (
 								<div />
 							) : (
@@ -133,22 +124,10 @@ export default function Navegacion(props) {
 								</Button>
 							) : (
 								<Button color="inherit" component={Link} to="/login" className={classes.marginButton}>
-									Iniciar sesión
+									<AccountCircleSharpIcon/>
 								</Button>
 							)
 							}
-						</Hidden>
-						<Hidden mdUp>
-							<IconButton
-								aria-label="show 17 new notifications"
-								color="inherit"
-								component={Link}
-								to="/carrito"
-							>
-								<Badge  color="secondary">
-									<ShoppingCartIcon />
-								</Badge>
-							</IconButton>
 						</Hidden>
 					</Toolbar>
 				</AppBar>

@@ -158,7 +158,8 @@ export default function Navegacion_User(props) {
 								Vista Principal
 							</Typography>
 						</ListItem>
-						<ListItem button 
+						<ListItem 
+							button 
 							component={Link} 
 							to="/"
 							onClick={() => {

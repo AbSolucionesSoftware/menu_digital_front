@@ -1,51 +1,51 @@
 import React, { Fragment } from 'react'
-import { makeStyles, Grid, Box} from '@material-ui/core';
-import Carousel from 'react-material-ui-carousel'
+import { makeStyles} from '@material-ui/core';
+import './banner.scss';
 import imagen from '../img/BannerLogo.PNG'
-import { Link } from 'react-router-dom';
-
-
-const useStyles = makeStyles((theme) => ({
-    containerImagen:{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center"
-    }, 
-    containerBanner:{
-        height: 500,
-        // width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center"
-    },
-    imagen:{
-        maxWidth: "100%",
-        maxHeight:  "100%"   
-    }
-    
-}))
-
+import BannerAnim, { Element } from 'rc-banner-anim';
+import 'rc-banner-anim/assets/index.css';
+const BgElement = Element.BgElement;
 
 export default function Banner() {
-    const classes = useStyles();
 
     return (
-        <Fragment>
-            <Grid>
-                <Carousel interval={4000} indicators={false} >
-                    <Grid className={classes.containerImagen}>
-                        <Box className={classes.containerBanner} >
-                            <img className={classes.imagen} alt="No imagen" src={imagen}/>
-                        </Box>
-                    </Grid>
-
-                    <Grid className={classes.containerImagen}>
-                        <Box className={classes.containerBanner} >
-                            <img className={classes.imagen} alt="No imagen" src={imagen}/>
-                        </Box>
-                    </Grid>
-                </Carousel>
-            </Grid>
-        </Fragment>
+        <BannerAnim autoPlay /* activeIndex={index} */ /* onSelect={handleSelect} */ prefixCls="banner-user" delay={200}>
+            <Element prefixCls="banner-user-elem" >
+                <BgElement
+                    key="bg"
+                    className="bg banner-elemento"
+                    alt="img-oferta"
+                    style={{
+                        backgroundImage: `url(${imagen})`,
+                        cursor: 'pointer' 
+                    }}
+                >
+                </BgElement>
+            </Element>
+            <Element prefixCls="banner-user-elem" >
+                <BgElement
+                    key="bg"
+                    className="bg banner-elemento"
+                    alt="img-oferta"
+                    style={{
+                        backgroundImage: `url(${imagen})`,
+                        cursor: 'pointer' 
+                    }}
+                >
+                </BgElement>
+            </Element>
+            <Element prefixCls="banner-user-elem" >
+                <BgElement
+                    key="bg"
+                    className="bg banner-elemento"
+                    alt="img-oferta"
+                    style={{
+                        backgroundImage: `url(${imagen})`,
+                        cursor: 'pointer' 
+                    }}
+                >
+                </BgElement>
+            </Element>
+		</BannerAnim>
     )
 }

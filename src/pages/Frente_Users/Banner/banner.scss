@@ -1,0 +1,22 @@
+/* For demo */
+.banner-user{
+  height: 580px;
+  width: 100%!important;
+}
+.banner-elemento{
+  width: 100%!important;
+  height: 100%!important;
+  background-repeat: no-repeat;
+  background-attachment: center;
+  background-position: center center;
+  background-size: contain;
+}
+@media(max-width: 768px){
+  .banner-user{
+    height: 100px!important;
+  }
+}
+
+.search-nav .ant-input-wrapper{
+  border-radius: 150px;
+}

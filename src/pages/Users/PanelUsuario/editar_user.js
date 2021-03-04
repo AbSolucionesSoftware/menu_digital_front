@@ -1,4 +1,4 @@
-import { Box, Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
+import { Box, Button, Dialog, DialogTitle, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import clienteAxios from '../../../config/axios';
 
@@ -12,11 +12,23 @@ const useStyles = makeStyles((theme) => ({
 export default function Editar_User(props) {
     const {datosEmpresa, setDatosEmpresa} = props;
 	const [ control, setControl ] = useState(false);
-    const [editar, setEditar] = useState([]); 
+    const [editar, setEditar] = useState([]);
+    const [open, setOpen] = useState(false);
+
+    const [password, setPassword] = useState([]); 
+
 	const token = localStorage.getItem('token');
 
 	const classes = useStyles();
     // console.log(editar);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
 
     const editarDatos = async () => {
         await clienteAxios
@@ -111,6 +123,15 @@ export default function Editar_User(props) {
                             </Box>
                         </form>
                     </Box>
+                    <Box p={3} textAlign="center">
+                        <Button
+                            variant="contained" 
+                            color="primary"
+                            onClick={handleClickOpen}
+                        >
+                            Cambiar Contrasena
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item lg={12}>
                     <Box textAlign="center" >
@@ -124,6 +145,44 @@ export default function Editar_User(props) {
                     </Box>
                 </Grid>
             </Grid>
+
+            <Dialog open={open} onClose={handleClose}>
+                <Grid lg={12}>
+                    <Box p={3}>
+                        <Typography variant="h6">
+                            Por favor ingrese su nueva contrasena
+                        </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="center"  flexWrap="wrap">
+                        <Box p={2}>
+                            <TextField
+                                // defaultValue={datosEmpresa.phone}
+                                // value={datosEmpresa.phone ? datosEmpresa.phone : ''}
+                                // className={classes.text}
+                                id="constrasena"
+                                label="Nueva Contraena"
+                                placeholder="Nueva Contraena"
+                                multiline
+                                variant="outlined"
+                                onChange={(e) =>
+                                    setPassword({ ...password, constrasena: e.target.value })
+                                }
+                            />
+                        </Box>
+                    </Box>
+
+                    <Box p={3} textAlign="center" >
+                        <Button
+                            variant="contained" 
+                            color="primary"
+                            //  onClick={ () => }
+                        >
+                            Guardar
+                        </Button>
+                    </Box>
+                    
+                </Grid>
+            </Dialog>
         </div>
     )
 }

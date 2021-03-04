@@ -75,7 +75,6 @@ export default function Registro_User(props) {
           ).then((res) => {
             setRegistro([])
             setLoading(false);
-            console.log(res);
             setSnackbar({
                 open: true,
                 mensaje: res.data.message,

@@ -143,7 +143,15 @@ export default function Navegacion_Admin(props) {
 								Registro
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/">
+						<ListItem 
+							button 
+							component={Link} 
+							to="/"
+							onClick={() => {
+								localStorage.removeItem('token');
+								localStorage.removeItem('user');
+							}}
+						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>
 								Cerrar Sesión

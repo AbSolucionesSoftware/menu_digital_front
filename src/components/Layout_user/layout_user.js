@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
-
+import { CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
 import { NavProvider } from '../../context/context_nav';
 import { ImageProvider } from '../../context/curso_context';
+
+import BotonCarrito from '../../pages/Frente_Users/Carrito/botonCarrito'
 import Navegacion_User from '../Navegacion_User/navegacion_user';
+import Footer from '../Footer/footer'
 
 const drawerWidth = 240;
 
@@ -91,6 +91,7 @@ export default function LayoutUser(props) {
 					<div style={{ minHeight: '90vh' }}>
 						<LoadRoutes routes={routes} />
 					</div>
+					
 				</NavProvider>
 				<div>
 					<Footer />
