@@ -1,28 +1,32 @@
-import { Box, Button, Card, Grid, List, makeStyles } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { Box, Button, Card, Drawer, Grid, List, makeStyles } from '@material-ui/core'
+import React, { useContext, useEffect, useState } from 'react'
+import { ImageContext } from '../../../context/curso_context';
+
 import clienteAxios from '../../../config/axios';
+import RegistroBanner from './services/registroBanner';
+import Eliminar from './services/eliminar';
 import Spin from '../../../components/Spin/spin';
 const useStyles = makeStyles((theme) => ({
     root:{
         marginTop: 10,
         display: "flex",
         justifyContent: "center",
-        alignContent: "center"
+        alignContent: "center",
     },
     containerImagen:{
+        height: "auto",
         display: "flex",
         justifyContent: "center",
         alignContent: "center"
     }, 
     containerBanner:{
-        height: 350,
+        height: "auto",
         // width: "100%",
     },
     imagen:{
         maxWidth: "100%",
         maxHeight:  "100%"   
     }
-    
 }))
 
 export default function Banner() {
@@ -34,41 +38,34 @@ export default function Banner() {
 
     const classes = useStyles();
 
+    const [ open, setOpen ] = useState(false);
+	const { update } = useContext(ImageContext);
+
+    const handleDrawerOpen = () => {
+		setOpen(true);
+	};
+
+	const handleDrawerClose = () => {
+		setOpen(false);
+	};
+
     const traerBanner = async () => {
+        setLoading(true);
         await clienteAxios
 			.get(`/banner/banner-company/${user._id}`)
 			.then((res) => {
+                setLoading(false);
                 setBanners(res.data);
-                console.log(res.data);
-                console.log("si hay datos");
-			})
-			.catch((err) => {
-                console.log(err);
-			});
-    };
-
-    const eliminarBanner = async (idBanner) => {
-        setLoading(true);
-        await clienteAxios
-			.delete(`/banner/${idBanner}`, {
-                headers: {
-					Authorization: `bearer ${token}`
-				}
-            })
-			.then((res) => {
-                setLoading(false);
-                // console.log(res);
 			})
 			.catch((err) => {
                 setLoading(false);
                 console.log(err);
-                console.log("error al eliminado");
 			});
     };
 
     useEffect(() => {
         traerBanner(); 
-    }, [])
+    }, [update])
 
     const render = banners.map((banner) => {
         return(
@@ -76,20 +73,20 @@ export default function Banner() {
                 <Grid container>
                     <Grid item lg={12} xs={12}>
                         <Box  display="flex" justifyContent="center">
+
                             <Box p={1} display="flex" justifyContent="center">
-                                <Button variant="contained" color="primary">
+                                <Button 
+                                    variant="contained" 
+                                    color="primary"
+                                    onClick={() => handleDrawerOpen()}
+                                >
                                     Editar
                                 </Button>
                             </Box>
                             <Box p={1} display="flex" justifyContent="center">
-                                <Button 
-                                    variant="contained" 
-                                    color="secondary"
-                                    onClick={() => eliminarBanner(banner._id)}
-                                >
-                                    Eliminar
-                                </Button>
+                                <Eliminar banner={banner._id} />
                             </Box>
+
                         </Box>
                     </Grid>
 
@@ -106,8 +103,27 @@ export default function Banner() {
         
     return (
         <div>
-            {/* <Spin loading={loading} /> */}
+            <Spin loading={loading} />
             {render}
+
+            <Drawer
+                anchor="right"
+                open={open}
+                onClose={handleDrawerClose}
+            >
+                <RegistroBanner close={handleDrawerClose} banner={banners}/>
+                <Box textAlign="center" mt={4}>
+                    <Button
+                        variant="contained" 
+                        color="secondary"
+                        size="large"
+                        onClick={handleDrawerClose}
+                    >
+                        Salir
+                    </Button>
+                </Box>
+            </Drawer>
+            
         </div>
     )
 }

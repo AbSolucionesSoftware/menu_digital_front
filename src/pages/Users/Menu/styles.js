@@ -10,12 +10,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
     },
-    content: {
-      flex: '1 0 auto',
-    },
     cover: {
-      width: 200,
-      height: 200
+      width: 180,
+      height: 180
     },
     controls: {
       display: 'flex',
@@ -26,6 +23,15 @@ const useStyles = makeStyles((theme) => ({
     playIcon: {
       height: 38,
       width: 38,
+    },
+    large: {
+      width: theme.spacing(13),
+      height: theme.spacing(13),
+    },
+    paper: {
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
     },
   }));
 

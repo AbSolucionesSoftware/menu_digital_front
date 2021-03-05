@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginAdmin(props) {
 	const token = localStorage.getItem('token')
+	console.log(props);
 
 	const classes = useStyles();
 	const [ datos, setDatos ] = useState([]);

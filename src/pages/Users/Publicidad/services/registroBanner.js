@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography } from '@material-ui/core'
 import React, { useCallback, useContext, useState } from 'react'
 import useStyles from '../styles';
 import { ImageContext } from '../../../../context/curso_context';
+
 import clienteAxios from '../../../../config/axios';
 import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
@@ -9,12 +10,15 @@ import { Alert } from '@material-ui/lab';
 
 
 export default function RegistroBanner( props ) {
-	const {handleDrawerClose} = props;
-    const classes = useStyles();
+	const {handleDrawerClose, banners} = props;
+
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
+	
 	const { datos, setDatos, update, setUpdate, preview, setPreview } = useContext(ImageContext);
 	const [ loading, setLoading ] = useState(false);
+
+	const classes = useStyles();
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
 		mensaje: '',
@@ -32,9 +36,6 @@ export default function RegistroBanner( props ) {
 		[ datos, setDatos, setPreview ]
 	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-	console.log(company._id);
-	console.log(datos.imagen);
 
     const subirImagen = async () => {
 		

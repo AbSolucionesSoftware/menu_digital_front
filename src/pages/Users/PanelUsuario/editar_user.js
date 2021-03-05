@@ -60,7 +60,6 @@ export default function Editar_User(props) {
                 </Grid>
                 <Grid lg={12}>
                     <Box mt={5} textAlign="center">
-                        <form className={classes.root} noValidate autoComplete="off">
                             <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.nameCompany}
@@ -121,7 +120,15 @@ export default function Editar_User(props) {
                                     }
                                 />
                             </Box>
-                        </form>
+                    </Box>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        <Button
+                             variant="contained" 
+                             color="primary"
+                            //  onClick={ () => }
+                        >
+                            Guardar
+                        </Button>
                     </Box>
                     <Box p={3} textAlign="center">
                         <Button
@@ -130,17 +137,6 @@ export default function Editar_User(props) {
                             onClick={handleClickOpen}
                         >
                             Cambiar Contrasena
-                        </Button>
-                    </Box>
-                </Grid>
-                <Grid item lg={12}>
-                    <Box textAlign="center" >
-                        <Button
-                             variant="contained" 
-                             color="primary"
-                            //  onClick={ () => }
-                        >
-                            Guardar
                         </Button>
                     </Box>
                 </Grid>
@@ -153,7 +149,7 @@ export default function Editar_User(props) {
                             Por favor ingrese su nueva contrasena
                         </Typography>
                     </Box>
-                    <Box display="flex" justifyContent="center"  flexWrap="wrap">
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
                             <TextField
                                 // defaultValue={datosEmpresa.phone}

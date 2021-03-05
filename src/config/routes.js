@@ -13,6 +13,7 @@ import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
 import Carrito from '../pages/Frente_Users/Carrito/carrito'
 import Busqueda from '../pages/Frente_Users/Busqueda/busqueda'
+import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
 
 const routes = [
 	{
@@ -65,13 +66,13 @@ const routes = [
 				exact: true
 			},
 			{
-				path: '/login',
-				component: LoginAdmin,
+				path: '/:idMenu',
+				component: Menu_Front,
 				exact: true
 			},
 			{
-				path: '/carrito',
-				component: Carrito,
+				path: '/:idMenu/login',
+				component: LoginAdmin,
 				exact: true
 			}
 		]

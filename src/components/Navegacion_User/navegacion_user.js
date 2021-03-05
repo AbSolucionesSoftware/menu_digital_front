@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
 import useStyles from './styles';
 
@@ -19,18 +20,8 @@ export default function Navegacion_User(props) {
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
 	const sesion = Sesion(props, false);
-	const [ datos, setDatos ] = useState([]);
-	const [ busqueda, setBusqueda ] = useState('');
 
-	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
-	const buscarBD = () => {
-		if (!busqueda) {
-			return;
-		}
-		/* setBusqueda(''); */
-		props.history.push(`/busqueda/${busqueda}`);
-	};
-
+	const company = JSON.parse(localStorage.getItem('user'))
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
@@ -86,7 +77,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
-							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
 								Menu
 							</Typography>
@@ -97,13 +88,15 @@ export default function Navegacion_User(props) {
 								Publicidad
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/">
-							<ListItemIcon><HomeIcon/></ListItemIcon>
-							<Typography>
-								Vista Principal
-							</Typography>
-						</ListItem>
-						<ListItem button component={Link} to="/">
+						<ListItem 
+							button 
+							component={Link} 
+							to="/"
+							onClick={() => {
+								localStorage.removeItem('token');
+								localStorage.removeItem('user');
+							}}
+						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>
 								Cerrar Sesión
@@ -140,8 +133,14 @@ export default function Navegacion_User(props) {
 								Panel User
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/user/menu">
+						<ListItem button component={Link} to={`/${company._id}`}>
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Ver mi menu digital
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/user/menu">
+							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
 								Menu
 							</Typography>
@@ -150,12 +149,6 @@ export default function Navegacion_User(props) {
 							<ListItemIcon><PersonAddIcon/></ListItemIcon>
 							<Typography>
 								Publicidad
-							</Typography>
-						</ListItem>
-						<ListItem button component={Link} to="/">
-							<ListItemIcon><HomeIcon/></ListItemIcon>
-							<Typography>
-								Vista Principal
 							</Typography>
 						</ListItem>
 						<ListItem 

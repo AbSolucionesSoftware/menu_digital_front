@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AgregarCarrito(props) {
-    const {platillos, setOpen} = props;
-
+    const {nombre, platillos, precio, setOpen} = props;
+    console.log(platillos);
     const [contador , setContador] = useState(0)
     const [carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
@@ -34,13 +34,14 @@ export default function AgregarCarrito(props) {
 
     let array = [ 
         {
-            platillos,
+            nombre,
+            precio,
             "cantidad": contador,
             notas
         }
     ] 
     ;
-
+    console.log(array);
     
     
 	const agregarCarrito = () => {
@@ -50,7 +51,7 @@ export default function AgregarCarrito(props) {
             setOpen(false)
         } else {
             let data = JSON.parse(datos)
-            let newCar = {platillos, cantidad: contador, notas}
+            let newCar = {nombre, precio, cantidad: contador, notas}
             data.push(newCar)
             localStorage.setItem("carritoUsuario", JSON.stringify(data));
             setOpen(false)
@@ -61,7 +62,7 @@ export default function AgregarCarrito(props) {
     return (
         <div>
             <Grid lg={12}>
-                <Box p={3}> 
+                <Box p={3} textAlign="center"> 
                     <Typography variant="h4">
                         Agregar a tu Carrito
                     </Typography>

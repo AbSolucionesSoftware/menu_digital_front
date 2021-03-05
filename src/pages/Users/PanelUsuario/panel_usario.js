@@ -41,30 +41,24 @@ export default function PanelUser() {
         <div>
             <Grid >
                 <Grid lg={12}>
-                    <Box textAlign="center">
-                        <Typography variant="h4">
-                            Tu Empresa
-                        </Typography>
-                        <Box mt={2}>
+                    <Box textAlign="center" display="flex" justifyContent="center" flexWrap="wrap">
+                        <Box p={2}>
                             <Typography variant="h4">
-                                {datosEmpresa.nameCompany}
+                                Tu Empresa
                             </Typography>
                         </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={10} >
-                    <Box display="flex" justifyContent="flex-end" >
-                        <Button
-                            variant="contained" 
-                            color="primary"
-                            onClick={handleDrawerOpen}
-                        >
-                            Editar Datos
-                        </Button>
+                        
                     </Box>
                 </Grid>
                 <Grid lg={12}>
-                    <Box display="flex" justifyContent="center">
+                    <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
+                        <Typography variant="h4">
+                            {datosEmpresa.nameCompany}
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid lg={12}>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={3}>
                             <Typography variant="h6">
                                 Empresa: {datosEmpresa.nameCompany}
@@ -87,6 +81,17 @@ export default function PanelUser() {
                         </Box>
                     </Box>
                 </Grid>
+                <Grid lg={12} >
+                    <Box display="flex" justifyContent="center" >
+                        <Button
+                            variant="contained" 
+                            color="primary"
+                            onClick={handleDrawerOpen}
+                        >
+                            Editar Datos
+                        </Button>
+                    </Box>
+                </Grid>
             </Grid>
 
             <Drawer
@@ -96,7 +101,7 @@ export default function PanelUser() {
                 onClose={handleDrawerClose}
             >
                 <Editar_User datosEmpresa={datosEmpresa} setDatosEmpresa={setDatosEmpresa} />
-                <Box textAlign="center" mt={4}>
+                <Box display="flex" justifyContent="center" mt={4}>
                     <Button
                         variant="contained" 
                         color="secondary"

@@ -1,38 +1,38 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List } from '@material-ui/core'
-import { Link } from 'react-router-dom';
-import Sesion from '../Verificacion_sesion/verificacion_sesion';
+import {useParams, Link, withRouter } from 'react-router-dom';
+// import Sesion from '../Verificacion_sesion/verificacion_sesion';
+import jwt_decode from 'jwt-decode';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 import { MenuContext } from '../../context/carritoContext';
 import useStyles from './styles';
 
 import React, { useContext, useEffect, useState } from 'react';
 
-// const drawerWidth = 240;
+function Navegacion(props) {
 
-export default function Navegacion(props) {
-	// const { active, setActive } = useContext(MenuContext);
-	// const { loading, setLoading } = useContext(MenuContext);
-	
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [ datos, setDatos ] = useState([]);
-	const sesion = Sesion(props, false);
 	const [ busqueda, setBusqueda ] = useState('');
-	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
 
-	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
-	const buscarBD = () => {
-		if (!busqueda) {
-			return;
+	const token = localStorage.getItem('token');
+	var decoded = Jwt(token);
+
+	function Jwt(token) {
+		try {
+			return jwt_decode(token);
+		} catch (e) {
+			return null;
 		}
-		/* setBusqueda(''); */
-		props.history.push(`/busqueda/${busqueda}`);
-	};
+	}
+
+	const idMenu = props.location.pathname;
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -51,13 +51,17 @@ export default function Navegacion(props) {
 		setOpen(false);
 	};
 
-    // useEffect(
-	// 	() => {
-	// 		setActive(true);
-	// 	},
-	// 	[ active ]
-	// );
+	
+	function Jwt(token) {
+		try {
+			return jwt_decode(token);
+		} catch (e) {
+			return null;
+		}
+	}
 
+	// console.log(props);
+	
 	const classes = useStyles();
     return (
         <div>
@@ -87,10 +91,10 @@ export default function Navegacion(props) {
 								}}
 								inputProps={{ 'aria-label': 'search' }}
 								value={busqueda}
-								onChange={obtenerBusqueda}
+								// onChange={obtenerBusqueda}
 							/>
 							<div className={classes.grow} />
-							<IconButton size="small" color="inherit" onClick={() => buscarBD()}>
+							<IconButton size="small" color="inherit">
 								<SearchIcon />
 							</IconButton>
 						</div>
@@ -99,19 +103,15 @@ export default function Navegacion(props) {
 							<Button color="inherit" component={Link} to="/" className={classes.marginButton}>
 								Inicio
 							</Button>
-							<Button color="inherit" component={Link} to="/admin" className={classes.marginButton}>
-								Admin
-							</Button>
-							<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
-								User
-							</Button>
-							
-							{sesion ? (
-								<div />
+							{decoded ? (
+								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
+									<AccountCircleSharpIcon/> Mi cuenta
+								</Button>
 							) : (
 								<div />
 							)}
-							{sesion ? (
+
+							{decoded ? (
 								<Button color="inherit" 
 									component={Link} to="/" 
 									className={classes.marginButton}
@@ -123,7 +123,7 @@ export default function Navegacion(props) {
 									Cerrar Sesion
 								</Button>
 							) : (
-								<Button color="inherit" component={Link} to="/login" className={classes.marginButton}>
+								<Button color="inherit" component={Link}  to={`${idMenu}/login`} className={classes.marginButton}>
 									<AccountCircleSharpIcon/>
 								</Button>
 							)
@@ -147,6 +147,16 @@ export default function Navegacion(props) {
 						</IconButton>
 					</div>
 					<Divider />
+					{decoded ? (
+						<ListItem button component={Link} to="/user" >
+							<ListItemIcon>
+								<AccountCircleSharpIcon/>
+							</ListItemIcon>
+							<ListItemText primary="Mi cuenta" />
+						</ListItem>
+					) : (
+						<div />
+					)}
 					<List>
 						<ListItem button component={Link} to="/" >
 							<ListItemIcon>
@@ -154,8 +164,41 @@ export default function Navegacion(props) {
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
+						{decoded ? (
+							<ListItem>
+								<ListItemIcon>
+									<ExitToAppIcon/>
+								</ListItemIcon>
+								
+								<ListItemText
+									color="inherit" 
+									component={Link} to="/" 
+									onClick={() => {
+										localStorage.removeItem('token');
+										localStorage.removeItem('user');
+									}}
+								>
+									Cerrar sesion
+								</ListItemText>
+							</ListItem>
+							) : (
+								<ListItem 
+									color="inherit" 
+									component={Link} 
+									to="/login"
+								>
+									<ListItemIcon>
+										<AccountCircleSharpIcon/>
+									</ListItemIcon>
+									<ListItemText
+										primary="Iniciar sesion"
+									/>
+								</ListItem>
+							)
+						}
 					</List>
                 </Drawer>
         </div>
     )
 }
+ export default withRouter(Navegacion);
