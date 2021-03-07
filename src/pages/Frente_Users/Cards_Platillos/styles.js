@@ -3,8 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      // height: 200,
       display: 'flex',
+    },
+    paper: {
+      maxWidth: 500,
+      margin: `${theme.spacing(1)}px auto`,
+      padding: theme.spacing(2),
     },
     details: {
       display: 'flex',
@@ -14,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
       flex: '1 0 auto',
     },
     cover: {
-      width: 200,
-      height: 200
+      width: 210,
     },
     controls: {
       display: 'flex',
@@ -28,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
       width: 38,
     },
     large: {
-      width: theme.spacing(10),
-      height: theme.spacing(10),
+      width: theme.spacing(4),
+      height: theme.spacing(4),
     }
   }));
 

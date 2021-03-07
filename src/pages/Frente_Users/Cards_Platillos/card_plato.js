@@ -57,44 +57,49 @@ export default function Cards_Platos(props) {
 	const render = productos.map((producto) => {
 		return (
 			<Grid lg={5}>
-				{/* {console.log(producto)} */}
 				<Box p={2}>
-					<Card onClick={() => {
-						handleClickOpen()
-						setagregarProducto(producto)
-						}} className={classes.root}>
-						<Box justifyContent="center" display="flex">
-							<CardMedia
-								className={classes.cover}
-								image={producto.imagenProductUrl}
-								title="Live from space album cover"
-							/>
-
-							<div className={classes.details}>
-								<CardContent className={classes.content}>
-										<Box display="flex" className="titulos">
-											<Typography variant="h4" gutterBottom={false}>
-												{producto.name}
-											</Typography>
-											<IconButton>
-												<AddShoppingCartIcon />
-											</IconButton>
-										</Box>
-											<Typography variant="subtitle1" color="textSecondary">
-												{producto.subCategory}
-											</Typography>
-											<Typography variant="subtitle1" color="textSecondary">
-												{producto.description}
-											</Typography>
-											<Typography variant="h4" color="textSecondary">
-												{producto.price}
-											</Typography>
+					<Card className={classes.root}>
+							<Hidden mdUp>
+								<Box p={3} display="flex" justifyContent="center" alignContent="center" >
+									<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
+								</Box>
+							</Hidden>
+							<Hidden smDown>
+								<CardMedia
+									className={classes.cover}
+									image={producto.imagenProductUrl}
+								/>
+							</Hidden>
+							<Grid lg={5} item xs zeroMinWidth>
+								<div className={classes.details}>
+									<CardContent className={classes.content}>
+										<Typography variant="h4" noWrap>
+											{producto.name}
+										</Typography>
+										<Typography variant="subtitle1" color="textSecondary">
+											{producto.description}
+										</Typography>
+										<Typography variant="h4" color="textSecondary">
+											{producto.price}
+										</Typography>
+									</CardContent>
+									
+								</div>
+							</Grid>
+							<Grid lg={2}>
+								<CardContent>
+									<IconButton
+									 onClick={() => {
+										handleClickOpen()
+										setagregarProducto(producto)
+										}}
+									>
+										<AddShoppingCartIcon className={classes.large} />
+									</IconButton>
 								</CardContent>
-							</div>
-						</Box>
+							</Grid>
 					</Card>
 				</Box>
-				
 			</Grid>
 			
 		);

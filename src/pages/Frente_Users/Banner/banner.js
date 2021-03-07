@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { makeStyles} from '@material-ui/core';
 import './banner.scss';
-import imagen from '../img/BannerLogo.PNG'
 import BannerAnim, { Element } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 import clienteAxios from '../../../config/axios';
@@ -17,7 +16,7 @@ export default function Banner(props) {
 			.get(`/banner/banner-company/${empresa._id}`)
 			.then((res) => {
                 setBanners(res.data);
-                console.log("si hay datos");
+                // console.log("si hay datos");
 			})
 			.catch((err) => {
                 console.log(err);

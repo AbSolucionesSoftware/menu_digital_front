@@ -25,7 +25,7 @@ export default function CardPlato(props) {
         <Grid item lg={5} className={classes.paper}>
             <Card key={index} className={classes.root}> 
                 {console.log(producto)}
-                <Box justifyContent="center" display="flex" flexWrap="wrap">
+                <Box display="flex" flexWrap="wrap">
                     <Hidden mdUp>
                         <Box p={3} display="flex" justifyContent="center" alignContent="center" >
                             <Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
@@ -39,7 +39,7 @@ export default function CardPlato(props) {
                     </Hidden>
                     <div className={classes.details}>
                         <CardContent className={classes.content}>
-                            <Typography component="h5" variant="h5">
+                            <Typography  variant="h5">
                                 {producto.name}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
@@ -48,7 +48,6 @@ export default function CardPlato(props) {
                             <Typography variant="subtitle1" color="textSecondary">
                                 {producto.description}
                             </Typography>
-                            
                         </CardContent>
                         <Box p={0} display="flex" justifyContent="center">
                             <Box p={1}>

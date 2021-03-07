@@ -48,11 +48,11 @@ export default function Menu_Front(props) {
 					<Categorias empresa={empresa}/>
 				</Box>
 
-				<Hidden smDown>
+				{/* <Hidden smDown> */}
 					<Box mt={5}> 	
 						<Cards_Platos empresa={empresa} />
 					</Box>
-				</Hidden>
+				{/* </Hidden> */}
 				<BotonCarrito />
 			</div>
         );

@@ -7,8 +7,8 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
     },
     details: {
-      display: 'flex',
-      flexDirection: 'column',
+      // display: 'flex',
+      // flexDirection: 'column',
     },
     cover: {
       width: 180,
@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
     controls: {
       display: 'flex',
-      alignItems: 'center',
       paddingLeft: theme.spacing(1),
       paddingBottom: theme.spacing(1),
     },
