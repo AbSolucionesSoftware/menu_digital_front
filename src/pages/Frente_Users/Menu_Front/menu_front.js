@@ -7,21 +7,25 @@ import BotonCarrito from '../Carrito/botonCarrito'
 import Banner from '../Banner/banner';
 import Categorias from '../Categorias/categorias';
 import clienteAxios from '../../../config/axios';
-import Cards_Platos from '../Cards_Platillos/card_plato';
+import Consulta_platillos from '../Cards_Platillos/consulta_plato';
+import Spin from '../../../components/Spin/spin';
 
 export default function Menu_Front(props) {
 
 	const idMenu = props.match.params.idMenu;
 	const [empresas, setEmpresas] = useState([]);
+	const [ loading, setLoading ] = useState(false);
 
 	const consultarDatos = async () => {
+		setLoading(true);
 		await clienteAxios
 			.get(`/company/${idMenu}`)
 			.then((res) => {
+				setLoading(false);
 				setEmpresas([res.data]);
 			})
 			.catch((err) => {
-
+				setLoading(false);
 			})
 	}
 
@@ -31,7 +35,8 @@ export default function Menu_Front(props) {
 
     const render = empresas.map(empresa => {
         return(
-			<div>  
+			<div> 
+				<Spin loading={loading} />
 				<Box>
 					<Banner empresa={empresa} />
 				</Box>
@@ -50,7 +55,7 @@ export default function Menu_Front(props) {
 
 				{/* <Hidden smDown> */}
 					<Box mt={5}> 	
-						<Cards_Platos empresa={empresa} />
+						<Consulta_platillos empresa={empresa} />
 					</Box>
 				{/* </Hidden> */}
 				<BotonCarrito />

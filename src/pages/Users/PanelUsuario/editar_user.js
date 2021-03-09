@@ -1,5 +1,7 @@
 import { Box, Button, Dialog, DialogTitle, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import MessageSnackbar from '../../../components/Snackbar/snackbar';
+import Spin from '../../../components/Spin/spin';
 import clienteAxios from '../../../config/axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,8 +16,15 @@ export default function Editar_User(props) {
 	const [ control, setControl ] = useState(false);
     const [editar, setEditar] = useState([]);
     const [open, setOpen] = useState(false);
+	const [ loading, setLoading ] = useState(false);
 
     const [password, setPassword] = useState([]); 
+
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
 
 	const token = localStorage.getItem('token');
 
@@ -31,6 +40,7 @@ export default function Editar_User(props) {
     };
 
     const editarDatos = async () => {
+	    setLoading(true);
         await clienteAxios
 			.put(`/company/${datosEmpresa._id}`, {
 				headers: {
@@ -38,18 +48,35 @@ export default function Editar_User(props) {
 				}
 			})
 			.then((res) => {
+                setLoading(false);
                 // setDatosEmpresa(res.data)
                 console.log(" si edito ");
-                console.log(res.data.response);
+                setSnackbar({
+					open: true,
+					mensaje: 'Usuario editado exitosamente!',
+					status: 'success'
+				});
 			})
 			.catch((err) => {
+                setLoading(false);
                 console.log(" no edito ");
-                console.log(err.response);
+                setSnackbar({
+                    open: true,
+                    mensaje: 'Al parecer no se a podido conectar al servidor.',
+                    status: 'error'
+                });
 			});
     }
 
     return (
         <div>
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
+			<Spin loading={loading} />
             <Grid container>
                 <Grid item lg={12}>
                     <Box textAlign="center" p={5}>

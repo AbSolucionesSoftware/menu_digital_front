@@ -11,9 +11,11 @@ import Menu from '../pages/Users/Menu/menu';
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
-import Carrito from '../pages/Frente_Users/Carrito/carrito'
-import Busqueda from '../pages/Frente_Users/Busqueda/busqueda'
+import Carrito from '../pages/Frente_Users/Carrito/carrito';
+import Busqueda from '../pages/Frente_Users/Busqueda/busqueda';
 import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
+import BusquedaSubCates from '../pages/Frente_Users/Categorias/busquedaSubCates';
+import ResultadoBusqueda from '../pages/Frente_Users/Busqueda/busqueda';
 
 const routes = [
 	{
@@ -60,11 +62,7 @@ const routes = [
 		component: Layout,
 		exact: false,
 		routes: [
-			{
-				path: '/',
-				component: Home,
-				exact: true
-			},
+			
 			{
 				path: '/:idMenu',
 				component: Menu_Front,
@@ -74,7 +72,22 @@ const routes = [
 				path: '/:idMenu/login',
 				component: LoginAdmin,
 				exact: true
-			}
+			},
+			{
+				path: '/subCategorias/:categoria',
+				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/productos/:subCategory',
+				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/searching/:id/:url',
+				component: ResultadoBusqueda,
+				exact: true
+			},
 		]
 	}
 ];

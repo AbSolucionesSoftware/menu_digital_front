@@ -1,14 +1,17 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
-
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
+      maxWidth: 460,
+    },
+    rootTitulo: {
+      maxWidth: 250,
     },
     details: {
-      // display: 'flex',
-      // flexDirection: 'column',
+      display: 'flex',
+      flexDirection: 'column',
     },
     cover: {
       width: 180,
@@ -16,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     },
     controls: {
       display: 'flex',
-      paddingLeft: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+      // paddingLeft: theme.spacing(1),
+      // paddingBottom: theme.spacing(1),
     },
     playIcon: {
       height: 38,
@@ -32,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
+    titulo:{
+      width: 260
+    },
+    
   }));
 
 export default useStyles;

@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
     controls: {
@@ -19,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AgregarCarrito(props) {
-    const {nombre, platillos, precio, setOpen} = props;
-    console.log(platillos);
+    const {nombre, precio, setOpen} = props;
+    console.log(nombre);
+    console.log(precio);
     const [contador , setContador] = useState(0)
     const [carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
@@ -41,8 +43,6 @@ export default function AgregarCarrito(props) {
         }
     ] 
     ;
-    console.log(array);
-    
     
 	const agregarCarrito = () => {
         let datos = localStorage.getItem("carritoUsuario");
@@ -64,7 +64,7 @@ export default function AgregarCarrito(props) {
             <Grid lg={12}>
                 <Box p={3} textAlign="center"> 
                     <Typography variant="h4">
-                        Agregar a tu Carrito
+                        Agregar a Carrito
                     </Typography>
                 </Box>
 
@@ -85,15 +85,18 @@ export default function AgregarCarrito(props) {
                         </IconButton>
                     </Box>
                 </Box>
-
+                <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
+                    <Alert severity="info">Agrega notas a tu platillo. Ejemplo: 2 sin cebolla"</Alert>
+                </Box>
                 <Box p={3} display="flex" justifyContent="center">
+                    
                     <TextField
-                        // className={classes.text}
                         id="notas"
-                        label="Agregar Notas"
-                        placeholder="Agregar Notas"
+                        label="Notas"
+                        placeholder="Notas"
                         multiline
                         variant="outlined"
+                        InputLabelProps={{ shrink: true }}
                         onChange={(e) =>
                             setNotas({ ...notas, notas: e.target.value })
                         }
@@ -108,7 +111,7 @@ export default function AgregarCarrito(props) {
                             variant="contained" 
                             color="primary"
                         >
-                            Agregar Carrito<AddShoppingCartIcon />
+                            Agregar Carrito <AddShoppingCartIcon />
                         </Button>
                     </Tooltip>
                 </Box>

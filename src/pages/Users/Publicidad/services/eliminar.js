@@ -1,10 +1,13 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useState } from 'react'
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
+import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
 
 
 export default function Eliminar(props){
 	const { banner } = props;
+	const [ loading, setLoading ] = useState(false);
 	const token = localStorage.getItem('token');
 
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
@@ -26,6 +29,7 @@ export default function Eliminar(props){
 	});
 
 	const eliminarBannerBD = async (idBanner) => {
+		setLoading(true);
         await clienteAxios
 			.delete(`/banner/${idBanner}`, {
                 headers: {
@@ -33,31 +37,41 @@ export default function Eliminar(props){
 				}
             })
 			.then((res) => {
+				setLoading(false);
                 setResourceDel({open: false, resource: ''});
 				window.location.reload();
 				setSnackbar({
 					open: true,
-					mensaje: res.data.message,
+					mensaje: "Banner eliminado exitosamente!",
 					status: 'success'
 				});
 			})
 			.catch((err) => {
-                // setLoading(false);
-                console.log(err);
-                console.log("error al eliminado");
+				setSnackbar({
+					open: true,
+					mensaje:'Al parecer no se a podido conectar al servidor.', 
+					status: 'error'
+				});
+                setLoading(false);
 			});
 	}
 	
     
     return (
         <div>
+            <Spin loading={loading} />
+			<MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
 			<AlertConfimationDelete
 				deleteConfimation={deleteConfimation}
 				handleDeleteConfimation={handleDeleteConfimation}
 				eliminarBannerBD={eliminarBannerBD}
 			/>
             <Button
-                // className={classes.boton} 
                 variant="contained" 
                 color="secondary"
 				onClick={() => handleDeleteConfimation(banner)}

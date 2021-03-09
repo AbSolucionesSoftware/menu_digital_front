@@ -2,13 +2,17 @@ import { Box, Button, Drawer, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import Editar_User from './editar_user'
 import clienteAxios from '../../../config/axios';
+import Spin from '../../../components/Spin/spin';
 
 export default function PanelUser() {
-    const [ datosEmpresa, setDatosEmpresa] = useState([]);    
+    const [ datosEmpresa, setDatosEmpresa] = useState([]);
+	const [ loading, setLoading ] = useState(false);
+
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
 
     const traerDatos = async () => {
+        setLoading(true);
         await clienteAxios
 			.get(`/company/${company._id}`, {
 				headers: {
@@ -16,9 +20,11 @@ export default function PanelUser() {
 				}
 			})
 			.then((res) => {
+                setLoading(false);
                 setDatosEmpresa(res.data)
 			})
 			.catch((err) => {
+                setLoading(false);
                 console.log(err.response);
 			});
     }
@@ -39,7 +45,9 @@ export default function PanelUser() {
 
     return (
         <div>
-            <Grid >
+			<Spin loading={loading} />
+
+            <Grid>
                 <Grid lg={12}>
                     <Box textAlign="center" display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>

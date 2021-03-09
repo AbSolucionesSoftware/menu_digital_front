@@ -29,21 +29,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Registro_User(props) {
 
     const token = localStorage.getItem('token')
-    // var decoded = Jwt(token);
-	
-	// function Jwt(token) {
-	// 	try {
-	// 		return jwt_decode(token);
-	// 	} catch (e) {
-	// 		return null;
-	// 	}
-	// }
-
-    // if(token === '' || token === null){
-    //     props.history.push('/entrar')
-    // }else if(decoded['rol'] !== true){
-    //     props.history.push('/')
-    // }
 
 	const classes = useStyles();
     const [ registro, setRegistro] = useState([]); 
@@ -77,7 +62,7 @@ export default function Registro_User(props) {
             setLoading(false);
             setSnackbar({
                 open: true,
-                mensaje: res.data.message,
+                mensaje: "Usuario registrado exitosamente!.",
                 status: 'success'
             });
           }

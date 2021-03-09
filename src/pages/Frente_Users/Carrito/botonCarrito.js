@@ -52,7 +52,7 @@ export default function BotonCarrito(props) {
                         <ShoppingCartIcon className={classes.icono}/>
                     </Badge>
                 </IconButton>
-            )}
+             )}
 
             <Dialog open={open} onClose={handleClose}>
                 <Carrito setOpen={setOpen}/>

@@ -7,6 +7,7 @@ import clienteAxios from '../../../../config/axios';
 import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
 import { Alert } from '@material-ui/lab';
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 
 
 export default function RegistroBanner( props ) {
@@ -64,7 +65,7 @@ export default function RegistroBanner( props ) {
 				handleDrawerClose();
 				setSnackbar({
 					open: true,
-					mensaje: res.data.message,
+					mensaje: 'Banner registrado exitosamente!',
 					status: 'success'
 				});
 				setLoading(false);
@@ -90,6 +91,12 @@ export default function RegistroBanner( props ) {
 
     return (
         <div>
+			<MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
 			<Spin loading={loading} />
                 <Grid item lg={12}>
                     <Box textAlign="center"  mt={10}>

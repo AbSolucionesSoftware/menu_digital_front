@@ -1,5 +1,7 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useState } from 'react'
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
+import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
 
 
@@ -7,6 +9,7 @@ export default function Eliminar(props){
 	const { empresa } = props;
 	const token = localStorage.getItem('token');
 
+	const [ loading, setLoading ] = useState(false);
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
 	const [ deleteConfimation, setDeleteConfimation ] = useState({ open: false, id: '' });
 
@@ -26,6 +29,7 @@ export default function Eliminar(props){
 	});
 
 	const eliminarEmpresaBD = async (idEmpresa) => {
+			setLoading(true);
 			await clienteAxios
 			.delete(`/company/${idEmpresa}`,
 			{
@@ -35,22 +39,34 @@ export default function Eliminar(props){
 			}
 			)
 			.then((res) => {
+				setLoading(false);
 				setResourceDel({open: false, resource: ''});
 				setSnackbar({
 					open: true,
-					mensaje: res.data.message,
+					mensaje: "Usuario eliminado exitosamente!.",
 					status: 'success'
 				});
 			})
 			.catch((err) => {
-				// setLoading(false);
-				// errors(err);
+				setLoading(false);
+				setSnackbar({
+					open: true,
+					mensaje: "Ocurrio un problema en el servidor!.",
+					status: 'error'
+				});
 			});
 	}
 	
     
     return (
         <div>
+            <Spin loading={loading} />
+			<MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
 			<AlertConfimationDelete
 				deleteConfimation={deleteConfimation}
 				handleDeleteConfimation={handleDeleteConfimation}

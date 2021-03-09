@@ -76,6 +76,12 @@ export default function Navegacion_User(props) {
 								Panel User
 							</Typography>
 						</ListItem>
+						<ListItem button component={Link} to={`/${company._id}`}>
+							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Ver mi menu digital
+							</Typography>
+						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>

@@ -4,6 +4,7 @@ import clienteAxios from '../../../config/axios';
 import Eliminar from './services/eliminar';
 import RegistroProducto from './services/registroProducto';
 import useStyles from './styles';
+import {formatoMexico} from '../../../config/reuserFunction'
 
 export default function CardPlato(props) {
     const {productos} = props;
@@ -22,33 +23,41 @@ export default function CardPlato(props) {
 
     const render = productos.map((producto, index) => {
         return(
-        <Grid item lg={5} className={classes.paper}>
+        <Grid item lg={5} xs={12} className={classes.paper}>
             <Card key={index} className={classes.root}> 
-                {console.log(producto)}
                 <Box display="flex" flexWrap="wrap">
-                    <Hidden mdUp>
-                        <Box p={3} display="flex" justifyContent="center" alignContent="center" >
-                            <Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
-                        </Box>
-                    </Hidden>
-                    <Hidden smDown>
-                        <CardMedia
-                            className={classes.cover}
-                            image={producto.imagenProductUrl}
-                        />
-                    </Hidden>
-                    <div className={classes.details}>
-                        <CardContent className={classes.content}>
-                            <Typography  variant="h5">
-                                {producto.name}
-                            </Typography>
-                            <Typography variant="subtitle1" color="textSecondary">
-                               {producto.category}
-                            </Typography>
+                    <Grid item lg={5} xs={12}>
+                        <Hidden mdUp>
+                            <Box p={1} display="flex" justifyContent="center" alignContent="center" >
+                                <Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
+                            </Box>
+                        </Hidden>
+                        <Hidden smDown>
+                            <CardMedia
+                                className={classes.cover}
+                                image={producto.imagenProductUrl}
+                            />
+                        </Hidden>
+                    </Grid>
+                    <Grid lg={7} xs={12}>
+                        <Grid xs zeroMinWidth>
+                            <Box display="flex" justifyContent="center">
+                                <Typography  className={classes.rootTitulo} variant="h6" noWrap>
+                                    {producto.name}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs zeroMinWidth>
                             <Typography variant="subtitle1" color="textSecondary">
                                 {producto.description}
                             </Typography>
-                        </CardContent>
+                        </Grid>
+                        <Grid item xs zeroMinWidth>
+                            <Typography variant="h4" color="textSecondary">
+                               ${formatoMexico(producto.price)} 
+                            </Typography>
+                        </Grid>
+
                         <Box p={0} display="flex" justifyContent="center">
                             <Box p={1}>
                                 <Button
@@ -64,7 +73,7 @@ export default function CardPlato(props) {
                                 <Eliminar platillo={producto._id}/>
                             </Box>
                         </Box>
-                    </div>
+                    </Grid>
                 </Box>
             </Card>
         </Grid>

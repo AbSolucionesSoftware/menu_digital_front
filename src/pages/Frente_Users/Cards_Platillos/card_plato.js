@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import Typography from '@material-ui/core/Typography';
+import {formatoMexico} from '../../../config/reuserFunction'
+
 
 import useStyles from './styles';
 import { Avatar, Box, Dialog, Grid, Hidden, IconButton } from '@material-ui/core';
@@ -13,11 +15,11 @@ import clienteAxios from '../../../config/axios';
 import './styles.scss';
 
 export default function Cards_Platos(props) {
-	const {empresa} = props;
+	const {productos} = props;
 	const classes = useStyles();
 	
 	const [open, setOpen] = useState(false);
-	const [productos, setProductos ] = useState([]);
+	
 	const [agregarProducto, setagregarProducto] = useState({})
 
     const handleClickOpen = () => {
@@ -28,39 +30,14 @@ export default function Cards_Platos(props) {
         setOpen(false);
     };
 
-
-
-	const consultarProductos = async () => {
-		await clienteAxios
-			.get(`/product/${empresa._id}`)
-			.then((res) => {
-				setProductos(res.data);
-			})
-			.catch((err) => {
-
-			})
-	}
-
-    useEffect(() => {
-		consultarProductos();
-	},
-	 []);
-
-	
-	var platillos =
-		{ 
-			nombre: 'Pozole', 
-			precio: 1200,
-		}
-	;
-
-	const render = productos.map((producto) => {
+	const render = productos.map((producto, index) => {
 		return (
-			<Grid lg={5}>
-				<Box p={2}>
-					<Card className={classes.root}>
+			<Grid item lg={5} className={classes.paper}>
+            	<Card key={index} className={classes.root}> 
+               		<Box display="flex" flexWrap="wrap">
+						<Grid item lg={5} xs={12}>
 							<Hidden mdUp>
-								<Box p={3} display="flex" justifyContent="center" alignContent="center" >
+								<Box p={1} display="flex" justifyContent="center" alignContent="center" >
 									<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
 								</Box>
 							</Hidden>
@@ -70,52 +47,54 @@ export default function Cards_Platos(props) {
 									image={producto.imagenProductUrl}
 								/>
 							</Hidden>
-							<Grid lg={5} item xs zeroMinWidth>
-								<div className={classes.details}>
-									<CardContent className={classes.content}>
-										<Typography variant="h4" noWrap>
-											{producto.name}
-										</Typography>
-										<Typography variant="subtitle1" color="textSecondary">
-											{producto.description}
-										</Typography>
-										<Typography variant="h4" color="textSecondary">
-											{producto.price}
-										</Typography>
-									</CardContent>
-									
-								</div>
+						</Grid>
+						<Grid lg={7} xs={12}>
+							<Grid xs zeroMinWidth >
+								<Box display="flex" justifyContent="center">
+									<Typography className={classes.rootTitulo} variant="h5" noWrap>
+										{producto.name}
+									</Typography>
+								</Box>
 							</Grid>
-							<Grid lg={2}>
-								<CardContent>
-									<IconButton
-									 onClick={() => {
-										handleClickOpen()
-										setagregarProducto(producto)
-										}}
-									>
-										<AddShoppingCartIcon className={classes.large} />
-									</IconButton>
-								</CardContent>
+							<Grid item xs zeroMinWidth>
+								<Typography variant="subtitle1" color="textSecondary">
+									{producto.description}
+								</Typography>
 							</Grid>
+							<Grid item xs zeroMinWidth>
+								<Typography variant="h4" color="textSecondary">
+									${formatoMexico(producto.price)} 
+								</Typography>
+							</Grid>
+							<Grid lg={12}>
+								<IconButton
+									onClick={() => {
+									handleClickOpen()
+									setagregarProducto(producto)
+									}}
+								>
+									<AddShoppingCartIcon className={classes.large} />
+								</IconButton>
+							</Grid>
+						</Grid>	
+						</Box>
 					</Card>
-				</Box>
 			</Grid>
 			
 		);
 	})
 
 	return (
-		<Grid container>
-			<Box justifyContent="center" display="flex" flexWrap="wrap">
-				{render}
-			</Box>
+		<div>
+			<Grid container justify="center">
+                {render}
+            </Grid>
 
 			<Dialog open={open} onClose={handleClose} >
-				<AgregarCarrito  platillos={agregarProducto} setOpen={setOpen}  />
+				<AgregarCarrito  nombre={agregarProducto.name} precio={agregarProducto.price} setOpen={setOpen}  />
 			</Dialog>
 			
-		</Grid>
+		</div>
 	
 	);
 	}

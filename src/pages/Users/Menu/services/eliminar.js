@@ -1,5 +1,6 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useState } from 'react'
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
 
@@ -40,20 +41,30 @@ export default function Eliminar(props){
                 setResourceDel({open: false, resource: ''});
 				setSnackbar({
 					open: true,
-					mensaje: res.data.message,
+					mensaje: "Producto eliminado exitosamente!.",
 					status: 'success'
 				});
 			})
 			.catch((err) => {
                 setLoading(false);
                 console.log(err);
-                console.log("error al eliminado");
+				setSnackbar({
+					open: true,
+					mensaje: "Ocurrio un problema en el servidor!.",
+					status: 'success'
+				});
 			});
 	}
 	
     
     return (
         <div>
+			<MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Spin loading={loading} />
 			<AlertConfimationDelete
 				deleteConfimation={deleteConfimation}

@@ -1,7 +1,11 @@
-import { AppBar, Badge, Button, fade, Hidden, IconButton,  Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List } from '@material-ui/core'
+import { AppBar, Badge, Button, fade, Hidden, IconButton,  
+		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
+		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List 
+		} from '@material-ui/core'
 import {useParams, Link, withRouter } from 'react-router-dom';
 // import Sesion from '../Verificacion_sesion/verificacion_sesion';
 import jwt_decode from 'jwt-decode';
+import clienteAxios from '../../config/axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -19,7 +23,7 @@ function Navegacion(props) {
 
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [ busqueda, setBusqueda ] = useState('');
+	const [ busqueda, setBusqueda ] = useState("");
 
 	const token = localStorage.getItem('token');
 	var decoded = Jwt(token);
@@ -33,6 +37,7 @@ function Navegacion(props) {
 	}
 
 	const idMenu = props.location.pathname;
+	// console.log(props.match);
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -51,7 +56,19 @@ function Navegacion(props) {
 		setOpen(false);
 	};
 
-	
+	const obtenerBusqueda = async () => {
+		await clienteAxios
+			.post(`/product/search/company${idMenu}`, {filter: busqueda})
+			.then((res) => {
+				console.log(res.data);
+				console.log("si jalo la cosa");
+			})
+			.catch((err) => {
+				console.log("No jalo esa mamada");
+				console.log(err.response);
+			})
+	}
+
 	function Jwt(token) {
 		try {
 			return jwt_decode(token);
@@ -60,7 +77,7 @@ function Navegacion(props) {
 		}
 	}
 
-	// console.log(props);
+	// console.log(busqueda);
 	
 	const classes = useStyles();
     return (
@@ -84,17 +101,23 @@ function Navegacion(props) {
 						</Typography>
 						<div className={classes.search}>
 							<InputBase
+								id="busqueda"
 								placeholder="Busca tu platillo..."
 								classes={{
 									root: classes.inputRoot,
 									input: classes.inputInput
 								}}
 								inputProps={{ 'aria-label': 'search' }}
-								value={busqueda}
-								// onChange={obtenerBusqueda}
+								onChange={(e) =>
+									setBusqueda({ ...busqueda, busqueda: e.target.value })
+								}
 							/>
 							<div className={classes.grow} />
-							<IconButton size="small" color="inherit">
+							<IconButton 
+								onClick={() => {
+									props.history.push(`/searching${idMenu}/${busqueda}`)
+								}}
+								size="small" color="inherit">
 								<SearchIcon />
 							</IconButton>
 						</div>

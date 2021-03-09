@@ -4,20 +4,25 @@ import React, { useEffect, useState } from 'react';
 import RegistroProducto from './services/registroProducto';
 import CardPlato from './cardPlato';
 import clienteAxios from '../../../config/axios';
+import Spin from '../../../components/Spin/spin';
 
 export default function Menu() {
 
     const user = JSON.parse(localStorage.getItem('user'))
 
     const [ productos, setProductos ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
 
     const traerProdutos = async () => {
+        setLoading(true)
         await clienteAxios
 			.get(`/product/${user._id}`)
 			.then((res) => {
+                setLoading(false);
                 setProductos(res.data);
 			})
 			.catch((err) => {
+                setLoading(false);
                 console.log(err);
 			});
     };
@@ -38,6 +43,7 @@ export default function Menu() {
 
     return (
         <div>
+            <Spin loading={loading} />
             <Grid>
                 <Grid lg={12}>
                     <Box textAlign="center">

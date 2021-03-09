@@ -1,5 +1,6 @@
 import { Box, Button, Drawer, Grid, makeStyles, SwipeableDrawer, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
+import Spin from '../../components/Spin/spin';
 import clienteAxios from '../../config/axios';
 
 
@@ -22,10 +23,11 @@ export default function Panel_Admin(props) {
 				}
 			})
 			.then((res) => {
+		        setLoading(false);
 				setEmpresas(res.data);
 			})
 			.catch((err) => {
-
+		        setLoading(false);
 			})
 	}
 
@@ -37,6 +39,7 @@ export default function Panel_Admin(props) {
 
     return (
         <div>
+            <Spin loading={loading} />
             <Grid lg={12}>
                 <Box textAlign="center" mt={3}>
                     <Typography variant="h4">

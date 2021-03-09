@@ -4,6 +4,7 @@ import { ImageContext } from '../../../../context/curso_context';
 import clienteAxios from '../../../../config/axios';
 import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -137,17 +138,19 @@ export default function RegistroProducto(props) {
             })
 			.then((res) => {
                 setLoading(false);
-                console.log("si jalo y registro");
 				setSnackbar({
 					open: true,
-					mensaje: res.data.message,
+					mensaje: "Producto registrado exitosamente!.",
 					status: 'success'
 				});
 			})
 			.catch((err) => {
                 setLoading(false);
-                console.log(err);
-                console.log("error al registrar");
+                setSnackbar({
+					open: true,
+					mensaje: "Ocurrio un problema con el servidor",
+					status: 'err'
+				});
 			});
 	}
 
@@ -193,6 +196,12 @@ export default function RegistroProducto(props) {
 
     return (
         <div>
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Spin loading={loading} />
             <Grid container> 
                 <Grid lg={12}>

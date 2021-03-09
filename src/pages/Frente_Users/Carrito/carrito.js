@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, Typography, Button, TextField } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-
+import { formatoMexico }from '../../../config/reuserFunction';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
@@ -24,19 +24,17 @@ export default function Carrito(props) {
         setOpen(false);
     }
 
+
     const mensaje = 
-    `Hola, me comunico desde *Mi menu Digital* y me gustaria realizar el siguiente pedido: 
+    `Hola, me comunico desde *Mi menu Digital* y me gustaria realizar el siguiente pedido:  
 
         ${pedidos === null ? null : 
             pedidos.map((pedido) => (
-            pedido.cantidad +`  `+ pedido.platillos.nombre +`  ($${pedido.platillos.precio}) =  $`+ (pedido.platillos.precio*pedido.cantidad)
+            pedido.cantidad +`*  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas +`)`
         ))}
-
         Con un total de: $ ${total}
-        
         A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.
-
-        A nombre de *${cliente.nombre}*, mi telefono: *${cliente.telefono}*.
+        A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.
 
         Gracias`;
 
@@ -50,7 +48,7 @@ export default function Carrito(props) {
                 
             }else{
                 pedidos.forEach((res) => {
-                    subtotal += res.platillos.precio * res.cantidad;
+                    subtotal += res.precio * res.cantidad;
                     total = subtotal;
                     setTotal(total);
                 })
@@ -79,7 +77,7 @@ export default function Carrito(props) {
                                         </Typography>
                                     </Box>
                                     <Box display="flex" justifyContent="center" flexWrap="wrap">
-                                        <Box p={3}>
+                                        <Box p={2}>
                                             <TextField
                                                 error={!cliente.nombre && validate}
                                                 helperText={!cliente.nombre && validate  ? 'Esta campo es requerido' : null}
@@ -94,7 +92,7 @@ export default function Carrito(props) {
                                                 }
                                             />
                                         </Box>
-                                        <Box p={3}>
+                                        <Box p={2}>
                                             <TextField
                                                 error={!cliente.telefono && validate}
                                                 helperText={!cliente.telefono && validate  ? 'Esta campo es requerido' : null}
@@ -115,7 +113,7 @@ export default function Carrito(props) {
                                         </Typography>
                                     </Box>
                                     <Box display="flex" justifyContent="center" flexWrap="wrap">
-                                        <Box p={3}>
+                                        <Box p={2}>
                                             <TextField
                                                 error={!cliente.domicilio && validate}
                                                 helperText={!cliente.domicilio && validate  ? 'Esta campo es requerido' : null}
@@ -129,7 +127,7 @@ export default function Carrito(props) {
                                                 }
                                             />
                                         </Box>
-                                        <Box p={3}>
+                                        <Box p={2}>
                                             <TextField
                                                 error={!cliente.colonia && validate}
                                                 helperText={!cliente.colonia && validate  ? 'Esta campo es requerido' : null}
@@ -143,7 +141,7 @@ export default function Carrito(props) {
                                                 }
                                             />
                                         </Box>
-                                        <Box p={3}>
+                                        <Box p={2}>
                                             <TextField
                                                 error={!cliente.ciudad && validate}
                                                 helperText={!cliente.ciudad && validate  ? 'Esta campo es requerido' : null}
@@ -209,7 +207,7 @@ export default function Carrito(props) {
                                         <Grid lg={5}>
                                             <Box  p={1}>
                                                 <Typography variant="body1">
-                                                    {pedido.platillos.nombre}
+                                                    {pedido.nombre}
                                                 </Typography>
                                             </Box>
                                         </Grid>
@@ -223,7 +221,7 @@ export default function Carrito(props) {
                                         <Grid lg={2}>
                                             <Box  p={1}>
                                                 <Typography variant="body1">
-                                                    ${pedido.platillos.precio}
+                                                    ${formatoMexico(pedido.precio)}
                                                 </Typography>
                                             </Box>
                                         </Grid>
@@ -231,7 +229,7 @@ export default function Carrito(props) {
                                         <Grid lg={3}>
                                             <Box  p={1}>
                                                 <Typography variant="body1">
-                                                    ${pedido.platillos.precio * pedido.cantidad}
+                                                    ${pedido.precio * pedido.cantidad}
                                                 </Typography>
                                             </Box>
                                         </Grid>
@@ -242,7 +240,7 @@ export default function Carrito(props) {
                         <Grid lg={10}>
                             <Box p={2} display="flex" justifyContent="flex-end">
                                 <Typography variant="h5">
-                                TOTAL:  ${total}
+                                TOTAL:  ${formatoMexico(total)}
                                 </Typography>
                             </Box>
                         </Grid>
