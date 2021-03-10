@@ -37,7 +37,7 @@ function Navegacion(props) {
 	}
 
 	const idMenu = props.location.pathname;
-	// console.log(props.match);
+	console.log(props.location.pathname);
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -58,9 +58,9 @@ function Navegacion(props) {
 
 	const obtenerBusqueda = async () => {
 		await clienteAxios
-			.post(`/product/search/company${idMenu}`, {filter: busqueda})
+			.post(`/product/search/company${idMenu}`, {filter: "camarones"})
 			.then((res) => {
-				console.log(res.data);
+				console.log(res);
 				console.log("si jalo la cosa");
 			})
 			.catch((err) => {
@@ -99,28 +99,6 @@ function Navegacion(props) {
 						<Typography className={classes.title} variant="h6" noWrap>
 							Mi Menú Online
 						</Typography>
-						<div className={classes.search}>
-							<InputBase
-								id="busqueda"
-								placeholder="Busca tu platillo..."
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput
-								}}
-								inputProps={{ 'aria-label': 'search' }}
-								onChange={(e) =>
-									setBusqueda({ ...busqueda, busqueda: e.target.value })
-								}
-							/>
-							<div className={classes.grow} />
-							<IconButton 
-								onClick={() => {
-									props.history.push(`/searching${idMenu}/${busqueda}`)
-								}}
-								size="small" color="inherit">
-								<SearchIcon />
-							</IconButton>
-						</div>
 						<div className={classes.grow} />
 						<Hidden smDown>
 							<Button color="inherit" component={Link} to="/" className={classes.marginButton}>
@@ -181,7 +159,7 @@ function Navegacion(props) {
 						<div />
 					)}
 					<List>
-						<ListItem button component={Link} to="/" >
+						<ListItem button component={Link} to={`${idMenu}`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>

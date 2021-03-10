@@ -29,7 +29,6 @@ export default function Editar_User(props) {
 	const token = localStorage.getItem('token');
 
 	const classes = useStyles();
-    // console.log(editar);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,11 +37,20 @@ export default function Editar_User(props) {
     const handleClose = (value) => {
         setOpen(false);
     };
+    
+    console.log(datosEmpresa);
+    
+    const array = {
+        "nameCompany": datosEmpresa.nameCompany,
+        "owner": datosEmpresa.owner,
+        "phone": datosEmpresa.phone,
+    }
 
     const editarDatos = async () => {
 	    setLoading(true);
         await clienteAxios
-			.put(`/company/${datosEmpresa._id}`, {
+			.put(`/company/${datosEmpresa._id}`, array, 
+            {
 				headers: {
 					Authorization: `bearer ${token}`
 				}
@@ -68,6 +76,8 @@ export default function Editar_User(props) {
 			});
     }
 
+    console.log(editar);
+
     return (
         <div>
             <MessageSnackbar
@@ -90,60 +100,42 @@ export default function Editar_User(props) {
                             <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.nameCompany}
-                                    // value={monstrarInformacion.nombreCompania}
                                     className={classes.text}
-                                    id="nombreCompania"
+                                    id="nameCompany"
                                     label="Nombre de Compania"
                                     placeholder="Nombre de Compania"
                                     multiline
                                     variant="outlined"
                                     onChange={(e) =>
-                                        setEditar({ ...editar, nombreCompania: e.value })
+                                        setDatosEmpresa({ ...datosEmpresa, nameCompany: e.target.value })
                                     }
                                 />
                             </Box>
                             <Box p={2}>
                                 <TextField
-                                    // value={datosEmpresa.owner ? datosEmpresa.owner : ''}
                                     defaultValue={datosEmpresa.owner}
                                     className={classes.text}
-                                    id="propietario"
+                                    id="owner"
                                     label="Propietario"
                                     placeholder="Propietario"
                                     multiline
                                     variant="outlined"
                                     onChange={(e) =>
-                                        setEditar({ ...editar, nombreCompania: e.target.value })
+                                        setDatosEmpresa({ ...datosEmpresa, owner: e.target.value })
                                     }
                                 />
                             </Box>
                             <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.phone}
-                                    // value={datosEmpresa.phone ? datosEmpresa.phone : ''}
                                     className={classes.text}
-                                    id="telefono"
+                                    id="phone"
                                     label="Telefono"
                                     placeholder="Telefono"
                                     multiline
                                     variant="outlined"
                                     onChange={(e) =>
-                                        setEditar({ ...editar, nombreCompania: e.target.value })
-                                    }
-                                />
-                            </Box>
-                            <Box p={2}>
-                                <TextField
-                                    defaultValue={datosEmpresa.nameUser}
-                                    // value={datosEmpresa.nameUser ? datosEmpresa.nameUser : ''}
-                                    className={classes.text}
-                                    id="nameUser"
-                                    label="Nombre de Usuario"
-                                    placeholder="Nombre de Usuario"
-                                    multiline
-                                    variant="outlined"
-                                    onChange={(e) =>
-                                        setEditar({ ...editar, nombreCompania: e.target.value })
+                                        setDatosEmpresa({ ...datosEmpresa, phone: e.target.value })
                                     }
                                 />
                             </Box>
@@ -152,7 +144,7 @@ export default function Editar_User(props) {
                         <Button
                              variant="contained" 
                              color="primary"
-                            //  onClick={ () => }
+                             onClick={ () => editarDatos()}
                         >
                             Guardar
                         </Button>
@@ -177,6 +169,21 @@ export default function Editar_User(props) {
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        <Box p={2}>
+                            <TextField
+                                // defaultValue={datosEmpresa.phone}
+                                // value={datosEmpresa.phone ? datosEmpresa.phone : ''}
+                                // className={classes.text}
+                                id="constrasena"
+                                label="Actual Contrasena"
+                                placeholder="Actual Contrasena"
+                                multiline
+                                variant="outlined"
+                                onChange={(e) =>
+                                    setPassword({ ...password, constrasena: e.target.value })
+                                }
+                            />
+                        </Box>
                         <Box p={2}>
                             <TextField
                                 // defaultValue={datosEmpresa.phone}

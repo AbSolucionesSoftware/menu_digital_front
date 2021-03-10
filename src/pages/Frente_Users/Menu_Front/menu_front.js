@@ -33,9 +33,9 @@ export default function Menu_Front(props) {
 		consultarDatos();
 	}, [])
 
-    const render = empresas.map(empresa => {
+    const render = empresas.map((empresa ,index) => {
         return(
-			<div> 
+			<div key={index}> 
 				<Spin loading={loading} />
 				<Box>
 					<Banner empresa={empresa} />

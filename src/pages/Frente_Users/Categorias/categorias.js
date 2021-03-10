@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Box, Card, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Card, ClickAwayListener, Container, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Menu, MenuItem, MenuList, Paper, Typography, withStyles } from '@material-ui/core'
 import LastPageIcon from '@material-ui/icons/LastPage';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
@@ -9,12 +9,43 @@ import clienteAxios from '../../../config/axios';
 import { PlayCircleFilledWhiteRounded } from '@material-ui/icons';
 import { withRouter } from 'react-router';
 
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      {...props}
+    />
+  ));
+
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
+
 function Categorias(props) {
     const {empresa} = props;
+    const [open, setOpen] = useState(false);
     const [categorias , setCategorias] = useState([]);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState([]);
     const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState([]);
-    const classes = useStyles();
     // console.log(empresa._id);
 
     const consultarCates = async () => {
@@ -32,24 +63,11 @@ function Categorias(props) {
 		consultarCates();
 	}, [])
 
+ 
     const render = categorias.map((categoria, index) => {
         return(
-            <Grid className={classes.paper} lg={3} md={6} xs={12}>
-                <Card key={index} className={classes.root}
-                    onClick={() => {
-                        props.history.push(`/subCategorias/${categoria.categoria}/`)
-                        setCategoriaSeleccionada(categoria);
-                    }}
-                >
-                    <Box display="flex" justifyContent="center" alignItems="center" p={2} >
-                        <RestaurantMenuIcon className={classes.large}/>
-                        <Typography variant="h5">
-                            {categoria.categoria}
-                        </Typography>
-                    </Box>
-                </Card>
-            </Grid>
-        );
+            <Lista key={index} categoria={categoria}/>
+        )
     })
 
     return (
@@ -62,6 +80,64 @@ function Categorias(props) {
         </div>
     )
 }
+ 
 
 export default withRouter(Categorias);
+
+function Lista({categoria}) {
+    const [ancho, setAncho] = useState(null);
+    const classes = useStyles();
+
+    const handleClick = (event) => {
+        setAncho(event.currentTarget);
+    };
+    
+    const handleClose = () => {
+        setAncho(null);
+    };
+
+    return(
+        <Grid className={classes.paper} lg={3} md={6} xs={12}>
+            <Button
+                className={classes.root}
+                aria-controls="customized-menu"
+                aria-haspopup="true"
+                variant="contained"
+                color="primary"
+                onClick={(e) => {
+                    handleClick(e)
+                }}
+            >
+                <Box p={2}>
+                    <RestaurantMenuIcon className={classes.large}/>
+                </Box>
+                <Typography variant="h6">
+                    {categoria.categoria}
+                </Typography>
+            </Button>
+
+            <StyledMenu
+                id={categoria.categoria}
+                anchorEl={ancho}
+                keepMounted
+                open={Boolean(ancho)}
+                onClose={handleClose}
+            >
+                {
+                    categoria.subCategoria.map((sub) => {
+                        return(
+                            <StyledMenuItem id={sub._id}>
+                                <ListItemText className={classes.subCate} >
+                                    <Typography variant="h6">
+                                        {sub._id}
+                                    </Typography>
+                                </ListItemText>
+                            </StyledMenuItem>
+                        )
+                    })
+                }
+            </StyledMenu>
+        </Grid>
+    )
+}
 

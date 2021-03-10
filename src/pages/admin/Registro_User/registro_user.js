@@ -31,7 +31,7 @@ export default function Registro_User(props) {
     const token = localStorage.getItem('token')
 
 	const classes = useStyles();
-    const [ registro, setRegistro] = useState([]); 
+    const [ registro, setRegistro] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
@@ -84,6 +84,7 @@ export default function Registro_User(props) {
                 }
           });
     }
+    console.log(registro);
 
     return (
         <div>

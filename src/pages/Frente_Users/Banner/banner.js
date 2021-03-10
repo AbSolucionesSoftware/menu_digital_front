@@ -27,9 +27,9 @@ export default function Banner(props) {
         traerBanner(); 
     }, [])
 
-    const render = banners.map(banner => {
+    const render = banners.map((banner, index) => {
         return(
-            <Element prefixCls="banner-user-elem" >
+            <Element key={index} prefixCls="banner-user-elem" >
                 <BgElement
                     key="bg"
                     className="bg banner-elemento"

@@ -49,7 +49,7 @@ export default function Panel_Admin(props) {
             </Grid>
             <Grid lg={12}>
                 <Box mt={5} display="flex" justifyContent="center">
-                    <Cards_Restaurate empresas={empresas} />
+                    <Cards_Restaurate empresas={empresas} setEmpresas={setEmpresas} />
                 </Box>
             </Grid>
         </div>

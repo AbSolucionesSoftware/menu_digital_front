@@ -17,7 +17,6 @@ import './styles.scss';
 export default function Cards_Platos(props) {
 	const {productos} = props;
 	const classes = useStyles();
-	
 	const [open, setOpen] = useState(false);
 	
 	const [agregarProducto, setagregarProducto] = useState({})
@@ -32,8 +31,8 @@ export default function Cards_Platos(props) {
 
 	const render = productos.map((producto, index) => {
 		return (
-			<Grid item lg={5} className={classes.paper}>
-            	<Card key={index} className={classes.root}> 
+			<Grid key={index} item lg={5} className={classes.paper}>
+            	<Card className={classes.root}> 
                		<Box display="flex" flexWrap="wrap">
 						<Grid item lg={5} xs={12}>
 							<Hidden mdUp>
