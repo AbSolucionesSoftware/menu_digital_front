@@ -1,5 +1,5 @@
-import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography,} from '@material-ui/core'
-import { Link } from 'react-router-dom';
+import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography, Dialog, Box, TextField,} from '@material-ui/core'
+import { Link, withRouter } from 'react-router-dom';
 import Sesion from '../Verificacion_sesion/verificacion_sesion';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 
 const drawerWidth = 240;
 
-
+ 
 export default function Navegacion_User(props) {
 	const { window } = props;
 	const [ open, setOpen ] = useState(false);
@@ -38,15 +38,25 @@ export default function Navegacion_User(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+
+	const [openDialog, setOpenDialog] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpenDialog(true);
+    };
+
+    const handleClose = () => {
+        setOpenDialog(false);
+    };
     
 
 	const classes = useStyles();
 
-	const container = window !== undefined ? () => window().document.body : undefined;
+	// const container = window !== undefined ? () => window().document.body : undefined;
 	const handleDrawerToggle = () => {
 		setOpen(!open);
 	};
-
+	
     return (
 		<div>
 			{/* Panel de responsivo */}
@@ -82,6 +92,12 @@ export default function Navegacion_User(props) {
 								Ver mi menu digital
 							</Typography>
 						</ListItem>
+						<ListItem button onClick="">
+							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Compartir Menu
+							</Typography>
+						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
@@ -95,11 +111,12 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem 
-							button 
+							button
 							component={Link} 
-							to="/"
+							to={`${company._id}/${company.slug}`}
 							onClick={() => {
 								localStorage.removeItem('token');
+								localStorage.removeItem('carritoUsuario');
 								localStorage.removeItem('user');
 							}}
 						>
@@ -139,10 +156,16 @@ export default function Navegacion_User(props) {
 								Panel User
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company._id}`}>
+						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menu digital
+							</Typography>
+						</ListItem>
+						<ListItem button onClick={handleClickOpen}>
+							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Compartir Menu
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
@@ -160,10 +183,11 @@ export default function Navegacion_User(props) {
 						<ListItem 
 							button 
 							component={Link} 
-							to="/"
+							to={`${company._id}/${company.slug}`}
 							onClick={() => {
 								localStorage.removeItem('token');
 								localStorage.removeItem('user');
+								localStorage.removeItem('carritoUsuario');
 							}}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
@@ -186,6 +210,29 @@ export default function Navegacion_User(props) {
 					<MenuIcon />
 				</IconButton>
 			</Hidden>
+
+			<Dialog open={openDialog} onClose={handleClose}>
+				<Box p={5} textAlign="center">
+					<Box p={1}>
+						<Typography variant="h6">
+							Comparte este enlace para poder compartir tu Menu!
+						</Typography>
+					</Box>
+					<Box textAlign="center" p={2}>
+						<TextField
+							style={{width: '100%'}}
+							value={`http://localhost:3000/${company._id}/${company.slug}`}
+							name="Link"
+							id="link"
+							label="Link"
+						>
+						</TextField>
+					</Box>
+				</Box>
+            </Dialog>
 	</div>
     )
 }
+
+
+

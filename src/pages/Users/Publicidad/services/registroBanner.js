@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Typography } from '@material-ui/core'
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import useStyles from '../styles';
 import { ImageContext } from '../../../../context/curso_context';
 
@@ -11,22 +11,38 @@ import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 
 
 export default function RegistroBanner( props ) {
-	const {handleDrawerClose, banners} = props;
+	const {handleDrawerClose, editarBanner} = props;
 
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
-	
-	const { datos, setDatos, update, setUpdate, preview, setPreview } = useContext(ImageContext);
+	const [ preview, setPreview ] = useState('');
+	const [ datos, setDatos] = useState([]);
+	const {  update, setUpdate} = useContext(ImageContext);
+	const [ control, setControl ] = useState(false);
 	const [ loading, setLoading ] = useState(false);
 
 	const classes = useStyles();
+
+	useEffect(() => {
+		if (editarBanner) {
+			setControl(true);
+			setPreview(editarBanner.imagenBannerUrl);
+			setDatos({
+				...datos,
+				imagen: editarBanner.imagenBannerUrl
+			});
+		}else{
+			setControl(false);
+		}
+	}, [])
+
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
 		mensaje: '',
 		status: ''
 	});
 
-    const onDrop = useCallback(
+	const onDrop = useCallback(
 		(files) => {
 			setPreview(URL.createObjectURL(files[0]));
 			setDatos({
@@ -40,53 +56,84 @@ export default function RegistroBanner( props ) {
 
     const subirImagen = async () => {
 		
-		if (!datos.imagen || !preview) {
-			return;
-		} else if (preview && preview.includes('https')) {
-			return;
-		}
-		const formData = new FormData();
+		if (control === false) {
+			
+			if (!datos.imagen || !preview) {
+				return;
+			} else if (preview && preview.includes('https')) {
+				return;
+			}
 
-        formData.append("company", company._id); 
-		formData.append("imagen", datos.imagen);
+			const formData = new FormData();
+			formData.append("company", company._id); 
+			formData.append("imagen", datos.imagen);
 
-
-
-		setLoading(true);
-		await clienteAxios
-			.post(`/banner/`, formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-					Authorization: `bearer ${token}`
-				}
-			})
-			.then((res) => {
-				setLoading(false);
-				handleDrawerClose();
-				setSnackbar({
-					open: true,
-					mensaje: 'Banner registrado exitosamente!',
-					status: 'success'
-				});
-				setLoading(false);
-				setUpdate(!update);
-			})
-			.catch((err) => {
-				setLoading(false);
-				if (err.response) {
+			setLoading(true);
+			await clienteAxios
+				.post(`/banner/`, formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						Authorization: `bearer ${token}`
+					}
+				})
+				.then((res) => {
+					setLoading(false);
 					setSnackbar({
 						open: true,
-						mensaje: err.response.data.message,
-						status: 'error'
+						mensaje: 'Banner registrado exitosamente!',
+						status: 'success'
 					});
-				} else {
+					setLoading(false);
+					setUpdate(!update);
+				})
+				.catch((err) => {
+					setLoading(false);
 					setSnackbar({
 						open: true,
 						mensaje: 'Al parecer no se a podido conectar al servidor.',
 						status: 'error'
 					});
-				}
-			});
+				});
+		}else{
+
+			if (!datos.imagen || !preview) {
+				return;
+			} else if (preview && preview.includes('https')) {
+				return;
+			}
+			const formData = new FormData();
+
+			// formData.append("company", company._id); 
+			formData.append("imagen", datos.imagen);
+
+			setLoading(true);
+			await clienteAxios
+				.put(`/banner/${editarBanner._id}`, formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						Authorization: `bearer ${token}`
+					}
+				})
+				.then((res) => {
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: 'Banner registrado exitosamente!',
+						status: 'success'
+					});
+					setLoading(false);
+					setUpdate(!update);
+				})
+				.catch((err) => {
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: 'Al parecer no se a podido conectar al servidor.',
+						status: 'error'
+					});
+				});
+		}
+		
 	};
 
     return (
@@ -148,7 +195,7 @@ export default function RegistroBanner( props ) {
                             size="large"
                             onClick={() => subirImagen()}
                         >
-                            Registrar
+							{control === false ? "Registrar" : "Actualizar"}
                         </Button>
                     </Box>
                 </Grid>

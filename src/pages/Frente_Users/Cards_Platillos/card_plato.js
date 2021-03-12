@@ -16,6 +16,7 @@ import './styles.scss';
 
 export default function Cards_Platos(props) {
 	const {productos} = props;
+	console.log(productos);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	

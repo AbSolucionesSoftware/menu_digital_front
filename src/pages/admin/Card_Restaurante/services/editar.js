@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Editar(props) {
-    const { empresa } = props;
+    const { empresa, setEmpresas} = props;
     console.log(empresa);
 	const classes = useStyles();
 
@@ -21,14 +21,6 @@ export default function Editar(props) {
 
     const [ open, setOpen ] = useState(false);
     const [ dialog, setDialog] = useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const dialogOpen = () => {
         setDialog(true);
@@ -52,8 +44,6 @@ export default function Editar(props) {
 
     const cambiarPassword = async (empresa) => {
         setLoading(true);
-        console.log(empresa._id);
-        console.log(newPass);
         clienteAxios
         .put(
             `/company/resetPass/${empresa._id}`, newPass,
@@ -64,60 +54,24 @@ export default function Editar(props) {
             }
         )
         .then((res) => {
-            console.log("Si cambio tu contrasena");
+            dialogClose();
+            setLoading(false);
             setSnackbar({
                 open: true,
-                mensaje: 'Contrasena! editada exitosamente!',
+                mensaje: 'Contraseña editada exitosamente!',
                 status: 'success'
             });
 
         }).catch((err) => {
-            console.log("No cambio tu contrasena");
-            console.log(err.response);
+            setLoading(false);
             setSnackbar({
                 open: true,
-                mensaje: 'No se pudo actualizar su contrasena!',
+                mensaje: err.response.data.message,
                 status: 'error'
             });
 
         });
     };
-    console.log(newPass);
-
-    // const array = {
-    //     "nameCompany": empresa.nameCompany,
-    //     "owner": empresa.owner,
-    //     "phone": empresa.phone,
-    // }
-
-    // const editarDatos = async (empresa) => {
-	//     setLoading(true);
-    //     await clienteAxios
-	// 		.put(`/company/${empresa._id}`, array, 
-    //         {
-	// 			headers: {
-	// 				Authorization: `bearer ${token}`
-	// 			}
-	// 		})
-	// 		.then((res) => {
-    //             setLoading(false);
-    //             console.log(" si edito ");
-    //             setSnackbar({
-	// 				open: true,
-	// 				mensaje: 'Usuario editado exitosamente!',
-	// 				status: 'success'
-	// 			});
-	// 		})
-	// 		.catch((err) => {
-    //             setLoading(false);
-    //             console.log(" no edito ");
-    //             setSnackbar({
-    //                 open: true,
-    //                 mensaje: 'Al parecer no se a podido conectar al servidor.',
-    //                 status: 'error'
-    //             });
-	// 		});
-    // }
 
     return (
         <div>
@@ -132,114 +86,32 @@ export default function Editar(props) {
                 variant="contained" 
                 color="primary"
                 type="Link"
-                onClick={handleClickOpen}
+                onClick={dialogOpen}
             >
-                Editar
+                Editar Contraseña
             </Button>
 
-            <Drawer
-                anchor="right"
-                open={open}
-                onClose={handleClose}
-            >
+            <Dialog open={dialog} onClose={dialogClose}>
                 <Grid container>
                 <Grid item lg={12}>
-                    <Box textAlign="center" p={5}>
+                    <Box textAlign="center" p={2}>
                         <Typography variant="h4">
-                            Editar Datos
+                            Editar Contraseña
                         </Typography>
                     </Box>
                 </Grid>
                 <Grid lg={12}>
-                    <Box mt={5} textAlign="center">
-                            <Box p={2}>
-                                <TextField
-                                    defaultValue={empresa.nameCompany}
-                                    className={classes.text}
-                                    id="nameCompany"
-                                    label="Nombre de Compania"
-                                    placeholder="Nombre de Compania"
-                                    multiline
-                                    variant="outlined"
-                                    // onChange={(e) =>
-                                    //     setEmpresas({ ...empresa, nameCompany: e.target.value })
-                                    // }
-                                />
-                            </Box>
-                            <Box p={2}>
-                                <TextField
-                                    defaultValue={empresa.owner}
-                                    className={classes.text}
-                                    id="owner"
-                                    label="Propietario"
-                                    placeholder="Propietario"
-                                    multiline
-                                    variant="outlined"
-                                    // onChange={(e) =>
-                                    //     setEmpresas({ ...empresa, owner: e.target.value })
-                                    // }
-                                />
-                            </Box>
-                            <Box p={2}>
-                                <TextField
-                                    defaultValue={empresa.phone}
-                                    className={classes.text}
-                                    id="phone"
-                                    label="Telefono"
-                                    placeholder="Telefono"
-                                    multiline
-                                    variant="outlined"
-                                    // onChange={(e) =>
-                                    //     setEmpresas({ ...empresa, phone: e.target.value })
-                                    // }
-                                />
-                            </Box>
-                    </Box>
-                    <Box display="flex" justifyContent="center" flexWrap="wrap">
-                        <Button
-                             variant="contained" 
-                             color="primary"
-                            //  onClick={() => editarDatos(empresa)}
-                        >
-                            Actualizar
-                        </Button>
-                    </Box>
-                    <Box p={3} textAlign="center">
-                        <Button
-                            variant="contained" 
-                            color="primary"
-                            onClick={dialogOpen}
-                        >
-                            Cambiar Contrasena
-                        </Button>
-                    </Box>
-                    <Box p={3} textAlign="center">
-                        <Button
-                            variant="contained" 
-                            color="primary"
-                            onClick={handleClose}
-                        >
-                            Salir
-                        </Button>
-                    </Box>
-                </Grid>
-            </Grid>
-            </Drawer>
-
-            {/* CAMBIOS DE CONTRASE;A */}
-            <Dialog open={dialog} onClose={dialogClose}>
-                <Grid lg={12}>
-                    <Box p={3}>
+                    <Box textAlign="center" p={2}>
                         <Typography variant="h6">
-                            Por favor ingrese su nueva contrasena
+                            Por favor ingrese su nueva Contraseña
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
                             <TextField
                                 id="password"
-                                label="Nueva Contraena"
-                                placeholder="Nueva Contraena"
+                                label="Nueva Contraseña"
+                                placeholder="Nueva Contraseña"
                                 multiline
                                 variant="outlined"
                                 onChange={(e) =>
@@ -250,8 +122,8 @@ export default function Editar(props) {
                         <Box p={2}>
                             <TextField
                                 id="repeatPassword"
-                                label="Repetir Contraena"
-                                placeholder="Repetir Contraena"
+                                label="Repetir Contraseña"
+                                placeholder="Repetir Contraseña"
                                 multiline
                                 variant="outlined"
                                 onChange={(e) =>
@@ -269,9 +141,20 @@ export default function Editar(props) {
                             Guardar
                         </Button>
                     </Box>
-                    
+                    <Box p={3} textAlign="center">
+                        <Button
+                            variant="contained" 
+                            color="primary"
+                            onClick={dialogClose}
+                        >
+                            Salir
+                        </Button>
+                    </Box>
                 </Grid>
+            </Grid>
             </Dialog>
+
+               
         </div>
     )
 }

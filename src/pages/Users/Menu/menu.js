@@ -12,6 +12,7 @@ export default function Menu() {
 
     const [ productos, setProductos ] = useState([]);
     const [ loading, setLoading ] = useState(false);
+    const [ upload, setUpload ] = useState(false);
 
     const traerProdutos = async () => {
         setLoading(true)
@@ -29,7 +30,8 @@ export default function Menu() {
 
     useEffect(() => {
         traerProdutos(); 
-    }, [])
+    }, [upload])
+    console.log(productos);
 
     const [ open, setOpen ] = useState(false);
 
@@ -66,7 +68,7 @@ export default function Menu() {
                 </Grid>
                 <Grid container>
                     <Grid lg={12}>
-                        <CardPlato productos={productos} />
+                        <CardPlato  setUpload={setUpload} productos={productos} />
                     </Grid>
                 </Grid>
             </Grid>

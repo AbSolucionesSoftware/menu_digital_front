@@ -7,11 +7,12 @@ import useStyles from './styles';
 import {formatoMexico} from '../../../config/reuserFunction'
 
 export default function CardPlato(props) {
-    const {productos} = props;
+    const {productos, setUpload} = props;
 
     const classes = useStyles();
 
     const [ open, setOpen ] = useState(false);
+    const [editarProducto, setEditarProducto] = useState([])
 
     const handleDrawerOpen = () => {
 		setOpen(true);
@@ -60,17 +61,20 @@ export default function CardPlato(props) {
 
                         <Box p={0} display="flex" justifyContent="center">
                             <Box p={1}>
-                                <Button
-                                    variant="contained" 
-                                    color="primary"
-                                    size="medium"
-                                    onClick={handleDrawerOpen}
-                                >
-                                    Editar
-                                </Button>
+                            <Button
+                                variant="contained" 
+                                color="primary"
+                                size="large"
+                                onClick={() => {
+									handleDrawerOpen()
+									setEditarProducto(producto)
+									}}
+                            >
+                                Editar
+                            </Button>
                             </Box>
                             <Box p={1}>
-                                <Eliminar platillo={producto._id}/>
+                                <Eliminar setUpload={setUpload} platillo={producto._id}/>
                             </Box>
                         </Box>
                     </Grid>
@@ -93,7 +97,8 @@ export default function CardPlato(props) {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroProducto />
+                <RegistroProducto productos={productos} editarProducto={editarProducto}/>
+
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

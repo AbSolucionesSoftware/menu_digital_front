@@ -12,6 +12,7 @@ export default function Panel_Admin(props) {
     const [ open, setOpen] = useState(false);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(false);
+    const [ upload, setUpload] = useState(false);
 
 
     const consultarDatos = async () => {
@@ -33,8 +34,10 @@ export default function Panel_Admin(props) {
 
 
     useEffect(() => {
+
 		consultarDatos();
-	}, [])
+
+	}, [upload])
 
 
     return (
@@ -49,7 +52,7 @@ export default function Panel_Admin(props) {
             </Grid>
             <Grid lg={12}>
                 <Box mt={5} display="flex" justifyContent="center">
-                    <Cards_Restaurate empresas={empresas} setEmpresas={setEmpresas} />
+                    <Cards_Restaurate setUpload={setUpload} empresas={empresas} setEmpresas={setEmpresas} />
                 </Box>
             </Grid>
         </div>

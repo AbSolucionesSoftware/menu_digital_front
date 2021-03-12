@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select } from '@material-ui/core'
+import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ImageContext } from '../../../../context/curso_context';
 import clienteAxios from '../../../../config/axios';
@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
     text:{
         width: "100%"
     },
+    select: {
+		width: '100%',
+		margin: '8px 0'
+	},
     image:{
         maxWidth: "100%",
         maxHeight: "100%"
@@ -26,59 +30,56 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 300
     },
     dropZone: {
-    border: 'dashed 2px',
-    borderColor: '#aaaaaa'
+        border: 'dashed 2px',
+        borderColor: '#aaaaaa'
     }
-}))
+}));
+
+const FormStyles = makeStyles((theme) => ({
+	input: {
+		'& .MuiTextField-root': {
+			margin: theme.spacing(1),
+			width: '50%',
+			[theme.breakpoints.down('xs')]: {
+				width: '100%'
+			}
+		}
+	},
+	formControl: {
+		margin: theme.spacing(1),
+		width: '50%',
+		[theme.breakpoints.down('xs')]: {
+			width: '100%'
+		}
+	}
+}));
 
 export default function RegistroProducto(props) {
-    const {productos} = props;
+    const {productos, editarProducto} = props;
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'));
-    
     String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+        return this.charAt(0).toUpperCase() + this.slice(1);
     };
-
 	const classes = useStyles();
-    const { datos, setDatos, update, setUpdate, preview, setPreview } = useContext(ImageContext);
-
-    const [ platillos, setPlatillos] = useState([]);
+    const clasForm = FormStyles();
+    const { update, setUpdate} = useContext(ImageContext);
+    
+    const [ preview, setPreview ] = useState('');
 	const [ loading, setLoading ] = useState(false);
-
-    const [ categorias, setCategorias] = useState([]);
-    const [ categoriasDefault, setCategoriasDefault] = useState([]);
-    const [ subCategoria, setSubCategoria ] = useState([]);
-    const [ subcategoriasDefault, setSubcategoriasDefault ] = useState([]);
-
     const [ buttonCat, setButtonCat ] = useState(true);
+    const [ control, setControl ] = useState(false);
+
+    const [ datos, setDatos] = useState([]);
+    
+    const [ categories, setCategories ] = useState([ { categorie: '', subCategoria: [ { subcategoria: '' } ] } ]);
+
+    const [ subCategorias, setSubCategorias ] = useState([]);
+    const [ platillos, setPlatillos ] = useState([]);
+
+    const [ categoriasDefault, setCategoriasDefault] = useState([]);
+    const [ subcategoriasDefault, setSubcategoriasDefault ] = useState([]);
     const [ item, setItem ] = useState();
-
-    // Valores de Categorias
-    const [ valueSelect, setValueSelect ] = useState();
-    const [ valueSelectSub, setValueSelectSub ] = useState();
-    const [ select, setSelect ] = useState('');
-    const [ selectSub, setSelectSub ] = useState('');
-
-    const onSelect = (value) => {
-		setSelect(value[1]);
-		setValueSelect(value[1]);
-		// if (value) {
-		// 	setDisabled(false);
-		// } else {
-		// 	setDisabled(true);
-		// }
-	};
-
-    const onSelectSub = (value) => {
-		setSelectSub(value[1]);
-		setValueSelectSub(value[1]);
-		// if (value) {
-		// 	setDisabled(false);
-		// } else {
-		// 	setDisabled(true);
-		// }
-	};
 
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
@@ -86,94 +87,158 @@ export default function RegistroProducto(props) {
 		status: ''
 	});
 
+    // Valores de Categorias
+    // const [ valueSelect, setValueSelect ] = useState('');
+	// const [ valueSelectSubCat, setValueSelectSubCat ] = useState('');
+    const [ select, setSelect ] = useState();
+    const [ selectSub, setSelectSub ] = useState();
+    const [ disabled,setDisabled] = useState(false);
+    
+    const onSelect = (e) => {
+        if (e.target.name === 'category') {
+			setPlatillos({
+				...platillos,
+				category: e.target.value
+			});
+			return;
+            
+		}
+	};
+
+    const onSelectSub = (event) => {
+        setSelectSub(event.target.value);
+	};
+
     const onDrop = useCallback(
 		(files) => {
-			setPreview(URL.createObjectURL(files[0]));
-			setDatos({
-				...datos,
-				imagen: files[0]
-			});
+            setPreview(URL.createObjectURL(files[0]));
+            setDatos({
+                ...datos,
+                imagen: files[0]
+            });
 		},
 		[ datos, setDatos, setPreview ]
 	);
+    // console.log(editarProducto);
+    useEffect(() => {
+        if (editarProducto) {
+            setPreview(editarProducto.imagenProductUrl);
+        }
+    }, [])
+
+    // console.log(datos.imagen);
     
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-    // const traerCategorias = async () => {
-    //     await clienteAxios
-	// 		.get(`/product/categories/${company._id}`)
-	// 		.then((res) => {
-    //             setCategorias(res.data);
-	// 		})
-	// 		.catch((err) => {
-    //             // setLoading(false);
-    //             console.log(err);
-    //             console.log("error al traer");
-	// 		});
-    // }
-
-    const agregarPlatilloBD = async () => {
-
-        if (!datos.imagen || !preview) {
-			return;
-		} else if (preview && preview.includes('https')) {
-			return;
-		}
-
-        const formData = new FormData();
-        formData.append("category", categorias);
-        formData.append("subCategory", subCategoria);
-        formData.append("name", platillos.name);
-        formData.append("price", platillos.price);
-        formData.append("description", platillos.description);
-        formData.append("imagen", datos.imagen);
     
-        setLoading(true);
-        await clienteAxios
-			.post(`/product/${company._id}`, formData, {
+    const agregarPlatilloBD = async () => {
+        if (control === true) {
+            
+            const formData = new FormData();
+            formData.append("category", platillos.category);
+            formData.append("subCategory", platillos.subCategory);
+            formData.append("name", platillos.name);
+            formData.append("price", platillos.price);
+            formData.append("description", platillos.description);
+            formData.append("imagen", datos.imagen);
+        
+            setLoading(true);
+            await clienteAxios
+                .post(`/product/${company._id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `bearer ${token}`
+                    }
+                })
+                .then((res) => {
+                    console.log(res);
+                    setLoading(false);
+                    setSnackbar({
+                        open: true,
+                        mensaje: "Producto registrado exitosamente!.",
+                        status: 'success'
+                    });
+                })
+                .catch((err) => {
+                    console.log("No funciona");
+                    setLoading(false);
+                    setSnackbar({
+                        open: true,
+                        mensaje: "Ocurrio un problema con el servidor",
+                        status: 'err'
+                    });
+                });
+        }else{
+            
+            const formData = new FormData();
+            formData.append("category", platillos.category);
+            formData.append("subCategory", platillos.subCategory);
+            formData.append("name", platillos.name);
+            formData.append("price", platillos.price);
+            formData.append("description", platillos.description);
+            if (datos.imagen) {
+                formData.append("imagen", datos.imagen);
+            }
+            console.log(datos.imagen);
+
+            await clienteAxios
+            .put(`/product/edit/${platillos._id}`,formData,  {
                 headers: {
-					'Content-Type': 'multipart/form-data',
-					Authorization: `bearer ${token}`
-				}
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `bearer ${token}`
+                }
             })
-			.then((res) => {
-                setLoading(false);
-				setSnackbar({
-					open: true,
-					mensaje: "Producto registrado exitosamente!.",
-					status: 'success'
-				});
-			})
-			.catch((err) => {
+            .then((res) => {
                 setLoading(false);
                 setSnackbar({
-					open: true,
-					mensaje: "Ocurrio un problema con el servidor",
-					status: 'err'
-				});
-			});
+                    open: true,
+                    mensaje: "Producto editado!.",
+                    status: 'success'
+                });
+            })
+            .catch((err) => {
+                setLoading(false);
+                setSnackbar({
+                    open: true,
+                    mensaje: "Ocurrio un problema con el servidor",
+                    status: 'err'
+                });
+            });
+        }
+
+	}
+
+    const consultarCates = async () => {
+		await clienteAxios
+			.get(`/product/categories/${company._id}`)
+			.then((res) => {
+				setCategories(res.data);
+                // console.log(res);
+			})
+			.catch((err) => {
+                // console.log(err);
+			})
 	}
 
     useEffect(() => {
-        // traerCategorias();
+        consultarCates();
+        if (editarProducto !== undefined) {
+            setControl(false);
+            setPlatillos(editarProducto);
+        }else{
+            setControl(true);
+        }
     }, []);
+
+    //TOMAR CATEGORIAS E INSERTAR UNA NUEVA
 
     const addItemCategoria = () => {
 		setCategoriasDefault([ ...categoriasDefault, {category: item } ]);
-        setCategorias(item);
 		setSelect(item);
-		// setDisabled(false);
-		// setValueSelect(item);
-		// form.resetFields();
 	};
 
     const addItemSubCategoria = () => {
 		setSubcategoriasDefault([ ...subcategoriasDefault, {subcategory: item } ]);
-		// setSelectSub(item);
-        setSubCategoria(item);
-		// setDisabled(false);
-		// setValueSelect(item);
-		// form.resetFields();
+		setSelectSub(item);
 	};
 
     const onCategoriaChange = (e) => {
@@ -192,6 +257,20 @@ export default function RegistroProducto(props) {
 		} else {
 			setButtonCat(true);
 		}
+	};
+
+    const obtenerCampos = (e) => {
+        if (e.target.name === 'category') {
+			setPlatillos({
+				...platillos,
+				subCategory: ''
+			});
+			return;
+		}
+		setPlatillos({
+			...platillos,
+			[e.target.name]: e.target.value
+		});
 	};
 
     return (
@@ -214,7 +293,7 @@ export default function RegistroProducto(props) {
                 <Grid container>
                     <Grid lg={12}>
                         <Box textAlign="center" display="flex" justifyContent="center">
-                            <form className={classes.root} noValidate autoComplete="off">
+                            <form noValidate autoComplete="off">
                                 <Box p={2}>
                                     <Box p={2}>
                                         <TextField
@@ -240,22 +319,24 @@ export default function RegistroProducto(props) {
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
                                         <Select
-                                            native
-                                            value={valueSelect}
-                                            onChange={(e) => onSelect(e)}
+                                            id="categoria"
+									        name="category"
+                                            value={platillos.category ? platillos.category : ''}
+                                            onChange={onSelect}
+                                            renderValue={(value) => value}
                                         >
                                             <option aria-label="None" value="" />
                                             {categoriasDefault && categoriasDefault.length !== 0 ? (
-                                                categoriasDefault.map((item) => (
-                                                    <option key={item.category} value={item.category}>
+                                                categoriasDefault.map((item, index) => (
+                                                    <option key={index} value={item.category}>
                                                         {item.category}
                                                     </option>
                                                 ))
                                             ) : null}
                                             {
-                                                productos.map((item) => (
-                                                    <option key={item.category} value={item.category}>
-                                                        {item.category}
+                                                categories.map((item, index) => (
+                                                    <option key={index} value={item.categoria}>
+                                                        {item.categoria}
                                                     </option>
                                                 ))
                                             }
@@ -287,9 +368,11 @@ export default function RegistroProducto(props) {
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Sub-Categoria</InputLabel>
                                         <Select
-                                            native
-                                            value={valueSelect}
-                                            onChange={(e) => onSelectSub(e)}
+                                            id="subcategoria"
+									        name="subCategory"
+                                            value={platillos.subCategory ? platillos.subCategory : ''}
+										    onChange={obtenerCampos}
+                                            renderValue={(value) => value}
                                         >
                                             <option aria-label="None" value="" />
                                             {subcategoriasDefault && subcategoriasDefault.length !== 0 ? (
@@ -299,13 +382,19 @@ export default function RegistroProducto(props) {
                                                     </option>
                                                 ))
                                             ) : null}
-
                                             {
-                                                productos.map((item) => (
-                                                    <option key={item.subCategory} value={item.subCategory}>
-                                                        {item.subCategory}
-                                                    </option>
-                                                ))
+                                                categories.map((categorias) => {
+                                                    return categorias.subCategoria.map((subCategorias) => {
+                                                        return (
+                                                            <option
+                                                                key={subCategorias._id}
+                                                                value={subCategorias._id}
+                                                            >
+                                                                {subCategorias._id}
+                                                            </option>
+                                                        );
+                                                    });
+                                                })
                                             }
                                         </Select>
                                     </FormControl>
@@ -314,39 +403,39 @@ export default function RegistroProducto(props) {
                                     <TextField
                                         className={classes.text}
                                         id="name"
+                                        name="name"
                                         label="Platillo"
                                         placeholder="Platillo"
+                                        value={platillos.name ? platillos.name : ''}
                                         multiline
                                         variant="outlined"
-                                        onChange={(e) =>
-                                            setPlatillos({ ...platillos, name: e.target.value })
-                                        }
+                                        onChange={obtenerCampos}
                                     />
                                 </Box>
                                 <Box p={2}>
                                     <TextField
                                         className={classes.text}
                                         id="description"
+                                        name="description"
                                         label="Descripcion"
                                         placeholder="Descripcion"
+                                        value={platillos.description ? platillos.description : ''}
                                         multiline
                                         variant="outlined"
-                                        onChange={(e) =>
-                                            setPlatillos({ ...platillos, description: e.target.value })
-                                        }
+                                        onChange={obtenerCampos}
                                     />
                                 </Box>
                                 <Box p={2}>
                                     <TextField
                                         className={classes.text}
                                         id="price"
+                                        name="price"
                                         label="Precio"
                                         placeholder="Precio"
+                                        value={platillos.price ? platillos.price : ''}
                                         multiline
                                         variant="outlined"
-                                        onChange={(e) =>
-                                            setPlatillos({ ...platillos, price: e.target.value })
-                                        }
+                                        onChange={obtenerCampos}
                                     />
                                 </Box>
                                 <Box p={2}>
@@ -359,6 +448,7 @@ export default function RegistroProducto(props) {
                                         justifyContent="center"
                                         alignItems="center"
                                         textAlign="center"
+                                       
                                     >
                                         <input {...getInputProps()} />
                                         {datos.imagen || preview ? (
@@ -386,7 +476,9 @@ export default function RegistroProducto(props) {
                             size="large"
                             onClick={ ()=> agregarPlatilloBD()}
                         >
-                            Registrar
+                            {control === true
+                            ? "Registrar"
+                            : "Actualizar"}
                         </Button>
                     </Box>
                    

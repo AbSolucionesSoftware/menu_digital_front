@@ -42,11 +42,14 @@ export default function Registro_User(props) {
     const array = {
         "nameCompany": registro.nombreCompania,
         "nameUser": registro.nameUser,
+        "slug": registro.slug,
         "owner": registro.propietario,
         "phone": registro.telefono,
         "password": registro.password,
         "repeatPassword": registro.repeatPassword
     }
+
+    
 
     const envianDatos = async () => {
         setLoading(true);
@@ -116,6 +119,7 @@ export default function Registro_User(props) {
 								            value={registro.nombreCompania ? registro.nombreCompania : ''}
                                             className={classes.text}
                                             id="nombreCompania"
+                                            name="nombreCompania"
                                             label="Nombre de Compania"
                                             placeholder="Nombre de Compania"
                                             multiline
@@ -150,6 +154,20 @@ export default function Registro_User(props) {
                                             variant="outlined"
                                             onChange={(e) =>
                                                 setRegistro({ ...registro, telefono: e.target.value })
+                                            }
+                                        />
+                                    </Box>
+                                    <Box p={2}>
+                                        <TextField
+								            value={registro.slug ? registro.slug : ''}
+                                            className={classes.text}
+                                            id="slug"
+                                            label="Identificador"
+                                            placeholder="Identificador"
+                                            multiline
+                                            variant="outlined"
+                                            onChange={(e) =>
+                                                setRegistro({ ...registro, slug: e.target.value.replace(' ', '-').toLowerCase() })
                                             }
                                         />
                                     </Box>

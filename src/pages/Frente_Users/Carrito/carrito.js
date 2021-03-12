@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Carrito(props) {
-    const {setOpen} = props;
+    const {setOpen, empresa} = props;
+    console.log(empresa);
     const carrito = JSON.parse(localStorage.getItem('carritoUsuario'));
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
@@ -258,16 +259,19 @@ export default function Carrito(props) {
                                 </Button>
                             ) : cliente.nombre && cliente.telefono && cliente.ciudad && cliente.colonia && cliente.domicilio ? (
                                 <a target="_blank" href={`https://api.whatsapp.com/send?phone=
-                                    ${523173873462}
+                                    ${52 + empresa.phone}
                                     &text=\n
                                     ${mensaje}`} 
                                 >
                                    
                                     <Button
-                                    className={classes.buton}
-                                    variant="contained" 
-                                    color="primary"
-                                    size="large"
+                                        onClick={
+								            localStorage.removeItem('carritoUsuario')
+                                        }
+                                        className={classes.buton}
+                                        variant="contained" 
+                                        color="primary"
+                                        size="large"
                                     >
                                         Realizar Pedido
                                     </Button>

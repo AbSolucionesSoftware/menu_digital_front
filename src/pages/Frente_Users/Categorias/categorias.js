@@ -42,10 +42,8 @@ const StyledMenu = withStyles({
 
 function Categorias(props) {
     const {empresa} = props;
-    const [open, setOpen] = useState(false);
     const [categorias , setCategorias] = useState([]);
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState([]);
-    const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState([]);
+    
     // console.log(empresa._id);
 
     const consultarCates = async () => {
@@ -53,9 +51,10 @@ function Categorias(props) {
 			.get(`/product/categories/${empresa._id}`)
 			.then((res) => {
 				setCategorias(res.data);
+                console.log(res);
 			})
 			.catch((err) => {
-
+                console.log(err);
 			})
 	}
 
@@ -63,10 +62,29 @@ function Categorias(props) {
 		consultarCates();
 	}, [])
 
- 
+    
+    // const buscarProductos = async () => {
+    //     await clienteAxios
+    //         .post(`/product/search/subCategory/`, {subCategory: 'Arrachera', company: empresa._id})
+    //         .then((res) => {
+    //             console.log(res);
+    //             // setCategorias(res.data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err.response);
+    //             console.log("No jalo");
+    //         })
+    // }
+
+    useEffect(() => {
+
+        // buscarProductos()
+        
+    }, [])
+    
     const render = categorias.map((categoria, index) => {
         return(
-            <Lista key={index} categoria={categoria}/>
+            <Lista key={index} empresa={empresa} categoria={categoria} props={props} />
         )
     })
 
@@ -80,11 +98,10 @@ function Categorias(props) {
         </div>
     )
 }
- 
 
-export default withRouter(Categorias);
 
-function Lista({categoria}) {
+
+function Lista({categoria, props, empresa}) {
     const [ancho, setAncho] = useState(null);
     const classes = useStyles();
 
@@ -95,6 +112,9 @@ function Lista({categoria}) {
     const handleClose = () => {
         setAncho(null);
     };
+
+    const tienda =
+        {'tienda': empresa._id, "slug": empresa.slug }
 
     return(
         <Grid className={classes.paper} lg={3} md={6} xs={12}>
@@ -127,11 +147,18 @@ function Lista({categoria}) {
                     categoria.subCategoria.map((sub) => {
                         return(
                             <StyledMenuItem id={sub._id}>
-                                <ListItemText className={classes.subCate} >
-                                    <Typography variant="h6">
-                                        {sub._id}
-                                    </Typography>
-                                </ListItemText>
+                                <ListItem button  
+                                    onClick={() => {
+                                            localStorage.setItem("tienda" , tienda)
+                                            props.history.push(`/${empresa._id}/${empresa.slug}/subCategorias/${sub._id}`)
+                                        }}  
+                                >
+                                    <ListItemText className={classes.subCate} >
+                                        <Typography variant="h6">
+                                            {sub._id}
+                                        </Typography>
+                                    </ListItemText>
+                                </ListItem>
                             </StyledMenuItem>
                         )
                     })
@@ -140,4 +167,7 @@ function Lista({categoria}) {
         </Grid>
     )
 }
+
+export default withRouter(Categorias);
+
 

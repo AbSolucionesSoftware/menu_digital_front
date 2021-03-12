@@ -36,10 +36,11 @@ export default function Banner() {
 	const [ loading, setLoading ] = useState(false);
     const [ banners, setBanners ] = useState([]);
 
+    const [editarBanner, setEditarBanner ] = useState();
     const classes = useStyles();
 
     const [ open, setOpen ] = useState(false);
-	const { update } = useContext(ImageContext);
+	const { update, setUpdate } = useContext(ImageContext);
 
     const handleDrawerOpen = () => {
 		setOpen(true);
@@ -59,13 +60,13 @@ export default function Banner() {
 			})
 			.catch((err) => {
                 setLoading(false);
-                console.log(err);
 			});
     };
 
     useEffect(() => {
         traerBanner(); 
     }, [update])
+
 
     const render = banners.map((banner) => {
         return(
@@ -78,7 +79,10 @@ export default function Banner() {
                                 <Button 
                                     variant="contained" 
                                     color="primary"
-                                    onClick={() => handleDrawerOpen()}
+                                    onClick={() => {
+                                        handleDrawerOpen()
+                                        setEditarBanner(banner)
+                                    }}
                                 >
                                     Editar
                                 </Button>
@@ -111,7 +115,7 @@ export default function Banner() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner close={handleDrawerClose} banner={banners}/>
+                <RegistroBanner editarBanner={editarBanner} handleDrawerClose={handleDrawerClose} />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

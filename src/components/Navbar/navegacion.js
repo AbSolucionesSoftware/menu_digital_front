@@ -3,7 +3,6 @@ import { AppBar, Badge, Button, fade, Hidden, IconButton,
 		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List 
 		} from '@material-ui/core'
 import {useParams, Link, withRouter } from 'react-router-dom';
-// import Sesion from '../Verificacion_sesion/verificacion_sesion';
 import jwt_decode from 'jwt-decode';
 import clienteAxios from '../../config/axios';
 
@@ -26,6 +25,11 @@ function Navegacion(props) {
 	const [ busqueda, setBusqueda ] = useState("");
 
 	const token = localStorage.getItem('token');
+	const company = JSON.parse(localStorage.getItem('user'));
+	
+	const idEmpresa = props.match.params.idMenu;
+	console.log(props.match);
+
 	var decoded = Jwt(token);
 
 	function Jwt(token) {
@@ -37,7 +41,6 @@ function Navegacion(props) {
 	}
 
 	const idMenu = props.location.pathname;
-	console.log(props.location.pathname);
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -60,12 +63,8 @@ function Navegacion(props) {
 		await clienteAxios
 			.post(`/product/search/company${idMenu}`, {filter: "camarones"})
 			.then((res) => {
-				console.log(res);
-				console.log("si jalo la cosa");
 			})
 			.catch((err) => {
-				console.log("No jalo esa mamada");
-				console.log(err.response);
 			})
 	}
 
@@ -101,9 +100,17 @@ function Navegacion(props) {
 						</Typography>
 						<div className={classes.grow} />
 						<Hidden smDown>
-							<Button color="inherit" component={Link} to="/" className={classes.marginButton}>
-								Inicio
-							</Button>
+							{
+								idMenu == "/login" ? (
+									null
+								):(
+									<Button color="inherit" component={Link} to={`/${idMenu}`}   
+									className={classes.marginButton} >
+										Inicio
+									</Button>
+								)
+							}
+							
 							{decoded ? (
 								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
 									<AccountCircleSharpIcon/> Mi cuenta
@@ -111,12 +118,13 @@ function Navegacion(props) {
 							) : (
 								<div />
 							)}
-
-							{decoded ? (
+							{/* {decoded ? (
 								<Button color="inherit" 
-									component={Link} to="/" 
+									component={Link}
+									to={`${company._id}/${company.slug}`}
 									className={classes.marginButton}
 									onClick={() => {
+										localStorage.removeItem('carritoUsuario');
 										localStorage.removeItem('token');
 										localStorage.removeItem('user');
 									}}
@@ -124,11 +132,9 @@ function Navegacion(props) {
 									Cerrar Sesion
 								</Button>
 							) : (
-								<Button color="inherit" component={Link}  to={`${idMenu}/login`} className={classes.marginButton}>
-									<AccountCircleSharpIcon/>
-								</Button>
+								null
 							)
-							}
+							} */}
 						</Hidden>
 					</Toolbar>
 				</AppBar>
@@ -159,7 +165,7 @@ function Navegacion(props) {
 						<div />
 					)}
 					<List>
-						<ListItem button component={Link} to={`${idMenu}`} >
+						<ListItem button component={Link} to={`/${idMenu}`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
@@ -175,6 +181,7 @@ function Navegacion(props) {
 									color="inherit" 
 									component={Link} to="/" 
 									onClick={() => {
+										localStorage.removeItem('carritoUsuario');
 										localStorage.removeItem('token');
 										localStorage.removeItem('user');
 									}}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, TextField, Button, Typography, Grid, Hidden, Divider } from '@material-ui/core';
 import './login.scss';
-import Imagen from '../img/restaurante.jpg'
+import Imagen from '../img/RESTAUTANTE.jpeg'
 
 import clienteAxios from '../../../config/axios';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
@@ -74,14 +74,12 @@ export default function LoginAdmin(props) {
 				console.log(datos);
 				setLoading(false);
 				if (err.response){
-					console.log(err);
 					setSnackbar({
 						open: true,
 						mensaje: err.response.data.message,
 						status: 'error'
 					});
 				} else {
-					console.log(err);
 					setSnackbar({
 						open: true,
 						mensaje: 'Al parecer no se a podido conectar al servidor.',

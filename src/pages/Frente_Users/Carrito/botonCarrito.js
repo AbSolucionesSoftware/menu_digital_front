@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function BotonCarrito(props) {
+    const {empresa} = props;
 	const sesion = Sesion(props, false);
 	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
 
@@ -55,7 +56,7 @@ export default function BotonCarrito(props) {
              )}
 
             <Dialog open={open} onClose={handleClose}>
-                <Carrito setOpen={setOpen}/>
+                <Carrito empresa={empresa} setOpen={setOpen}/>
             </Dialog>
         </div>
     )

@@ -17,6 +17,8 @@ import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
 import BusquedaSubCates from '../pages/Frente_Users/Categorias/busquedaSubCates';
 import ResultadoBusqueda from '../pages/Frente_Users/Busqueda/busqueda';
 
+import Error404 from '../components/error'
+
 const routes = [
 	{
 		path: '/admin',
@@ -32,6 +34,9 @@ const routes = [
 				path: '/admin/registro',
 				component: Registro_User,
 				exact: true,
+			},
+			{
+				component: Error404
 			}
 		]
 	},
@@ -54,6 +59,9 @@ const routes = [
 				path: '/user/publicidad',
 				component: Publicidad,
 				exact: true,
+			},
+			{
+				component: Error404
 			}
 		]
 	},
@@ -64,30 +72,24 @@ const routes = [
 		routes: [
 			
 			{
-				path: '/:idMenu',
+				path: '/:idMenu/:slug',
 				component: Menu_Front,
 				exact: true
 			},
 			{
-				path: '/:idMenu/login',
+				path: '/:idMenu/:slug/subCategorias/:subCategoria',
+				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/login',
 				component: LoginAdmin,
 				exact: true
 			},
 			{
-				path: '/subCategorias/:categoria',
-				component: BusquedaSubCates,
-				exact: true
-			},
-			{
-				path: '/productos/:subCategory',
-				component: BusquedaSubCates,
-				exact: true
-			},
-			{
-				path: '/searching/:id/:url',
-				component: ResultadoBusqueda,
-				exact: true
-			},
+				component: Error404
+			}
+			
 		]
 	}
 ];

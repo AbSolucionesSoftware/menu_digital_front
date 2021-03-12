@@ -146,7 +146,7 @@ export default function Navegacion_Admin(props) {
 						<ListItem 
 							button 
 							component={Link} 
-							to="/"
+							to="/login"
 							onClick={() => {
 								localStorage.removeItem('token');
 								localStorage.removeItem('user');

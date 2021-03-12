@@ -2,6 +2,7 @@ import { Box, Grid, Hidden, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {useParams} from 'react-router-dom'
+import No_Page from '../../../components/noPage'
 
 import BotonCarrito from '../Carrito/botonCarrito'
 import Banner from '../Banner/banner';
@@ -34,40 +35,44 @@ export default function Menu_Front(props) {
 	}, [])
 
     const render = empresas.map((empresa ,index) => {
-        return(
-			<div key={index}> 
-				<Spin loading={loading} />
-				<Box>
-					<Banner empresa={empresa} />
-				</Box>
-
-				<Grid lg={12}>
-					<Box mt={5} textAlign="center">
-						<Typography variant="h4">
-							{empresa.nameCompany}
-						</Typography>
+		if (empresa.public === true) {
+			return(
+				<div key={index}> 
+					<Spin loading={loading} />
+					<Box>
+						<Banner empresa={empresa} />
 					</Box>
-				</Grid>
 
-				<Box mt={4}> 	
-					<Categorias empresa={empresa}/>
-				</Box>
+					<Grid lg={12}>
+						<Box mt={5} textAlign="center">
+							<Typography variant="h4">
+								{empresa.nameCompany}
+							</Typography>
+						</Box>
+					</Grid>
 
-				{/* <Hidden smDown> */}
-					<Box mt={5}> 	
-						<Consulta_platillos empresa={empresa} />
+					<Box mt={4}> 	
+						<Categorias empresa={empresa}/>
 					</Box>
-				{/* </Hidden> */}
-				<BotonCarrito />
-			</div>
-        );
+
+					<Hidden smDown>
+						<Box mt={5}> 	
+							<Consulta_platillos empresa={empresa} />
+						</Box>
+					</Hidden>
+					<BotonCarrito empresa={empresa}/>
+				</div>
+			);
+		}else{
+			return(
+				<No_Page/>
+			);
+		}
     })
 
 	return (
-		
         <div>
             {render}
         </div>
-		
 	);
 }

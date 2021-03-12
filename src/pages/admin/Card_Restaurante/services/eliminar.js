@@ -6,7 +6,7 @@ import clienteAxios from '../../../../config/axios';
 
 
 export default function Eliminar(props){
-	const { empresa } = props;
+	const { empresa, setUpload } = props;
 	const token = localStorage.getItem('token');
 
 	const [ loading, setLoading ] = useState(false);
@@ -39,6 +39,7 @@ export default function Eliminar(props){
 			}
 			)
 			.then((res) => {
+				setUpload(true);
 				setLoading(false);
 				setResourceDel({open: false, resource: ''});
 				setSnackbar({
@@ -48,6 +49,7 @@ export default function Eliminar(props){
 				});
 			})
 			.catch((err) => {
+				setUpload(true);
 				setLoading(false);
 				setSnackbar({
 					open: true,

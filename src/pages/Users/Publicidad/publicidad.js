@@ -24,7 +24,6 @@ export default function Publicidad() {
     
     return (
         <div>
-            {/* <Grid container> */}
                 <Grid item lg={12}>
                     <Box textAlign="center">
                         <Typography variant="h4">
@@ -51,10 +50,8 @@ export default function Publicidad() {
                 <Grid item lg={12}>
                     <Banner />
                 </Grid>
-            {/* </Grid> */}
 
             <Drawer
-                // className={classes.drawer}
                 anchor="right"
                 open={open}
                 onClose={handleDrawerClose}

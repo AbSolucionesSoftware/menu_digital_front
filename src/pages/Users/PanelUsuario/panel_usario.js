@@ -25,7 +25,6 @@ export default function PanelUser() {
 			})
 			.catch((err) => {
                 setLoading(false);
-                console.log(err.response);
 			});
     }
 
@@ -64,6 +63,11 @@ export default function PanelUser() {
                             {datosEmpresa.nameCompany}
                         </Typography>
                     </Box>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
+                        <Typography variant="h6">
+                            Usuario:  {datosEmpresa.nameUser}
+                        </Typography>
+                    </Box>
                 </Grid>
                 <Grid lg={12}>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
@@ -82,11 +86,7 @@ export default function PanelUser() {
                                 Telefono:  {datosEmpresa.phone}
                             </Typography>
                         </Box>
-                        <Box p={3}>
-                            <Typography variant="h6">
-                                Usuario:  {datosEmpresa.nameUser}
-                            </Typography>
-                        </Box>
+                        
                     </Box>
                 </Grid>
                 <Grid lg={12} >

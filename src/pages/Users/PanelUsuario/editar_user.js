@@ -13,12 +13,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Editar_User(props) {
     const {datosEmpresa, setDatosEmpresa} = props;
+    console.log(datosEmpresa);
 	const [ control, setControl ] = useState(false);
     const [editar, setEditar] = useState([]);
     const [open, setOpen] = useState(false);
 	const [ loading, setLoading ] = useState(false);
 
-    const [password, setPassword] = useState([]); 
+    const [contrasena, setContrasena] = useState([]); 
 
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
@@ -34,15 +35,14 @@ export default function Editar_User(props) {
         setOpen(true);
     };
 
-    const handleClose = (value) => {
+    const handleClose = () => {
         setOpen(false);
     };
-    
-    console.log(datosEmpresa);
     
     const array = {
         "nameCompany": datosEmpresa.nameCompany,
         "owner": datosEmpresa.owner,
+        "slug": datosEmpresa.slug,
         "phone": datosEmpresa.phone,
     }
 
@@ -58,7 +58,6 @@ export default function Editar_User(props) {
 			.then((res) => {
                 setLoading(false);
                 // setDatosEmpresa(res.data)
-                console.log(" si edito ");
                 setSnackbar({
 					open: true,
 					mensaje: 'Usuario editado exitosamente!',
@@ -67,7 +66,6 @@ export default function Editar_User(props) {
 			})
 			.catch((err) => {
                 setLoading(false);
-                console.log(" no edito ");
                 setSnackbar({
                     open: true,
                     mensaje: 'Al parecer no se a podido conectar al servidor.',
@@ -76,7 +74,43 @@ export default function Editar_User(props) {
 			});
     }
 
-    console.log(editar);
+    const newPass = { 
+        "currentPassword": contrasena.currentPassword,
+        "password": contrasena.password,
+        "repeatPassword" : contrasena.repeatPassword
+    }
+
+    const cambiarPassword = async (empresa) => {
+        setLoading(true);
+        clienteAxios
+        .put(
+            `/company/resetPass/user/${empresa._id}`, newPass,
+            {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            }
+        )
+        .then((res) => {
+            setLoading(false);
+            handleClose()
+            setSnackbar({
+                open: true,
+                mensaje: 'Contraseña editada exitosamente!',
+                status: 'success'
+            });
+
+        }).catch((err) => {
+            setLoading(false);
+            setSnackbar({
+                open: true,
+                mensaje: err.response.data.message,
+                status: 'error'
+            });
+
+        });
+    };
+
 
     return (
         <div>
@@ -108,6 +142,20 @@ export default function Editar_User(props) {
                                     variant="outlined"
                                     onChange={(e) =>
                                         setDatosEmpresa({ ...datosEmpresa, nameCompany: e.target.value })
+                                    }
+                                />
+                            </Box>
+                            <Box p={2}>
+                                <TextField
+                                    defaultValue={datosEmpresa.slug}
+                                    className={classes.text}
+                                    id="slug"
+                                    label="Identificador"
+                                    placeholder="Identificador"
+                                    multiline
+                                    variant="outlined"
+                                    onChange={(e) =>
+                                        setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase() })
                                     }
                                 />
                             </Box>
@@ -155,7 +203,7 @@ export default function Editar_User(props) {
                             color="primary"
                             onClick={handleClickOpen}
                         >
-                            Cambiar Contrasena
+                            Cambiar Contraseña
                         </Button>
                     </Box>
                 </Grid>
@@ -171,31 +219,37 @@ export default function Editar_User(props) {
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
                             <TextField
-                                // defaultValue={datosEmpresa.phone}
-                                // value={datosEmpresa.phone ? datosEmpresa.phone : ''}
-                                // className={classes.text}
-                                id="constrasena"
-                                label="Actual Contrasena"
-                                placeholder="Actual Contrasena"
+                                id="currentPassword"
+                                label="Contraseña Actual"
+                                placeholder="Contraseña Actual"
                                 multiline
                                 variant="outlined"
                                 onChange={(e) =>
-                                    setPassword({ ...password, constrasena: e.target.value })
+                                    setContrasena({ ...contrasena, currentPassword: e.target.value })
                                 }
                             />
                         </Box>
                         <Box p={2}>
                             <TextField
-                                // defaultValue={datosEmpresa.phone}
-                                // value={datosEmpresa.phone ? datosEmpresa.phone : ''}
-                                // className={classes.text}
-                                id="constrasena"
-                                label="Nueva Contraena"
-                                placeholder="Nueva Contraena"
+                                id="password"
+                                label="Nueva Contraeña"
+                                placeholder="Nueva Contraseña"
                                 multiline
                                 variant="outlined"
                                 onChange={(e) =>
-                                    setPassword({ ...password, constrasena: e.target.value })
+                                    setContrasena({ ...contrasena, password: e.target.value })
+                                }
+                            />
+                        </Box>
+                        <Box p={2}>
+                            <TextField
+                                id="repeatPassword"
+                                label="Repetir Contrasena"
+                                placeholder="Repetir Contrasena"
+                                multiline
+                                variant="outlined"
+                                onChange={(e) =>
+                                    setContrasena({ ...contrasena, repeatPassword: e.target.value })
                                 }
                             />
                         </Box>
@@ -205,7 +259,7 @@ export default function Editar_User(props) {
                         <Button
                             variant="contained" 
                             color="primary"
-                            //  onClick={ () => }
+                             onClick={ () => cambiarPassword(datosEmpresa)}
                         >
                             Guardar
                         </Button>
