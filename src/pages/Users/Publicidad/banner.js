@@ -88,7 +88,7 @@ export default function Banner() {
                                 </Button>
                             </Box>
                             <Box p={1} display="flex" justifyContent="center">
-                                <Eliminar banner={banner._id} />
+                                <Eliminar  banner={banner._id} />
                             </Box>
 
                         </Box>
@@ -115,7 +115,7 @@ export default function Banner() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner editarBanner={editarBanner} handleDrawerClose={handleDrawerClose} />
+                <RegistroBanner editarBanner={editarBanner}  />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

@@ -8,7 +8,7 @@ export const MenuProvider = ({ children }) => {
   const [reloadFilter, setReloadFilter] = useState(true);
 
   return (
-    <MenuContext.Provider value={{active,setActive, loading, setLoading, reloadFilter, setReloadFilter}}>
+    <MenuContext.Provider value={{active, setActive, loading, setLoading, reloadFilter, setReloadFilter}}>
       {children}
     </MenuContext.Provider>
   );

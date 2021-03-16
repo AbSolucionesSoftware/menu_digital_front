@@ -1,6 +1,6 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  
 		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
-		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List 
+		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box 
 		} from '@material-ui/core'
 import {useParams, Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
@@ -12,6 +12,8 @@ import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+import Comody from '../../img/Comody.jpeg'
 
 import { MenuContext } from '../../context/carritoContext';
 import useStyles from './styles';
@@ -26,10 +28,9 @@ function Navegacion(props) {
 
 	const token = localStorage.getItem('token');
 	const company = JSON.parse(localStorage.getItem('user'));
+	const datos = JSON.parse(localStorage.getItem('tienda'));
 	
 	const idEmpresa = props.match.params.idMenu;
-	console.log(props.match);
-
 	var decoded = Jwt(token);
 
 	function Jwt(token) {
@@ -41,7 +42,9 @@ function Navegacion(props) {
 	}
 
 	const idMenu = props.location.pathname;
-
+	console.log(idMenu);
+	const subCategoria = props.match.params;
+	console.log(props.location);
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
@@ -63,8 +66,10 @@ function Navegacion(props) {
 		await clienteAxios
 			.post(`/product/search/company${idMenu}`, {filter: "camarones"})
 			.then((res) => {
+
 			})
 			.catch((err) => {
+				
 			})
 	}
 
@@ -95,21 +100,11 @@ function Navegacion(props) {
 								<MenuIcon />
 							</IconButton>
 						</Hidden>
-						<Typography className={classes.title} variant="h6" noWrap>
-							Mi Menú Online
-						</Typography>
+						<Box className={classes.containerImage}>  
+							<img  className={classes.image} alt="logotipo" src={Comody}/>
+						</Box>
 						<div className={classes.grow} />
 						<Hidden smDown>
-							{
-								idMenu == "/login" ? (
-									null
-								):(
-									<Button color="inherit" component={Link} to={`/${idMenu}`}   
-									className={classes.marginButton} >
-										Inicio
-									</Button>
-								)
-							}
 							
 							{decoded ? (
 								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
@@ -165,7 +160,7 @@ function Navegacion(props) {
 						<div />
 					)}
 					<List>
-						<ListItem button component={Link} to={`/${idMenu}`} >
+						<ListItem button component={Link} to={`/`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
@@ -190,18 +185,7 @@ function Navegacion(props) {
 								</ListItemText>
 							</ListItem>
 							) : (
-								<ListItem 
-									color="inherit" 
-									component={Link} 
-									to="/login"
-								>
-									<ListItemIcon>
-										<AccountCircleSharpIcon/>
-									</ListItemIcon>
-									<ListItemText
-										primary="Iniciar sesion"
-									/>
-								</ListItem>
+								null
 							)
 						}
 					</List>

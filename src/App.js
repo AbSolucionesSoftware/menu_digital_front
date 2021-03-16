@@ -9,7 +9,7 @@ function App() {
 		<div className="App">
 			<Helmet>
 				<meta charSet="utf-8" />
-				<title>Mi menu Online</title>
+				<title>COMODY</title>
 			</Helmet>
 			<Router>
 				<Switch>{routes.map((route, index) => <RoutesWithSubRoutes key={index} {...route} />)}</Switch>

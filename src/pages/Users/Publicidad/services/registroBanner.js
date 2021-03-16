@@ -11,7 +11,7 @@ import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 
 
 export default function RegistroBanner( props ) {
-	const {handleDrawerClose, editarBanner} = props;
+	const { editarBanner} = props;
 
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
@@ -93,6 +93,7 @@ export default function RegistroBanner( props ) {
 						mensaje: 'Al parecer no se a podido conectar al servidor.',
 						status: 'error'
 					});
+					setUpdate(!update);
 				});
 		}else{
 
@@ -131,6 +132,7 @@ export default function RegistroBanner( props ) {
 						mensaje: 'Al parecer no se a podido conectar al servidor.',
 						status: 'error'
 					});
+					setUpdate(!update);
 				});
 		}
 		

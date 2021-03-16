@@ -1,42 +1,64 @@
 import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography, Dialog, Box, TextField,} from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom';
-import Sesion from '../Verificacion_sesion/verificacion_sesion';
+import clienteAxios from '../../config/axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import AddToQueueIcon from '@material-ui/icons/AddToQueue';
+import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
 import useStyles from './styles';
 
-import React, { useState } from 'react';
+import comody from '../../img/Comody.jpeg'
+
+import React, { useEffect, useState } from 'react';
 
 const drawerWidth = 240;
 
  
 export default function Navegacion_User(props) {
-	const { window } = props;
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const sesion = Sesion(props, false);
 
-	const company = JSON.parse(localStorage.getItem('user'))
+	const [empresa, setEmpresa] = useState([]);
+
+	const company = JSON.parse(localStorage.getItem('user'));
+	const token = localStorage.getItem('token');
+
     const isMenuOpen = Boolean(anchorEl);
 
-    const handleProfileMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleMenuClose = () => {
-		setAnchorEl(null);
+	const consultarDatos = async () => {
+		await clienteAxios
+			.get(`/company/${company._id}`, {
+				headers: {
+					Authorization: `bearer ${token}`
+				}
+			})
+			.then((res) => {
+				setEmpresa(res.data);
+				
+			})
+			.catch((err) => {
+			})
 	};
 
-    const handleDrawerOpen = () => {
+    useEffect(() => {
+		consultarDatos();
+	}, [])
+
+    // const handleProfileMenuOpen = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
+	// const handleMenuClose = () => {
+	// 	setAnchorEl(null);
+	// };
+	// const handleDrawerClose = () => {
+	// 	setOpen(false);
+	// };
+	const handleDrawerOpen = () => {
 		setOpen(true);
-	};
-
-	const handleDrawerClose = () => {
-		setOpen(false);
 	};
 
 	const [openDialog, setOpenDialog] = useState(false);
@@ -48,11 +70,9 @@ export default function Navegacion_User(props) {
     const handleClose = () => {
         setOpenDialog(false);
     };
-    
 
 	const classes = useStyles();
 
-	// const container = window !== undefined ? () => window().document.body : undefined;
 	const handleDrawerToggle = () => {
 		setOpen(!open);
 	};
@@ -70,14 +90,19 @@ export default function Navegacion_User(props) {
 					}}
 				>
 					<List>
+						<ListItem>
+							<Box className={classes.containerImage}>  
+								<img  className={classes.image} alt="logotipo" src={comody}/>
+							</Box>
+						</ListItem>
 						<ListItem >
 							<Typography>
-								Mi menu digital
+								Bienevenido:
 							</Typography>
 						</ListItem>
 						<ListItem >
 							<Typography>
-								Usuario
+								{empresa.nameUser}
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user">
@@ -86,14 +111,14 @@ export default function Navegacion_User(props) {
 								Panel User
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company._id}`}>
-							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
+							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menu digital
 							</Typography>
 						</ListItem>
-						<ListItem button onClick="">
-							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+						<ListItem button onClick={handleClickOpen}>
+							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menu
 							</Typography>
@@ -105,7 +130,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
-							<ListItemIcon><PersonAddIcon/></ListItemIcon>
+							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
 							<Typography>
 								Publicidad
 							</Typography>
@@ -140,14 +165,19 @@ export default function Navegacion_User(props) {
 					open={open}
 				>
 					<List>
+						<ListItem>
+							<Box className={classes.containerImage}>  
+								<img  className={classes.image} alt="logotipo" src={comody}/>
+							</Box>
+						</ListItem>
 						<ListItem >
 							<Typography>
-								Mi menu digital
+								Bienvenido:
 							</Typography>
 						</ListItem>
 						<ListItem >
 							<Typography>
-								Usuario
+								{empresa.nameUser}
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user">
@@ -157,13 +187,13 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
-							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menu digital
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
-							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menu
 							</Typography>
@@ -175,7 +205,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
-							<ListItemIcon><PersonAddIcon/></ListItemIcon>
+							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
 							<Typography>
 								Publicidad
 							</Typography>
@@ -220,6 +250,7 @@ export default function Navegacion_User(props) {
 					</Box>
 					<Box textAlign="center" p={2}>
 						<TextField
+							color="primary"
 							style={{width: '100%'}}
 							value={`http://localhost:3000/${company._id}/${company.slug}`}
 							name="Link"

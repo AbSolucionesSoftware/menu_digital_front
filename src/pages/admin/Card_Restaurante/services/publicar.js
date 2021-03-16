@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
-
-
+import useStyles from '../../styles';
 
 export default function Publicar(props) {
     const { empresa, setUpload } = props;
 	const [ loading, setLoading ] = useState(false);
 	const token = localStorage.getItem('token');
+	const classes = useStyles();
 
 
     const [ snackbar, setSnackbar ] = useState({
@@ -34,7 +34,6 @@ export default function Publicar(props) {
         )
         .then((res) => {
             setUpload(true);
-            console.log(setUpload);
             setLoading(false);
             setSnackbar({
                 open: true,
@@ -64,11 +63,12 @@ export default function Publicar(props) {
 				setSnackbar={setSnackbar}
 			/>
             <Button
+                className={classes.boton}
                 variant="contained" 
                 color="primary"
                 onClick={() => publicarEmpresa(empresa, !empresa.public)}
             >
-                    {empresa.public ? 'Publicado' : 'Publicar'}
+                {empresa.public ? 'Publicado' : 'Publicar'}
             </Button>
         </div>
     )

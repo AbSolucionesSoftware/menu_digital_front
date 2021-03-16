@@ -1,4 +1,4 @@
-import { Badge, Dialog, IconButton, SimpleDialog } from '@material-ui/core'
+import { Badge, Dialog,Tooltip, IconButton, SimpleDialog } from '@material-ui/core'
 import React, { useState } from 'react';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         right: 35,
     }, 
     icono:{
-        fontSize: 45
+        fontSize: 60
     }
 }))
 
@@ -41,18 +41,20 @@ export default function BotonCarrito(props) {
             {sesion ? (
                null
             ) : (
-                <IconButton
-                    aria-label="show 17 new notifications"
-                    onClick={handleClickOpen}
-                    className={classes.float}
-                    color="primary" 
-                    aria-label="upload picture" 
-                    component="span"
-                >
-                    <Badge badgeContent={pedido === null ? null : pedido.length} color="secondary">
-                        <ShoppingCartIcon className={classes.icono}/>
-                    </Badge>
-                </IconButton>
+                <Tooltip title="Tu carrito" >
+                    <IconButton
+                        aria-label="show 17 new notifications"
+                        onClick={handleClickOpen}
+                        className={classes.float}
+                        color="primary" 
+                        aria-label="upload picture" 
+                        component="span"
+                    >
+                        <Badge badgeContent={pedido === null ? null : pedido.length} color="secondary">
+                            <ShoppingCartIcon className={classes.icono}/>
+                        </Badge>
+                    </IconButton>
+                </Tooltip>
              )}
 
             <Dialog open={open} onClose={handleClose}>

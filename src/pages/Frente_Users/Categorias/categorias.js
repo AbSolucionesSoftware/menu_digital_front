@@ -51,10 +51,8 @@ function Categorias(props) {
 			.get(`/product/categories/${empresa._id}`)
 			.then((res) => {
 				setCategorias(res.data);
-                console.log(res);
 			})
 			.catch((err) => {
-                console.log(err);
 			})
 	}
 
@@ -149,7 +147,7 @@ function Lista({categoria, props, empresa}) {
                             <StyledMenuItem id={sub._id}>
                                 <ListItem button  
                                     onClick={() => {
-                                            localStorage.setItem("tienda" , tienda)
+                                            localStorage.setItem("tienda" , JSON.stringify(tienda))
                                             props.history.push(`/${empresa._id}/${empresa.slug}/subCategorias/${sub._id}`)
                                         }}  
                                 >

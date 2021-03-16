@@ -3,16 +3,11 @@ import React, { useState } from 'react'
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
+import useStyles from '../../styles';
 
-const useStyles = makeStyles((theme) => ({
-    text:{
-        width: "100%"
-    }
-}));
 
 export default function Editar(props) {
     const { empresa, setEmpresas} = props;
-    console.log(empresa);
 	const classes = useStyles();
 
     const token = localStorage.getItem('token');
@@ -83,6 +78,7 @@ export default function Editar(props) {
 			/>
             <Spin loading={loading} />
             <Button
+                className={classes.boton}
                 variant="contained" 
                 color="primary"
                 type="Link"
@@ -144,7 +140,7 @@ export default function Editar(props) {
                     <Box p={3} textAlign="center">
                         <Button
                             variant="contained" 
-                            color="primary"
+                            color="secondary"
                             onClick={dialogClose}
                         >
                             Salir

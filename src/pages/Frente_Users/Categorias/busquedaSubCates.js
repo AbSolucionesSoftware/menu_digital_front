@@ -5,16 +5,30 @@ import { withRouter } from 'react-router';
 import Cards_Platos from '../Cards_Platillos/card_plato';
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
+import BotonCarrito from '../Carrito/botonCarrito';
 
 
 function BusquedaSubCates(props) {
     const subCategoria = props.match.params.subCategoria;
     const idEmpresa = props.match.params.idMenu;
-	
-     
-
+    
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [empresa, setEmpresa] = useState([])
+
+    const consultarDatos = async () => {
+		setLoading(true);
+		await clienteAxios
+			.get(`/company/${idEmpresa}`)
+			.then((res) => {
+				setLoading(false);
+                console.log(res.data);
+				setEmpresa(res.data);
+			})
+			.catch((err) => {
+				setLoading(false);
+			})
+	}
 
     const buscarProductos = async () => {
         setLoading(true)
@@ -30,7 +44,8 @@ function BusquedaSubCates(props) {
     }
 
     useEffect(() => {
-        buscarProductos()
+        buscarProductos();
+        consultarDatos();
     }, [])
 
     return (
@@ -45,6 +60,7 @@ function BusquedaSubCates(props) {
 
                 <Cards_Platos productos={productos}/>
             </Grid>
+            <BotonCarrito empresa={empresa}/>
         </div>
     )
 }

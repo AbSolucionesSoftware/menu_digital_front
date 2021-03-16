@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import Eliminar from './services/eliminar';
 import Editar from './services/editar';
@@ -11,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from '../styles';
 import { Box, Button, Grid } from '@material-ui/core';
-// import clienteAxios from '../../../config/axios';
 
 
 export default function Cards_Restaurate(props) {
@@ -21,44 +19,67 @@ export default function Cards_Restaurate(props) {
 
 	const render = empresas.map((empresa) => {
 		return (
-			<Box mt={3}>
+			<Grid lg={3}>
+				<Box p={1} mt={1} display="flex" justifyContent="center" textAlign="center">
 				<Card key={empresa._id} className={classes.root}>
-					<Grid container>
-						<Grid item lg={6} xs={12}>
+						<Grid item lg={12} xs={12}>
 							<CardContent className={classes.content}>
-								<Box textAlign="center" mt={2}>
-									<Typography variant="h5">
-										{empresa.nameCompany}
-									</Typography>
-									<Typography variant="h6" >
-										{empresa.owner}
-									</Typography>
-									<Typography variant="h6">
-										{empresa.phone}
-									</Typography>
+								<Box mt={1}>
+									<Grid xs zeroMinWidth >
+										<Box display="flex" justifyContent="center">
+											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+												{empresa.nameCompany}
+											</Typography>
+										</Box>
+									</Grid>
+									<Grid xs zeroMinWidth >
+										<Box display="flex" justifyContent="center">
+											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+											{empresa.owner}
+											</Typography>
+										</Box>
+									</Grid>
+									<Grid xs zeroMinWidth >
+										<Box display="flex" justifyContent="center">
+											<Typography className={classes.rootTitulo} variant="h5" noWrap>
+												{empresa.phone}
+											</Typography>
+										</Box>
+									</Grid>
 								</Box>
 							</CardContent>
 						</Grid>
-						<Grid item lg={6} xs={12}>
-							<Box textAlign="center" p={1}>
-								<Eliminar setUpload={setUpload} empresa={empresa}/>
-							</Box>
-							<Box textAlign="center" p={1}>
-								<Editar empresa={empresa}/>
-							</Box>
-							<Box textAlign="center" p={1}>
-								<Publicar setUpload={setUpload} empresa={empresa}/>
-							</Box>
+						{console.log(empresa)}
+						<Grid item lg={12} xs={12}>
+							{empresa.type === true ? (
+								<>
+									<Box textAlign="center" p={1}>
+										<Editar empresa={empresa}/>
+									</Box>
+								</>
+							 ) : (
+								<>
+									<Box textAlign="center" p={1}>
+										<Eliminar setUpload={setUpload} empresa={empresa}/>
+									</Box>
+									<Box textAlign="center" p={1}>
+										<Editar empresa={empresa}/>
+									</Box>
+									<Box textAlign="center" p={1}>
+										<Publicar setUpload={setUpload} empresa={empresa}/>
+									</Box>
+								</>
+							  )}
 						</Grid>
-					</Grid>
 				</Card>
 			</Box>
+		</Grid>
 		);
 	});
 
 	return (
-		<Grid item lg={8}>
-			{render}
+		<Grid container>
+				{render}
 		</Grid>
 	);
 }

@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Carrito(props) {
     const {setOpen, empresa} = props;
-    console.log(empresa);
     const carrito = JSON.parse(localStorage.getItem('carritoUsuario'));
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
@@ -27,17 +26,11 @@ export default function Carrito(props) {
 
 
     const mensaje = 
-    `Hola, me comunico desde *Mi menu Digital* y me gustaria realizar el siguiente pedido:  
-
-        ${pedidos === null ? null : 
-            pedidos.map((pedido) => (
-            pedido.cantidad +`*  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas +`)`
-        ))}
-        Con un total de: $ ${total}
-        A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.
-        A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.
-
-        Gracias`;
+    `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A 
+    ${pedidos === null ? null : 
+        pedidos.map((pedido) => (
+        pedido.cantidad +` *  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas.notas +`) %0A`
+    ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
 
     useEffect(
         
@@ -260,7 +253,7 @@ export default function Carrito(props) {
                             ) : cliente.nombre && cliente.telefono && cliente.ciudad && cliente.colonia && cliente.domicilio ? (
                                 <a target="_blank" href={`https://api.whatsapp.com/send?phone=
                                     ${52 + empresa.phone}
-                                    &text=\n
+                                    &text=
                                     ${mensaje}`} 
                                 >
                                    

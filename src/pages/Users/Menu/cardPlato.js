@@ -59,12 +59,11 @@ export default function CardPlato(props) {
                             </Typography>
                         </Grid>
 
-                        <Box p={0} display="flex" justifyContent="center">
+                        <Box p={1} display="flex" justifyContent="center">
                             <Box p={1}>
                             <Button
                                 variant="contained" 
                                 color="primary"
-                                size="large"
                                 onClick={() => {
 									handleDrawerOpen()
 									setEditarProducto(producto)
@@ -97,7 +96,12 @@ export default function CardPlato(props) {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroProducto productos={productos} editarProducto={editarProducto}/>
+                <RegistroProducto 
+                    handleDrawerClose={handleDrawerClose} 
+                    setUpload={setUpload} 
+                    productos={productos} 
+                    editarProducto={editarProducto}
+                />
 
                 <Box textAlign="center" mt={4}>
                     <Button

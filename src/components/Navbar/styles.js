@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1
 	},
 	appbar: {
-		backgroundColor: "red"
+		backgroundColor: "#bb2225"
 	},
 	marginButton: {
 		marginRight: theme.spacing(1),
@@ -88,9 +88,13 @@ const useStyles = makeStyles((theme) => ({
 	logoResponsive: {
 		height: 40,
 	},
-	imagen: {
+	image: {
 		maxHeight: '100%',
 		maxWidth: '100%'
+	},
+	containerImage:{
+		width: 140,
+		height: 50
 	}
 }));
 

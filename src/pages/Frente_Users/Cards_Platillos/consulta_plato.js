@@ -1,4 +1,4 @@
-import { Container, Grid } from '@material-ui/core';
+import { Box, Container, Grid, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import clienteAxios from '../../../config/axios';
 import Cards_Platos from './card_plato';
@@ -24,6 +24,13 @@ export default function Consulta_platillos(props) {
 	 []);
     return (
         <Container maxWidth="xl">
+			<Grid lg={12} justify="center">
+				<Box p={3} textAlign="center">
+					<Typography variant="h4" color="primary">
+						¡Nuestros platillos! 
+					</Typography>
+				</Box>
+			</Grid>
             <Grid container lg={12}>
                 <Cards_Platos productos={productos}/>
             </Grid>

@@ -55,14 +55,16 @@ const FormStyles = makeStyles((theme) => ({
 }));
 
 export default function RegistroProducto(props) {
-    const {productos, editarProducto} = props;
+    const {productos, editarProducto, setUpload, handleDrawerClose} = props;
+	const [ validate, setValidate ] = useState(false);
+
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'));
     String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
 	const classes = useStyles();
-    const clasForm = FormStyles();
+
     const { update, setUpdate} = useContext(ImageContext);
     
     const [ preview, setPreview ] = useState('');
@@ -92,8 +94,7 @@ export default function RegistroProducto(props) {
 	// const [ valueSelectSubCat, setValueSelectSubCat ] = useState('');
     const [ select, setSelect ] = useState();
     const [ selectSub, setSelectSub ] = useState();
-    const [ disabled,setDisabled] = useState(false);
-    
+
     const onSelect = (e) => {
         if (e.target.name === 'category') {
 			setPlatillos({
@@ -119,18 +120,21 @@ export default function RegistroProducto(props) {
 		},
 		[ datos, setDatos, setPreview ]
 	);
-    // console.log(editarProducto);
+
     useEffect(() => {
         if (editarProducto) {
             setPreview(editarProducto.imagenProductUrl);
         }
     }, [])
 
-    // console.log(datos.imagen);
-    
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
     
     const agregarPlatilloBD = async () => {
+        if (!platillos.category || !platillos.subCategory || !platillos.name || !platillos.price ) {
+			setValidate(true);
+			return;
+		}
+
         if (control === true) {
             
             const formData = new FormData();
@@ -150,7 +154,8 @@ export default function RegistroProducto(props) {
                     }
                 })
                 .then((res) => {
-                    console.log(res);
+                    // setUpload(true);
+                    // handleDrawerClose();
                     setLoading(false);
                     setSnackbar({
                         open: true,
@@ -159,7 +164,6 @@ export default function RegistroProducto(props) {
                     });
                 })
                 .catch((err) => {
-                    console.log("No funciona");
                     setLoading(false);
                     setSnackbar({
                         open: true,
@@ -178,7 +182,6 @@ export default function RegistroProducto(props) {
             if (datos.imagen) {
                 formData.append("imagen", datos.imagen);
             }
-            console.log(datos.imagen);
 
             await clienteAxios
             .put(`/product/edit/${platillos._id}`,formData,  {
@@ -188,6 +191,8 @@ export default function RegistroProducto(props) {
                 }
             })
             .then((res) => {
+                setUpload(true);
+                handleDrawerClose();
                 setLoading(false);
                 setSnackbar({
                     open: true,
@@ -319,6 +324,8 @@ export default function RegistroProducto(props) {
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
                                         <Select
+                                            error={!platillos.category && validate}
+                                            helperText={!platillos.category && validate ? 'Esta campo es requerido' : null}
                                             id="categoria"
 									        name="category"
                                             value={platillos.category ? platillos.category : ''}
@@ -368,6 +375,8 @@ export default function RegistroProducto(props) {
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Sub-Categoria</InputLabel>
                                         <Select
+                                            error={!platillos.subCategory && validate}
+                                            helperText={!platillos.subCategory && validate ? 'Esta campo es requerido' : null}
                                             id="subcategoria"
 									        name="subCategory"
                                             value={platillos.subCategory ? platillos.subCategory : ''}
@@ -401,6 +410,8 @@ export default function RegistroProducto(props) {
                                 </Box>
                                 <Box p={2}>
                                     <TextField
+                                        error={!platillos.name && validate}
+                                        helperText={!platillos.name && validate ? 'Esta campo es requerido' : null}
                                         className={classes.text}
                                         id="name"
                                         name="name"
@@ -427,6 +438,8 @@ export default function RegistroProducto(props) {
                                 </Box>
                                 <Box p={2}>
                                     <TextField
+                                        error={!platillos.price && validate}
+                                        helperText={!platillos.price && validate ? 'Esta campo es requerido' : null}
                                         className={classes.text}
                                         id="price"
                                         name="price"

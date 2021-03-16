@@ -31,7 +31,6 @@ export default function Menu() {
     useEffect(() => {
         traerProdutos(); 
     }, [upload])
-    console.log(productos);
 
     const [ open, setOpen ] = useState(false);
 

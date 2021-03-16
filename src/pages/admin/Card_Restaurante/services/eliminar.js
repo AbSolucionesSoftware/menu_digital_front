@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
+import useStyles from '../../styles';
 
 
 export default function Eliminar(props){
 	const { empresa, setUpload } = props;
 	const token = localStorage.getItem('token');
+	const classes = useStyles();
 
 	const [ loading, setLoading ] = useState(false);
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
@@ -75,7 +77,7 @@ export default function Eliminar(props){
 				eliminarEmpresaBD={eliminarEmpresaBD}
 			/>
             <Button
-                // className={classes.boton} 
+                className={classes.boton} 
                 variant="contained" 
                 color="secondary"
 				onClick={() => handleDeleteConfimation(empresa._id)}

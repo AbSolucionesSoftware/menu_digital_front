@@ -5,15 +5,18 @@ import { deepOrange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
+      width: 230,
+      height: 315
+      // display: 'flex',
     },
     details: {
       display: 'flex',
-      flexDirection: 'column',
+      // flexDirection: 'column',
     },
     content: {
-      flex: '1 0 auto',
+      // flex: '1 0 auto',
     },
+
     cover: {
       width: 180,
       height: 180
@@ -29,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       width: 38,
     },
     boton:{
-      width: "80%"
+      width: "100%"
     }
   }));
 

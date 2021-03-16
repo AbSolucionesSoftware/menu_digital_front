@@ -1,4 +1,5 @@
 import { Box, Button, Dialog, DialogTitle, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
+import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
@@ -12,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Editar_User(props) {
-    const {datosEmpresa, setDatosEmpresa} = props;
-    console.log(datosEmpresa);
+    const {handleDrawerClose, datosEmpresa, setDatosEmpresa, setUpload} = props;
 	const [ control, setControl ] = useState(false);
     const [editar, setEditar] = useState([]);
     const [open, setOpen] = useState(false);
@@ -57,6 +57,8 @@ export default function Editar_User(props) {
 			})
 			.then((res) => {
                 setLoading(false);
+                handleDrawerClose();
+                setUpload(true);
                 // setDatosEmpresa(res.data)
                 setSnackbar({
 					open: true,
@@ -145,6 +147,9 @@ export default function Editar_User(props) {
                                     }
                                 />
                             </Box>
+                            <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
+                                <Alert severity="info">Un identificador para poder distinguir tu Negocio en el navegador</Alert>
+                            </Box>
                             <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.slug}
@@ -155,7 +160,7 @@ export default function Editar_User(props) {
                                     multiline
                                     variant="outlined"
                                     onChange={(e) =>
-                                        setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase() })
+                                        setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase()})
                                     }
                                 />
                             </Box>

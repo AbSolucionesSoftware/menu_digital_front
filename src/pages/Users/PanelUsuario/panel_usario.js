@@ -1,12 +1,15 @@
-import { Box, Button, Drawer, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import Editar_User from './editar_user'
+
+import TextField from '@material-ui/core/TextField';
+import { Box, Button, Drawer, Grid, Typography } from '@material-ui/core/'
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
 
 export default function PanelUser() {
     const [ datosEmpresa, setDatosEmpresa] = useState([]);
 	const [ loading, setLoading ] = useState(false);
+    const [ upload, setUpload ] = useState(false);
 
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
@@ -20,17 +23,19 @@ export default function PanelUser() {
 				}
 			})
 			.then((res) => {
+                setUpload(true);
                 setLoading(false);
                 setDatosEmpresa(res.data)
 			})
 			.catch((err) => {
+                setUpload(true);
                 setLoading(false);
 			});
     }
 
     useEffect(() => {
         traerDatos();
-    }, [])
+    }, [upload])
 
     const [ open, setOpen ] = useState(false);
 
@@ -51,7 +56,7 @@ export default function PanelUser() {
                     <Box textAlign="center" display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
                             <Typography variant="h4">
-                                Tu Empresa
+                                Tu empresa en Comody
                             </Typography>
                         </Box>
                         
@@ -59,32 +64,29 @@ export default function PanelUser() {
                 </Grid>
                 <Grid lg={12}>
                     <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
-                        <Typography variant="h4">
+                        <Typography variant="h5">
                             {datosEmpresa.nameCompany}
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
-                        <Typography variant="h6">
-                            Usuario:  {datosEmpresa.nameUser}
+                        <Typography variant="h5">
+                           Tu usuario: {datosEmpresa.nameUser}
                         </Typography>
                     </Box>
                 </Grid>
                 <Grid lg={12}>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={3}>
-                            <Typography variant="h6">
-                                Empresa: {datosEmpresa.nameCompany}
-                            </Typography>
+                            <TextField variant="outlined" label="Usuario" value={`${datosEmpresa.nameCompany}`}/>
                         </Box>
                         <Box p={3}>
-                            <Typography variant="h6">
-                                Propietario: {datosEmpresa.owner}
-                            </Typography>
+                            <TextField variant="outlined" label="Propietario" value={`${datosEmpresa.owner}`}/>
                         </Box>
                         <Box p={3}>
-                            <Typography variant="h6">
-                                Telefono:  {datosEmpresa.phone}
-                            </Typography>
+                            <TextField variant="outlined" label="Identificador" value={`${datosEmpresa.slug}`}/>
+                        </Box>
+                        <Box p={3}>
+                            <TextField variant="outlined" label="Telefono" value={`${datosEmpresa.phone}`}/>
                         </Box>
                         
                     </Box>
@@ -108,7 +110,12 @@ export default function PanelUser() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <Editar_User datosEmpresa={datosEmpresa} setDatosEmpresa={setDatosEmpresa} />
+                <Editar_User 
+                    handleDrawerClose={handleDrawerClose} 
+                    setUpload={setUpload} 
+                    datosEmpresa={datosEmpresa} 
+                    setDatosEmpresa={setDatosEmpresa} 
+                />
                 <Box display="flex" justifyContent="center" mt={4}>
                     <Button
                         variant="contained" 

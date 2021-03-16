@@ -60,6 +60,7 @@ export default function Menu_Front(props) {
 							<Consulta_platillos empresa={empresa} />
 						</Box>
 					</Hidden>
+					
 					<BotonCarrito empresa={empresa}/>
 				</div>
 			);

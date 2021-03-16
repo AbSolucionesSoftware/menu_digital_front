@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AgregarCarrito(props) {
     const {nombre, precio, setOpen} = props;
-    console.log(nombre);
-    console.log(precio);
     const [contador , setContador] = useState(0)
     const [carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");

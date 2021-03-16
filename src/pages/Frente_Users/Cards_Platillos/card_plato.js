@@ -16,7 +16,6 @@ import './styles.scss';
 
 export default function Cards_Platos(props) {
 	const {productos} = props;
-	console.log(productos);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	
@@ -32,50 +31,61 @@ export default function Cards_Platos(props) {
 
 	const render = productos.map((producto, index) => {
 		return (
-			<Grid key={index} item lg={5} className={classes.paper}>
+			<Grid key={index} item lg={6} xs={12} className={classes.paper}>
             	<Card className={classes.root}> 
                		<Box display="flex" flexWrap="wrap">
+					   
 						<Grid item lg={5} xs={12}>
-							<Hidden mdUp>
-								<Box p={1} display="flex" justifyContent="center" alignContent="center" >
-									<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
-								</Box>
-							</Hidden>
-							<Hidden smDown>
-								<CardMedia
-									className={classes.cover}
-									image={producto.imagenProductUrl}
-								/>
-							</Hidden>
+						{producto.imagenProductUrl ? (
+							<>
+								<Hidden mdUp>
+									<Box p={1} display="flex" justifyContent="center" alignContent="center" >
+										<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
+									</Box>
+								</Hidden>
+								<Hidden smDown>
+									<CardMedia
+										className={classes.cover}
+										image={producto.imagenProductUrl}
+									/>
+								</Hidden>
+							</>
+							) : (
+							null
+							)}
 						</Grid>
+						
 						<Grid lg={7} xs={12}>
-							<Grid xs zeroMinWidth >
-								<Box display="flex" justifyContent="center">
-									<Typography className={classes.rootTitulo} variant="h5" noWrap>
-										{producto.name}
+							<Box p={1}>
+								<Grid xs zeroMinWidth >
+									<Box display="flex" justifyContent="center">
+										<Typography className={classes.rootTitulo} variant="h5" noWrap>
+											{producto.name}
+										</Typography>
+									</Box>
+								</Grid>
+								<Grid item xs zeroMinWidth>
+									<Typography variant="subtitle1" color="textSecondary">
+										{producto.description}
 									</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs zeroMinWidth>
-								<Typography variant="subtitle1" color="textSecondary">
-									{producto.description}
-								</Typography>
-							</Grid>
-							<Grid item xs zeroMinWidth>
-								<Typography variant="h4" color="textSecondary">
-									${formatoMexico(producto.price)} 
-								</Typography>
-							</Grid>
-							<Grid lg={12}>
-								<IconButton
-									onClick={() => {
-									handleClickOpen()
-									setagregarProducto(producto)
-									}}
-								>
-									<AddShoppingCartIcon className={classes.large} />
-								</IconButton>
-							</Grid>
+								</Grid>
+								<Grid item xs zeroMinWidth>
+									<Typography variant="h4" color="textSecondary">
+										${formatoMexico(producto.price)} 
+									</Typography>
+								</Grid>
+								<Grid lg={12}>
+									<IconButton
+										color="secondary" 
+										onClick={() => {
+										handleClickOpen()
+										setagregarProducto(producto)
+										}}
+									>
+										<AddShoppingCartIcon color="secondary" className={classes.largeCar} />
+									</IconButton>
+								</Grid>
+							</Box>
 						</Grid>	
 						</Box>
 					</Card>
@@ -86,7 +96,7 @@ export default function Cards_Platos(props) {
 
 	return (
 		<div>
-			<Grid container justify="center">
+			<Grid container justify="center" alignItems="center">
                 {render}
             </Grid>
 

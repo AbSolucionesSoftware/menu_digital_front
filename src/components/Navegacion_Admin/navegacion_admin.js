@@ -1,14 +1,13 @@
-import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography,} from '@material-ui/core'
+import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography, Box,} from '@material-ui/core'
 import { Link } from 'react-router-dom';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
-// import Sesion from '../Verificacion_sesion/verificacion_sesion';
 
+import comody from '../../img/Comody.jpeg'
 import useStyles from './styles';
 
 import React, { useState } from 'react';
@@ -71,14 +70,14 @@ export default function Navegacion_Admin(props) {
 					}}
 				>
 					<List>
-						<ListItem >
-							<Typography>
-								Mi menu digital
-							</Typography>
+						<ListItem>
+							<Box className={classes.containerImage}>  
+								<img  className={classes.image} alt="logotipo" src={comody}/>
+							</Box>
 						</ListItem>
 						<ListItem >
 							<Typography>
-								ADMIN
+								Administrador
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/admin">
@@ -95,7 +94,7 @@ export default function Navegacion_Admin(props) {
 						</ListItem>
 						<ListItem 
 							button 
-							component={Link} to="/"  
+							component={Link} to="/login"  
 							onClick={() => {
 								localStorage.removeItem('token');
 								localStorage.removeItem('admin');
@@ -121,14 +120,14 @@ export default function Navegacion_Admin(props) {
 					open={open}
 				>
 					<List>
-						<ListItem >
-							<Typography>
-								Mi menu digital
-							</Typography>
+						<ListItem>
+							<Box className={classes.containerImage}>  
+								<img  className={classes.image} alt="logotipo" src={comody}/>
+							</Box>
 						</ListItem>
 						<ListItem >
 							<Typography>
-								ADMIN
+								Administrador
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/admin">
