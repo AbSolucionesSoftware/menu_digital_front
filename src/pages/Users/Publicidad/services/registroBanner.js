@@ -11,7 +11,7 @@ import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 
 
 export default function RegistroBanner( props ) {
-	const { editarBanner} = props;
+	const {editarBanner, handleDrawerClose} = props;
 
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'))
@@ -77,16 +77,18 @@ export default function RegistroBanner( props ) {
 					}
 				})
 				.then((res) => {
+					handleDrawerClose(false);
 					setLoading(false);
 					setSnackbar({
 						open: true,
 						mensaje: 'Banner registrado exitosamente!',
 						status: 'success'
 					});
-					setLoading(false);
 					setUpdate(!update);
 				})
 				.catch((err) => {
+					handleDrawerClose(false)
+					console.log(err);
 					setLoading(false);
 					setSnackbar({
 						open: true,
@@ -102,9 +104,8 @@ export default function RegistroBanner( props ) {
 			} else if (preview && preview.includes('https')) {
 				return;
 			}
-			const formData = new FormData();
 
-			// formData.append("company", company._id); 
+			const formData = new FormData();
 			formData.append("imagen", datos.imagen);
 
 			setLoading(true);
@@ -119,20 +120,23 @@ export default function RegistroBanner( props ) {
 					setLoading(false);
 					setSnackbar({
 						open: true,
-						mensaje: 'Banner registrado exitosamente!',
+						mensaje: 'Banner editado exitosamente!',
 						status: 'success'
 					});
-					setLoading(false);
 					setUpdate(!update);
+					handleDrawerClose(true);
 				})
 				.catch((err) => {
 					setLoading(false);
+					console.log(err);
 					setSnackbar({
 						open: true,
 						mensaje: 'Al parecer no se a podido conectar al servidor.',
 						status: 'error'
 					});
 					setUpdate(!update);
+					handleDrawerClose(true);
+
 				});
 		}
 		
@@ -163,8 +167,9 @@ export default function RegistroBanner( props ) {
                     </Box>
                 </Grid>
 
-                <Grid item lg={10}>
+                <Grid item lg={12} p={3}>
                     <Box
+						p={3}
                         mt={3}
 						className={classes.dropZone}
 						{...getRootProps()}

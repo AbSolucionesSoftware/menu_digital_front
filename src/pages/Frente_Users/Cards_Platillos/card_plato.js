@@ -101,7 +101,7 @@ export default function Cards_Platos(props) {
             </Grid>
 
 			<Dialog open={open} onClose={handleClose} >
-				<AgregarCarrito  nombre={agregarProducto.name} precio={agregarProducto.price} setOpen={setOpen}  />
+				<AgregarCarrito descripcion={agregarProducto.description} nombre={agregarProducto.name} precio={agregarProducto.price} setOpen={setOpen}  />
 			</Dialog>
 			
 		</div>

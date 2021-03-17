@@ -7,7 +7,7 @@ import useStyles from './styles';
 import {formatoMexico} from '../../../config/reuserFunction'
 
 export default function CardPlato(props) {
-    const {productos, setUpload} = props;
+    const {productos, setUpload, upload} = props;
 
     const classes = useStyles();
 
@@ -19,6 +19,7 @@ export default function CardPlato(props) {
 	};
 
 	const handleDrawerClose = () => {
+        setUpload(!upload);
 		setOpen(false);
 	};
 
@@ -98,7 +99,8 @@ export default function CardPlato(props) {
             >
                 <RegistroProducto 
                     handleDrawerClose={handleDrawerClose} 
-                    setUpload={setUpload} 
+                    setUpload={setUpload}
+                    upload={upload}
                     productos={productos} 
                     editarProducto={editarProducto}
                 />

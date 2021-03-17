@@ -5,6 +5,7 @@ import clienteAxios from '../../../../config/axios';
 import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -55,7 +56,7 @@ const FormStyles = makeStyles((theme) => ({
 }));
 
 export default function RegistroProducto(props) {
-    const {productos, editarProducto, setUpload, handleDrawerClose} = props;
+    const {productos, editarProducto, upload, setUpload, handleDrawerClose} = props;
 	const [ validate, setValidate ] = useState(false);
 
 	const token = localStorage.getItem('token');
@@ -90,8 +91,6 @@ export default function RegistroProducto(props) {
 	});
 
     // Valores de Categorias
-    // const [ valueSelect, setValueSelect ] = useState('');
-	// const [ valueSelectSubCat, setValueSelectSubCat ] = useState('');
     const [ select, setSelect ] = useState();
     const [ selectSub, setSelectSub ] = useState();
 
@@ -128,7 +127,7 @@ export default function RegistroProducto(props) {
     }, [])
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-    
+
     const agregarPlatilloBD = async () => {
         if (!platillos.category || !platillos.subCategory || !platillos.name || !platillos.price ) {
 			setValidate(true);
@@ -136,7 +135,7 @@ export default function RegistroProducto(props) {
 		}
 
         if (control === true) {
-            
+            setLoading(true);
             const formData = new FormData();
             formData.append("category", platillos.category);
             formData.append("subCategory", platillos.subCategory);
@@ -144,8 +143,6 @@ export default function RegistroProducto(props) {
             formData.append("price", platillos.price);
             formData.append("description", platillos.description);
             formData.append("imagen", datos.imagen);
-        
-            setLoading(true);
             await clienteAxios
                 .post(`/product/${company._id}`, formData, {
                     headers: {
@@ -154,8 +151,8 @@ export default function RegistroProducto(props) {
                     }
                 })
                 .then((res) => {
-                    // setUpload(true);
-                    // handleDrawerClose();
+                    // setUpload(!upload);
+                    handleDrawerClose()
                     setLoading(false);
                     setSnackbar({
                         open: true,
@@ -164,6 +161,8 @@ export default function RegistroProducto(props) {
                     });
                 })
                 .catch((err) => {
+                    // setUpload(!upload);
+                    handleDrawerClose()
                     setLoading(false);
                     setSnackbar({
                         open: true,
@@ -172,7 +171,7 @@ export default function RegistroProducto(props) {
                     });
                 });
         }else{
-            
+            setLoading(true);
             const formData = new FormData();
             formData.append("category", platillos.category);
             formData.append("subCategory", platillos.subCategory);
@@ -191,7 +190,7 @@ export default function RegistroProducto(props) {
                 }
             })
             .then((res) => {
-                setUpload(true);
+                setUpload(!upload);
                 handleDrawerClose();
                 setLoading(false);
                 setSnackbar({
@@ -201,6 +200,7 @@ export default function RegistroProducto(props) {
                 });
             })
             .catch((err) => {
+                setUpload(!upload);
                 setLoading(false);
                 setSnackbar({
                     open: true,
@@ -217,10 +217,8 @@ export default function RegistroProducto(props) {
 			.get(`/product/categories/${company._id}`)
 			.then((res) => {
 				setCategories(res.data);
-                // console.log(res);
 			})
 			.catch((err) => {
-                // console.log(err);
 			})
 	}
 
@@ -451,8 +449,16 @@ export default function RegistroProducto(props) {
                                         onChange={obtenerCampos}
                                     />
                                 </Box>
+                                <Grid item lg={12}>
+                                    <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
+                                        <Alert severity="info">
+                                            Tamaño recomendado para su imagen: Alto: 600px, Ancho: 600px
+                                        </Alert>
+                                    </Box>
+                                </Grid>
                                 <Box p={2}>
                                     <Box
+                                        p={2}
                                         mt={3}
                                         className={classes.dropZone}
                                         {...getRootProps()}
@@ -482,7 +488,7 @@ export default function RegistroProducto(props) {
                     </Grid>
                 </Grid>
                 <Grid lg={12}>
-                    <Box textAlign="center">
+                    <Box textAlign="center" p={2} display="flex" justifyContent="center">
                         <Button
                             variant="contained" 
                             color="primary"

@@ -140,9 +140,11 @@ export default function Navegacion_User(props) {
 							component={Link} 
 							to={`${company._id}/${company.slug}`}
 							onClick={() => {
-								localStorage.removeItem('token');
-								localStorage.removeItem('carritoUsuario');
-								localStorage.removeItem('user');
+								setTimeout(() => {  
+									localStorage.removeItem('token');
+									localStorage.removeItem('carritoUsuario');
+									localStorage.removeItem('user');
+								 }, 1000)
 							}}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>

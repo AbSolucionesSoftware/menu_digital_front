@@ -77,7 +77,7 @@ export default function PanelUser() {
                 <Grid lg={12}>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={3}>
-                            <TextField variant="outlined" label="Usuario" value={`${datosEmpresa.nameCompany}`}/>
+                            <TextField variant="outlined" label="Compañia" value={`${datosEmpresa.nameCompany}`}/>
                         </Box>
                         <Box p={3}>
                             <TextField variant="outlined" label="Propietario" value={`${datosEmpresa.owner}`}/>

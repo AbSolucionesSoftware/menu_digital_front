@@ -41,14 +41,14 @@ const StyledMenu = withStyles({
   }))(MenuItem);
 
 function Categorias(props) {
-    const {empresa} = props;
+    const {empresa, slug} = props;
     const [categorias , setCategorias] = useState([]);
     
     // console.log(empresa._id);
 
     const consultarCates = async () => {
 		await clienteAxios
-			.get(`/product/categories/${empresa._id}`)
+			.get(`/product/categories/${empresa}`)
 			.then((res) => {
 				setCategorias(res.data);
 			})
@@ -82,7 +82,7 @@ function Categorias(props) {
     
     const render = categorias.map((categoria, index) => {
         return(
-            <Lista key={index} empresa={empresa} categoria={categoria} props={props} />
+            <Lista key={index} slug={slug} empresa={empresa} categoria={categoria} props={props} />
         )
     })
 
@@ -99,7 +99,7 @@ function Categorias(props) {
 
 
 
-function Lista({categoria, props, empresa}) {
+function Lista({categoria, props, empresa, slug}) {
     const [ancho, setAncho] = useState(null);
     const classes = useStyles();
 
@@ -148,7 +148,7 @@ function Lista({categoria, props, empresa}) {
                                 <ListItem button  
                                     onClick={() => {
                                             localStorage.setItem("tienda" , JSON.stringify(tienda))
-                                            props.history.push(`/${empresa._id}/${empresa.slug}/subCategorias/${sub._id}`)
+                                            props.history.push(`/${empresa}/${slug}/subCategorias/${sub._id}`)
                                         }}  
                                 >
                                     <ListItemText className={classes.subCate} >

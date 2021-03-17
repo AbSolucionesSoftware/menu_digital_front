@@ -14,12 +14,12 @@ export default function Publicidad() {
 	const [ open, setOpen ] = useState(false);
     const classes = useStyles();
 
-    const handleDrawerOpen = () => {
-		setOpen(true);
+    const handleDrawerOpen = (value) => {
+		setOpen(value);
 	};
 
-	const handleDrawerClose = () => {
-		setOpen(false);
+	const handleDrawerClose = (value) => {
+		setOpen(value);
 	};
     
     return (
@@ -39,7 +39,7 @@ export default function Publicidad() {
                 <Grid item lg={12}>
                     <Box display="flex" justifyContent="center" mt={3}>
                         <Button
-                            onClick={handleDrawerOpen}
+                            onClick={() => handleDrawerOpen(true)}
                             variant="contained" 
                             color="primary"
                         >
@@ -54,15 +54,15 @@ export default function Publicidad() {
             <Drawer
                 anchor="right"
                 open={open}
-                onClose={handleDrawerClose}
+                onClose={() => handleDrawerClose(false)}
             >
-                <RegistroBanner close={handleDrawerClose}/>
+                <RegistroBanner handleDrawerClose={handleDrawerClose}/>
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 
                         color="secondary"
                         size="large"
-                        onClick={handleDrawerClose}
+                        onClick={() => handleDrawerClose(false)}
                     >
                         Salir
                     </Button>

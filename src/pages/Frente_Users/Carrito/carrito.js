@@ -2,6 +2,7 @@ import { Box, Card, CardContent, Grid, Typography, Button, TextField } from '@ma
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { formatoMexico }from '../../../config/reuserFunction';
+import { ImageContext } from '../../../context/curso_context';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Carrito(props) {
     const {setOpen, empresa} = props;
     const carrito = JSON.parse(localStorage.getItem('carritoUsuario'));
+
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
     const [total, setTotal] = useState(0);

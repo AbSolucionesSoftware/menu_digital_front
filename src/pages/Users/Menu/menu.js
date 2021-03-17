@@ -39,6 +39,7 @@ export default function Menu() {
 	};
 
 	const handleDrawerClose = () => {
+        setUpload(!upload);
 		setOpen(false);
 	};
 
@@ -67,7 +68,7 @@ export default function Menu() {
                 </Grid>
                 <Grid container>
                     <Grid lg={12}>
-                        <CardPlato  setUpload={setUpload} productos={productos} />
+                        <CardPlato setUpload={setUpload} upload={upload} productos={productos} />
                     </Grid>
                 </Grid>
             </Grid>
@@ -78,7 +79,7 @@ export default function Menu() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroProducto productos={productos}/>
+                <RegistroProducto productos={productos} handleDrawerClose={handleDrawerClose} />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

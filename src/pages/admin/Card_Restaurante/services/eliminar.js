@@ -7,7 +7,7 @@ import useStyles from '../../styles';
 
 
 export default function Eliminar(props){
-	const { empresa, setUpload } = props;
+	const { empresa, setUpload, upload } = props;
 	const token = localStorage.getItem('token');
 	const classes = useStyles();
 
@@ -21,7 +21,9 @@ export default function Eliminar(props){
 	};
 
 	const handleDeleteConfimation = (idEmpresa) => {
+		setUpload(!upload);
 		setDeleteConfimation({ open: !deleteConfimation.open, id: idEmpresa });
+		
 	};
 
 	const [ snackbar, setSnackbar ] = useState({
@@ -41,7 +43,7 @@ export default function Eliminar(props){
 			}
 			)
 			.then((res) => {
-				setUpload(true);
+				setUpload(!upload);
 				setLoading(false);
 				setResourceDel({open: false, resource: ''});
 				setSnackbar({
@@ -51,7 +53,7 @@ export default function Eliminar(props){
 				});
 			})
 			.catch((err) => {
-				setUpload(true);
+				setUpload(!upload);
 				setLoading(false);
 				setSnackbar({
 					open: true,

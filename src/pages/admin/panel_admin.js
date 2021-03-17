@@ -24,19 +24,21 @@ export default function Panel_Admin(props) {
 				}
 			})
 			.then((res) => {
-                setUpload(true);
 		        setLoading(false);
+                setUpload(true);
 				setEmpresas(res.data);
 			})
 			.catch((err) => {
 		        setLoading(true);
-                setUpload(!upload);
+                setUpload(true);
 			})
 	}
 
 
     useEffect(() => {
+
 		consultarDatos();
+
 	}, [upload])
 
 
@@ -52,7 +54,7 @@ export default function Panel_Admin(props) {
             </Grid>
             <Grid lg={12}>
                 <Box mt={3} display="flex" justifyContent="center">
-                    <Cards_Restaurate setUpload={setUpload} empresas={empresas} setEmpresas={setEmpresas} />
+                    <Cards_Restaurate upload={upload} setUpload={setUpload} empresas={empresas} setEmpresas={setEmpresas} />
                 </Box>
             </Grid>
         </div>

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Hidden, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import Spin from '../../../components/Spin/spin'
 
@@ -61,8 +61,8 @@ export default function Registro_User(props) {
             },
           }
           ).then((res) => {
-            setRegistro([])
             setLoading(false);
+            setRegistro([])
             setSnackbar({
                 open: true,
                 mensaje: "Usuario registrado exitosamente!.",
@@ -91,7 +91,7 @@ export default function Registro_User(props) {
 
     return (
         <div>
-            <Spin size="large" spinning={loading} />
+            <Spin loading={loading} />
             <MessageSnackbar
 				open={snackbar.open}
 				mensaje={snackbar.mensaje}
@@ -106,11 +106,13 @@ export default function Registro_User(props) {
                         </Typography>
                     </Box>
                     <Grid container>
-                        <Grid lg={6}>`
-                        <Box className={classes.containerImagen}> 
-                            <img src={imagen} alt="Imagen de registro" className={classes.image}/>
-                        </Box>
-                        </Grid>
+                        <Hidden smDown>
+                            <Grid lg={6}>
+                                <Box className={classes.containerImagen}> 
+                                    <img src={imagen} alt="Imagen de registro" className={classes.image}/>
+                                </Box>
+                            </Grid>
+                        </Hidden>
                         <Grid lg={6}>
                             <Box mt={5} textAlign="center">
                                 <form className={classes.root} noValidate autoComplete="off">

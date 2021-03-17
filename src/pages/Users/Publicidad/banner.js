@@ -115,7 +115,7 @@ export default function Banner() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner editarBanner={editarBanner}  />
+                <RegistroBanner  handleDrawerClose={handleDrawerClose} editarBanner={editarBanner}  />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

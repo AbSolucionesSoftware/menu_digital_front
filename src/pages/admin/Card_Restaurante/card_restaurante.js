@@ -13,7 +13,7 @@ import { Box, Button, Grid } from '@material-ui/core';
 
 
 export default function Cards_Restaurate(props) {
-	const { empresas, setEmpresas, setUpload } = props;
+	const { empresas, setEmpresas, setUpload, upload } = props;
 
 	const classes = useStyles();
 
@@ -49,7 +49,6 @@ export default function Cards_Restaurate(props) {
 								</Box>
 							</CardContent>
 						</Grid>
-						{console.log(empresa)}
 						<Grid item lg={12} xs={12}>
 							{empresa.type === true ? (
 								<>
@@ -60,13 +59,13 @@ export default function Cards_Restaurate(props) {
 							 ) : (
 								<>
 									<Box textAlign="center" p={1}>
-										<Eliminar setUpload={setUpload} empresa={empresa}/>
+										<Eliminar upload={upload} setUpload={setUpload} empresa={empresa}/>
 									</Box>
 									<Box textAlign="center" p={1}>
 										<Editar empresa={empresa}/>
 									</Box>
 									<Box textAlign="center" p={1}>
-										<Publicar setUpload={setUpload} empresa={empresa}/>
+										<Publicar upload={upload} setUpload={setUpload} empresa={empresa}/>
 									</Box>
 								</>
 							  )}

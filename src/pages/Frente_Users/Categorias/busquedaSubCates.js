@@ -1,4 +1,4 @@
-import { Box, Card, Container, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Card, Container, Divider, Grid, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import { withRouter } from 'react-router';
@@ -6,12 +6,15 @@ import Cards_Platos from '../Cards_Platillos/card_plato';
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
 import BotonCarrito from '../Carrito/botonCarrito';
+import { Link } from 'react-router-dom';
+import Categorias from './categorias';
 
 
 function BusquedaSubCates(props) {
     const subCategoria = props.match.params.subCategoria;
     const idEmpresa = props.match.params.idMenu;
-    
+    const slug = props.match.params.slug;
+
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false)
     const [empresa, setEmpresa] = useState([])
@@ -22,7 +25,6 @@ function BusquedaSubCates(props) {
 			.get(`/company/${idEmpresa}`)
 			.then((res) => {
 				setLoading(false);
-                console.log(res.data);
 				setEmpresa(res.data);
 			})
 			.catch((err) => {
@@ -51,13 +53,31 @@ function BusquedaSubCates(props) {
     return (
         <div>
             <Spin loading={loading} />
+            <Grid container>
+                <Grid lg={11}  xs={12}>
+                    <Box display="flex" justifyContent="center" p={2}>
+                        <Typography variant="h4">
+                            {subCategoria}
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid lg={1} xs={12}>
+                    <Box display="flex" justifyContent="center" p={1}>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            component={Link}
+                            to={`/${idEmpresa}/${slug}`}
+                        >
+                            Volver
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
+            <Grid lg={12} xs={12}>
+                <Divider variant="inset:" />
+            </Grid>
             <Grid lg={12}>
-                <Box textAlign="center" p={3}>
-                    <Typography variant="h5">
-                        Resultados de: {subCategoria}
-                    </Typography>
-                </Box>
-
                 <Cards_Platos productos={productos}/>
             </Grid>
             <BotonCarrito empresa={empresa}/>

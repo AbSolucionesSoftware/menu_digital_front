@@ -6,7 +6,7 @@ import clienteAxios from '../../../../config/axios';
 import useStyles from '../../styles';
 
 export default function Publicar(props) {
-    const { empresa, setUpload } = props;
+    const { empresa, upload, setUpload } = props;
 	const [ loading, setLoading ] = useState(false);
 	const token = localStorage.getItem('token');
 	const classes = useStyles();
@@ -33,7 +33,7 @@ export default function Publicar(props) {
 			}
         )
         .then((res) => {
-            setUpload(true);
+            setUpload(!upload);
             setLoading(false);
             setSnackbar({
                 open: true,
@@ -42,7 +42,7 @@ export default function Publicar(props) {
             });
 
         }).catch((err) => {
-            setUpload(true);
+            setUpload(!upload);
             setLoading(false);
             setSnackbar({
                 open: true,
@@ -66,7 +66,11 @@ export default function Publicar(props) {
                 className={classes.boton}
                 variant="contained" 
                 color="primary"
-                onClick={() => publicarEmpresa(empresa, !empresa.public)}
+                onClick={
+                    () => {
+                        setUpload(!upload)
+                        publicarEmpresa(empresa, !empresa.public)
+                    }}
             >
                 {empresa.public ? 'Publicado' : 'Publicar'}
             </Button>

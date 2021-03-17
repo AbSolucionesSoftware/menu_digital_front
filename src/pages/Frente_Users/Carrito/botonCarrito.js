@@ -1,11 +1,12 @@
 import { Badge, Dialog,Tooltip, IconButton, SimpleDialog } from '@material-ui/core'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { makeStyles } from '@material-ui/core/styles';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
 
 
 import Carrito from './carrito'; 
+
 
 const useStyles = makeStyles((theme) => ({
     float:{
@@ -23,9 +24,9 @@ export default function BotonCarrito(props) {
     const {empresa} = props;
 	const sesion = Sesion(props, false);
 	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
-
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+
 
     const handleClickOpen = () => {
         setOpen(true);

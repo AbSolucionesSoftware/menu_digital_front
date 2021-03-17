@@ -39,20 +39,28 @@ export default function Menu_Front(props) {
 			return(
 				<div key={index}> 
 					<Spin loading={loading} />
-					<Box>
-						<Banner empresa={empresa} />
-					</Box>
-
 					<Grid lg={12}>
-						<Box mt={5} textAlign="center">
+						<Box mt={1} textAlign="center">
 							<Typography variant="h4">
 								{empresa.nameCompany}
 							</Typography>
 						</Box>
 					</Grid>
+					
+					<Box>
+						<Banner empresa={empresa} />
+					</Box>
 
-					<Box mt={4}> 	
-						<Categorias empresa={empresa}/>
+					<Grid lg={12}>
+						<Box mt={2} textAlign="center">
+							<Typography variant="h5">
+								Consulta nuestro Menu y Carta
+							</Typography>
+						</Box>
+					</Grid>
+
+					<Box mt={1}> 	
+						<Categorias empresa={empresa._id} slug={empresa.slug} />
 					</Box>
 
 					<Hidden smDown>

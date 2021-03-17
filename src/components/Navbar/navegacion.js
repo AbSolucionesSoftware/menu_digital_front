@@ -15,10 +15,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import Comody from '../../img/Comody.jpeg'
 
-import { MenuContext } from '../../context/carritoContext';
 import useStyles from './styles';
 
 import React, { useContext, useEffect, useState } from 'react';
+import Categorias from '../../pages/Frente_Users/Categorias/categorias';
 
 function Navegacion(props) {
 
@@ -27,10 +27,8 @@ function Navegacion(props) {
 	const [ busqueda, setBusqueda ] = useState("");
 
 	const token = localStorage.getItem('token');
-	const company = JSON.parse(localStorage.getItem('user'));
 	const datos = JSON.parse(localStorage.getItem('tienda'));
 	
-	const idEmpresa = props.match.params.idMenu;
 	var decoded = Jwt(token);
 
 	function Jwt(token) {
@@ -42,9 +40,6 @@ function Navegacion(props) {
 	}
 
 	const idMenu = props.location.pathname;
-	console.log(idMenu);
-	const subCategoria = props.match.params;
-	console.log(props.location);
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
@@ -81,8 +76,6 @@ function Navegacion(props) {
 		}
 	}
 
-	// console.log(busqueda);
-	
 	const classes = useStyles();
     return (
         <div>
@@ -113,23 +106,7 @@ function Navegacion(props) {
 							) : (
 								<div />
 							)}
-							{/* {decoded ? (
-								<Button color="inherit" 
-									component={Link}
-									to={`${company._id}/${company.slug}`}
-									className={classes.marginButton}
-									onClick={() => {
-										localStorage.removeItem('carritoUsuario');
-										localStorage.removeItem('token');
-										localStorage.removeItem('user');
-									}}
-								>
-									Cerrar Sesion
-								</Button>
-							) : (
-								null
-							)
-							} */}
+							
 						</Hidden>
 					</Toolbar>
 				</AppBar>
@@ -160,12 +137,12 @@ function Navegacion(props) {
 						<div />
 					)}
 					<List>
-						<ListItem button component={Link} to={`/`} >
+						{/* <ListItem button component={Link} to={`/${datos.tienda}/${datos.slug}`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
-						</ListItem>
+						</ListItem> */}
 						{decoded ? (
 							<ListItem>
 								<ListItemIcon>
