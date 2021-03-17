@@ -260,9 +260,6 @@ export default function Carrito(props) {
                                 >
                                    
                                     <Button
-                                        onClick={
-								            localStorage.removeItem('carritoUsuario')
-                                        }
                                         className={classes.buton}
                                         variant="contained" 
                                         color="primary"

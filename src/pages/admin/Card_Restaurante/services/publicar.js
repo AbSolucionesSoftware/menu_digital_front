@@ -4,6 +4,7 @@ import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
 import useStyles from '../../styles';
+import { palette } from '@material-ui/system';
 
 export default function Publicar(props) {
     const { empresa, upload, setUpload } = props;
@@ -65,7 +66,12 @@ export default function Publicar(props) {
             <Button
                 className={classes.boton}
                 variant="contained" 
-                color="primary"
+                // color={empresa.public ? style={} : "publicado"}
+                style={
+                    empresa.public ? (
+                        { backgroundColor: '#4caf50', color: "white"}
+                    ) : null
+                }
                 onClick={
                     () => {
                         setUpload(!upload)

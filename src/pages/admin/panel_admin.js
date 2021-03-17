@@ -1,5 +1,6 @@
 import { Box, Button, Drawer, Grid, makeStyles, SwipeableDrawer, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router';
 import Spin from '../../components/Spin/spin';
 import clienteAxios from '../../config/axios';
 
@@ -7,7 +8,7 @@ import clienteAxios from '../../config/axios';
 // import Registro_Menu from './Registro_Menus/registro_menu'
 import Cards_Restaurate from './Card_Restaurante/card_restaurante'
 
-export default function Panel_Admin(props) {
+ function Panel_Admin(props) {
 	const token = localStorage.getItem('token');
     const [ open, setOpen] = useState(false);
 	const [empresas, setEmpresas] = useState([]);
@@ -48,7 +49,7 @@ export default function Panel_Admin(props) {
             <Grid lg={12}>
                 <Box textAlign="center" mt={3}>
                     <Typography variant="h4">
-                        Panel de Administrador
+                        Establecimientos con Menu
                     </Typography>
                 </Box>
             </Grid>
@@ -60,3 +61,4 @@ export default function Panel_Admin(props) {
         </div>
     )
 }
+export default withRouter(Panel_Admin);

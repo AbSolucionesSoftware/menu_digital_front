@@ -108,7 +108,7 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
-								Panel User
+								Datos Empresa
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
@@ -185,7 +185,7 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
-								Panel User
+								Datos Empresa
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>

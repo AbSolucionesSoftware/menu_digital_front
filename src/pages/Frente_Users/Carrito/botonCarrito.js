@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
         position: "fixed",
         bottom: 50,
         right: 35,
+        backgroundColor: "#bb2225",
+        color: "white"
     }, 
     icono:{
         fontSize: 60
@@ -47,7 +49,6 @@ export default function BotonCarrito(props) {
                         aria-label="show 17 new notifications"
                         onClick={handleClickOpen}
                         className={classes.float}
-                        color="primary" 
                         aria-label="upload picture" 
                         component="span"
                     >

@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode'
 
 import imagen from  '../../../img/Registro.png'
 import { DataUsageOutlined, DragIndicatorSharp } from '@material-ui/icons'
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -26,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Registro_User(props) {
-
+function Registro_User(props) {
     const token = localStorage.getItem('token')
 
 	const classes = useStyles();
     const [ registro, setRegistro] = useState([]);
     const [ loading, setLoading ] = useState(false);
+    const [ validate, setValidate ] = useState(false);
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
 		mensaje: '',
@@ -52,6 +53,12 @@ export default function Registro_User(props) {
     
 
     const envianDatos = async () => {
+        if (!registro.nombreCompania || !registro.propietarioS 
+            || !registro.telefono || !registro.slug || !registro.nameUser 
+            || !registro.password || !registro.repeatPassword ) {
+			setValidate(true);
+			return;
+		}
         setLoading(true);
         await clienteAxios
           .post('/company', array,
@@ -62,6 +69,7 @@ export default function Registro_User(props) {
           }
           ).then((res) => {
             setLoading(false);
+            props.history.push(`/admin`)
             setRegistro([])
             setSnackbar({
                 open: true,
@@ -118,6 +126,8 @@ export default function Registro_User(props) {
                                 <form className={classes.root} noValidate autoComplete="off">
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.nombreCompania && validate}
+                                            helperText={!registro.nombreCompania && validate ? 'Esta campo es requerido' : null}
 								            value={registro.nombreCompania ? registro.nombreCompania : ''}
                                             className={classes.text}
                                             id="nombreCompania"
@@ -133,6 +143,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.propietario && validate}
+                                            helperText={!registro.propietario && validate ? 'Esta campo es requerido' : null}
 								            value={registro.propietario ? registro.propietario : ''}
                                             className={classes.text}
                                             id="propietario"
@@ -147,6 +159,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.telefono && validate}
+                                            helperText={!registro.telefono && validate ? 'Esta campo es requerido' : null}
 								            value={registro.telefono ? registro.telefono : ''}
                                             className={classes.text}
                                             id="telefono"
@@ -161,6 +175,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.slug && validate}
+                                            helperText={!registro.slug && validate ? 'Esta campo es requerido' : null}
 								            value={registro.slug ? registro.slug : ''}
                                             className={classes.text}
                                             id="slug"
@@ -175,6 +191,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.nameUser && validate}
+                                            helperText={!registro.nameUser && validate ? 'Esta campo es requerido' : null}
 								            value={registro.nameUser ? registro.nameUser : ''}
                                             className={classes.text}
                                             id="nameUser"
@@ -189,6 +207,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.password && validate}
+                                            helperText={!registro.password && validate ? 'Esta campo es requerido' : null}
 								            value={registro.password ? registro.password : ''}
                                             className={classes.text}
                                             id="password"
@@ -203,6 +223,8 @@ export default function Registro_User(props) {
                                     </Box>
                                     <Box p={2}>
                                         <TextField
+                                            error={!registro.repeatPassword && validate}
+                                            helperText={!registro.repeatPassword && validate ? 'Esta campo es requerido' : null}
 								            value={registro.repeatPassword ? registro.repeatPassword : ''}
                                             className={classes.text}
                                             id="repeatPassword"
@@ -225,6 +247,7 @@ export default function Registro_User(props) {
                             color="primary"
                             size="large"
                             onClick={() => envianDatos()}
+                            
                         >
                             Registrar
                         </Button>
@@ -235,3 +258,6 @@ export default function Registro_User(props) {
         </div>
     )
 }
+
+
+export default withRouter(Registro_User);
