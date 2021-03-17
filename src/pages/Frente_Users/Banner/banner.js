@@ -28,24 +28,33 @@ export default function Banner(props) {
     }, [])
 
     const render = banners.map((banner, index) => {
-        return(
-            <Element key={index} prefixCls="banner-user-elem" >
-                <BgElement
-                    key="bg"
-                    className="bg banner-elemento"
-                    alt="img-oferta"
-                    style={{
-                        backgroundImage: `url(${banner.imagenBannerUrl})`,
-                    }}
-                >
-                </BgElement>
-            </Element>
-        )
+        
+            return(
+                <Element key={index} prefixCls="banner-user-elem" >
+                    <BgElement
+                        key="bg"
+                        className="bg banner-elemento"
+                        alt="img-oferta"
+                        style={{
+                            backgroundImage: `url(${banner.imagenBannerUrl})`,
+                        }}
+                    >
+                    </BgElement>
+                </Element>
+            )
+        
     })
 
     return (
-        <BannerAnim autoPlay  prefixCls="banner-user" delay={200}>
-            {render}
-		</BannerAnim>
+        <>
+            {banners.length === 0 ? (
+                null
+            ): (
+                <BannerAnim autoPlay  prefixCls="banner-user" delay={200}>
+                    {render}
+                </BannerAnim>
+            )}
+        </>
+		
     )
 }
