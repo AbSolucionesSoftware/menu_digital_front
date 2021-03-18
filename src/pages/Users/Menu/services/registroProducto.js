@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select, MenuItem, InputAdornment } from '@material-ui/core'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ImageContext } from '../../../../context/curso_context';
 import clienteAxios from '../../../../config/axios';
@@ -6,6 +6,37 @@ import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Alert from '@material-ui/lab/Alert';
+
+import PropTypes from 'prop-types';
+import NumberFormat from 'react-number-format';
+
+NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
+  function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        isNumericString
+        prefix="$"
+      />
+    );
+  }
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -262,6 +293,8 @@ export default function RegistroProducto(props) {
 		}
 	};
 
+   
+
     const obtenerCampos = (e) => {
         if (e.target.name === 'category') {
 			setPlatillos({
@@ -299,25 +332,31 @@ export default function RegistroProducto(props) {
                             <form noValidate autoComplete="off">
                                 <Box p={2}>
                                     <Box p={2}>
-                                        <TextField
-                                            className={classes.text}
-                                            id=""
-                                            label="Nueva Categoria"
-                                            placeholder="Nueva Categoria"
-                                            multiline
-                                            variant="outlined"
-                                            onChange={onCategoriaChange}
-                                        />
-                                    </Box>
-                                    <Box textAlign="center" p={2}>
-                                        <Button
-                                            variant="contained" 
-                                            color="primary"
-                                            size="large"
-                                            onClick={addItemCategoria}
-                                        >
-                                            Anadir
-                                        </Button>
+                                        <Grid container >
+                                            <Grid lg={9}>
+                                                <TextField
+                                                    className={classes.text}
+                                                    id=""
+                                                    label="Nueva Categoria"
+                                                    placeholder="Nueva Categoria"
+                                                    multiline
+                                                    variant="outlined"
+                                                    onChange={onCategoriaChange}
+                                                />
+                                            </Grid>
+                                            <Grid lg={2}>
+                                                <Box p={1}>
+                                                    <Button
+                                                        variant="contained" 
+                                                        color="primary"
+                                                        size="large"
+                                                        onClick={addItemCategoria}
+                                                    >
+                                                        Anadir
+                                                    </Button>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
                                     </Box>
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
@@ -330,7 +369,7 @@ export default function RegistroProducto(props) {
                                             onChange={onSelect}
                                             renderValue={(value) => value}
                                         >
-                                            <option aria-label="None" value="" />
+                                            {/* <option aria-label="None" value="" /> */}
                                             {categoriasDefault && categoriasDefault.length !== 0 ? (
                                                 categoriasDefault.map((item, index) => (
                                                     <option key={index} value={item.category}>
@@ -350,25 +389,31 @@ export default function RegistroProducto(props) {
 
 
                                     <Box p={2}>
-                                        <TextField
-                                            className={classes.text}
-                                            id=""
-                                            label="Nueva SubCategoria"
-                                            placeholder="Nueva SubCategoria"
-                                            multiline
-                                            variant="outlined"
-                                            onChange={onSubCategoriaChange}
-                                        />
-                                    </Box>
-                                    <Box textAlign="center" p={2}>
-                                        <Button
-                                            variant="contained" 
-                                            color="primary"
-                                            size="large"
-                                            onClick={addItemSubCategoria}
-                                        >
-                                            Anadir
-                                        </Button>
+                                        <Grid container >
+                                            <Grid lg={9}>
+                                                <TextField
+                                                    className={classes.text}
+                                                    id=""
+                                                    label="Nueva SubCategoria"
+                                                    placeholder="Nueva SubCategoria"
+                                                    multiline
+                                                    variant="outlined"
+                                                    onChange={onSubCategoriaChange}
+                                                />
+                                            </Grid>
+                                            <Grid lg={2}>
+                                                <Box p={1}>
+                                                    <Button
+                                                        variant="contained" 
+                                                        color="primary"
+                                                        size="large"
+                                                        onClick={addItemSubCategoria}
+                                                    >
+                                                        Anadir
+                                                    </Button>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
                                     </Box>
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Sub-Categoria</InputLabel>
@@ -381,7 +426,7 @@ export default function RegistroProducto(props) {
 										    onChange={obtenerCampos}
                                             renderValue={(value) => value}
                                         >
-                                            <option aria-label="None" value="" />
+                                            {/* <option aria-label="None" value="" /> */}
                                             {subcategoriasDefault && subcategoriasDefault.length !== 0 ? (
                                                 subcategoriasDefault.map((item, index) => (
                                                     <option key={index} value={item.subcategory}>
@@ -391,7 +436,9 @@ export default function RegistroProducto(props) {
                                             ) : null}
                                             {
                                                 categories.map((categorias) => {
+                                                if (platillos.category === categorias.categoria) {
                                                     return categorias.subCategoria.map((subCategorias) => {
+                                                        console.log(subCategorias);
                                                         return (
                                                             <option
                                                                 key={subCategorias._id}
@@ -401,6 +448,8 @@ export default function RegistroProducto(props) {
                                                             </option>
                                                         );
                                                     });
+                                                }
+                                                return null;
                                                 })
                                             }
                                         </Select>
@@ -444,8 +493,10 @@ export default function RegistroProducto(props) {
                                         label="Precio"
                                         placeholder="Precio"
                                         value={platillos.price ? platillos.price : ''}
-                                        multiline
                                         variant="outlined"
+                                        InputProps={{
+                                            inputComponent: NumberFormatCustom,
+                                          }}
                                         onChange={obtenerCampos}
                                     />
                                 </Box>

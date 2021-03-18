@@ -261,6 +261,7 @@ export default function Navegacion_User(props) {
 						>
 						</TextField>
 					</Box>
+
 				</Box>
             </Dialog>
 	</div>
