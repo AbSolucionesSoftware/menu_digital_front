@@ -31,9 +31,9 @@ export default function Footer() {
                                 Todos los derechos reservados de COMODY, AB Soluciones Empresariales 2021
                             </Typography>
                         </Box>
-                        <Box textAlign="center" className={classes.containerImage}>  
+                        {/* <Box textAlign="center" className={classes.containerImage}>  
                             <img className={classes.image} alt="logotipo" src={comody}/>
-                        </Box>
+                        </Box> */}
                     </Box>
                 </Grid>
                 

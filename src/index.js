@@ -15,12 +15,6 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#160404"
-    },
-    publicado: {
-      main: "#4caf50"
-    },
-    publicar: {
-      main: "#ff1744"
     }
   }
 });
