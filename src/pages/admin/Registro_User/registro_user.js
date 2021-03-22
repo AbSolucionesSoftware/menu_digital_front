@@ -4,11 +4,40 @@ import Spin from '../../../components/Spin/spin'
 
 import clienteAxios from '../../../config/axios'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
-import jwt_decode from 'jwt-decode'
 
 import imagen from  '../../../img/Registro.png'
 import { DataUsageOutlined, DragIndicatorSharp } from '@material-ui/icons'
 import { withRouter } from 'react-router';
+
+import PropTypes from 'prop-types';
+import MaskedInput from 'react-text-mask';
+import NumberFormat from 'react-number-format';
+
+function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+       
+      />
+    );
+  }
+  
+  NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
 
 const useStyles = makeStyles((theme) => ({
     text:{
@@ -49,11 +78,10 @@ function Registro_User(props) {
         "password": registro.password,
         "repeatPassword": registro.repeatPassword
     }
-
     
 
     const envianDatos = async () => {
-        if (!registro.nombreCompania || !registro.propietarioS 
+        if (!registro.nombreCompania || !registro.propietario
             || !registro.telefono || !registro.slug || !registro.nameUser 
             || !registro.password || !registro.repeatPassword ) {
 			setValidate(true);
@@ -78,6 +106,7 @@ function Registro_User(props) {
             });
           }
           ).catch((err) => {
+            console.log(err);
             if (err.response) {
                 setLoading(false);
 					setSnackbar({
@@ -168,6 +197,9 @@ function Registro_User(props) {
                                             placeholder="Telefono"
                                             multiline
                                             variant="outlined"
+                                            InputProps={{
+                                                inputComponent: NumberFormatCustom,
+                                            }}
                                             onChange={(e) =>
                                                 setRegistro({ ...registro, telefono: e.target.value })
                                             }

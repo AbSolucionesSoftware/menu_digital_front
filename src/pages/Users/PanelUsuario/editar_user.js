@@ -5,6 +5,35 @@ import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
 import clienteAxios from '../../../config/axios';
 
+import PropTypes from 'prop-types';
+import NumberFormat from 'react-number-format';
+
+NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
+  function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        
+      />
+    );
+  }
+
 const useStyles = makeStyles((theme) => ({
     text:{
         width: "100%"
@@ -187,6 +216,9 @@ export default function Editar_User(props) {
                                     placeholder="Telefono"
                                     multiline
                                     variant="outlined"
+                                    InputProps={{
+                                        inputComponent: NumberFormatCustom,
+                                    }}
                                     onChange={(e) =>
                                         setDatosEmpresa({ ...datosEmpresa, phone: e.target.value })
                                     }

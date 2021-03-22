@@ -88,6 +88,9 @@ export default function LoginAdmin(props) {
 				}
 			});
 	};
+	const handleSubmit = () => {
+		enviarDatosBD()
+	};
 
 	return (
         <Grid container className={classes.color}>
@@ -106,42 +109,41 @@ export default function LoginAdmin(props) {
 			<Grid xs={12} sm={6} md={6} lg={4} className={classes.color}>
 				<Box p={5} mt={15}>
 					<Typography align="center" variant="h4">Iniciar sesión</Typography>
-
-					<Box my={2} className={classes.contaCampos}>
-						<TextField
-							error={!datos.userName && validate}
-							helperText={!datos.userName && validate ? 'Esta campo es requerido' : null}
-							fullWidth
-							required
-							id="userName"
-							name="Usuario"
-							label="Usuario"
-							onChange={(e) =>
-								setDatos({ ...datos, userName: e.target.value })
-							}
-						/>
+						<Box my={2} className={classes.contaCampos}>
+							<TextField
+								error={!datos.userName && validate}
+								helperText={!datos.userName && validate ? 'Esta campo es requerido' : null}
+								fullWidth
+								required
+								id="userName"
+								name="Usuario"
+								label="Usuario"
+								onChange={(e) =>
+									setDatos({ ...datos, userName: e.target.value })
+								}
+							/>
+						</Box>
+						<Box my={2}>
+							<TextField
+								error={!datos.password && validate}
+								helperText={!datos.password && validate ? 'Esta campo es requerido' : null}
+								fullWidth
+								required
+								id="password"
+								name="password"
+								label="Contraseña"
+								type="password"
+								onChange={(e) =>
+									setDatos({ ...datos, password: e.target.value })
+								}
+							/>
+						</Box>
+						<Box display="flex" justifyContent="center" mt={5}>
+							<Button type="submit" variant="contained" color="primary" onClick={() => enviarDatosBD()}>
+								Iniciar sesión
+							</Button>
+						</Box>
 					</Box>
-					<Box my={2}>
-						<TextField
-							error={!datos.password && validate}
-							helperText={!datos.password && validate ? 'Esta campo es requerido' : null}
-							fullWidth
-							required
-							id="password"
-							name="password"
-							label="Contraseña"
-							type="password"
-							onChange={(e) =>
-								setDatos({ ...datos, password: e.target.value })
-							}
-						/>
-					</Box>
-					<Box display="flex" justifyContent="center" mt={5}>
-						<Button variant="contained" color="primary" onClick={() => enviarDatosBD()}>
-							Iniciar sesión
-						</Button>
-					</Box>
-				</Box>
 			</Grid>
 		</Grid>
 	);

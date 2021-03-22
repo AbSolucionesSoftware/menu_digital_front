@@ -1,4 +1,4 @@
-import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography, Dialog, Box, TextField,} from '@material-ui/core'
+import { Hidden, IconButton, ListItemIcon, ListItemText, Drawer, ListItem, List, Typography, Dialog, Box, TextField, Grid,} from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
@@ -9,6 +9,9 @@ import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
+
+import { FacebookIcon, FacebookShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
+
 import useStyles from './styles';
 
 import comody from '../../img/Comody.jpeg'
@@ -261,6 +264,21 @@ export default function Navegacion_User(props) {
 						>
 						</TextField>
 					</Box>
+					<Grid spacing={3} justify="center">
+						<Box>
+							<Typography variant="h6">
+								Comparte tu menu digital en WhatssAp
+							</Typography>
+						</Box>
+						<Grid item>
+							<WhatsappShareButton 
+								url={`https://localhost:3000/${company._id}/${company.slug}`} 
+								title="Te comparto mi menu Digital" 
+								separator=": ">
+								<WhatsappIcon style={{ fontSize: 45, color: '#00bb2d' }} />
+							</WhatsappShareButton>
+						</Grid>
+					</Grid>
 
 				</Box>
             </Dialog>

@@ -46,10 +46,6 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		margin: '8px 0'
 	},
-    image:{
-        maxWidth: "100%",
-        maxHeight: "100%"
-    },
     containerImagen:{
         display:"flex",
         justifyContent: "center",
@@ -58,10 +54,15 @@ const useStyles = makeStyles((theme) => ({
         height: 500
     },
     imagen: {
-        maxHeight: 300,
-        maxWidth: 300
+        maxHeight: 290,
+        maxWidth: 290,
     },
     dropZone: {
+        width: 300,
+        height: 300,
+        display:"flex",
+        justifyContent: "center",
+        alignContent: "center",
         border: 'dashed 2px',
         borderColor: '#aaaaaa'
     }
@@ -102,6 +103,7 @@ export default function RegistroProducto(props) {
     const [ preview, setPreview ] = useState('');
 	const [ loading, setLoading ] = useState(false);
     const [ buttonCat, setButtonCat ] = useState(true);
+    const [ buttonSubCat, setButtonSubCat ] = useState(true);
     const [ control, setControl ] = useState(false);
 
     const [ datos, setDatos] = useState([]);
@@ -132,7 +134,6 @@ export default function RegistroProducto(props) {
 				category: e.target.value
 			});
 			return;
-            
 		}
 	};
 
@@ -287,9 +288,9 @@ export default function RegistroProducto(props) {
     const onSubCategoriaChange = (e) => {
 		if (e.target.value.length !== 0) {
 			setItem(e.target.value.capitalize());
-			setButtonCat(false);
+			setButtonSubCat(false);
 		} else {
-			setButtonCat(true);
+			setButtonSubCat(true);
 		}
 	};
 
@@ -333,10 +334,10 @@ export default function RegistroProducto(props) {
                                 <Box p={2}>
                                     <Box p={2}>
                                         <Grid container >
-                                            <Grid lg={9}>
+                                            <Grid lg={9} xs={8}>
                                                 <TextField
                                                     className={classes.text}
-                                                    id=""
+                                                    id="nuevaCategoria"
                                                     label="Nueva Categoria"
                                                     placeholder="Nueva Categoria"
                                                     multiline
@@ -344,9 +345,10 @@ export default function RegistroProducto(props) {
                                                     onChange={onCategoriaChange}
                                                 />
                                             </Grid>
-                                            <Grid lg={2}>
+                                            <Grid lg={2}  xs={3}>
                                                 <Box p={1}>
                                                     <Button
+                                                        disabled={buttonCat}
                                                         variant="contained" 
                                                         color="primary"
                                                         size="large"
@@ -365,7 +367,7 @@ export default function RegistroProducto(props) {
                                             helperText={!platillos.category && validate ? 'Esta campo es requerido' : null}
                                             id="categoria"
 									        name="category"
-                                            value={platillos.category ? platillos.category : ''}
+                                            value={platillos.category ? platillos.category : ""}
                                             onChange={onSelect}
                                             renderValue={(value) => value}
                                         >
@@ -390,7 +392,7 @@ export default function RegistroProducto(props) {
 
                                     <Box p={2}>
                                         <Grid container >
-                                            <Grid lg={9}>
+                                            <Grid lg={9} xs={8}>
                                                 <TextField
                                                     className={classes.text}
                                                     id=""
@@ -401,15 +403,16 @@ export default function RegistroProducto(props) {
                                                     onChange={onSubCategoriaChange}
                                                 />
                                             </Grid>
-                                            <Grid lg={2}>
+                                            <Grid lg={2} xs={2}>
                                                 <Box p={1}>
                                                     <Button
+                                                        disabled={buttonSubCat}
                                                         variant="contained" 
                                                         color="primary"
                                                         size="large"
                                                         onClick={addItemSubCategoria}
                                                     >
-                                                        Anadir
+                                                        Añadir
                                                     </Button>
                                                 </Box>
                                             </Grid>
@@ -496,7 +499,7 @@ export default function RegistroProducto(props) {
                                         variant="outlined"
                                         InputProps={{
                                             inputComponent: NumberFormatCustom,
-                                          }}
+                                        }}
                                         onChange={obtenerCampos}
                                     />
                                 </Box>
@@ -522,7 +525,7 @@ export default function RegistroProducto(props) {
                                     >
                                         <input {...getInputProps()} />
                                         {datos.imagen || preview ? (
-                                            <Box height={200} display="flex" justifyContent="center" alignItems="center">
+                                            <Box display="flex" alignItems="center" justifyContent="center">
                                                 <img alt="imagen del banner" src={preview} className={classes.imagen} />
                                             </Box>
                                         ) : isDragActive ? (
@@ -538,8 +541,8 @@ export default function RegistroProducto(props) {
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid lg={12}>
-                    <Box textAlign="center" p={2} display="flex" justifyContent="center">
+                <Grid lg={12} xs={12}>
+                    <Box p={2} display="flex" justifyContent="center">
                         <Button
                             variant="contained" 
                             color="primary"
@@ -551,7 +554,6 @@ export default function RegistroProducto(props) {
                             : "Actualizar"}
                         </Button>
                     </Box>
-                   
                 </Grid>
             </Grid>
         </div>

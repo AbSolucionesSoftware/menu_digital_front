@@ -28,11 +28,11 @@ export default function Carrito(props) {
 
 
     const mensaje = 
-    `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A 
-    ${pedidos === null ? null : 
-        pedidos.map((pedido) => (
-        pedido.cantidad +` *  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas.notas +`) %0A`
-    ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
+        `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A 
+        ${pedidos === null ? null : 
+            pedidos.map((pedido) => (
+            pedido.cantidad +` *  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas.notas +`) %0A`
+        ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
 
     useEffect(
         
@@ -76,7 +76,7 @@ export default function Carrito(props) {
                                         <Box p={2}>
                                             <TextField
                                                 error={!cliente.nombre && validate}
-                                                helperText={!cliente.nombre && validate  ? 'Esta campo es requerido' : null}
+                                                helperText={!cliente.nombre && validate ? 'Esta campo es requerido' : null}
                                                 // className={classes.text}
                                                 id="nombre"
                                                 label="Nombre"
@@ -243,8 +243,9 @@ export default function Carrito(props) {
                         </Grid>
 
                         <Box p={1} textAlign="center">
-                            { pedidos === null || validate === false? (
-                                <Button 
+                            {!cliente.nombre || !cliente.telefono || !cliente.ciudad || !cliente.colonia || !cliente.domicilio ? (
+                                <Button
+                                disabled={true}
                                 variant="contained" 
                                 color="primary"
                                 size="large"
@@ -252,7 +253,7 @@ export default function Carrito(props) {
                                 >
                                     Realizar Pedido
                                 </Button>
-                            ) : cliente.nombre && cliente.telefono && cliente.ciudad && cliente.colonia && cliente.domicilio ? (
+                            ) :  (
                                 <a target="_blank" href={`https://api.whatsapp.com/send?phone=
                                     ${52 + empresa.phone}
                                     &text=
@@ -268,8 +269,6 @@ export default function Carrito(props) {
                                         Realizar Pedido
                                     </Button>
                                 </a>
-                             ): (
-                                 null
                              )
                             }
                         </Box>

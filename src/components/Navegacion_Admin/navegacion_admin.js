@@ -83,7 +83,7 @@ export default function Navegacion_Admin(props) {
 						<ListItem button component={Link} to="/admin">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
-								Establecimientos con Menu
+								Empresas con Menu
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/admin/registro">
@@ -133,7 +133,7 @@ export default function Navegacion_Admin(props) {
 						<ListItem button component={Link} to="/admin">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
-								Establecimientos con Menu
+								Empresas con Menu
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/admin/registro">
