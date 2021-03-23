@@ -93,9 +93,6 @@ export default function LayoutUser(props) {
 					</div>
 					
 				</NavProvider>
-				<div>
-					<Footer />
-				</div>
 			</div>
 		</ImageProvider>
 		</ThemeProvider>

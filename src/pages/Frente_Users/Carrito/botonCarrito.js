@@ -1,11 +1,12 @@
 import { Badge, Dialog,Tooltip, IconButton, SimpleDialog, Button } from '@material-ui/core'
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { makeStyles } from '@material-ui/core/styles';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
 
-
 import Carrito from './carrito'; 
+
+import { ImageContext } from '../../../context/curso_context';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,24 +22,20 @@ const useStyles = makeStyles((theme) => ({
         color: "white"
     },
     icono:{
-        fontSize: 50,
+        fontSize: 60,
         padding: 2
-    },
-    cantidad:{
-        "MuiBadge-badge-295":{
-            color: "black"
-        }
     }
+    
 }))
 
 export default function BotonCarrito(props) {
     const {empresa} = props;
 	const sesion = Sesion(props, false);
-	const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-
-
+    const pedido = JSON.parse(localStorage.getItem('carritoUsuario'));
+    
+    const { update } = useContext(ImageContext);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -49,7 +46,6 @@ export default function BotonCarrito(props) {
 
     return (
         <div>
-           
             {sesion ? (
                null
             ) : (
@@ -58,7 +54,7 @@ export default function BotonCarrito(props) {
                         onClick={handleClickOpen}
                         className={classes.float}
                     >
-                        <Badge className={classes.cantidad} badgeContent={pedido === null ? null : pedido.length} >
+                        <Badge color="secondary" overlap="circle" badgeContent={pedido === null ? null : pedido.length} >
                             <ShoppingCartIcon className={classes.icono}/>
                         </Badge>
                     </IconButton>

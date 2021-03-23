@@ -32,10 +32,7 @@ export default function Cards_Platos(props) {
 			<Grid key={index} item lg={6} xs={12} className={classes.paper}>
             	<Card className={classes.root}> 
                		<Box display="flex" flexWrap="wrap">
-					   
 						<Grid item lg={5} xs={12}>
-						{producto.imagenProductUrl ? (
-							<>
 								<Hidden mdUp>
 									<Box p={1} display="flex" justifyContent="center" alignContent="center" >
 										<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
@@ -47,17 +44,7 @@ export default function Cards_Platos(props) {
 										image={producto.imagenProductUrl}
 									/>
 								</Hidden>
-							</>
-							) : (
-								<Hidden smDown>
-									<CardMedia
-										className={classes.cover}
-										image={comody}
-									/>
-								</Hidden>
-							)}
 						</Grid>
-						
 						<Grid lg={7} xs={12}>
 							<Box p={1}>
 								<Grid xs zeroMinWidth >
@@ -67,10 +54,13 @@ export default function Cards_Platos(props) {
 										</Typography>
 									</Box>
 								</Grid>
-								<Grid item xs zeroMinWidth>
-									<Typography variant="subtitle1" color="textSecondary">
-										{producto.description}
-									</Typography>
+								
+								<Grid xs zeroMinWidth >
+									<Box display="flex" justifyContent="center">
+										<Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
+											{producto.description} 
+										</Typography>
+									</Box>
 								</Grid>
 								<Grid item xs zeroMinWidth>
 									<Typography variant="h4" color="textSecondary">

@@ -49,10 +49,12 @@ export default function CardPlato(props) {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item xs zeroMinWidth>
-                            <Typography variant="subtitle1" color="textSecondary">
-                                {producto.description}
-                            </Typography>
+                        <Grid xs zeroMinWidth >
+                            <Box display="flex" justifyContent="center">
+                                <Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
+                                    {producto.description} 
+                                </Typography>
+                            </Box>
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Typography variant="h4" color="textSecondary">

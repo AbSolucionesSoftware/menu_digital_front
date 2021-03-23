@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
 
 import { NavProvider } from '../../context/context_nav';
+import { ImageProvider } from '../../context/curso_context';
 
 const useStyles = makeStyles((theme) => ({
 	fondo:{
@@ -51,6 +52,7 @@ export default function LayoutUsers(props) {
 	return (
 		<ThemeProvider >
 			<CssBaseline />
+			<ImageProvider>
 			<div className={classes.fondo}>
 				<NavProvider>
 					<HideOnScroll {...props}>
@@ -70,6 +72,7 @@ export default function LayoutUsers(props) {
 					<Footer />
 				</div>
 			</div>
+			</ImageProvider>
 		</ThemeProvider>
 	);
 }

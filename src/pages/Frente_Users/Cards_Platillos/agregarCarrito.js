@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AgregarCarrito(props) {
     const {nombre, precio, descripcion, setOpen} = props;
+    const { setUpdate, setDatos} = useContext(ImageContext);
+
     const [disable, setDisable] = useState(false)
     const [contador , setContador] = useState(0)
     const [carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
-
     const Agregar = () => {
 		setContador(contador+1);
         setDisable(false);
@@ -48,17 +49,19 @@ export default function AgregarCarrito(props) {
             "cantidad": contador,
             notas
         }
-    ] 
-    ;
+    ];
     
 	const agregarCarrito = () => {
+        
+        setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
+
         if (contador === 0) {
             setDisable(true);
         }else{
             let datos = localStorage.getItem("carritoUsuario");
             if(datos === null){
                 localStorage.setItem('carritoUsuario', JSON.stringify(array))
-                setOpen(false)
+                setOpen(false);
             } else {
                 let data = JSON.parse(datos)
                 let newCar = {nombre, precio, cantidad: contador, notas}
@@ -81,11 +84,6 @@ export default function AgregarCarrito(props) {
                 </Box>
                 <Box display="flex" justifyContent="center" textAlign="center">
                     <Divider style={{width: "80%"}}/>
-                </Box>
-                <Box p={1} textAlign="center">
-                    <Typography variant="h6">
-                        {descripcion}
-                    </Typography>
                 </Box>
                 <Box  display="flex" justifyContent="center" textAlign="center">
                     <Divider style={{width: "50%"}}/>
@@ -134,7 +132,7 @@ export default function AgregarCarrito(props) {
                             color="primary"
                             disabled={disable}
                         >
-                            Agregar a Oden <AddShoppingCartIcon />
+                            <AddShoppingCartIcon /> Agregar a Oden 
                         </Button>
                     </Tooltip>
                 </Box>

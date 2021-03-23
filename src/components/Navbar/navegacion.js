@@ -1,34 +1,31 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  
 		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
-		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box 
+		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid 
 		} from '@material-ui/core'
-import {useParams, Link, withRouter } from 'react-router-dom';
+import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import clienteAxios from '../../config/axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
-import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
 
 import Comody from '../../img/Comody.jpeg'
 
 import useStyles from './styles';
+import { ImageContext } from '../../context/curso_context';
 
-import React, { useContext, useEffect, useState } from 'react';
-import Categorias from '../../pages/Frente_Users/Categorias/categorias';
+import React, { useContext,  useState } from 'react';
 
 function Navegacion(props) {
 
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [ busqueda, setBusqueda ] = useState("");
-
+    const {  nombre, id, slug } = useContext(ImageContext);
 	const token = localStorage.getItem('token');
 	const datos = JSON.parse(localStorage.getItem('tienda'));
-	
 	var decoded = Jwt(token);
 
 	function Jwt(token) {
@@ -93,12 +90,21 @@ function Navegacion(props) {
 								<MenuIcon />
 							</IconButton>
 						</Hidden>
-						<Box className={classes.containerImage}>  
-							<img  className={classes.image} alt="logotipo" src={Comody}/>
-						</Box>
+						<Hidden smDown>
+							<Box className={classes.containerImage}>  
+								<img  className={classes.image} alt="logotipo" src={Comody}/>
+							</Box>
+						</Hidden>
+						<Grid lg={9} zeroMinWidth >
+							<Box display="flex" justifyContent="center">
+								<Typography variant="h4" noWrap>
+									{nombre} 
+								</Typography>
+							</Box>
+						</Grid>
+						
 						<div className={classes.grow} />
 						<Hidden smDown>
-							
 							{decoded ? (
 								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
 									<AccountCircleSharpIcon/> Mi cuenta
@@ -106,7 +112,6 @@ function Navegacion(props) {
 							) : (
 								<div />
 							)}
-							
 						</Hidden>
 					</Toolbar>
 				</AppBar>
@@ -137,12 +142,12 @@ function Navegacion(props) {
 						<div />
 					)}
 					<List>
-						{/* <ListItem button component={Link} to={`/${datos.tienda}/${datos.slug}`} >
+						<ListItem button component={Link} to={`/${id}/${slug}`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
-						</ListItem> */}
+						</ListItem>
 						{decoded ? (
 							<ListItem>
 								<ListItemIcon>

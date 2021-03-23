@@ -35,7 +35,6 @@ export default function Carrito(props) {
         ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
 
     useEffect(
-        
 		() => {
 			var subtotal = 0;
 			var total = 0;
@@ -200,9 +199,9 @@ export default function Carrito(props) {
                             ) : (
                                 pedidos.map((pedido) => (
                                     <Box p={2} display="flex" justifyContent="center">
-                                        <Grid lg={5}>
-                                            <Box  p={1}>
-                                                <Typography variant="body1">
+                                       <Grid lg={5} zeroMinWidth>
+                                            <Box p={1}>
+                                                <Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
                                                     {pedido.nombre}
                                                 </Typography>
                                             </Box>

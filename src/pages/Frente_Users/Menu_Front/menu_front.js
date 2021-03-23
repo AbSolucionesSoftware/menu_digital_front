@@ -1,7 +1,5 @@
 import { Box, Grid, Hidden, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {useParams} from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react';
 import No_Page from '../../../components/noPage'
 
 import BotonCarrito from '../Carrito/botonCarrito'
@@ -10,12 +8,14 @@ import Categorias from '../Categorias/categorias';
 import clienteAxios from '../../../config/axios';
 import Consulta_platillos from '../Cards_Platillos/consulta_plato';
 import Spin from '../../../components/Spin/spin';
+import { ImageContext } from '../../../context/curso_context';
 
 export default function Menu_Front(props) {
 
 	const idMenu = props.match.params.idMenu;
 	const [empresas, setEmpresas] = useState([]);
 	const [ loading, setLoading ] = useState(false);
+    const {  setNombre, setId, setSlug  } = useContext(ImageContext);
 
 	const consultarDatos = async () => {
 		setLoading(true);
@@ -39,14 +39,9 @@ export default function Menu_Front(props) {
 			return(
 				<div key={index}> 
 					<Spin loading={loading} />
-					<Grid lg={12}>
-						<Box mt={1} textAlign="center">
-							<Typography variant="h4">
-								{empresa.nameCompany}
-							</Typography>
-						</Box>
-					</Grid>
-					
+						{setNombre(empresa.nameCompany)}
+						{setId(empresa._id)}
+						{setSlug(empresa.slug)}
 					<Box>
 						<Banner empresa={empresa} />
 					</Box>

@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginAdmin(props) {
 	const token = localStorage.getItem('token')
-	console.log(props);
 
 	const classes = useStyles();
 	const [ datos, setDatos ] = useState([]);
@@ -48,7 +47,9 @@ export default function LoginAdmin(props) {
 		"password": datos.password
 	}
 
-	const enviarDatosBD = async () => {
+	const enviarDatosBD = async (e) => {
+		e.preventDefault();
+
 		if (!datos.userName || !datos.password) {
 			setValidate(true);
 			return;
@@ -88,9 +89,6 @@ export default function LoginAdmin(props) {
 				}
 			});
 	};
-	const handleSubmit = () => {
-		enviarDatosBD()
-	};
 
 	return (
         <Grid container className={classes.color}>
@@ -107,8 +105,9 @@ export default function LoginAdmin(props) {
 				</Grid>
 			</Hidden>
 			<Grid xs={12} sm={6} md={6} lg={4} className={classes.color}>
-				<Box p={5} mt={15}>
-					<Typography align="center" variant="h4">Iniciar sesión</Typography>
+				<form onSubmit={enviarDatosBD}>
+					<Box p={5} mt={15}>
+						<Typography align="center" variant="h4">Iniciar sesión</Typography>
 						<Box my={2} className={classes.contaCampos}>
 							<TextField
 								error={!datos.userName && validate}
@@ -139,11 +138,12 @@ export default function LoginAdmin(props) {
 							/>
 						</Box>
 						<Box display="flex" justifyContent="center" mt={5}>
-							<Button type="submit" variant="contained" color="primary" onClick={() => enviarDatosBD()}>
+							<Button type="submit" variant="contained" color="primary">
 								Iniciar sesión
 							</Button>
 						</Box>
 					</Box>
+				</form>
 			</Grid>
 		</Grid>
 	);

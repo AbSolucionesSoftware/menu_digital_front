@@ -89,9 +89,6 @@ export default function LayoutAdmin(props) {
 						<LoadRoutes routes={routes} />
 					</div>
 				</NavProvider>
-				<div>
-					<Footer />
-				</div>
 			</div>
 		</ThemeProvider>
 		</div>
