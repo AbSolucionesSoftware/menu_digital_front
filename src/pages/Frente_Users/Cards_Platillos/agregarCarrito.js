@@ -78,7 +78,7 @@ export default function AgregarCarrito(props) {
         <div>
             <Grid lg={12}>
                 <Box p={2} textAlign="center"> 
-                    <Typography variant="h4">
+                    <Typography variant="h5">
                         Agregar a Orden
                     </Typography>
                 </Box>
@@ -94,8 +94,8 @@ export default function AgregarCarrito(props) {
                             <RemoveIcon />
                         </IconButton>
                     </Box>
-                    <Box p={1}>
-                        <Typography variant="h4" pattern="^[0-9]+">
+                    <Box p={2}>
+                        <Typography variant="h3">
                             {contador}
                         </Typography>
                     </Box>

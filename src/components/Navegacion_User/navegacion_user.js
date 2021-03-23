@@ -104,7 +104,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem >
-							<Typography>
+							<Typography variant="h5">
 								{empresa.nameUser}
 							</Typography>
 						</ListItem>
@@ -181,7 +181,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem >
-							<Typography>
+							<Typography variant="h5">
 								{empresa.nameUser}
 							</Typography>
 						</ListItem>

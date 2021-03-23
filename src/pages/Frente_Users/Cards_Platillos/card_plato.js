@@ -51,7 +51,7 @@ export default function Cards_Platos(props) {
 							<Box p={1}>
 								<Grid xs zeroMinWidth >
 									<Box display="flex" justifyContent="center">
-										<Typography className={classes.rootTitulo} variant="h5" noWrap>
+										<Typography className={classes.rootTitulo} variant="h4" noWrap>
 											{producto.name}
 										</Typography>
 									</Box>
@@ -59,13 +59,13 @@ export default function Cards_Platos(props) {
 								
 								<Grid xs zeroMinWidth >
 									<Box display="flex" justifyContent="center">
-										<Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
+										<Typography className={classes.rootTitulo} variant="h6" noWrap>
 											{producto.description} 
 										</Typography>
 									</Box>
 								</Grid>
 								<Grid item xs zeroMinWidth>
-									<Typography variant="h4" color="textSecondary">
+									<Typography variant="h3" color="textSecondary">
 										${formatoMexico(producto.price)} 
 									</Typography>
 								</Grid>

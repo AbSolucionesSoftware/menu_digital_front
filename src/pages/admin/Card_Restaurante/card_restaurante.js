@@ -27,21 +27,21 @@ export default function Cards_Restaurate(props) {
 								<Box mt={1}>
 									<Grid xs zeroMinWidth >
 										<Box display="flex" justifyContent="center">
-											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+											<Typography className={classes.rootTitulo} variant="h5" noWrap>
 												{empresa.nameCompany}
 											</Typography>
 										</Box>
 									</Grid>
 									<Grid xs zeroMinWidth >
 										<Box display="flex" justifyContent="center">
-											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+											<Typography className={classes.rootTitulo} variant="h5" noWrap>
 											{empresa.owner}
 											</Typography>
 										</Box>
 									</Grid>
 									<Grid xs zeroMinWidth >
 										<Box display="flex" justifyContent="center">
-											<Typography className={classes.rootTitulo} variant="h5" noWrap>
+											<Typography className={classes.rootTitulo} variant="h6" noWrap>
 												{empresa.phone}
 											</Typography>
 										</Box>

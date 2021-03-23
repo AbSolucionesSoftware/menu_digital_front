@@ -80,7 +80,7 @@ export default function Footer() {
                         
                         <Box p={1} display="flex" justifyContent="center" alignItems="center" >
                             <LanguageIcon  mr={2} style={{fontSize: 35}}/>
-                            <Typography>
+                            <Typography variant="h6">
                                 WWW.COMODY.MX
                             </Typography>
                         </Box>

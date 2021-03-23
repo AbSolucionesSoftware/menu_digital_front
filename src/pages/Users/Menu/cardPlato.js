@@ -44,14 +44,14 @@ export default function CardPlato(props) {
                     <Grid lg={7} xs={12}>
                         <Grid xs zeroMinWidth>
                             <Box display="flex" justifyContent="center">
-                                <Typography  className={classes.rootTitulo} variant="h6" noWrap>
+                                <Typography  className={classes.rootTitulo} variant="h5" noWrap>
                                     {producto.name}
                                 </Typography>
                             </Box>
                         </Grid>
                         <Grid xs zeroMinWidth >
                             <Box display="flex" justifyContent="center">
-                                <Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
+                                <Typography className={classes.rootTitulo} variant="h6" noWrap>
                                     {producto.description} 
                                 </Typography>
                             </Box>

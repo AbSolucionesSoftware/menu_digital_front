@@ -98,7 +98,7 @@ export default function Editar(props) {
                 </Grid>
                 <Grid lg={12}>
                     <Box textAlign="center" p={2}>
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             Por favor ingrese su nueva Contraseña
                         </Typography>
                     </Box>

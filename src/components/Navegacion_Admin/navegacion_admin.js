@@ -76,7 +76,7 @@ export default function Navegacion_Admin(props) {
 							</Box>
 						</ListItem>
 						<ListItem >
-							<Typography>
+							<Typography variant="h6">
 								Administrador
 							</Typography>
 						</ListItem>
@@ -126,7 +126,7 @@ export default function Navegacion_Admin(props) {
 							</Box>
 						</ListItem>
 						<ListItem >
-							<Typography>
+							<Typography variant="h6">
 								Administrador
 							</Typography>
 						</ListItem>

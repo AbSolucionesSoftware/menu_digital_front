@@ -129,7 +129,7 @@ function Lista({categoria, props, empresa, slug}) {
                 <Box p={2}>
                     <RestaurantMenuIcon className={classes.large}/>
                 </Box>
-                <Typography variant="h4">
+                <Typography variant="h5">
                     {categoria.categoria}
                 </Typography>
             </Button>

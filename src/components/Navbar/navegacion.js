@@ -97,7 +97,7 @@ function Navegacion(props) {
 						</Hidden>
 						<Grid lg={9} zeroMinWidth >
 							<Box display="flex" justifyContent="center">
-								<Typography variant="h4" noWrap>
+								<Typography variant="h3" noWrap>
 									{nombre} 
 								</Typography>
 							</Box>

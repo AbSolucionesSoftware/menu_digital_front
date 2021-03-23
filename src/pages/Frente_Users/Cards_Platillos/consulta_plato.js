@@ -26,7 +26,7 @@ export default function Consulta_platillos(props) {
         <Container maxWidth="xl">
 			<Grid lg={12} justify="center">
 				<Box p={3} textAlign="center">
-					<Typography variant="h5" color="primary">
+					<Typography variant="h4" color="primary">
 						¡Nuestros platillos! 
 					</Typography>
 				</Box>
