@@ -7,7 +7,16 @@ import App from './App';
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: "Helvetica"
+    h6:{ //testo
+      fontSize: 20
+    },
+    h5:{ //subtitulos
+      fontSize: 18
+    },
+    h4:{ // titulos
+      fontSize: 22
+    },
+    fontFamily: "Helvetica",
   }, 
   palette:{
     primary: {

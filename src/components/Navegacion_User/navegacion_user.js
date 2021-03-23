@@ -141,7 +141,7 @@ export default function Navegacion_User(props) {
 						<ListItem 
 							button
 							component={Link} 
-							
+							to={`${company._id}/${company.slug}`}
 							onClick={() => {
 								setTimeout(() => {  
 									localStorage.removeItem('token');
@@ -149,7 +149,6 @@ export default function Navegacion_User(props) {
 									localStorage.removeItem('user');
 								 }, 1000)
 							}}
-							to={`${company._id}/${company.slug}`}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>

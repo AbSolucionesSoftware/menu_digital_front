@@ -11,11 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import comody from '../../../img/c.jpeg'
 import useStyles from './styles';
 import './styles.scss';
+import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
 
 export default function Cards_Platos(props) {
 	const {productos} = props;
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
+	const sesion = Sesion(props, false);
 	
 	const [agregarProducto, setagregarProducto] = useState({})
 
@@ -67,17 +69,21 @@ export default function Cards_Platos(props) {
 										${formatoMexico(producto.price)} 
 									</Typography>
 								</Grid>
-								<Grid lg={12}>
-									<IconButton
-										color="secondary" 
-										onClick={() => {
-										handleClickOpen()
-										setagregarProducto(producto)
-										}}
-									>
-										<AddShoppingCartIcon color="secondary" className={classes.largeCar} />
-									</IconButton>
-								</Grid>
+								{sesion ? (
+									null
+								) : (
+									<Grid lg={12}>
+										<IconButton
+											color="secondary" 
+											onClick={() => {
+											handleClickOpen()
+											setagregarProducto(producto)
+											}}
+										>
+											<AddShoppingCartIcon color="secondary" className={classes.largeCar} />
+										</IconButton>
+									</Grid>
+								)}
 							</Box>
 						</Grid>	
 						</Box>

@@ -107,7 +107,9 @@ export default function LoginAdmin(props) {
 			<Grid xs={12} sm={6} md={6} lg={4} className={classes.color}>
 				<form onSubmit={enviarDatosBD}>
 					<Box p={5} mt={15}>
-						<Typography align="center" variant="h4">Iniciar sesión</Typography>
+						<Typography align="center" variant="h4">
+							Bienvenido
+						</Typography>
 						<Box my={2} className={classes.contaCampos}>
 							<TextField
 								error={!datos.userName && validate}

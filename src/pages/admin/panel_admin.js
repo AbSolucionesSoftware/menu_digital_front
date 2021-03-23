@@ -49,7 +49,7 @@ import Cards_Restaurate from './Card_Restaurante/card_restaurante'
             <Grid lg={12}>
                 <Box textAlign="center" mt={3}>
                     <Typography variant="h4">
-                        Establecimientos con Menu
+                        Establecimientos con Menú
                     </Typography>
                 </Box>
             </Grid>

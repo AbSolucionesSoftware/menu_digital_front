@@ -271,7 +271,6 @@ export default function RegistroProducto(props) {
 		setSelect(item);
         
 	};
-    console.log(platillos.category);
 
     const addItemSubCategoria = () => {
 		setSubcategoriasDefault([ ...subcategoriasDefault, {subcategory: item } ]);
@@ -343,7 +342,7 @@ export default function RegistroProducto(props) {
                                                     label="Nueva Categoria"
                                                     placeholder="Nueva Categoria"
                                                     multiline
-                                                    value={platillos.category ? '' : platillos.category}
+                                                    // value={platillos.category ? '' : platillos.category}
                                                     variant="outlined"
                                                     onChange={onCategoriaChange}
                                                 />
@@ -402,7 +401,7 @@ export default function RegistroProducto(props) {
                                                     label="Nueva SubCategoria"
                                                     placeholder="Nueva SubCategoria"
                                                     multiline
-                                                    value={platillos.subCategory ? '' : platillos.subCategory}
+                                                    // value={platillos.subCategory ? '' : platillos.subCategory}
                                                     variant="outlined"
                                                     onChange={onSubCategoriaChange}
                                                 />

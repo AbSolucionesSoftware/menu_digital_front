@@ -3,12 +3,41 @@ import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { formatoMexico }from '../../../config/reuserFunction';
 import { ImageContext } from '../../../context/curso_context';
+import PropTypes from 'prop-types';
+import MaskedInput from 'react-text-mask';
+import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
         width: "50%"
     }
 }))
+function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+       
+      />
+    );
+  }
+  
+  NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
 
 export default function Carrito(props) {
     const {setOpen, empresa} = props;
@@ -28,10 +57,7 @@ export default function Carrito(props) {
 
 
     const mensaje = 
-        `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A 
-        ${pedidos === null ? null : 
-            pedidos.map((pedido) => (
-            pedido.cantidad +` *  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+pedido.notas.notas +`) %0A`
+        `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +` *  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+ (pedido.notas.notas ? pedido.notas.notas : "")+ `) %0A`
         ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
 
     useEffect(
@@ -68,7 +94,7 @@ export default function Carrito(props) {
                                 <form noValidate autoComplete="off">
                                     <Box mt={2} textAlign="center">
                                         <Typography variant="h5">
-                                            Tus datos personales:
+                                            Datos de envío
                                         </Typography>
                                     </Box>
                                     <Box display="flex" justifyContent="center" flexWrap="wrap">
@@ -95,6 +121,9 @@ export default function Carrito(props) {
                                                 label="Telefono"
                                                 placeholder="Telefono"
                                                 multiline
+                                                InputProps={{
+                                                    inputComponent: NumberFormatCustom,
+                                                }}
                                                 variant="outlined"
                                                 onChange={(e) =>
                                                     setCliente({ ...cliente, telefono: e.target.value }, setValidate(true)) 
@@ -104,7 +133,7 @@ export default function Carrito(props) {
                                     </Box>
                                     <Box textAlign="center">
                                         <Typography variant="h5">
-                                            Datos domiciliarios:
+                                            Dirección
                                         </Typography>
                                     </Box>
                                     <Box display="flex" justifyContent="center" flexWrap="wrap">
@@ -154,16 +183,16 @@ export default function Carrito(props) {
                                 </form>
                             </Box>
                         </Grid>
-                        <Grid>
+                        {/* <Grid>
                         <Box textAlign="center">
                             <Typography variant="h5">
-                                Tu orden:
+                                Tu pedido:
                             </Typography>
                         </Box>
-                        </Grid>
+                        </Grid> */}
                        
                         <Grid lg={12}>
-                            <Box p={2} display="flex" justifyContent="center">
+                            {/* <Box p={2} display="flex" justifyContent="center">
                                 <Grid lg={5}>
                                     <Box  p={1}>
                                         <Typography variant="h6">
@@ -231,9 +260,9 @@ export default function Carrito(props) {
                                     </Box>
                                 ))
                             )
-                            }
+                            } */}
                         <Grid lg={10}>
-                            <Box p={2} display="flex" justifyContent="flex-end">
+                            <Box p={2} display="flex" justifyContent="center">
                                 <Typography variant="h5">
                                 TOTAL:  ${formatoMexico(total)}
                                 </Typography>

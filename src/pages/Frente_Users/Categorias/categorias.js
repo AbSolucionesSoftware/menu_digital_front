@@ -129,7 +129,7 @@ function Lista({categoria, props, empresa, slug}) {
                 <Box p={2}>
                     <RestaurantMenuIcon className={classes.large}/>
                 </Box>
-                <Typography variant="h6">
+                <Typography variant="h4">
                     {categoria.categoria}
                 </Typography>
             </Button>
@@ -137,7 +137,7 @@ function Lista({categoria, props, empresa, slug}) {
             <StyledMenu
                 id={categoria.categoria}
                 anchorEl={ancho}
-                keepMounted
+                // keepMounted
                 open={Boolean(ancho)}
                 onClose={handleClose}
             >

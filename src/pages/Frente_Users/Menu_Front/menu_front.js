@@ -47,9 +47,9 @@ export default function Menu_Front(props) {
 					</Box>
 
 					<Grid lg={12}>
-						<Box mt={2} textAlign="center">
+						<Box mt={3} textAlign="center">
 							<Typography variant="h5">
-								Consulta nuestro Menu y Carta
+								Conoce Nuestro Menú
 							</Typography>
 						</Box>
 					</Grid>

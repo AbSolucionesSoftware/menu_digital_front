@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.text.secondary,
         },
         subCate:{
-            height: 35,
-            width: 250
+            height: 25,
+            width: 250,
+            textTransform: 'uppercase'
         }
     }
 ));
