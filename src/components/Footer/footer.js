@@ -45,16 +45,16 @@ export default function Footer() {
                             <PhoneForwardedIcon style={{fontSize: 35}}/>
                         </Box>
                         <Typography variant="body1">
-                            3173873462
+                           3173873462
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center" alignItems="center">
-                        <Box mr={2}>
+                        {/* <Box mr={2}>
                             <MailOutlineIcon style={{fontSize: 35}}/>
                         </Box>
                         <Typography variant="body1">
                             correo.correo@gmail.com
-                        </Typography>
+                        </Typography> */}
                     </Box>
                 </Grid>
                 <Hidden xsDown>
@@ -70,19 +70,19 @@ export default function Footer() {
                             ¡Encuentranos y Siguenos!
                         </Typography>
                         <Box display="flex" justifyContent="center">
-                            <Box p={1} >
+                            {/* <Box p={1} >
                                 <FacebookIcon style={{fontSize: 35}}/>
                             </Box>
                             <Box p={1}>
                                 <InstagramIcon style={{fontSize: 35}} />
-                            </Box>
+                            </Box> */}
                         </Box>
                         
                         <Box p={1} display="flex" justifyContent="center" alignItems="center" >
-                            <LanguageIcon  mr={2} style={{fontSize: 35}}/>
+                            {/* <LanguageIcon  mr={2} style={{fontSize: 35}}/>
                             <Typography variant="h6">
                                 WWW.COMODY.MX
-                            </Typography>
+                            </Typography> */}
                         </Box>
                     </Box>
                 </Grid>
