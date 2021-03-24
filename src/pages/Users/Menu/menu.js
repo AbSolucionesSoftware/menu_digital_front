@@ -19,10 +19,12 @@ export default function Menu() {
         await clienteAxios
 			.get(`/product/${user._id}`)
 			.then((res) => {
+                setUpload(true);
                 setLoading(false);
                 setProductos(res.data);
 			})
 			.catch((err) => {
+                setUpload(true);
                 setLoading(false);
                 console.log(err);
 			});

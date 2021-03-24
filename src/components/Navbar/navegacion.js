@@ -4,7 +4,8 @@ import { AppBar, Badge, Button, fade, Hidden, IconButton,
 		} from '@material-ui/core'
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import clienteAxios from '../../config/axios';
+import SearchIcon from '@material-ui/icons/Search';
+// import clienteAxios from '../../config/axios';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
@@ -23,9 +24,13 @@ function Navegacion(props) {
 
 	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-    const {  nombre, id, slug } = useContext(ImageContext);
+    const {  nombre,  } = useContext(ImageContext);
 	const token = localStorage.getItem('token');
-	const datos = JSON.parse(localStorage.getItem('tienda'));
+	const [ busqueda, setBusqueda ] = useState('');
+
+	const slug = localStorage.getItem('slug');
+	const id = localStorage.getItem('idEmpresa');
+
 	var decoded = Jwt(token);
 
 	function Jwt(token) {
@@ -36,16 +41,6 @@ function Navegacion(props) {
 		}
 	}
 
-	const idMenu = props.location.pathname;
-    const isMenuOpen = Boolean(anchorEl);
-
-    const handleProfileMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleMenuClose = () => {
-		setAnchorEl(null);
-	};
-
     const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -54,16 +49,19 @@ function Navegacion(props) {
 		setOpen(false);
 	};
 
-	const obtenerBusqueda = async () => {
-		await clienteAxios
-			.post(`/product/search/company${idMenu}`, {filter: "camarones"})
-			.then((res) => {
+	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
 
-			})
-			.catch((err) => {
-				
-			})
-	}
+	const buscarBD = () => {
+		if (!busqueda) {
+			return;
+		}
+		props.history.push(`/${id}/${slug}/busqueda/${busqueda}`);
+	};
+
+	const pressEnter = (e) => {
+		if(!e.target.defaultValue) return;
+		if(e.key === "Enter") props.history.push(`/${id}/${slug}/busqueda/${e.target.defaultValue}`);
+	};
 
 	function Jwt(token) {
 		try {
@@ -91,18 +89,45 @@ function Navegacion(props) {
 							</IconButton>
 						</Hidden>
 						<Hidden smDown>
-							<Box className={classes.containerImage}>  
+							<Box component={Link} to={`/${id}/${slug}`} className={classes.containerImage}>  
 								<img  className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
 						</Hidden>
-						<Grid lg={9} zeroMinWidth >
-							<Box display="flex" justifyContent="center">
-								<Typography variant="h3" noWrap>
-									{nombre} 
-								</Typography>
-							</Box>
-						</Grid>
+						<div className={classes.search}>
+							
+							<InputBase
+								placeholder="¿Qué quieres comer hoy?"
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput
+								}}
+								inputProps={{ 'aria-label': 'search' }}
+								value={busqueda}
+								onChange={obtenerBusqueda}
+								onKeyPress={pressEnter}
+							/>
+							<div className={classes.grow} />
+							<IconButton size="small" color="inherit"  onClick={() => buscarBD()} >
+								<SearchIcon />
+							</IconButton>
+						</div>
+						<Hidden smDown>
+							<Grid lg={8} zeroMinWidth >
+								<Box display="flex" justifyContent="center" >
+									<Typography variant="h3" noWrap>
+										{nombre} 
+									</Typography>
+								</Box>
+							</Grid>
 						
+
+							<Grid  >
+							<ListItem button component={Link} to={`/${id}/${slug}`} >
+								<ListItemText primary="Inicio" />
+							</ListItem>
+							</Grid>
+						</Hidden>
+
 						<div className={classes.grow} />
 						<Hidden smDown>
 							{decoded ? (
@@ -143,11 +168,16 @@ function Navegacion(props) {
 					)}
 					<List>
 						<ListItem button component={Link} to={`/${id}/${slug}`} >
+							<ListItemText primary={nombre} />
+						</ListItem>
+						<ListItem button component={Link} to={`/${id}/${slug}`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
+
+						
 						{decoded ? (
 							<ListItem>
 								<ListItemIcon>

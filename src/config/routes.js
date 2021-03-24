@@ -15,6 +15,7 @@ import Carrito from '../pages/Frente_Users/Carrito/carrito';
 import Busqueda from '../pages/Frente_Users/Busqueda/busqueda';
 import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
 import BusquedaSubCates from '../pages/Frente_Users/Categorias/busquedaSubCates';
+
 import ResultadoBusqueda from '../pages/Frente_Users/Busqueda/busqueda';
 
 import Error404 from '../components/error'
@@ -79,6 +80,11 @@ const routes = [
 			{
 				path: '/:idMenu/:slug/subCategorias/:subCategoria',
 				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/:idMenu/:slug/busqueda/:busqueda',
+				component: ResultadoBusqueda,
 				exact: true
 			},
 			{

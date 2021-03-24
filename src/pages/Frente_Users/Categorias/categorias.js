@@ -61,25 +61,6 @@ function Categorias(props) {
 	}, [])
 
     
-    // const buscarProductos = async () => {
-    //     await clienteAxios
-    //         .post(`/product/search/subCategory/`, {subCategory: 'Arrachera', company: empresa._id})
-    //         .then((res) => {
-    //             console.log(res);
-    //             // setCategorias(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.response);
-    //             console.log("No jalo");
-    //         })
-    // }
-
-    useEffect(() => {
-
-        // buscarProductos()
-        
-    }, [])
-    
     const render = categorias.map((categoria, index) => {
         return(
             <Lista key={index} slug={slug} empresa={empresa} categoria={categoria} props={props} />
@@ -126,18 +107,19 @@ function Lista({categoria, props, empresa, slug}) {
                     handleClick(e)
                 }}
             >
-                <Box p={2}>
+                <Box>
                     <RestaurantMenuIcon className={classes.large}/>
                 </Box>
-                <Typography variant="h5">
-                    {categoria.categoria}
-                </Typography>
+                <Box>
+                    <Typography variant="h5">
+                        {categoria.categoria}
+                    </Typography>
+                </Box>
             </Button>
 
             <StyledMenu
                 id={categoria.categoria}
                 anchorEl={ancho}
-                // keepMounted
                 open={Boolean(ancho)}
                 onClose={handleClose}
             >
@@ -147,7 +129,7 @@ function Lista({categoria, props, empresa, slug}) {
                             <StyledMenuItem id={sub._id}>
                                 <ListItem button  
                                     onClick={() => {
-                                            localStorage.setItem("tienda" , JSON.stringify(tienda))
+                                            
                                             props.history.push(`/${empresa}/${slug}/subCategorias/${sub._id}`)
                                         }}  
                                 >

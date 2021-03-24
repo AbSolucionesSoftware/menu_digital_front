@@ -57,8 +57,8 @@ export default function Carrito(props) {
 
 
     const mensaje = 
-        `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +`  ($${pedido.precio}) = $`+ (pedido.precio*pedido.cantidad) +` (`+ (pedido.notas.notas ? pedido.notas.notas : "")+ `) %0A`
-        ))} %0A Con un total de: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
+        `¡Hola!, me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) +` (`+ (pedido.notas.notas ? pedido.notas.notas : "")+ `) %0A`
+        ))} %0A Total de tu pedido: $ ${total}%0A %0A A mi domicilio *${cliente.domicilio}*, *${cliente.colonia} en ${cliente.ciudad}*.%0A %0A A nombre de *${cliente.nombre}*, mi telefono *${cliente.telefono}*.%0A %0AGracias`;
 
     useEffect(
 		() => {

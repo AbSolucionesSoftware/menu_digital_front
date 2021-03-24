@@ -6,7 +6,7 @@ import clienteAxios from '../../../../config/axios';
 
 
 export default function Eliminar(props){
-	const { platillo, setUpload } = props;
+	const { platillo, setUpload, upload } = props;
 	const token = localStorage.getItem('token');
 	const [ loading, setLoading ] = useState(false);
 
@@ -20,6 +20,7 @@ export default function Eliminar(props){
 
 	const handleDeleteConfimation = (idPlatillo) => {
 		setDeleteConfimation({ open: !deleteConfimation.open, id: idPlatillo });
+		setUpload(!upload);
 	};
 
 	const [ snackbar, setSnackbar ] = useState({
@@ -37,7 +38,7 @@ export default function Eliminar(props){
 				}
             })
 			.then((res) => {
-				setUpload(true);
+				setUpload(!upload);
                 setLoading(false);
                 setResourceDel({open: false, resource: ''});
 				setSnackbar({
@@ -47,6 +48,7 @@ export default function Eliminar(props){
 				});
 			})
 			.catch((err) => {
+				setUpload(!upload);
                 setLoading(false);
                 console.log(err);
 				setSnackbar({

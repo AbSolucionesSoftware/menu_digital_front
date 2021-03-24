@@ -1,4 +1,4 @@
-import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core'
+import { Box, Grid, Hidden, IconButton, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 
 import comody from '../../img/Comody.jpeg';
@@ -34,17 +34,17 @@ export default function Footer() {
                 <Grid lg={4} xs={12}>
                     <Box p={1} textAlign="center">
                         <Typography variant="body1">
-                            ¿Te interesa formar parte de Comody?
+                            ¿Quieres tener tu menú digital?
                         </Typography>
                         <Typography variant="body1">
-                            Contactanos:
+                            Contáctanos:
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center">
                         <Box mr={2}>
                             <PhoneForwardedIcon style={{fontSize: 35}}/>
                         </Box>
-                        <Typography variant="body1">
+                        <Typography variant="h5">
                            3173873462
                         </Typography>
                     </Box>
@@ -70,12 +70,14 @@ export default function Footer() {
                             ¡Encuentranos y Siguenos!
                         </Typography>
                         <Box display="flex" justifyContent="center">
-                            {/* <Box p={1} >
-                                <FacebookIcon style={{fontSize: 35}}/>
+                            <Box p={1} >
+                                <a target="_blank" href="https://www.facebook.com/Comody-tu-men%C3%BA-digital-101302482046695">
+                                <FacebookIcon style={{color: "white",fontSize: 50}}/>
+                                </a>
                             </Box>
-                            <Box p={1}>
+                            {/* <Box p={1}>
                                 <InstagramIcon style={{fontSize: 35}} />
-                            </Box> */}
+                            </Box>  */}
                         </Box>
                         
                         <Box p={1} display="flex" justifyContent="center" alignItems="center" >

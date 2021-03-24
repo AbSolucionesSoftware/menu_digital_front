@@ -76,7 +76,7 @@ export default function CardPlato(props) {
                             </Button>
                             </Box>
                             <Box p={1}>
-                                <Eliminar setUpload={setUpload} platillo={producto._id}/>
+                                <Eliminar upload={upload} setUpload={setUpload} platillo={producto._id}/>
                             </Box>
                         </Box>
                     </Grid>

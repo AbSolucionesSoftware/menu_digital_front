@@ -42,6 +42,8 @@ export default function Menu_Front(props) {
 						{setNombre(empresa.nameCompany)}
 						{setId(empresa._id)}
 						{setSlug(empresa.slug)}
+						{localStorage.setItem("idEmpresa", empresa._id)}
+						{localStorage.setItem("slug", empresa.slug)}
 					<Box>
 						<Banner empresa={empresa} />
 					</Box>
