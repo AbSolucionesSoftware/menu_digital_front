@@ -183,31 +183,31 @@ export default function Carrito(props) {
                                 </form>
                             </Box>
                         </Grid>
-                        {/* <Grid>
+                        <Grid>
                         <Box textAlign="center">
                             <Typography variant="h5">
                                 Tu pedido:
                             </Typography>
                         </Box>
-                        </Grid> */}
+                        </Grid>
                        
                         <Grid lg={12}>
-                            {/* <Box p={2} display="flex" justifyContent="center">
+                            <Box p={2} display="flex" justifyContent="center">
+                                <Grid lg={2}>
+                                    <Box  p={1}>
+                                        <Typography variant="h6">
+                                            Cant.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
                                 <Grid lg={5}>
                                     <Box  p={1}>
                                         <Typography variant="h6">
-                                        Platillo
+                                            Platillo
                                         </Typography>
                                     </Box>
-                                </Grid>
-                                <Grid lg={2}>
-                                    <Box  p={1}>
-                                        <Typography variant="h6">
-                                            Cantidad
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid lg={2}>
+                                </Grid> 
+                                 <Grid lg={2}>
                                     <Box  p={1}>
                                         <Typography variant="h6">
                                             Precio
@@ -228,13 +228,6 @@ export default function Carrito(props) {
                             ) : (
                                 pedidos.map((pedido) => (
                                     <Box p={2} display="flex" justifyContent="center">
-                                       <Grid lg={5} zeroMinWidth>
-                                            <Box p={1}>
-                                                <Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
-                                                    {pedido.nombre}
-                                                </Typography>
-                                            </Box>
-                                        </Grid>
                                         <Grid lg={2}>
                                             <Box  p={1}>
                                                 <Typography variant="body1">
@@ -242,6 +235,14 @@ export default function Carrito(props) {
                                                 </Typography>
                                             </Box>
                                         </Grid>
+                                       <Grid lg={5} zeroMinWidth>
+                                            <Box p={1}>
+                                                <Typography className={classes.rootTitulo} variant="subtitle1" noWrap>
+                                                    {pedido.nombre}
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                        
                                         <Grid lg={2}>
                                             <Box  p={1}>
                                                 <Typography variant="body1">
@@ -260,7 +261,7 @@ export default function Carrito(props) {
                                     </Box>
                                 ))
                             )
-                            } */}
+                            }
                         <Grid lg={10}>
                             <Box p={2} display="flex" justifyContent="center">
                                 <Typography variant="h5">
