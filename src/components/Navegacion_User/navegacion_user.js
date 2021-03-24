@@ -257,7 +257,7 @@ export default function Navegacion_User(props) {
 						<TextField
 							color="primary"
 							style={{width: '100%'}}
-							value={`http://localhost:3000/${company._id}/${company.slug}`}
+							value={`http://www.comody.mx/${company._id}/${company.slug}`}
 							name="Link"
 							id="link"
 							label="Link"
@@ -272,7 +272,7 @@ export default function Navegacion_User(props) {
 						</Box>
 						<Grid item>
 							<WhatsappShareButton 
-								url={`https://localhost:3000/${company._id}/${company.slug}`} 
+								url={`https://www.comody.mx/${company._id}/${company.slug}`} 
 								title="Te comparto mi menu Digital" 
 								separator=": ">
 								<WhatsappIcon style={{ fontSize: 45, color: '#00bb2d' }} />
