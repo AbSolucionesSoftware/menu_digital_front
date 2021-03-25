@@ -32,7 +32,7 @@ export default function Consulta_platillos(props) {
 				</Box>
 			</Grid>
             <Grid container lg={12}>
-                <Cards_Platos productos={productos}/>
+                <Cards_Platos empresa={empresa} productos={productos}/>
             </Grid>
         </Container>
 

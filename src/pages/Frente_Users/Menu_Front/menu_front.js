@@ -1,4 +1,4 @@
-import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import No_Page from '../../../components/noPage'
 
@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
 	containerImage:{
 		width: 150,
 		height: 90
-	}
+	},
+	large: {
+		width: theme.spacing(15),
+		height: theme.spacing(15),
+	  },
 }));
 
 export default function Menu_Front(props) {
@@ -62,8 +66,8 @@ export default function Menu_Front(props) {
 					</Box>
 
 					<Grid container justify="center" lg={12}>
-						<Box mt={3} textAlign="center" className={classes.containerImage}>
-							<img className={classes.imagen} alt="Imagen Logo" src={empresa.logoImagenUrl}/>
+						<Box mt={3} textAlign="center">
+							<Avatar className={classes.large} alt="Remy Sharp"  src={empresa.logoImagenUrl} />
 						</Box>
 					</Grid>
 

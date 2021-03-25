@@ -117,19 +117,19 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
-								Ver mi menu digital
+								Ver mi menú digital
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
 							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
-								Compartir Menu
+								Compartir Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
-								Menu
+								Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
@@ -194,19 +194,19 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
-								Ver mi menu digital
+								Ver mi menú digital
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
 							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
-								Compartir Menu
+								Compartir Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
-								Menu
+								Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
@@ -250,7 +250,7 @@ export default function Navegacion_User(props) {
 				<Box p={5} textAlign="center">
 					<Box p={1}>
 						<Typography variant="h6">
-							Comparte este enlace para poder compartir tu Menu!
+							Comparte este enlace para poder compartir tu Menú
 						</Typography>
 					</Box>
 					<Box textAlign="center" p={2}>
@@ -267,13 +267,13 @@ export default function Navegacion_User(props) {
 					<Grid spacing={3} justify="center">
 						<Box>
 							<Typography variant="h6">
-								Comparte tu menu digital en WhatssAp
+								Comparte tu menú digital en WhatssAp
 							</Typography>
 						</Box>
 						<Grid item>
 							<WhatsappShareButton 
 								url={`https://www.comody.mx/${company._id}/${company.slug}`} 
-								title="Te comparto mi menu Digital" 
+								title="Te comparto mi menú Digital" 
 								separator=": ">
 								<WhatsappIcon style={{ fontSize: 45, color: '#00bb2d' }} />
 							</WhatsappShareButton>

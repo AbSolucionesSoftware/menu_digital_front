@@ -155,6 +155,9 @@ function Navegacion(props) {
 						<IconButton onClick={handleDrawerClose}>
 							<ChevronLeftIcon />
 						</IconButton>
+						<Box component={Link} to={`/${id}/${slug}`} className={classes.containerImage}>  
+							<img className={classes.image} alt="logotipo" src={Comody}/>
+						</Box>
 					</div>
 					<Divider />
 					{decoded ? (
@@ -169,7 +172,7 @@ function Navegacion(props) {
 					)}
 					<List>
 						<ListItem button component={Link} to={`/${id}/${slug}`} >
-							<ListItemText primary={nombre} />
+							<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${id}/${slug}`} >
 							<ListItemIcon>
