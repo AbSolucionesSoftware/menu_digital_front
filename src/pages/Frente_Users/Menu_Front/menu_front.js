@@ -1,4 +1,4 @@
-import { Box, Grid, Hidden, Typography } from '@material-ui/core';
+import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import No_Page from '../../../components/noPage'
 
@@ -10,7 +10,20 @@ import Consulta_platillos from '../Cards_Platillos/consulta_plato';
 import Spin from '../../../components/Spin/spin';
 import { ImageContext } from '../../../context/curso_context';
 
+
+const useStyles = makeStyles((theme) => ({
+    imagen: {
+		maxHeight: '100%',
+		maxWidth: '100%'
+	},
+	containerImage:{
+		width: 300,
+		height: 190
+	}
+}));
+
 export default function Menu_Front(props) {
+	const classes = useStyles();
 
 	const idMenu = props.match.params.idMenu;
 	const [empresas, setEmpresas] = useState([]);
@@ -48,11 +61,9 @@ export default function Menu_Front(props) {
 						<Banner empresa={empresa} />
 					</Box>
 
-					<Grid lg={12}>
-						<Box mt={3} textAlign="center">
-							<Typography variant="h4">
-								Conoce Nuestro Menú
-							</Typography>
+					<Grid container justify="center" lg={12}>
+						<Box mt={3} textAlign="center" className={classes.containerImage}>
+							<img className={classes.imagen} alt="Imagen Logo" src={empresa.logoImagenUrl}/>
 						</Box>
 					</Grid>
 

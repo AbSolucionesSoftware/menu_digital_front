@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	containerImage:{
 		width: 140,
-		height: 50
+		height: 40
 	}
 }));
 

@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, DialogTitle, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
-import React, { useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone';
+import React, { useCallback, useEffect, useState } from 'react'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
 import clienteAxios from '../../../config/axios';
@@ -12,9 +13,8 @@ NumberFormatCustom.propTypes = {
     inputRef: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-  };
-
-  function NumberFormatCustom(props) {
+};
+function NumberFormatCustom(props) {
     const { inputRef, onChange, ...other } = props;
   
     return (
@@ -29,20 +29,55 @@ NumberFormatCustom.propTypes = {
             },
           });
         }}
-        
       />
     );
-  }
+}
+NumberFormatDinero.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
+function NumberFormatDinero(props) {
+    const { inputRef, onChange, ...other } = props;
+
+    return (
+        <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+            onChange({
+            target: {
+                name: props.name,
+                value: values.value,
+            },
+            });
+        }}
+        thousandSeparator
+        isNumericString
+        prefix="$"
+        />
+    );
+}
+
 
 const useStyles = makeStyles((theme) => ({
     text:{
         width: "100%"
+    },
+    dropZone: {
+        width: 300,
+        height: 300,
+        display:"flex",
+        justifyContent: "center",
+        alignContent: "center",
+        border: 'dashed 2px',
+        borderColor: '#aaaaaa'
     }
 }));
 
 
 export default function Editar_User(props) {
-    const {handleDrawerClose, datosEmpresa, setDatosEmpresa, setUpload} = props;
+    const {handleDrawerClose, datosEmpresa, setDatosEmpresa, setUpload, upload} = props;
 	const [ control, setControl ] = useState(false);
     const [editar, setEditar] = useState([]);
     const [open, setOpen] = useState(false);
@@ -65,20 +100,48 @@ export default function Editar_User(props) {
     };
 
     const handleClose = () => {
+        setUpload(!upload);
         setOpen(false);
     };
-    
-    const array = {
-        "nameCompany": datosEmpresa.nameCompany,
-        "owner": datosEmpresa.owner,
-        "slug": datosEmpresa.slug,
-        "phone": datosEmpresa.phone,
-    }
+//---------------------------------EDICION DE IMAGENES-----------------------------------------------
+    const [ preview, setPreview ] = useState('');
+    const [ datos, setDatos] = useState([]);
 
+    const onDrop = useCallback(
+		(files) => {
+            setPreview(URL.createObjectURL(files[0]));
+            setDatos({
+                ...datos,
+                imagen: files[0]
+            });
+		},
+		[ datos, setDatos, setPreview ]
+	);
+    
+    useEffect(() => {
+        if (datosEmpresa) {
+            setPreview(datosEmpresa.logoImagenUrl);
+        }
+    }, [])
+
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+//---------------------------FIN EDICION DE IMAGENES-----------------------------------------------
     const editarDatos = async () => {
 	    setLoading(true);
+
+        const formData = new FormData();
+        formData.append("category", datosEmpresa.nameCompany);
+        formData.append("subCategory", datosEmpresa.owner);
+        formData.append("name", datosEmpresa.slug);
+        formData.append("price", datosEmpresa.phone);
+        formData.append("description", datosEmpresa.priceEnvio);
+        formData.append("imagen", datos.imagen);
+
+        console.log(datos.imagen);
+
         await clienteAxios
-			.put(`/company/${datosEmpresa._id}`, array, 
+			.put(`/company/${datosEmpresa._id}`, formData, 
             {
 				headers: {
 					Authorization: `bearer ${token}`
@@ -87,8 +150,7 @@ export default function Editar_User(props) {
 			.then((res) => {
                 setLoading(false);
                 handleDrawerClose();
-                setUpload(true);
-                // setDatosEmpresa(res.data)
+                setUpload(!upload);
                 setSnackbar({
 					open: true,
 					mensaje: 'Usuario editado exitosamente!',
@@ -125,6 +187,7 @@ export default function Editar_User(props) {
         .then((res) => {
             setLoading(false);
             handleClose()
+            setUpload(!upload);
             setSnackbar({
                 open: true,
                 mensaje: 'Contraseña editada exitosamente!',
@@ -223,6 +286,57 @@ export default function Editar_User(props) {
                                         setDatosEmpresa({ ...datosEmpresa, phone: e.target.value })
                                     }
                                 />
+                            </Box>
+                            <Box p={2}>
+                                <TextField
+                                    defaultValue={datosEmpresa.priceEnvio}
+                                    className={classes.text}
+                                    id="priceEnvio"
+                                    label="Costo de Envio"
+                                    placeholder="Costo de Envio"
+                                    multiline
+                                    variant="outlined"
+                                    InputProps={{
+                                        inputComponent: NumberFormatDinero,
+                                    }}
+                                    onChange={(e) =>
+                                        setDatosEmpresa({ ...datosEmpresa, priceEnvio: e.target.value })
+                                    }
+                                />
+                            </Box>
+                            <Grid item lg={12}>
+                                <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
+                                    <Alert severity="info">
+                                        Tamaño recomendado para su imagen: Alto: 600px, Ancho: 600px
+                                    </Alert>
+                                </Box>
+                            </Grid>
+                            <Box p={2}>
+                                <Box
+                                    p={2}
+                                    mt={3}
+                                    className={classes.dropZone}
+                                    {...getRootProps()}
+                                    height={200}
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    textAlign="center"
+                                    
+                                >
+                                    <input {...getInputProps()} />
+                                    {datos.imagen || preview ? (
+                                        <Box display="flex" alignItems="center" justifyContent="center">
+                                            <img alt="imagen del banner" src={preview} className={classes.imagen} />
+                                        </Box>
+                                    ) : isDragActive ? (
+                                        <Typography>Suelta tu imagen aquí...</Typography>
+                                    ) : (
+                                        <Typography>
+                                            Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
+                                        </Typography>
+                                    )}
+                                </Box>
                             </Box>
                     </Box>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">

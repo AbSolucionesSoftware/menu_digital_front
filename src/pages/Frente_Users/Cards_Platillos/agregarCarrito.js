@@ -136,6 +136,17 @@ export default function AgregarCarrito(props) {
                         </Button>
                     </Tooltip>
                 </Box>
+                <Box p={1} textAlign="center">
+                    <Button
+                        className={classes.buton}
+                        variant="contained" 
+                        color="primary"
+                        size="large"
+                        onClick={() => setOpen(false)}
+                    >
+                        Salir
+                    </Button>
+                </Box>
             </Grid>
         </div>
     )

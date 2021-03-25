@@ -26,11 +26,12 @@ function Navegacion(props) {
 	const [ anchorEl, setAnchorEl ] = useState(null);
     const {  nombre,  } = useContext(ImageContext);
 	const token = localStorage.getItem('token');
-	const [ busqueda, setBusqueda ] = useState('');
-
 	const slug = localStorage.getItem('slug');
 	const id = localStorage.getItem('idEmpresa');
 
+	const [ busqueda, setBusqueda ] = useState('');
+
+	
 	var decoded = Jwt(token);
 
 	function Jwt(token) {

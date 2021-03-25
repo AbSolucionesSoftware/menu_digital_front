@@ -2,11 +2,25 @@ import React, { useEffect, useState } from 'react'
 import Editar_User from './editar_user'
 
 import TextField from '@material-ui/core/TextField';
-import { Box, Button, Drawer, Grid, Typography } from '@material-ui/core/'
+import { Box, Button, Drawer, Grid, makeStyles, Typography } from '@material-ui/core/'
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
 
+const useStyles = makeStyles((theme) => ({
+    imagen: {
+		maxHeight: '100%',
+		maxWidth: '100%'
+	},
+	containerImage:{
+		width: 300,
+		height: 190
+	}
+}));
+
 export default function PanelUser() {
+
+	const classes = useStyles();
+
     const [ datosEmpresa, setDatosEmpresa] = useState([]);
 	const [ loading, setLoading ] = useState(false);
     const [ upload, setUpload ] = useState(false);
@@ -76,6 +90,11 @@ export default function PanelUser() {
                 </Grid>
                 <Grid lg={12}>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        <Box p={2} className={classes.containerImage}>
+                            <img alt="Imagen de Logo" className={classes.imagen} src={datosEmpresa.logoImagenUrl}/>
+                        </Box>
+                    </Box>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={3}>
                             <TextField variant="outlined" label="Compañia" value={`${datosEmpresa.nameCompany}`}/>
                         </Box>
@@ -86,9 +105,11 @@ export default function PanelUser() {
                             <TextField variant="outlined" label="Identificador" value={`${datosEmpresa.slug}`}/>
                         </Box>
                         <Box p={3}>
+                            <TextField variant="outlined" label="Costo de Envio" value={`$${datosEmpresa.priceEnvio}`}/>
+                        </Box>
+                        <Box p={3}>
                             <TextField variant="outlined" label="Telefono" value={`${datosEmpresa.phone}`}/>
                         </Box>
-                        
                     </Box>
                 </Grid>
                 <Grid lg={12} >
@@ -114,7 +135,8 @@ export default function PanelUser() {
                     handleDrawerClose={handleDrawerClose} 
                     setUpload={setUpload} 
                     datosEmpresa={datosEmpresa} 
-                    setDatosEmpresa={setDatosEmpresa} 
+                    setDatosEmpresa={setDatosEmpresa}
+                    upload={upload}
                 />
                 <Box display="flex" justifyContent="center" mt={4}>
                     <Button

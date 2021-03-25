@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import AgregarCarrito from './agregarCarrito';
 import {formatoMexico} from '../../../config/reuserFunction'
 
-import { Avatar, Box, Dialog, Grid, Hidden, IconButton } from '@material-ui/core';
+import { Avatar, Box, Button, Dialog,  Grid, Hidden, IconButton, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+
 import Typography from '@material-ui/core/Typography';
 
 import comody from '../../../img/c.jpeg'
@@ -28,6 +29,7 @@ export default function Cards_Platos(props) {
     const handleClose = (value) => {
         setOpen(false);
     };
+	
 
 	const render = productos.map((producto, index) => {
 		return (
@@ -73,15 +75,19 @@ export default function Cards_Platos(props) {
 									null
 								) : (
 									<Grid lg={12}>
-										<IconButton
-											color="secondary" 
-											onClick={() => {
-											handleClickOpen()
-											setagregarProducto(producto)
-											}}
-										>
-											<AddShoppingCartIcon color="secondary" className={classes.largeCar} />
-										</IconButton>
+										<Box p={1} mt={2}>
+											<Button
+												variant="contained" 
+												color="primary" 
+												onClick={() => {
+												handleClickOpen()
+												setagregarProducto(producto)
+												}}
+											>
+												Agregar a orden
+												{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
+											</Button>
+										</Box>
 									</Grid>
 								)}
 							</Box>
@@ -99,7 +105,7 @@ export default function Cards_Platos(props) {
                 {render}
             </Grid>
 
-			<Dialog open={open} onClose={handleClose} >
+			<Dialog open={open} onClose={handleClose}>
 				<AgregarCarrito descripcion={agregarProducto.description} nombre={agregarProducto.name} precio={agregarProducto.price} setOpen={setOpen}  />
 			</Dialog>
 			
