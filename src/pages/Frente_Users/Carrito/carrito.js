@@ -63,8 +63,6 @@ export default function Carrito(props) {
         setEnvio(event.target.value);
     };
 
-    
-
     const classes = useStyles();
 
     function borrarCarrito() {
@@ -74,11 +72,13 @@ export default function Carrito(props) {
 
     function borrarProducto(key) {
         carrito.forEach(function(elemento, indice, array) {
-            carrito.splice(key, 4);
-            console.log(carrito);
+            if(key === indice){
+                carrito.splice(key, 1);
+                localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
+                setPedidos(carrito);
+            }
         })
-    }
-    console.log(carrito);
+    };
 
     const mensaje = 
         `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  `(`+ pedido.notas.notas +`)` : "")+ `%0A`
@@ -222,7 +222,7 @@ export default function Carrito(props) {
                                             <TableCell align="center" style={{ fontWeight: 600}} >Platillo</TableCell>
                                             <TableCell align="center" style={{ fontWeight: 600}} >Precio</TableCell>
                                             <TableCell align="center" style={{ fontWeight: 600}} >Total</TableCell>
-                                            {/* <TableCell align="center" style={{ fontWeight: 600}} ></TableCell> */}
+                                            <TableCell align="center" style={{ fontWeight: 600}} ></TableCell>
                                         </TableRow>
                                         <TableBody>
                                         { pedidos === null ? (
@@ -234,7 +234,7 @@ export default function Carrito(props) {
                                                     <TableCell align="center">{pedido.nombre}</TableCell>
                                                     <TableCell align="center">${formatoMexico(pedido.precio)}</TableCell>
                                                     <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad)}</TableCell>
-                                                    {/* <TableCell align="center">
+                                                    <TableCell align="center">
                                                         <IconButton 
                                                             onClick={
                                                                 () => borrarProducto(index)
@@ -243,7 +243,7 @@ export default function Carrito(props) {
                                                         >
                                                             <DeleteIcon fontSize="small" />
                                                         </IconButton>
-                                                    </TableCell> */}
+                                                    </TableCell>
                                                 </TableRow>
                                             ))
                                         )}
