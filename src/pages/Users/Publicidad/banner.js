@@ -57,6 +57,7 @@ export default function Banner() {
 			.then((res) => {
                 setLoading(false);
                 setBanners(res.data);
+                console.log(res.data);
 			})
 			.catch((err) => {
                 setLoading(false);

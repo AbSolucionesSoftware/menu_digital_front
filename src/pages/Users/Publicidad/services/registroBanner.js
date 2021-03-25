@@ -60,7 +60,7 @@ export default function RegistroBanner( props ) {
 			
 			if (!datos.imagen || !preview) {
 				return;
-			} else if (preview && preview.includes('https')) {
+			} else if (preview && preview.includes('https://prueba-tienda.s3.us-west-1.amazonaws.com')) {
 				return;
 			}
 
@@ -77,6 +77,7 @@ export default function RegistroBanner( props ) {
 					}
 				})
 				.then((res) => {
+					console.log(res);
 					handleDrawerClose(false);
 					setLoading(false);
 					setSnackbar({

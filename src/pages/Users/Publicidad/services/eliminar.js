@@ -40,7 +40,6 @@ export default function Eliminar(props){
 			.then((res) => {
 				setLoading(false);
 				setUpdate(!update);
-				console.log(res);
 				setSnackbar({
 					open: true,
 					mensaje: "Banner eliminado exitosamente!",
@@ -49,7 +48,6 @@ export default function Eliminar(props){
 			})
 			.catch((err) => {
 				setLoading(false);
-				console.log(err);
 				setUpdate(!update);
 				setSnackbar({
 					open: true,

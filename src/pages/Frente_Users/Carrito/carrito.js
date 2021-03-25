@@ -73,12 +73,12 @@ export default function Carrito(props) {
     }
 
     function borrarProducto(key) {
-        console.log(key);
         carrito.forEach(function(elemento, indice, array) {
-            console.log(indice);
+            carrito.splice(key, 4);
+            console.log(carrito);
         })
-
     }
+    console.log(carrito);
 
     const mensaje = 
         `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  `(`+ pedido.notas.notas +`)` : "")+ `%0A`

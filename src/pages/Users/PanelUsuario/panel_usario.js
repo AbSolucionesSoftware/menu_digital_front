@@ -77,16 +77,16 @@ export default function PanelUser() {
                     </Box>
                 </Grid>
                 <Grid lg={12}>
-                    <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
+                    {/* <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
                         <Typography variant="h5">
                             {datosEmpresa.nameCompany}
                         </Typography>
-                    </Box>
-                    <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
+                    </Box> */}
+                    {/* <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
                         <Typography variant="h5">
                            Tu usuario: {datosEmpresa.nameUser}
                         </Typography>
-                    </Box>
+                    </Box> */}
                 </Grid>
                 <Grid lg={12}>
                     <Grid container justify="center" lg={12}>
