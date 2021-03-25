@@ -1,12 +1,11 @@
-import { Box, Card, CardContent, Grid, Typography, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import { Box, Card,  Grid, Typography, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@material-ui/core'
+import React, {  useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { formatoMexico }from '../../../config/reuserFunction';
-import { ImageContext } from '../../../context/curso_context';
 import PropTypes from 'prop-types';
-import MaskedInput from 'react-text-mask';
-import NumberFormat from 'react-number-format';
 
+import NumberFormat from 'react-number-format';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -71,6 +70,14 @@ export default function Carrito(props) {
     function borrarCarrito() {
         localStorage.removeItem("carritoUsuario");
         setOpen(false);
+    }
+
+    function borrarProducto(key) {
+        console.log(key);
+        carrito.forEach(function(elemento, indice, array) {
+            console.log(indice);
+        })
+
     }
 
     const mensaje = 
@@ -211,21 +218,32 @@ export default function Carrito(props) {
                                 <TableContainer component={Paper}>
                                     <Table className={classes.table} aria-label="simple table">
                                         <TableRow>
-                                            <TableCell align="center" style={{ fontWeight: 600}} >Cant.</TableCell>
+                                            <TableCell align="center" style={{ fontWeight: 600}} >Cantidad</TableCell>
                                             <TableCell align="center" style={{ fontWeight: 600}} >Platillo</TableCell>
                                             <TableCell align="center" style={{ fontWeight: 600}} >Precio</TableCell>
                                             <TableCell align="center" style={{ fontWeight: 600}} >Total</TableCell>
+                                            {/* <TableCell align="center" style={{ fontWeight: 600}} ></TableCell> */}
                                         </TableRow>
                                         <TableBody>
                                         { pedidos === null ? (
                                             <Box></Box>
                                         ) : (
-                                            pedidos.map((pedido) => (
+                                            pedidos.map((pedido, index) => (
                                                 <TableRow key={pedido.name}>
-                                                <TableCell align="center">{pedido.cantidad}</TableCell>
-                                                <TableCell align="center">{pedido.nombre}</TableCell>
-                                                <TableCell align="center">${formatoMexico(pedido.precio)}</TableCell>
-                                                <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad)}</TableCell>
+                                                    <TableCell align="center">{pedido.cantidad}</TableCell>
+                                                    <TableCell align="center">{pedido.nombre}</TableCell>
+                                                    <TableCell align="center">${formatoMexico(pedido.precio)}</TableCell>
+                                                    <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad)}</TableCell>
+                                                    {/* <TableCell align="center">
+                                                        <IconButton 
+                                                            onClick={
+                                                                () => borrarProducto(index)
+                                                            } 
+                                                            className={classes.margin}
+                                                        >
+                                                            <DeleteIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </TableCell> */}
                                                 </TableRow>
                                             ))
                                         )}

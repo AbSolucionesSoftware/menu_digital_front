@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme) => ({
     text:{
         width: "100%"
     },
+    imagen:{
+        maxHeight: '100%',
+		maxWidth: '100%'
+    },
     dropZone: {
         width: 300,
         height: 300,
@@ -127,18 +131,19 @@ export default function Editar_User(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 //---------------------------FIN EDICION DE IMAGENES-----------------------------------------------
-    const editarDatos = async () => {
+console.log(datosEmpresa);
+    
+const editarDatos = async () => {
 	    setLoading(true);
-
         const formData = new FormData();
-        formData.append("category", datosEmpresa.nameCompany);
-        formData.append("subCategory", datosEmpresa.owner);
-        formData.append("name", datosEmpresa.slug);
-        formData.append("price", datosEmpresa.phone);
-        formData.append("description", datosEmpresa.priceEnvio);
-        formData.append("imagen", datos.imagen);
-
-        console.log(datos.imagen);
+        formData.append("nameCompany", datosEmpresa.nameCompany);
+        formData.append("owner", datosEmpresa.owner);
+        formData.append("slug", datosEmpresa.slug);
+        formData.append("phone", datosEmpresa.phone);
+        formData.append("priceEnvio", datosEmpresa.priceEnvio);
+        if (datos.imagen) {
+            formData.append("imagen", datos.imagen);
+        }
 
         await clienteAxios
 			.put(`/company/${datosEmpresa._id}`, formData, 
@@ -148,6 +153,8 @@ export default function Editar_User(props) {
 				}
 			})
 			.then((res) => {
+                console.log(formData);
+                console.log(res.data);
                 setLoading(false);
                 handleDrawerClose();
                 setUpload(!upload);
@@ -311,33 +318,35 @@ export default function Editar_User(props) {
                                     </Alert>
                                 </Box>
                             </Grid>
-                            <Box p={2}>
-                                <Box
-                                    p={2}
-                                    mt={3}
-                                    className={classes.dropZone}
-                                    {...getRootProps()}
-                                    height={200}
-                                    display="flex"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    textAlign="center"
-                                    
-                                >
-                                    <input {...getInputProps()} />
-                                    {datos.imagen || preview ? (
-                                        <Box display="flex" alignItems="center" justifyContent="center">
-                                            <img alt="imagen del banner" src={preview} className={classes.imagen} />
-                                        </Box>
-                                    ) : isDragActive ? (
-                                        <Typography>Suelta tu imagen aquí...</Typography>
-                                    ) : (
-                                        <Typography>
-                                            Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
-                                        </Typography>
-                                    )}
+                            <Grid container justify="center" item lg={12}>
+                                <Box p={2}>
+                                    <Box
+                                        p={2}
+                                        mt={3}
+                                        className={classes.dropZone}
+                                        {...getRootProps()}
+                                        height={200}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        textAlign="center"
+                                        
+                                    >
+                                        <input {...getInputProps()} />
+                                        {datos.imagen || preview ? (
+                                            <Box display="flex" alignItems="center" justifyContent="center">
+                                                <img alt="imagen del banner" src={preview} className={classes.imagen} />
+                                            </Box>
+                                        ) : isDragActive ? (
+                                            <Typography>Suelta tu imagen aquí...</Typography>
+                                        ) : (
+                                            <Typography>
+                                                Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
+                                            </Typography>
+                                        )}
+                                    </Box>
                                 </Box>
-                            </Box>
+                            </Grid>
                     </Box>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Button

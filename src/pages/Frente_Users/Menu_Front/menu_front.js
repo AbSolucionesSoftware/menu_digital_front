@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: '100%'
 	},
 	containerImage:{
-		width: 300,
-		height: 190
+		width: 150,
+		height: 90
 	}
 }));
 

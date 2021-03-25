@@ -89,11 +89,13 @@ export default function PanelUser() {
                     </Box>
                 </Grid>
                 <Grid lg={12}>
-                    <Box display="flex" justifyContent="center" flexWrap="wrap">
-                        <Box p={2} className={classes.containerImage}>
-                            <img alt="Imagen de Logo" className={classes.imagen} src={datosEmpresa.logoImagenUrl}/>
+                    <Grid container justify="center" lg={12}>
+                        <Box display="flex" justifyContent="center" flexWrap="wrap">
+                            <Box p={2} className={classes.containerImage}>
+                                <img alt="Imagen de Logo" className={classes.imagen} src={datosEmpresa.logoImagenUrl}/>
+                            </Box>
                         </Box>
-                    </Box>
+                    </Grid>
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={3}>
                             <TextField variant="outlined" label="Compañia" value={`${datosEmpresa.nameCompany}`}/>

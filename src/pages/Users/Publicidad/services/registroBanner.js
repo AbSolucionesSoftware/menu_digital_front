@@ -167,7 +167,7 @@ export default function RegistroBanner( props ) {
                     </Box>
                 </Grid>
 
-                <Grid item lg={12} p={3}>
+				<Grid container justify="center" item lg={12}>
                     <Box
 						p={3}
                         mt={3}

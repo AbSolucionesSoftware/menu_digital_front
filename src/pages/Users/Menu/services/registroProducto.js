@@ -46,16 +46,9 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		margin: '8px 0'
 	},
-    containerImagen:{
-        display:"flex",
-        justifyContent: "center",
-        alignContent: "center",
-        width: 500,
-        height: 500
-    },
-    imagen: {
-        maxHeight: 290,
-        maxWidth: 290,
+    imagen:{
+        maxHeight: '100%',
+		maxWidth: '100%'
     },
     dropZone: {
         width: 300,
@@ -512,33 +505,35 @@ export default function RegistroProducto(props) {
                                         </Alert>
                                     </Box>
                                 </Grid>
-                                <Box p={2}>
-                                    <Box
-                                        p={2}
-                                        mt={3}
-                                        className={classes.dropZone}
-                                        {...getRootProps()}
-                                        height={200}
-                                        display="flex"
-                                        justifyContent="center"
-                                        alignItems="center"
-                                        textAlign="center"
-                                       
-                                    >
-                                        <input {...getInputProps()} />
-                                        {datos.imagen || preview ? (
-                                            <Box display="flex" alignItems="center" justifyContent="center">
-                                                <img alt="imagen del banner" src={preview} className={classes.imagen} />
-                                            </Box>
-                                        ) : isDragActive ? (
-                                            <Typography>Suelta tu imagen aquí...</Typography>
-                                        ) : (
-                                            <Typography>
-                                                Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
-                                            </Typography>
-                                        )}
+                                <Grid container justify="center" item lg={12}>
+                                    <Box p={2}>
+                                        <Box
+                                            p={2}
+                                            mt={3}
+                                            className={classes.dropZone}
+                                            {...getRootProps()}
+                                            height={200}
+                                            display="flex"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            textAlign="center"
+                                        
+                                        >
+                                            <input {...getInputProps()} />
+                                            {datos.imagen || preview ? (
+                                                <Box display="flex" alignItems="center" justifyContent="center">
+                                                    <img alt="imagen del banner" src={preview} className={classes.imagen} />
+                                                </Box>
+                                            ) : isDragActive ? (
+                                                <Typography>Suelta tu imagen aquí...</Typography>
+                                            ) : (
+                                                <Typography>
+                                                    Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
+                                                </Typography>
+                                            )}
+                                        </Box>
                                     </Box>
-                                </Box>
+                                </Grid>
                             </form>
                         </Box>
                     </Grid>
