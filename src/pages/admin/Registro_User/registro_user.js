@@ -96,6 +96,7 @@ function Registro_User(props) {
             },
           }
           ).then((res) => {
+            console.log(res.data);
             setLoading(false);
             props.history.push(`/admin`)
             setRegistro([])

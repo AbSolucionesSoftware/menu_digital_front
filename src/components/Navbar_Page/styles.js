@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1
 	},
 	appbar: {
-		backgroundColor: "red"
+		backgroundColor: "#bb2225"
 	},
 	marginButton: {
 		marginRight: theme.spacing(1),
@@ -59,11 +59,9 @@ const useStyles = makeStyles((theme) => ({
 		}
 	},
 	drawer: {
-		[theme.breakpoints.up('sm')]: {
-		  width: drawerWidth,
-		  flexShrink: 0,
-		},
-	  },
+		width: drawerWidth,
+		flexShrink: 0
+	},
 	drawerPaper: {
 		width: drawerWidth
 	},
@@ -96,11 +94,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	containerImage:{
 		width: 140,
-		height: 50
-	},
-	qr:{
-		width: 140,
-		height: 50
+		height: 40
 	}
 }));
 

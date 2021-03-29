@@ -12,7 +12,7 @@ import Categorias from './categorias';
 
 function BusquedaSubCates(props) {
     const subCategoria = props.match.params.subCategoria;
-    const idEmpresa = props.match.params.idMenu;
+    const idEmpresa = props.match.params.idEmpresa;
     const slug = props.match.params.slug;
 
     const [productos, setProductos] = useState([]);
@@ -22,7 +22,7 @@ function BusquedaSubCates(props) {
     const consultarDatos = async () => {
 		setLoading(true);
 		await clienteAxios
-			.get(`/company/${idEmpresa}`)
+			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
 				setLoading(false);
 				setEmpresa(res.data);
@@ -32,13 +32,13 @@ function BusquedaSubCates(props) {
 			})
 	}
 
-    const buscarProductos = async () => {
+    const buscarProductos = () => {
         setLoading(true)
-        await clienteAxios
+        clienteAxios
             .post(`/product/search/subCategory/`, {subCategory: subCategoria, company: idEmpresa})
             .then((res) => {
                 setLoading(false)
-                setProductos(res.data)
+                setProductos(res.data);
             })
             .catch((err) => {
                 setLoading(false)
@@ -46,9 +46,11 @@ function BusquedaSubCates(props) {
     }
 
     useEffect(() => {
-        buscarProductos();
         consultarDatos();
+        buscarProductos();
     }, [])
+
+    
 
     return (
         <div>
@@ -67,7 +69,7 @@ function BusquedaSubCates(props) {
                             color="primary"
                             variant="contained"
                             component={Link}
-                            to={`/${idEmpresa}/${slug}`}
+                            to={`/${slug}`}
                         >
                             Volver
                         </Button>

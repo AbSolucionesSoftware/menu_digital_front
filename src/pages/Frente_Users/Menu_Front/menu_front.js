@@ -1,6 +1,8 @@
 import { Avatar, Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import No_Page from '../../../components/noPage'
+import LoginAdmin from '../Login/login'
+import HomePublicidad from '../../Publicidad/Home/home'
 
 import BotonCarrito from '../Carrito/botonCarrito'
 import Banner from '../Banner/banner';
@@ -29,32 +31,42 @@ const useStyles = makeStyles((theme) => ({
 export default function Menu_Front(props) {
 	const classes = useStyles();
 
-	const idMenu = props.match.params.idMenu;
-	const [empresas, setEmpresas] = useState([]);
+	const slug = props.match.params.slug;
+	const login = props.location.pathname;
+
+	const [empresa, setEmpresa] = useState([]);
 	const [ loading, setLoading ] = useState(false);
     const {  setNombre, setId, setSlug  } = useContext(ImageContext);
-
+	
 	const consultarDatos = async () => {
 		setLoading(true);
 		await clienteAxios
-			.get(`/company/${idMenu}`)
+			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
-				setLoading(false);
-				setEmpresas([res.data]);
+				console.log(res);
+				if (res.data === null) {
+					return 
+				}else{
+					setLoading(false);
+					setEmpresa(res.data);
+				}
+				
 			})
 			.catch((err) => {
 				setLoading(false);
 			})
 	}
-
-    useEffect(() => {
+	useEffect(() => {
 		consultarDatos();
 	}, [])
 
-    const render = empresas.map((empresa ,index) => {
+
+	if (empresa === null) {
+		<No_Page/>
+	}else{
 		if (empresa.public === true) {
 			return(
-				<div key={index}> 
+				<div> 
 					<Spin loading={loading} />
 						{setNombre(empresa.nameCompany)}
 						{setId(empresa._id)}
@@ -64,7 +76,6 @@ export default function Menu_Front(props) {
 					<Box>
 						<Banner empresa={empresa} />
 					</Box>
-
 					<Grid container justify="center" lg={12}>
 						<Box mt={3} textAlign="center">
 							<Avatar className={classes.large} alt="Remy Sharp"  src={empresa.logoImagenUrl} />
@@ -81,6 +92,7 @@ export default function Menu_Front(props) {
 						</Box>
 					</Hidden>
 					
+					
 					<BotonCarrito empresa={empresa}/>
 				</div>
 			);
@@ -89,11 +101,8 @@ export default function Menu_Front(props) {
 				<No_Page/>
 			);
 		}
-    })
+	}
 
-	return (
-        <div>
-            {render}
-        </div>
-	);
+	
+	
 }

@@ -92,9 +92,6 @@ function Lista({categoria, props, empresa, slug}) {
         setAncho(null);
     };
 
-    const tienda =
-        {'tienda': empresa._id, "slug": empresa.slug }
-
     return(
         <Grid className={classes.paper} lg={3} md={6} xs={12}>
             <Button
@@ -129,8 +126,7 @@ function Lista({categoria, props, empresa, slug}) {
                             <StyledMenuItem id={sub._id}>
                                 <ListItem button  
                                     onClick={() => {
-                                            
-                                            props.history.push(`/${empresa}/${slug}/subCategorias/${sub._id}`)
+                                            props.history.push(`/${slug}/${empresa}/subCategorias/${sub._id}`)
                                         }}  
                                 >
                                     <ListItemText className={classes.subCate} >

@@ -1,5 +1,7 @@
-import { Badge, Dialog,Tooltip, IconButton, SimpleDialog, Button, Typography, Box } from '@material-ui/core'
+import { Badge, Dialog,Tooltip, IconButton, SimpleDialog, Button, Typography, Box, Hidden, Drawer } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react';
+
+import RoomServiceIcon from '@material-ui/icons/RoomService';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
@@ -27,7 +29,7 @@ const DialogTitle = withStyles(styles)((props) => {
 	return (
 	  <MuiDialogTitle disableTypography className={classes.root} {...other}>
 		<Box textAlign="center">
-            <Typography variant="h4"> Tu pedido</Typography>
+            {/* <Typography variant="h4"> Tu pedido</Typography> */}
         </Box>
 		{onClose ? (
 		  <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
@@ -90,10 +92,26 @@ export default function BotonCarrito(props) {
                 </Tooltip>
              )}
 
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle id="customized-dialog-title" onClose={handleClose} />
-                <Carrito empresa={empresa} setOpen={setOpen}/>
-            </Dialog>
+            <Hidden mdUp>
+                <Drawer
+                    anchor="bottom"
+                    open={open}
+                    onClose={handleClose}
+                    classes={{
+                        paper: classes.drawerPaper
+                    }}
+                >
+                    <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+                    <Carrito empresa={empresa} setOpen={setOpen}/>
+                </Drawer>
+            </Hidden>
+            <Hidden smDown>
+                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+                    <Carrito empresa={empresa} setOpen={setOpen}/>
+                </Dialog>
+            </Hidden>
+            
         </div>
     )
 }

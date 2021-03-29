@@ -6,12 +6,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddToQueueIcon from '@material-ui/icons/AddToQueue';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import CropFreeIcon from '@material-ui/icons/CropFree';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
 
+import GenerarQr from './generarQr';
 import { FacebookIcon, FacebookShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
-
 import useStyles from './styles';
 
 import comody from '../../img/Comody.jpeg'
@@ -32,6 +33,9 @@ export default function Navegacion_User(props) {
 
     const isMenuOpen = Boolean(anchorEl);
 
+	var React = require('react');
+	var QRCode = require('qrcode.react');
+
 	const consultarDatos = async () => {
 		await clienteAxios
 			.get(`/company/${company._id}`, {
@@ -51,20 +55,13 @@ export default function Navegacion_User(props) {
 		consultarDatos();
 	}, [])
 
-    // const handleProfileMenuOpen = (event) => {
-	// 	setAnchorEl(event.currentTarget);
-	// };
-	// const handleMenuClose = () => {
-	// 	setAnchorEl(null);
-	// };
-	// const handleDrawerClose = () => {
-	// 	setOpen(false);
-	// };
+    
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
 
 	const [openDialog, setOpenDialog] = useState(false);
+	const [codigoQr, setCodigoQr] = useState(false);
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -72,6 +69,14 @@ export default function Navegacion_User(props) {
 
     const handleClose = () => {
         setOpenDialog(false);
+    };
+
+	const clickOpen = () => {
+        setCodigoQr(true);
+    };
+
+    const clickClose = () => {
+        setCodigoQr(false);
     };
 
 	const classes = useStyles();
@@ -114,7 +119,7 @@ export default function Navegacion_User(props) {
 								Datos Empresa
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
+						<ListItem button component={Link} to={`/${company.slug}`}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menú digital
@@ -124,6 +129,12 @@ export default function Navegacion_User(props) {
 							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menú
+							</Typography>
+						</ListItem>
+						<ListItem button onClick={clickOpen}>
+							<ListItemIcon><CropFreeIcon/></ListItemIcon>
+							<Typography>
+								Generar Codigo QR
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
@@ -141,7 +152,7 @@ export default function Navegacion_User(props) {
 						<ListItem 
 							button
 							component={Link} 
-							to={`${company._id}/${company.slug}`}
+							to={`/${company.slug}`}
 							onClick={() => {
 								setTimeout(() => {  
 									localStorage.removeItem('token');
@@ -191,7 +202,7 @@ export default function Navegacion_User(props) {
 								Datos Empresa
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company._id}/${company.slug}`}>
+						<ListItem button component={Link} to={`/${company.slug}`}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menú digital
@@ -201,6 +212,12 @@ export default function Navegacion_User(props) {
 							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menú
+							</Typography>
+						</ListItem>
+						<ListItem button onClick={clickOpen}>
+							<ListItemIcon><CropFreeIcon/></ListItemIcon>
+							<Typography>
+								Generar Codigo QR
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
@@ -223,7 +240,7 @@ export default function Navegacion_User(props) {
 								localStorage.removeItem('user');
 								localStorage.removeItem('carritoUsuario');
 							}}
-							to={`${company._id}/${company.slug}`}
+							to={`/${company.slug}`}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 							<Typography>
@@ -246,6 +263,7 @@ export default function Navegacion_User(props) {
 				</IconButton>
 			</Hidden>
 
+{/* //---------------Generar codigo PARA WHATSSAPP--------------------------- */}
 			<Dialog open={openDialog} onClose={handleClose}>
 				<Box p={5} textAlign="center">
 					<Box p={1}>
@@ -257,7 +275,7 @@ export default function Navegacion_User(props) {
 						<TextField
 							color="primary"
 							style={{width: '100%'}}
-							value={`http://www.comody.mx/${company._id}/${company.slug}`}
+							value={`http://www.comody.mx/${company.slug}`}
 							name="Link"
 							id="link"
 							label="Link"
@@ -272,7 +290,7 @@ export default function Navegacion_User(props) {
 						</Box>
 						<Grid item>
 							<WhatsappShareButton 
-								url={`https://www.comody.mx/${company._id}/${company.slug}`} 
+								url={`https://www.comody.mx/${company.slug}`} 
 								title="Te comparto mi menú Digital" 
 								separator=": ">
 								<WhatsappIcon style={{ fontSize: 45, color: '#00bb2d' }} />
@@ -280,6 +298,23 @@ export default function Navegacion_User(props) {
 						</Grid>
 					</Grid>
 
+				</Box>
+            </Dialog>
+
+{/* //---------------Generar codigo QR--------------------------- */}
+			<Dialog open={codigoQr} onClose={clickClose}>
+				<Box p={5} textAlign="center">
+					<Box p={1}>
+						<Typography variant="h6">
+							Comparte este codigo para ingresar a tu menú digital de una manera mas rapida
+						</Typography>
+					</Box>
+					<Box  textAlign="center" p={2}>
+						<QRCode size={180} value={`https://www.comody.mx/${company.slug}`} />
+					</Box>
+					{/* <Box textAlign="center" p={2}>
+						<GenerarQr empresa={empresa}/>
+					</Box> */}
 				</Box>
             </Dialog>
 	</div>

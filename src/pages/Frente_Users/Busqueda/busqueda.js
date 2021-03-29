@@ -8,10 +8,13 @@ import Cards_Platos from '../Cards_Platillos/card_plato';
 import BotonCarrito from '../Carrito/botonCarrito';
 
  function ResultadoBusqueda(props) {
-    const idEmpresa = props.match.params.idMenu;
+    const idEmpresa = props.match.params.idEmpresa;
     const slug = props.match.params.slug;
     const busqueda = props.match.params.busqueda;
-    
+    console.log(slug);
+    console.log(idEmpresa);
+
+
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false)
     const [empresa, setEmpresa] = useState([])
@@ -19,7 +22,7 @@ import BotonCarrito from '../Carrito/botonCarrito';
     const consultarDatos = async () => {
 		setLoading(true);
 		await clienteAxios
-			.get(`/company/${idEmpresa}`)
+			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
 				setLoading(false);
 				setEmpresa(res.data);
@@ -65,7 +68,7 @@ import BotonCarrito from '../Carrito/botonCarrito';
                             color="primary"
                             variant="contained"
                             component={Link}
-                            to={`/${idEmpresa}/${slug}`}
+                            to={`/${slug}`}
                         >
                             Volver
                         </Button>

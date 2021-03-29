@@ -79,7 +79,7 @@ export default function LayoutAdmin(props) {
 
 	return (
 		<div className={classes.root}>
-		<ThemeProvider >
+		<ThemeProvider>
 			<nav className={classes.drawer} aria-label="mailbox folders">
 				<Navegacion_Admin />
 			</nav>

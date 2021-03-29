@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AgregarCarrito from './agregarCarrito';
 import {formatoMexico} from '../../../config/reuserFunction'
 
-import { Avatar, Box, Button, Dialog,  Grid, Hidden, IconButton, withStyles } from '@material-ui/core';
+import { Avatar, Box, Button, Dialog,  Divider,  Drawer,  Grid, Hidden, IconButton, Tooltip, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 // import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
@@ -10,6 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 import comody from '../../../img/c.jpeg'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import './styles.scss';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
@@ -33,68 +34,117 @@ export default function Cards_Platos(props) {
 
 	const render = productos.map((producto, index) => {
 		return (
-			<Grid key={index} item lg={6} xs={12} className={classes.paper}>
-            	<Card className={classes.root}> 
-               		<Box display="flex" flexWrap="wrap">
-						<Grid item lg={5} xs={12}>
-								<Hidden mdUp>
-									<Box p={1} display="flex" justifyContent="center" alignContent="center" >
-										<Avatar  className={classes.large} alt="Remy Sharp" src={producto.imagenProductUrl} />
-									</Box>
-								</Hidden>
+			<>
+			<Hidden smDown>
+				<Grid key={index} item lg={6} className={classes.paper}>
+					<Card className={classes.root}>
+					
+						<Box display="flex" flexWrap="wrap">
+							<Grid item lg={5}>
 								<Hidden smDown>
 									<CardMedia
 										className={classes.cover}
 										image={producto.imagenProductUrl}
 									/>
 								</Hidden>
-						</Grid>
-						<Grid lg={7} xs={12}>
-							<Box p={1}>
-								<Grid xs zeroMinWidth >
-									<Box display="flex" justifyContent="center">
-										<Typography className={classes.rootTitulo} variant="h4" noWrap>
-											{producto.name}
-										</Typography>
-									</Box>
-								</Grid>
-								
-								<Grid xs zeroMinWidth >
-									<Box display="flex" justifyContent="center">
-										<Typography className={classes.rootTitulo} variant="h6" noWrap>
-											{producto.description} 
-										</Typography>
-									</Box>
-								</Grid>
-								<Grid item xs zeroMinWidth>
-									<Typography variant="h3" color="textSecondary">
-										${formatoMexico(producto.price)} 
-									</Typography>
-								</Grid>
-								{sesion ? (
-									null
-								) : (
-									<Grid lg={12}>
-										<Box p={1} mt={2}>
-											<Button
-												variant="contained" 
-												color="primary" 
-												onClick={() => {
-												handleClickOpen()
-												setagregarProducto(producto)
-												}}
-											>
-												Agregar a orden
-												{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
-											</Button>
+							</Grid>
+							<Grid lg={7}>
+								<Box p={1}>
+									<Tooltip title={producto.name} placement="top">
+										<Grid xs zeroMinWidth >
+											<Box display="flex" justifyContent="center">
+												<Typography className={classes.rootTitulo} variant="h4" noWrap>
+													{producto.name}
+												</Typography>
+											</Box>
+										</Grid>
+									</Tooltip>
+									<Grid xs zeroMinWidth >
+										<Box display="flex" justifyContent="center">
+											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+												{producto.description} 
+											</Typography>
 										</Box>
 									</Grid>
-								)}
-							</Box>
-						</Grid>	
+									<Grid item xs zeroMinWidth>
+										<Typography variant="h3" color="textSecondary">
+											${formatoMexico(producto.price)} 
+										</Typography>
+									</Grid>
+									{sesion ? (
+										null
+									) : (
+										<Grid lg={12}>
+											<Box p={1} mt={2}>
+												<Button
+													variant="contained" 
+													color="primary" 
+													onClick={() => {
+													handleClickOpen()
+													setagregarProducto(producto)
+													}}
+												>
+													Agregar a orden
+													{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
+												</Button>
+											</Box>
+										</Grid>
+									)}
+								</Box>
+							</Grid>	
 						</Box>
 					</Card>
-			</Grid>
+				</Grid>
+			</Hidden>
+			<Hidden mdUp>
+				<Grid key={index} item xs={12} className={classes.paper}>
+				{/* <Card> */}
+					<Grid container>
+						<Grid xs={8} >
+							<Box display="flex" textAlign="justify"  variant="h2">
+								<Typography style={{fontWeight: 600}}>
+									{producto.name} 
+								</Typography>
+							</Box>
+							<Box mt={1} display="flex" textAlign="justify" >
+								<Typography variant="h2">
+									{producto.description} 
+								</Typography>
+							</Box>
+						</Grid>		
+						<Grid xs={2}>
+							<Grid >
+								<Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
+									<Typography variant="h5" style={{fontWeight: 600}}>
+										${formatoMexico(producto.price)} 
+									</Typography>
+								</Box>
+							</Grid>
+						</Grid>
+						<Grid xs={2}>
+							<Grid xs zeroMinWidth >
+								<Box display="flex" alignItems="center" justifyContent="center">
+									<IconButton 
+										variant="contained" 
+										color="primary" 
+										onClick={() => {
+											handleClickOpen()
+											setagregarProducto(producto)
+										}} 
+									>
+										<AddCircleIcon style={{fontSize: 40}}/>
+									</IconButton>
+								</Box>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid lg={12} xs={12}>
+						<Divider variant="inset:" />
+					</Grid>
+				{/* </Card> */}
+				</Grid>
+			</Hidden>
+		</>
 			
 		);
 	})
@@ -105,17 +155,35 @@ export default function Cards_Platos(props) {
                 {render}
             </Grid>
 
-			<Dialog open={open} onClose={handleClose}>
-				<AgregarCarrito descripcion={agregarProducto.description} nombre={agregarProducto.name} precio={agregarProducto.price} setOpen={setOpen}  />
-			</Dialog>
+			<Hidden mdUp>
+				<Drawer
+					anchor="bottom"
+					open={open} 
+					onClose={handleClose}
+					classes={{
+						paper: classes.drawerPaper
+					}}
+				> 
+					<AgregarCarrito 
+						imagen={agregarProducto.imagenProductUrl} 
+						nombre={agregarProducto.name} 
+						precio={agregarProducto.price} 
+						setOpen={setOpen}  
+					/>
+				</Drawer>
+			</Hidden>
+			<Hidden smDown>
+                <Dialog open={open} onClose={handleClose}>
+					<AgregarCarrito 
+						imagen={agregarProducto.imagenProductUrl} 
+						nombre={agregarProducto.name} 
+						precio={agregarProducto.price} 
+						setOpen={setOpen}  
+					/>
+                </Dialog>
+            </Hidden>
 			
 		</div>
 	
 	);
-	}
-
-// <Container xl>
-// 	<Grid container lg={12}>
-// 		<Cards_Platos/>
-// 	</Grid>
-// </Container>
+}

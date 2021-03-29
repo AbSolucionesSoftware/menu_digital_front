@@ -138,7 +138,7 @@ const editarDatos = async () => {
         const formData = new FormData();
         formData.append("nameCompany", datosEmpresa.nameCompany);
         formData.append("owner", datosEmpresa.owner);
-        formData.append("slug", datosEmpresa.slug);
+        // formData.append("slug", datosEmpresa.slug);
         formData.append("phone", datosEmpresa.phone);
         formData.append("priceEnvio", datosEmpresa.priceEnvio);
         if (datos.imagen) {
@@ -249,7 +249,7 @@ const editarDatos = async () => {
                             <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
                                 <Alert severity="info">Un identificador para poder distinguir tu Negocio en el navegador</Alert>
                             </Box>
-                            <Box p={2}>
+                            {/* <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.slug}
                                     className={classes.text}
@@ -262,7 +262,7 @@ const editarDatos = async () => {
                                         setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase()})
                                     }
                                 />
-                            </Box>
+                            </Box> */}
                             <Box p={2}>
                                 <TextField
                                     defaultValue={datosEmpresa.owner}

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 600,
     },
     rootTitulo:{
-      width: 250,
+      width: 350
     },
     paper: {
       maxWidth: 600,
@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
     paddin:{
       padding: 0
     }
+
+    //-------RESPONSIVOS-------
+    ,titulo:{
+      width: "auto",
+    }
+
   }));
 
 export default useStyles;

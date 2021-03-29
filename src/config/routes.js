@@ -15,8 +15,9 @@ import Carrito from '../pages/Frente_Users/Carrito/carrito';
 import Busqueda from '../pages/Frente_Users/Busqueda/busqueda';
 import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
 import BusquedaSubCates from '../pages/Frente_Users/Categorias/busquedaSubCates';
-
 import ResultadoBusqueda from '../pages/Frente_Users/Busqueda/busqueda';
+
+import HomePublicidad from '../pages/Publicidad/Home/home'
 
 import Error404 from '../components/error'
 
@@ -71,20 +72,9 @@ const routes = [
 		component: Layout,
 		exact: false,
 		routes: [
-			
 			{
-				path: '/:idMenu/:slug',
-				component: Menu_Front,
-				exact: true
-			},
-			{
-				path: '/:idMenu/:slug/subCategorias/:subCategoria',
-				component: BusquedaSubCates,
-				exact: true
-			},
-			{
-				path: '/:idMenu/:slug/busqueda/:busqueda',
-				component: ResultadoBusqueda,
+				path: '/',
+				component: HomePublicidad,
 				exact: true
 			},
 			{
@@ -93,11 +83,27 @@ const routes = [
 				exact: true
 			},
 			{
+				path: '/:slug',
+				component: Menu_Front,
+				exact: true
+			},
+			{
+				path: '/:slug/:idEmpresa/subCategorias/:subCategoria',
+				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/:slug/:idEmpresa/busqueda/:busqueda',
+				component: ResultadoBusqueda,
+				exact: true
+			},
+			{
 				component: Error404
 			}
 			
 		]
-	}
+	},
+	
 ];
 
 export default routes;

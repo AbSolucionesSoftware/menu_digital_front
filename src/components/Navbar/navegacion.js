@@ -28,7 +28,7 @@ function Navegacion(props) {
 	const token = localStorage.getItem('token');
 	const slug = localStorage.getItem('slug');
 	const id = localStorage.getItem('idEmpresa');
-
+	const login = props.location.pathname;
 	const [ busqueda, setBusqueda ] = useState('');
 
 	
@@ -56,12 +56,12 @@ function Navegacion(props) {
 		if (!busqueda) {
 			return;
 		}
-		props.history.push(`/${id}/${slug}/busqueda/${busqueda}`);
+		props.history.push(`/${slug}/${id}/busqueda/${busqueda}`);
 	};
 
 	const pressEnter = (e) => {
 		if(!e.target.defaultValue) return;
-		if(e.key === "Enter") props.history.push(`/${id}/${slug}/busqueda/${e.target.defaultValue}`);
+		if(e.key === "Enter") props.history.push(`/${slug}/${id}/busqueda/${e.target.defaultValue}`);
 	};
 
 	function Jwt(token) {
@@ -71,63 +71,63 @@ function Navegacion(props) {
 			return null;
 		}
 	}
-
 	const classes = useStyles();
     return (
         <div>
             <AppBar  className={classes.appbar}>
 					<Toolbar>
-						<Hidden mdUp>
-							<IconButton
-								edge="start"
-								aria-label="show more"
-								aria-haspopup="true"
-								onClick={handleDrawerOpen}
-								color="inherit"
-								className={classes.menuButton}
-							>
-								<MenuIcon />
-							</IconButton>
-						</Hidden>
-						<Hidden smDown>
-							<Box component={Link} to={`/${id}/${slug}`} className={classes.containerImage}>  
-								<img  className={classes.image} alt="logotipo" src={Comody}/>
-							</Box>
-						</Hidden>
-						<div className={classes.search}>
-							
-							<InputBase
-								placeholder="¿Qué quieres comer hoy?"
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput
-								}}
-								inputProps={{ 'aria-label': 'search' }}
-								value={busqueda}
-								onChange={obtenerBusqueda}
-								onKeyPress={pressEnter}
-							/>
-							<div className={classes.grow} />
-							<IconButton size="small" color="inherit"  onClick={() => buscarBD()} >
-								<SearchIcon />
-							</IconButton>
-						</div>
-						<Hidden smDown>
-							<Grid lg={8} zeroMinWidth >
-								<Box display="flex" justifyContent="center" >
-									<Typography variant="h3" noWrap>
-										{nombre} 
-									</Typography>
+					{login  === "/login" ? null : (
+						<>
+							<Hidden mdUp>
+								<IconButton
+									edge="start"
+									aria-label="show more"
+									aria-haspopup="true"
+									onClick={handleDrawerOpen}
+									color="inherit"
+									className={classes.menuButton}
+								>
+									<MenuIcon />
+								</IconButton>
+							</Hidden>
+							<Hidden smDown>
+								<Box component={Link} to={`/${slug}`} className={classes.containerImage}>  
+									<img  className={classes.image} alt="logotipo" src={Comody}/>
 								</Box>
-							</Grid>
-						
-
-							<Grid  >
-							<ListItem button component={Link} to={`/${id}/${slug}`} >
-								<ListItemText primary="Inicio" />
-							</ListItem>
-							</Grid>
-						</Hidden>
+							</Hidden>
+							<div className={classes.search}>
+								<InputBase
+									placeholder="¿Qué quieres comer hoy?"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+									value={busqueda}
+									onChange={obtenerBusqueda}
+									onKeyPress={pressEnter}
+								/>
+								<div className={classes.grow} />
+								<IconButton size="small" color="inherit"  onClick={() => buscarBD()} >
+									<SearchIcon />
+								</IconButton>
+							</div>
+							<Hidden smDown>
+								<Grid lg={8} zeroMinWidth >
+									<Box display="flex" justifyContent="center" >
+										<Typography variant="h3" noWrap>
+											{nombre} 
+										</Typography>
+									</Box>
+								</Grid>					
+								<Grid>
+									<ListItem button component={Link} to={`/${slug}`} >
+										<ListItemText primary="Inicio" />
+									</ListItem>
+								</Grid>
+							</Hidden>
+						</>
+						)}
 
 						<div className={classes.grow} />
 						<Hidden smDown>
@@ -142,70 +142,70 @@ function Navegacion(props) {
 					</Toolbar>
 				</AppBar>
                 {/* {renderMenu} */}
-                <Drawer
-					className={classes.drawer}
-					anchor="left"
-					open={open}
-					onClose={handleDrawerClose}
-					classes={{
-						paper: classes.drawerPaper
-					}}
-				>
-					<div className={classes.drawerHeader}>
-						<IconButton onClick={handleDrawerClose}>
-							<ChevronLeftIcon />
-						</IconButton>
-						<Box component={Link} to={`/${id}/${slug}`} className={classes.containerImage}>  
-							<img className={classes.image} alt="logotipo" src={Comody}/>
-						</Box>
-					</div>
-					<Divider />
-					{decoded ? (
-						<ListItem button component={Link} to="/user" >
-							<ListItemIcon>
-								<AccountCircleSharpIcon/>
-							</ListItemIcon>
-							<ListItemText primary="Mi cuenta" />
-						</ListItem>
-					) : (
-						<div />
-					)}
-					<List>
-						<ListItem button component={Link} to={`/${id}/${slug}`} >
-							<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
-						</ListItem>
-						<ListItem button component={Link} to={`/${id}/${slug}`} >
-							<ListItemIcon>
-								<HomeIcon />
-							</ListItemIcon>
-							<ListItemText primary="Inicio" />
-						</ListItem>
-
-						
+				{login  === "/login" ? null : (
+					<Drawer
+						className={classes.drawer}
+						anchor="left"
+						open={open}
+						onClose={handleDrawerClose}
+						classes={{
+							paper: classes.drawerPaper
+						}}
+					>
+						<div className={classes.drawerHeader}>
+							<IconButton onClick={handleDrawerClose}>
+								<ChevronLeftIcon />
+							</IconButton>
+							<Box component={Link} to={`/${slug}`} className={classes.containerImage}>  
+								<img className={classes.image} alt="logotipo" src={Comody}/>
+							</Box>
+						</div>
+						<Divider />
 						{decoded ? (
-							<ListItem>
+							<ListItem button component={Link} to="/user" >
 								<ListItemIcon>
-									<ExitToAppIcon/>
+									<AccountCircleSharpIcon/>
 								</ListItemIcon>
-								
-								<ListItemText
-									color="inherit" 
-									component={Link} to="/" 
-									onClick={() => {
-										localStorage.removeItem('carritoUsuario');
-										localStorage.removeItem('token');
-										localStorage.removeItem('user');
-									}}
-								>
-									Cerrar sesion
-								</ListItemText>
+								<ListItemText primary="Mi cuenta" />
 							</ListItem>
-							) : (
-								null
-							)
-						}
-					</List>
-                </Drawer>
+						) : (
+							<div />
+						)}
+						<List>
+							<ListItem button component={Link} to={`/${slug}`} >
+								<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
+							</ListItem>
+							<ListItem button component={Link} to={`/${slug}`} >
+								<ListItemIcon>
+									<HomeIcon />
+								</ListItemIcon>
+								<ListItemText primary="Inicio" />
+							</ListItem>
+							{decoded ? (
+								<ListItem>
+									<ListItemIcon>
+										<ExitToAppIcon/>
+									</ListItemIcon>
+									
+									<ListItemText
+										color="inherit" 
+										component={Link} to="/" 
+										onClick={() => {
+											localStorage.removeItem('carritoUsuario');
+											localStorage.removeItem('token');
+											localStorage.removeItem('user');
+										}}
+									>
+										Cerrar sesion
+									</ListItemText>
+								</ListItem>
+								) : (
+									null
+								)
+							}
+						</List>
+					</Drawer>
+				)}
         </div>
     )
 }

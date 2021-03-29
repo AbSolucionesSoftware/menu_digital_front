@@ -49,12 +49,12 @@ export default function Footer() {
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center" alignItems="center">
-                        {/* <Box mr={2}>
+                        <Box mr={2}>
                             <MailOutlineIcon style={{fontSize: 35}}/>
                         </Box>
                         <Typography variant="body1">
-                            correo.correo@gmail.com
-                        </Typography> */}
+                            contacto@comody.mx
+                        </Typography>
                     </Box>
                 </Grid>
                 <Hidden xsDown>

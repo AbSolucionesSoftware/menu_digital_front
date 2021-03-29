@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
+import { Avatar, Box, Button, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -17,31 +17,36 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         paddingLeft: theme.spacing(1),
         paddingBottom: theme.spacing(1),
-      }
+    },
+    large: {
+        width: theme.spacing(10),
+        height: theme.spacing(10),
+    },
 }))
 
 
 export default function AgregarCarrito(props) {
-    const {nombre, precio, descripcion, setOpen} = props;
+    const {nombre, precio, imagen, setOpen} = props;
     const { setUpdate, setDatos} = useContext(ImageContext);
+    const classes = useStyles();
 
     const [disable, setDisable] = useState(false)
-    const [contador , setContador] = useState(0)
+    const [contador , setContador] = useState(1)
     const [carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
+
     const Agregar = () => {
 		setContador(contador+1);
         setDisable(false);
 	}; 
+
 	const Quitar = () => {
-        if (contador === 0 ) {
+        if (contador === 1 ) {
             return;
         }else{
             setContador(contador-1);
         }
 	};
-    
-
     let array = [ 
         {
             nombre,
@@ -52,7 +57,6 @@ export default function AgregarCarrito(props) {
     ];
     
 	const agregarCarrito = () => {
-        
         setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
 
         if (contador === 0) {
@@ -72,26 +76,29 @@ export default function AgregarCarrito(props) {
         }
 
 	}
-    const classes = useStyles();
 
     return (
         <div>
             <Grid lg={12}>
-                <Box p={2} textAlign="center"> 
-                    <Typography variant="h5">
-                        Agregar a Orden
-                    </Typography>
+                <Box mt={1} display="flex" justifyContent="center" textAlign="center">
+                    {!imagen ? null : (
+                        <Avatar
+                            className={classes.large}
+                            alt="Imagen de prducto" 
+                            src={imagen} 
+                        />
+                    )}
                 </Box>
-                <Box display="flex" justifyContent="center" textAlign="center">
+                {/* <Box display="flex" justifyContent="center" textAlign="center">
                     <Divider style={{width: "80%"}}/>
-                </Box>
-                <Box  display="flex" justifyContent="center" textAlign="center">
+                </Box> */}
+                {/* <Box  display="flex" justifyContent="center" textAlign="center">
                     <Divider style={{width: "50%"}}/>
-                </Box>
-                <Box p={3} display="flex" justifyContent="center" textAlign="center">
+                </Box> */}
+                <Box mt={2} display="flex" justifyContent="center" textAlign="center">
                     <Box p={1}>
                         <IconButton aria-label="play/pause" onClick={()=> Quitar() }>
-                            <RemoveIcon />
+                            <RemoveIcon style={{fontSize: 20}} />
                         </IconButton>
                     </Box>
                     <Box p={2}>
@@ -101,15 +108,14 @@ export default function AgregarCarrito(props) {
                     </Box>
                     <Box p={1}>
                         <IconButton aria-label="play/pause" onClick={()=> Agregar() }>
-                            <AddIcon />
+                            <AddIcon style={{fontSize: 20}} />
                         </IconButton>
                     </Box>
                 </Box>
                 <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
                     <Alert severity="info">Agrega notas a tu platillo. Ejemplo: 2 sin cebolla"</Alert>
                 </Box>
-                <Box p={3} display="flex" justifyContent="center">
-                    
+                <Box p={2} display="flex" justifyContent="center">
                     <TextField
                         id="notas"
                         label="Notas"
@@ -123,7 +129,7 @@ export default function AgregarCarrito(props) {
                     />
                 </Box>
 
-                <Box p={3} textAlign="center">
+                <Box p={1} textAlign="center">
                     <Tooltip title="Agregar a Carrito" aria-label="add">
                         <Button 
                             size="large"

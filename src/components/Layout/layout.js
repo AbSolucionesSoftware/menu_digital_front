@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Navegacion from '../Navbar/navegacion';
+import NavegacionPage from '../Navbar_Page/navegacionPage';
 import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		// backgroundColor: "black"
 	}
 }))
+
 
 function HideOnScroll(props) {
 	const { children, window } = props;
@@ -39,6 +41,8 @@ export default function LayoutUsers(props) {
 	let tema = JSON.parse(thema);
 	const { routes } = props;
 
+	const navs = props.location.pathname;
+
 	useEffect(
 		() => {
 			if (tema === null) {
@@ -58,7 +62,13 @@ export default function LayoutUsers(props) {
 					<HideOnScroll {...props}>
 						<AppBar>
 							<Toolbar>
-								<Navegacion />
+								{
+									navs === "/" ? (
+										<NavegacionPage />
+									):(
+										<Navegacion />
+									)
+								}
 							</Toolbar>
 						</AppBar>
 					</HideOnScroll>
