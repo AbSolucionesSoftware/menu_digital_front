@@ -43,7 +43,6 @@ export default function Menu_Front(props) {
 		await clienteAxios
 			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
-				console.log(res);
 				if (res.data === null) {
 					return 
 				}else{

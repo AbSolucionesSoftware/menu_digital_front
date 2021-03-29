@@ -1,13 +1,17 @@
 import { AppBar, Badge, Button, fade, Hidden, IconButton,  
 		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
-		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid 
+		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid, Dialog, withStyles 
 		} from '@material-ui/core'
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import SearchIcon from '@material-ui/icons/Search';
+import Reservaciones from './reservaciones'
 // import clienteAxios from '../../config/axios';
 
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -49,7 +53,46 @@ function Navegacion(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+	
+	const [ reservacion, setReservacion ] = useState(false);
 
+	const handleOpen = () => {
+		setReservacion(true);
+	};
+
+	const handleClose = () => {
+		setReservacion(false);
+	};
+
+	const styles = (theme) => ({
+		root: {
+		  margin: 0,
+		  padding: theme.spacing(2),
+		},
+		closeButton: {
+		  position: 'absolute',
+		  right: theme.spacing(1),
+		  top: theme.spacing(1),
+		  color: theme.palette.grey[500],
+		},
+	});
+	
+	const DialogTitle = withStyles(styles)((props) => {
+		const {  classes, onClose, ...other } = props;
+		return (
+			<MuiDialogTitle disableTypography className={classes.root} {...other}>
+			<Box textAlign="center">
+				{/* <Typography variant="h4"> Tu pedido</Typography> */}
+			</Box>
+			{onClose ? (
+				<IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+				<CloseIcon />
+				</IconButton>
+			) : null}
+			</MuiDialogTitle>
+		);
+	});
+	
 	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
 
 	const buscarBD = () => {
@@ -125,6 +168,11 @@ function Navegacion(props) {
 										<ListItemText primary="Inicio" />
 									</ListItem>
 								</Grid>
+								{/* <Grid>
+									<ListItem button onClick={handleOpen}>
+										<ListItemText primary="Reservar" />
+									</ListItem>
+								</Grid> */}
 							</Hidden>
 						</>
 						)}
@@ -156,13 +204,13 @@ function Navegacion(props) {
 							<IconButton onClick={handleDrawerClose}>
 								<ChevronLeftIcon />
 							</IconButton>
-							<Box component={Link} to={`/${slug}`} className={classes.containerImage}>  
+							<Box onClick={handleDrawerClose} component={Link} to={`/${slug}`} className={classes.containerImage}>  
 								<img className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
 						</div>
 						<Divider />
 						{decoded ? (
-							<ListItem button component={Link} to="/user" >
+							<ListItem button component={Link} to="/user" onClick={handleDrawerClose}>
 								<ListItemIcon>
 									<AccountCircleSharpIcon/>
 								</ListItemIcon>
@@ -175,14 +223,20 @@ function Navegacion(props) {
 							<ListItem button component={Link} to={`/${slug}`} >
 								<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
 							</ListItem>
-							<ListItem button component={Link} to={`/${slug}`} >
+							<ListItem button component={Link} to={`/${slug}`} onClick={handleDrawerClose}>
 								<ListItemIcon>
 									<HomeIcon />
 								</ListItemIcon>
 								<ListItemText primary="Inicio" />
 							</ListItem>
+							{/* <ListItem button onClick={handleOpen}>
+								<ListItemIcon>
+									<RestaurantIcon/>
+								</ListItemIcon>
+								<ListItemText primary="Reservar" />
+							</ListItem> */}
 							{decoded ? (
-								<ListItem>
+								<ListItem onClick={handleDrawerClose}>
 									<ListItemIcon>
 										<ExitToAppIcon/>
 									</ListItemIcon>
@@ -205,8 +259,36 @@ function Navegacion(props) {
 							}
 						</List>
 					</Drawer>
+
+					
 				)}
-        </div>
+
+				<div>
+					<Hidden mdUp>
+						<Drawer
+							anchor="bottom"
+							open={reservacion}
+							onClose={handleClose}
+						>
+							<DialogTitle id="customized-dialog-title" onClose={handleClose} />
+							<Reservaciones id={id}/>
+						</Drawer>
+					</Hidden>
+					<Hidden smDown>
+						<Dialog open={reservacion} onClose={handleClose}>
+							<DialogTitle id="customized-dialog-title" onClose={handleClose} />
+							<Reservaciones  slug={slug}/>
+						</Dialog>
+					</Hidden>
+				</div>
+		</div>
     )
+
 }
+
+
+
  export default withRouter(Navegacion);
+
+
+ 

@@ -46,11 +46,10 @@ function BusquedaSubCates(props) {
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         consultarDatos();
         buscarProductos();
     }, [])
-
-    
 
     return (
         <div>
@@ -63,6 +62,7 @@ function BusquedaSubCates(props) {
                         </Typography>
                     </Box>
                 </Grid>
+                
                 <Grid lg={1} xs={12}>
                     <Box display="flex" justifyContent="center" p={1}>
                         <Button

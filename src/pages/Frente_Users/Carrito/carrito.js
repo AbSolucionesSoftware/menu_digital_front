@@ -106,10 +106,10 @@ export default function Carrito(props) {
 	};
 
     const mensaje =
-        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A ${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  `(`+ pedido.notas.notas +`)` : "")+ `%0A`
-        ))} ${envio === "domicilio" ? `%0ACosto de envio: $${empresa.priceEnvio}` : "" } %0A Total de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
+        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  `(`+ pedido.notas.notas +`)` : "")+ `%0A`
+        ))} ${envio === "domicilio" ? `%0ACosto de envio: $${empresa.priceEnvio}` : "" } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
         ${envio === "domicilio" ? `%0AA mi domicilio ${!usuario ? "" : usuario.domicilio}, Col. ${!usuario ? "" : usuario.colonia}.%0A` : `%0A Recogeré mi pedido en sucursal. %0A` }
-        %0A A nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`;
+        %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`;
 
     useEffect(() => {
 			var subtotal = 0;
@@ -317,7 +317,7 @@ export default function Carrito(props) {
                                             Realizar Pedido
                                         </Button>
                                     ) : (
-                                        <a target="_blank" href={`https://api.whatsapp.com/send?phone=52${empresa.phone}&text=${mensaje}`}>
+                                        <a style={{textDecoration: "none" }} target="_blank" href={`https://api.whatsapp.com/send?phone=52${empresa.phone}&text=${mensaje}`}>
                                             <Button
                                                 className={classes.buton}
                                                 variant="contained" 
@@ -338,7 +338,7 @@ export default function Carrito(props) {
                                             Realizar Pedido
                                         </Button>
                                     ) : (
-                                        <a target="_blank" href={`https://api.whatsapp.com/send?phone=52${empresa.phone}&text=${mensaje}`}>
+                                        <a style={{textDecoration: "none" }} target="_blank" href={`https://api.whatsapp.com/send?phone=52${empresa.phone}&text=${mensaje}`}>
                                             <Button
                                                 className={classes.buton}
                                                 variant="contained" 

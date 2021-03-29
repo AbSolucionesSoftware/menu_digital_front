@@ -67,7 +67,7 @@ export default function Footer() {
                 <Grid lg={4} xs={12} >
                     <Box p={1} textAlign="center">
                         <Typography variant="body1">
-                            ¡Encuentranos y Siguenos!
+                            ¡Encuéntranos y Siguenos!
                         </Typography>
                         <Box display="flex" justifyContent="center">
                             <Box p={1} >

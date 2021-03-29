@@ -46,6 +46,7 @@ import BotonCarrito from '../Carrito/botonCarrito';
 	);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         obtenerBusqueda();
         consultarDatos();
     }, [obtenerBusqueda])

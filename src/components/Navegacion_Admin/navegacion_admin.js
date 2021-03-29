@@ -80,13 +80,13 @@ export default function Navegacion_Admin(props) {
 								Administrador
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/admin">
+						<ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
 								Empresas con Menú
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/admin/registro">
+						<ListItem button component={Link} to="/admin/registro"  onClick={handleDrawerToggle}>
 							<ListItemIcon><PersonAddIcon/></ListItemIcon>
 							<Typography>
 								Registro

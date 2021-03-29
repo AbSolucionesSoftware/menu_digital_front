@@ -113,7 +113,7 @@ export default function Navegacion_User(props) {
 								{empresa.nameUser}
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/user">
+						<ListItem button component={Link} to="/user" onClick={handleDrawerToggle}>
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
 								Datos Empresa
@@ -137,13 +137,13 @@ export default function Navegacion_User(props) {
 								Generar Codigo QR
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/user/menu">
+						<ListItem button component={Link} to="/user/menu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
 								Menú
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/user/publicidad">
+						<ListItem button component={Link} to="/user/publicidad" onClick={handleDrawerToggle}>
 							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
 							<Typography>
 								Publicidad
@@ -315,6 +315,15 @@ export default function Navegacion_User(props) {
 					{/* <Box textAlign="center" p={2}>
 						<GenerarQr empresa={empresa}/>
 					</Box> */}
+					{/* <Grid item>
+						<WhatsappShareButton 
+							url={`https://www.comody.mx/${company.slug}`} 
+							title="Te comparto mi menú Digital" 
+							separator=": "
+						>
+							<WhatsappIcon style={{ fontSize: 45, color: '#00bb2d' }} />
+						</WhatsappShareButton>
+					</Grid> */}
 				</Box>
             </Dialog>
 	</div>
