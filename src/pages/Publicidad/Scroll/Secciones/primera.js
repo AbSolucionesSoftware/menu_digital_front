@@ -1,11 +1,34 @@
-import { Box, Container, Divider, Grid, Typography } from '@material-ui/core';
+import { Box, Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { Fragment } from 'react'
 import { IconButton } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import imagen from '../../img/PublicidadComody.png'
 
-import ImagenOne from '../../../image/iphone.png'
-import useStyles from '../../estilos';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import EditIcon from '@material-ui/icons/Edit';
+import ViewCarouselIcon from '@material-ui/icons/ViewCarousel';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
+const useStyles = makeStyles((theme) => ({
+    large: {
+        width: theme.spacing(8),
+        height: theme.spacing(8),
+    },
+    divisorPrincipal:{
+        marginLeft: '39%',
+        width: '20%',
+        background: '#bb2225'
+    },
+    containerImg:{
+        width: "80%",
+        height: '100%'
+    },
+    imagen:{
+        maxHeight: '100%',
+		maxWidth: '100%'
+    },
+}))
 
 export default function Primera() {
 
@@ -17,166 +40,174 @@ export default function Primera() {
             <Grid container spacing={1} >
                 {/* SECCIONES DE TITULOS */}
                 <Grid xs={12} >
-                    <Typography  component="div" variant="h4" >
-                        <Box textAlign="center" mt={1}>
-                            Asombrosas funciones en un solo click
-                        </Box>
-                    </Typography>
-
+                    <Box textAlign="center" mt={1}>
+                        <Typography variant="h4" color="primary" >
+                            Gestiona tu propio menú en linea
+                        </Typography>
+                    </Box>
                     <Box mt={2}>
                         <Divider className={classes.divisorPrincipal}/>
                     </Box>
-
-                    <Typography component="div" variant="body1" className={classes.tipografia}>
-                        <Box textAlign="center" mt={1}>
+                    <Box textAlign="center" mt={1}>
+                        <Typography variant="h6" >
                             Una lista de maravillosas funciones para ti como Administrador.
-                        </Box>
-                    </Typography>
-
-                    <Box mt={2} mb={5}>
-                        <Divider className={classes.divisorPrincipal}/>
+                        </Typography>
                     </Box>
-
+                    <Box mt={2} mb={5}>
+                        <Divider className={classes.divisorPrincipal} />
+                    </Box>
                 </Grid>
                 {/* FIN SECCION DE TITULOS */}
             
                 {/* INCIIO DE CONTENIDO PRINCIPAL */}
-                    <Grid container >
-                        <Grid container lg={4} xs={12}>
-                            <Grid xs={10}>
-                                <Box >
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="right" className={classes.subtitulos} mt={2}>
-                                            Descargar base de datos
-                                        </Box>
-                                        <Box textAlign="right" className={classes.tipografia} mt={2}>
-                                            Puedes descargar toda la base de datos de tus clientes esto para garantizar la experiencia de usuario y un excelente servicio postventa.
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
-
-                            <Grid xs={10}>
-                                <Box >
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="right" className={classes.subtitulos} mt={2}>
-                                            Subir productos mas rapido
-                                        </Box>
-                                        <Box textAlign="right" className={classes.tipografia} mt={2}>
-                                            Solamente necesitas seleccionar una categoría, Registrar los datos de tu producto y complementar con una galería de fotos. 
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
-
-                            <Grid xs={10}>
-                                <Box >
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="right" className={classes.subtitulos} mt={2}>
-                                            Ineventarios ONLINE
-                                        </Box>
-                                        <Box textAlign="right" className={classes.tipografia} mt={2}>
-                                            Ya no tendrás que hacer un conteo de tu mercancía a diario, Con CAFI tu tienda en línea puedes administrar tu inventario online y cargar toda la base de datos de inventarios que tengas. Además, con pocos clics podrás agregar o restar unidades a tu inventario.
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
+                <Grid container >
+                    <Grid container lg={4} xs={12}>
+                        <Grid xs={10}>
+                            <Box >
+                                <Typography component="div" variant="h5" color="primary">
+                                    <Box textAlign="right" mt={2}>
+                                        Agregar Platillos
+                                    </Box>
+                                </Typography>
+                                <Typography component="div" variant="h6">
+                                    <Box textAlign="right" mt={2}>
+                                        Podras agregar todos los platillos que desees sin limite de espacio
+                                    </Box>
+                                </Typography>
+                            </Box>
                         </Grid>
-                        <Grid container lg={4} xs={12} >
-                            <Box mb={5}>
-                                <Box display="flex" justifyContent="center" ml={5} mt={5} className={classes.containerImgSec} >
-                                    <img 
-                                        className={classes.imagen}
-                                        src={ImagenOne}
-                                        alt="Celular" 
-                                    />
-                                </Box>
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <FastfoodIcon className={classes.large} color="primary"/>
+                                </IconButton>
                             </Box>
                         </Grid>
 
-                        <Grid container lg={4} xs={12}>
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
-                            <Grid xs={10}>
-                                <Box ml={3}>
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="left" className={classes.subtitulos} mt={2}>
-                                            Control de Apartados!
-                                        </Box>
-                                        <Box textAlign="left" className={classes.tipografia} mt={2}>
-                                            Si, tendrás un panel en el cual podrás gestionar los pedidos de tus clientes a detalle, donde el cliente puede seleccionar si quiere envió a domicilio o lo recoge en sucursal. Adicional a esto puedes actualizar el estado del pedido de tu cliente.
-                                        </Box>
+                        <Grid xs={10}>
+                            <Box >
+                                <Typography component="div" variant="h5" color="primary" >
+                                    <Box textAlign="right" mt={2}>
+                                        Editar Platillos
+                                    </Box>
                                     </Typography>
-                                </Box>
-                            </Grid>
+                                    <Typography component="div" variant="h6">
+                                    <Box textAlign="right" mt={2}>
+                                        Si tus platillos sufren cambios podras actualizarlos en cualquier momento con un solo click
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <EditIcon className={classes.large} color="primary"/>
+                                </IconButton>
+                            </Box>
+                        </Grid>
 
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
-                            <Grid xs={10}>
-                                <Box ml={3}>
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="left" className={classes.subtitulos} mt={2}>
-                                            ¡Administrar tus Pedidos!
-                                        </Box>
-                                        <Box textAlign="left" className={classes.tipografia} mt={2}>
-                                            En este apartado puedes ver todos los pedidos de tus clientes, filtrar por estados, si ya están pagados o no y cambiar su estado. Toda la gestión de tu tienda a unos clics de distancia.
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-
-                            <Grid xs={2}>
-                                <Box mt="50%">
-                                    <IconButton>
-                                        <AccountCircleIcon className={classes.iconBoton}/>
-                                    </IconButton>
-                                </Box>
-                            </Grid>
-                            <Grid xs={10}>
-                                <Box ml={3}>
-                                    <Typography component="div" variant="h4" >
-                                        <Box textAlign="left" className={classes.subtitulos} mt={2}>
-                                            Podras generar tus propias promociones!
-                                        </Box>
-                                        <Box textAlign="left" className={classes.tipografia} mt={2}>
-                                            Podras agregar ofertas especiales a tu producto y aparecer en la página principal, así es, con pocos clics puedes agregar descuentos a tus productos sin necesidad de un programador.                                           
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
+                        <Grid xs={10}>
+                            <Box >
+                                <Typography component="div" variant="h5" color="primary" >
+                                    <Box textAlign="right" mt={2}>
+                                        Publicidad
+                                    </Box>
+                                </Typography>
+                                <Typography component="div" variant="h6">
+                                    <Box textAlign="right" mt={2}>
+                                        Tendras tu propio carrusel publicitario, el cual podras editar cuantas veces desees                                        
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <ViewCarouselIcon className={classes.large} color="primary"/>
+                                </IconButton>
+                            </Box>
                         </Grid>
                     </Grid>
+                    <Grid container lg={4} xs={12} >
+                        <Box mb={5}>
+                            <Box display="flex" justifyContent="center" ml={5} className={classes.containerImg} >
+                                <img 
+                                    className={classes.imagen}
+                                    src={imagen}
+                                    alt="Celular" 
+                                />
+                            </Box>
+                        </Box>
+                    </Grid>
+
+                    <Grid container lg={4} xs={12}>
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <WhatsAppIcon className={classes.large} color="primary"/>
+                                </IconButton>
+                            </Box>
+                        </Grid>
+                        <Grid xs={10}>
+                            <Box ml={3}>
+                                <Typography component="div" variant="h5" color="primary" >
+                                    <Box textAlign="left" mt={2}>
+                                        Pedidos a WhattsApp
+                                    </Box>
+                                </Typography>
+                                <Typography component="div" variant="h6">
+                                    <Box textAlign="left" mt={2}>
+                                        Todos los pedidos que realicen tus clientes se redireccionan directo al WhattsApp que tu definas, que podras editar las veces que sea necesario 
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Grid>
+
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <CropFreeIcon className={classes.large} color="primary"/>
+                                </IconButton>
+                            </Box>
+                        </Grid>
+                        <Grid xs={10}>
+                            <Box ml={3}>
+                                <Typography component="div" variant="h5" color="primary" >
+                                    <Box textAlign="left" mt={2}>
+                                        ¡Codigo QR!
+                                    </Box>
+                                </Typography>
+                                <Typography component="div" variant="h6">
+                                    <Box textAlign="left" mt={2}>
+                                        Genera un codigo QR unico para que tus clientes puedan encontrarte de una manera mas rapida.
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Grid>
+
+                        <Grid xs={2}>
+                            <Box mt="50%">
+                                <IconButton>
+                                    <RestaurantMenuIcon className={classes.large} color="primary"/>
+                                </IconButton>
+                            </Box>
+                        </Grid>
+                        <Grid xs={10}>
+                            <Box ml={3}>
+                                <Typography component="div" variant="h5" color="primary" >
+                                    <Box textAlign="left" mt={2}>
+                                        Reservaciones
+                                    </Box>
+                                </Typography>
+                                <Typography component="div" variant="h6">
+                                    <Box textAlign="left" mt={2}>
+                                        Tus clientes podran solicitar disponibilidad a tu restaurante, la cual llegara directo a tu WhattsApp
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Grid>
                 {/* find e contenido princiapl */}
             </Grid>
             </Container>

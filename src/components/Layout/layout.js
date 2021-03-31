@@ -63,7 +63,7 @@ export default function LayoutUsers(props) {
 						<AppBar>
 							<Toolbar>
 								{
-									navs === "/" ? (
+									navs === "/" || navs === "/login" ? (
 										<NavegacionPage />
 									):(
 										<Navegacion />

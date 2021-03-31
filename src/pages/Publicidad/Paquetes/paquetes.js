@@ -6,159 +6,129 @@ import useStyles from '../estilos';
 
 const stylesLocal = makeStyles((theme) => ({
     precio:{
-        fontSize: 35,
-        color: '#2222a8',
+        fontSize: 30,
+        color: '#bb2225',
         textAlign: 'center'
     },
-    tipografia:{
-        fontSize: 17,
-        textAlign:'center',
-        marginTop: 12
-    },
-    fondo:{
-        background: '#673de6',
-    },
     fondoColor:{
-        background: '#F8E9FF',
+        background: '#FFE8E8',
     },
-    blanco:{
-        fontSize: 35,
-        textAlign:'center',
-        color: "white"
+    divisorPrincipal:{
+        marginLeft: '39%',
+        width: '20%',
+        background: '#bb2225'
     },
-    fondo2:{
-        background: '#F8E9FF',
-        
-    }
 }))
 
 export default function Paquetes() {
 
-    const classes = useStyles();
     const estilo = stylesLocal();
 
     return (
-        <Fragment>
             <Container>
                 <Grid container spacing={1} >
                         <Grid lg={12} xs={11}>
-                            <Typography component="div" variant="h4">
+                            <Typography component="div" variant="h4" color="primary">
                                 <Box textAlign="center" mt={5}>
-                                    Affordable Packages
+                                    Adquiere uno de nuestros paquetes
                                 </Box>
                             </Typography>
-                            <Box textAlign="center" mt={1}> 
-                                <Divider className={classes.divisorPrincipal}/>
+                            <Box p={1} textAlign="center" mt={1}> 
+                                <Divider className={estilo.divisorPrincipal}/>
                             </Box>
-                            <Typography component="div" variant="body1">
-                                <Box textAlign="center" mt={3}>
-                                    List your app features and all the details Lorem ipsum dolor kadr
+                            <Typography component="div" variant="h6">
+                                <Box textAlign="center" p={1}>
+                                    Adquiere el mejor plan que se adapte a tus necesidades y a las de tu negocio
                                 </Box>
                             </Typography>
-                            <Box textAlign="center" mt={1}> 
-                                <Divider className={classes.divisorPrincipal}/>
+                            <Box p={1} textAlign="center" mt={1}> 
+                                <Divider className={estilo.divisorPrincipal} />
                             </Box>
                         </Grid>
-                        <Grid container>
-                            <Grid lg={4} md={4} xs={11}>
-                                <Box mt={7} className={estilo.fondoColor}>
-                                    <Typography className={classes.tituloSec}>
-                                        Personal
+                        <Grid container justify="center">
+                            <Grid lg={5} md={4} xs={11}>
+                                <Box textAlign="center" mt={3} p={3} className={estilo.fondoColor}>
+                                    <Typography variant="h4">
+                                        Basico
                                     </Typography>
                                 </Box>
                                 <Box mt={2}>
                                     <Typography  className={estilo.precio}>
-                                        $50 
+                                        $300 / Mes
                                     </Typography>
                                 </Box>
-                                <Box mt={4} className={estilo.fondoColor}>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Unlimited Photos
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Secure Online Transfer
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Unlimited Styles
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Cloud Storage
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>24/7 Customer Service
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Automatic Backup
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid lg={4} md={4} xs={11}>
-                                <Box mt={7}>
-                                    <Typography  className={classes.tituloSec}>
-                                        Business
-                                    </Typography>
-                                </Box>
-                                <Box mt={3} className={estilo.fondo}>
-                                    <Typography className={estilo.blanco}>
-                                        $75
-                                    </Typography>
-                                </Box>
-                                <Box mt={3}>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Unlimited Photos
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Secure Online Transfer
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Unlimited Styles
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Cloud Storage
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>24/7 Customer Service
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Automatic Backup
-                                    </Typography>
+                                <Box mt={4} className={estilo.fondoColor} >
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography variant="h6" >
+                                            <DoneIcon /> Recibir pedidos WhatsApp
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Generar Codigo QR
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Recibir Reservaciones
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Editar Publicidad
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> SubDominio GRATIS
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Espacio ILIMITADO
+                                        </Typography>
+                                    </Box>
                                 </Box>
                             </Grid>
-                            <Grid lg={4} md={4} xs={11}>
-                                <Box mt={7} className={estilo.fondoColor}> 
-                                    <Typography  className={classes.tituloSec}>
-                                        Ultimate
+                           
+                            <Grid lg={5} md={4} xs={11}>
+                                <Box textAlign="center" mt={3} p={3} className={estilo.fondoColor}> 
+                                    <Typography  variant="h4">
+                                        Paquete Publicitario
                                     </Typography>
                                 </Box>
-                                <Box mt={3}>
+                                <Box mt={2}>
+                                    <Typography className={estilo.precio}>
+                                        $500 (Un solo pago)
+                                    </Typography>
+                                </Box>
+                                <Box mt={4} className={estilo.fondoColor} >
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography variant="h6" >
+                                            <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                                        </Typography>
+                                    </Box>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Subir todos tus productos a tu pagina
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <Box mt={2}>
                                     <Typography  className={estilo.precio}>
-                                        $99 
+                                        $300 / Renta Mensual
                                     </Typography>
                                 </Box>
-                                <Box mt={3} mb={7} className={estilo.fondoColor} >
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Unlimited Photos
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/> Secure Online Transfer
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Unlimited Styles
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Cloud Storage
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>24/7 Customer Service
-                                    </Typography>
-                                    <Typography  vaiant="body1" className={estilo.tipografia}>
-                                        <DoneIcon className={classes.colorIcon}/>Automatic Backup
-                                    </Typography>
+                                <Box p={3} mt={3} className={estilo.fondoColor}>
+                                    <Box p={1} display="flex" justifyContent="center" >
+                                        <Typography  variant="h6" >
+                                            <DoneIcon /> Paquete Basico
+                                        </Typography>
+                                    </Box>
                                 </Box>
                             </Grid>
                         </Grid>
                 </Grid>
             </Container>
-        </Fragment>
     )
 }

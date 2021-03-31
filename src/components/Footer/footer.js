@@ -34,7 +34,7 @@ export default function Footer() {
                 <Grid lg={4} xs={12}>
                     <Box p={1} textAlign="center">
                         <Typography variant="body1">
-                            ¿Quieres tener tu menú digital?
+                            ¿Quieres tener tu propio MENÚ DIGITAL?
                         </Typography>
                         <Typography variant="body1">
                             Contáctanos:
@@ -45,7 +45,7 @@ export default function Footer() {
                             <PhoneForwardedIcon style={{fontSize: 35}}/>
                         </Box>
                         <Typography variant="h5">
-                           3173873462
+                           317-103-5768
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center" alignItems="center">

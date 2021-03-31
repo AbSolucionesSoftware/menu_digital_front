@@ -1,9 +1,34 @@
-import { Box, Container, Divider, Grid, Hidden, Typography } from '@material-ui/core';
+import { Box, Container, Divider, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { Fragment } from 'react'
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
-import ImagenOne from '../../../image/CelularOne.png'
-import useStyles from '../../estilos';
+import imagen from '../../img/PublicidadComodyDoble.png'
+
+const useStyles = makeStyles((theme) => ({
+    large: {
+        width: theme.spacing(8),
+        height: theme.spacing(8),
+    },
+    divisorPrincipal:{
+        marginTop: "6%",
+        background: '#bb2225'
+    },
+    containerImage:{
+        width: "90%",
+        height: '100%'
+    },
+    margenes:{
+        textAlign: "left"
+    },
+    containerImg:{
+        width: "100%",
+        height: '100%'
+    },
+    imagen:{
+        maxHeight: '100%',
+		maxWidth: '100%'
+    },
+}))
 
 
 export default function Tercera() {
@@ -11,78 +36,66 @@ export default function Tercera() {
     const classes = useStyles();
 
     return (
-        <Fragment>
-            <Container>
-                <Grid container spacing={1} >
-                    <Grid lg={6} xs={12} >
-                        <Box className={classes.containerImage}>
-                            <img 
-                                className={classes.imagen}
-                                src={ImagenOne}
-                                alt="Tecnologia de Huawei" 
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid lg={6} xs={11}>
-                        <Typography component="div" variant="h4">
-                            <Box textAlign="left" mt={9}>
-                                ¡Todo lo que obtienes con CAFI!
-                            </Box>
-                        </Typography>
-                        <Box className={classes.margenes}>
-                        
-                        <Divider variant="inset" className={classes.divisor}/>
-                        
-                        </Box>
-                        <Typography component="div" variant="body1" className={classes.tipografia}>
-                            <Box className={classes.margenes}>
-                                Tú, como dueño de tu tienda en línea tendrás acceso a un panel de administrador donde estarán todos los apartados y secciones de tu tienda 100% editables para que le des el diseño y estructura que siempre habías soñado.
-                            </Box>
-                            <Box display="flex" alignItems="center" className={classes.margenes}>
-                                <Box p={1}>
-                                    <DoneAllIcon className={classes.colorIcon} />
-                                </Box>
-                                <Box>
-                                    Editar la información de tu tienda
-                                </Box>
-                            </Box>
-                            <Box display="flex" alignItems="center" className={classes.margenes}>
-                                <Box p={1}>
-                                    <DoneAllIcon className={classes.colorIcon} />
-                                </Box>
-                                <Box>
-                                    Configurar cuales serán tus políticas de envió, políticas de privacidad y de imagen corporativa
-                                </Box>
-                            </Box>
-                            <Box display="flex" alignItems="center" className={classes.margenes}>
-                                <Box p={1}>
-                                    <DoneAllIcon className={classes.colorIcon} />
-                                </Box>
-                                <Box>
-                                    Un apartado exclusivo donde puedes subir una historia de tu empresa.
-                                </Box> 
-                            </Box>
-                            <Box display="flex" alignItems="center" className={classes.margenes}>
-                                <Box p={1}>
-                                    <DoneAllIcon className={classes.colorIcon} />
-                                </Box>
-                                <Box>
-                                    Podras editar el logo de tu negocio, datos principales de contacto, ubicación
-                                </Box>
-                            </Box>
-                            <Box display="flex" alignItems="center" className={classes.margenes}>
-                                <Box p={1}>
-                                    <DoneAllIcon className={classes.colorIcon} />
-                                </Box>
-                                <Box>
-                                    Tienes un apartado de publicidad donde en este apartado puedes subir una sección completa con un banner y los productos de una categoría en especial en la página principal.
-                                </Box>
-                            </Box>
-                        </Typography>
-
-                    </Grid>
+            <Grid container >
+                <Grid lg={7} xs={12} >
+                    <Box className={classes.containerImage}>
+                        <img 
+                            className={classes.imagen}
+                            src={imagen}
+                            alt="Comody" 
+                        />
+                    </Box>
                 </Grid>
-            </Container>
-        </Fragment>
+                <Grid lg={5} xs={11}>
+                    <Typography component="div" variant="h4" color="primary">
+                        <Box p={2} textAlign="left">
+                            Gerandes beneficios en tu propio Menú Digital
+                        </Box>
+                    </Typography>
+                    
+                    <Typography component="div" variant="h6">
+                        <Box  p={1} display="flex" alignItems="center" className={classes.margenes}>
+                            <Box display="flex" alignItems="center" p={1}>
+                                <DoneAllIcon color="primary" />
+                            </Box>
+                            <Box>
+                                Lograr editar la informacion de pagina sin ayuda de nadie mas
+                            </Box>
+                        </Box>
+                        <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
+                            <Box  display="flex" alignItems="center" p={1}>
+                                <DoneAllIcon color="primary" />
+                            </Box>
+                            <Box>
+                                Tendras tu propio subdominio dentro de la web para ser localizado mas facil
+                            </Box>
+                        </Box>
+                        <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
+                            <Box  display="flex" alignItems="center" p={1}>
+                                <DoneAllIcon color="primary" />
+                            </Box>
+                            <Box>
+                                Tus usuarios tendran una mayor experiencia al pedir de forma online
+                            </Box> 
+                        </Box>
+                        <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
+                            <Box  display="flex" alignItems="center" p={1}>
+                                <DoneAllIcon color="primary" />
+                            </Box>
+                            <Box>
+                                Todos los pedidos llegaran a tu WhatsApp, con las caracteristicas y nnotas que tus clientes deseen agregar
+                            </Box>
+                        </Box>
+                        <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
+                            <Box  display="flex" alignItems="center" p={1}>
+                                <DoneAllIcon color="primary" />
+                            </Box>
+                            <Box>
+                                Tendras tu espacio dentro de nuestra publicidad para tener un mayor crecimiento ante los usuarios
+                            </Box>
+                        </Box>
+                    </Typography>
+                </Grid>
+            </Grid>
     )
 }

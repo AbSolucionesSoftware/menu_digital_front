@@ -119,7 +119,7 @@ function Navegacion(props) {
         <div>
             <AppBar  className={classes.appbar}>
 					<Toolbar>
-					{login  === "/login" ? null : (
+					{/* {login  === "/login" ? null : ( */}
 						<>
 							<Hidden mdUp>
 								<IconButton
@@ -168,14 +168,14 @@ function Navegacion(props) {
 										<ListItemText primary="Inicio" />
 									</ListItem>
 								</Grid>
-								{/* <Grid>
+								<Grid>
 									<ListItem button onClick={handleOpen}>
 										<ListItemText primary="Reservar" />
 									</ListItem>
-								</Grid> */}
+								</Grid>
 							</Hidden>
 						</>
-						)}
+						{/* )} */}
 
 						<div className={classes.grow} />
 						<Hidden smDown>
@@ -190,7 +190,7 @@ function Navegacion(props) {
 					</Toolbar>
 				</AppBar>
                 {/* {renderMenu} */}
-				{login  === "/login" ? null : (
+				{/* {login  === "/login" ? null : ( */}
 					<Drawer
 						className={classes.drawer}
 						anchor="left"
@@ -229,12 +229,12 @@ function Navegacion(props) {
 								</ListItemIcon>
 								<ListItemText primary="Inicio" />
 							</ListItem>
-							{/* <ListItem button onClick={handleOpen}>
+							<ListItem button onClick={handleOpen}>
 								<ListItemIcon>
 									<RestaurantIcon/>
 								</ListItemIcon>
 								<ListItemText primary="Reservar" />
-							</ListItem> */}
+							</ListItem>
 							{decoded ? (
 								<ListItem onClick={handleDrawerClose}>
 									<ListItemIcon>
@@ -259,9 +259,7 @@ function Navegacion(props) {
 							}
 						</List>
 					</Drawer>
-
-					
-				)}
+0				{/* )} */}
 
 				<div>
 					<Hidden mdUp>

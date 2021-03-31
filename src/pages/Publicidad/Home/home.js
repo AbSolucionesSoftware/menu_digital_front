@@ -1,41 +1,37 @@
 import React from 'react'
 
-// import BannerPrincipal from '../BannerPrincipal/bannerPrincipal'
-// import FrenteScroll from '../Scroll/scroll'
-// import Awesome from './awesome'
-// import Paquetes from '../Paquetes/paquetes';
-// import Contacto from './contacto';
-// import Carrusel_Screens from './carrusel_screens'
-// import { Box, Container } from '@material-ui/core';
+import BannerPrincipal from '../BannerPrincipal/bannerPrincipal'
+import FrenteScroll from '../Scroll/scroll'
+import Paquetes from '../Paquetes/paquetes';
+import CarruselEmpresas from '../Empresas/empresas'
+import Carrusel from '../Empresas/carruselEmpresas'
+
+import { Box,Container, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    fondo:{
+        // backgroundColor: "#bb2225"
+    }
+}))
 
 export default function HomePublicidad() {
+
+     const classes = useStyles();
+    //  className={classes.fondo}
     return (
-        <div>
-            PUBLICIDAD DE COMODY
-            {/* <div> 
-                <BannerPrincipal/>
-            </div>
-                <Container>
-                    <FrenteScroll/>
-                </Container>
-            <div  style={{background: "white"}}>
-                <Awesome />
-            </div>
-            <div>
-                <Container>
-                    <Carrusel_Screens />
-                </Container>
-            </div>
-            <div  style={{background: "white"}}>
-                <Box >
-                    <Paquetes />
-                </Box>
-            </div>
-            <div>
-                <Box>
-                    <Contacto />
-                </Box>
-            </div> */}
+        <div >
+            {/* <BannerPrincipal/>
+            <Container>
+                <FrenteScroll/>
+            </Container>
+            <Box mb={3}>
+                <Paquetes/>
+            </Box> */}
+            {/* <CarruselEmpresas /> */}
+            {/* <Box p={5}> */}
+                {/* <Carrusel/> */}
+            {/* </Box> */}
+
         </div>
     )
 }

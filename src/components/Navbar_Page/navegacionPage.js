@@ -90,7 +90,7 @@ function NavegacionPage(props) {
 							</IconButton>
 						</Hidden>
 						<Hidden smDown>
-							<Box component={Link} to={`/${slug}`} className={classes.containerImage}>  
+							<Box component={Link} to={`/`} className={classes.containerImage}>  
 								<img  className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
 						</Hidden>
@@ -155,7 +155,7 @@ function NavegacionPage(props) {
 						<IconButton onClick={handleDrawerClose}>
 							<ChevronLeftIcon />
 						</IconButton>
-						<Box component={Link} to={`/${id}/${slug}`} className={classes.containerImage}>  
+						<Box component={Link} to={`/`} className={classes.containerImage}>  
 							<img className={classes.image} alt="logotipo" src={Comody}/>
 						</Box>
 					</div>

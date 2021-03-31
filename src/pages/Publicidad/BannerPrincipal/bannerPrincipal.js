@@ -1,59 +1,39 @@
 import React from 'react'
-import { Box, Grid, makeStyles } from '@material-ui/core'
-import { Fragment } from 'react'
-// import GetAppIcon from '@material-ui/icons/GetApp';
+import '../../Frente_Users/Banner/banner.scss'
+import BannerAnim, { Element } from 'rc-banner-anim';
+import 'rc-banner-anim/assets/index.css';
+import Banner1 from '../img/Banner1.jpg'
 
-import banner from '../../image/BannerLogo.PNG';
-
-const useStyles = makeStyles((theme) => ({
-    principal:{
-        position: 'relative'
-    },
-    imagen:{
-        width: '100%',
-        height: '100%'
-    },
-    containerImagen:{
-        width: '100%',
-        // height: '95%',
-        position: 'relative',
-        zIndex: 80
-    },
-    containerBotton:{
-        marginLeft: '15%',
-        position: 'absolute',
-        top: '75%',
-        zIndex: 100,
-    },
-    buton:{
-        fontSize: 22,
-        textTransform: 'none',
-    }
-    //8600c8
-    
-}));
 
 export default function BannerPrincipal() {
 
-    const classes =useStyles();
-    
+    const BgElement = Element.BgElement;
+
+
     return (
-        <Fragment>
-            <Grid className={classes.principal}>
-                <Box className={classes.containerImagen}>
-                    <img className={classes.imagen}
-                        src={banner} 
-                        alt="Banner principal publicitario" 
-                    />
-                </Box>
-                {/* <Box className={classes.containerBotton}>
-                    <Button variant="contained" color="secondary" className={classes.buton}>
-                        <GetAppIcon fontSize='large'/>
-                        Download App
-                    </Button>
-                </Box> */}
-            </Grid>
-        </Fragment>
-        
+        <BannerAnim autoPlay  prefixCls="banner-user" delay={200}>
+            <Element key={1} prefixCls="banner-user-elem" >
+                <BgElement
+                    key="bg"
+                    className="bg banner-elemento"
+                    alt="img-oferta"
+                    style={{
+                        backgroundImage: `url(${Banner1})`,
+                    }}
+                >
+                </BgElement>
+            </Element>
+            <Element key={2} prefixCls="banner-user-elem" >
+                <BgElement
+                    key="bg"
+                    className="bg banner-elemento"
+                    alt="img-oferta"
+                    // style={{
+                    //     // backgroundImage: `url(${})`,
+                    // }}
+                >
+                </BgElement>
+            </Element>
+        </BannerAnim>
     )
 }
