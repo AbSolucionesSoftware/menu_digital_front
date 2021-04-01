@@ -269,7 +269,7 @@ function Navegacion(props) {
 							onClose={handleClose}
 						>
 							<DialogTitle id="customized-dialog-title" onClose={handleClose} />
-							<Reservaciones id={id}/>
+							<Reservaciones slug={slug}/>
 						</Drawer>
 					</Hidden>
 					<Hidden smDown>
