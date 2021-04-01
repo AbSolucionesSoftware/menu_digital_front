@@ -35,7 +35,7 @@ export default function Menu_Front(props) {
 	const login = props.location.pathname;
 
 	const [empresa, setEmpresa] = useState([]);
-	const [ loading, setLoading ] = useState(false);
+	const [ loading, setLoading ] = useState(true);
     const {  setNombre, setId, setSlug  } = useContext(ImageContext);
 	
 	const consultarDatos = async () => {
@@ -55,10 +55,17 @@ export default function Menu_Front(props) {
 				setLoading(false);
 			})
 	}
+	
+
 	useEffect(() => {
 		consultarDatos();
 	}, [])
 
+	if (loading) {
+		return (
+			<Spin loading={loading} />
+		);
+	}
 
 	if (empresa === null) {
 		<No_Page/>
@@ -75,6 +82,7 @@ export default function Menu_Front(props) {
 					<Box>
 						<Banner empresa={empresa} />
 					</Box>
+
 					<Grid container justify="center" lg={12}>
 						<Box mt={3} textAlign="center">
 							<Avatar className={classes.large} alt="Remy Sharp"  src={empresa.logoImagenUrl} />
