@@ -39,7 +39,6 @@ export default function Menu_Front(props) {
     const {  setNombre, setId, setSlug  } = useContext(ImageContext);
 	
 	const consultarDatos = async () => {
-		setLoading(true);
 		await clienteAxios
 			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
@@ -60,6 +59,7 @@ export default function Menu_Front(props) {
 	useEffect(() => {
 		consultarDatos();
 	}, [])
+
 
 	if (loading) {
 		return (

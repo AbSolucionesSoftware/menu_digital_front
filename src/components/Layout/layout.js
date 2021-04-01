@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Navegacion from '../Navbar/navegacion';
 import NavegacionPage from '../Navbar_Page/navegacionPage';
 import Footer from '../Footer/footer'
+import FooterPage from '../Footer/footerPage'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
@@ -79,7 +80,14 @@ export default function LayoutUsers(props) {
 				</NavProvider>
 
 				<div>
-					<Footer />
+					{
+						navs === "/" || navs === "/login" ? (
+							<FooterPage />
+						):(
+							<Footer />
+						)
+					}
+					
 				</div>
 			</div>
 			</ImageProvider>

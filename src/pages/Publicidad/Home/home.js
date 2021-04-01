@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import BannerPrincipal from '../BannerPrincipal/bannerPrincipal'
 import FrenteScroll from '../Scroll/scroll'
@@ -17,21 +17,26 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePublicidad() {
 
      const classes = useStyles();
-    //  className={classes.fondo}
+
+    useEffect(() => {
+        localStorage.removeItem('slug');
+        localStorage.removeItem('idEmpresa');
+    }, [])
+
+     //  className={classes.fondo}
     return (
         <div >
-            {/* <BannerPrincipal/>
+            <BannerPrincipal/>
+            {/* <Box p={5}>
+                <Carrusel/>
+            </Box> */}
             <Container>
                 <FrenteScroll/>
             </Container>
             <Box mb={3}>
                 <Paquetes/>
-            </Box> */}
+            </Box>
             {/* <CarruselEmpresas /> */}
-            {/* <Box p={5}> */}
-                {/* <Carrusel/> */}
-            {/* </Box> */}
-
         </div>
     )
 }

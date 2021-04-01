@@ -32,7 +32,6 @@ function Footer(props) {
 	const classes = useStyles();
     const slug = localStorage.getItem('slug');
 	const login = props.location.pathname;
-    console.log(slug, "login", login);
 	const [empresa, setEmpresa] = useState([]);
 
     const consultarDatos = async () => {
@@ -135,76 +134,9 @@ function Footer(props) {
                 </Grid>
 			);
 		}else{
-			return(
-            <Grid container className={classes.fondo}>
-                <Grid lg={4} xs={12}>
-                    <Box mt={2} p={1} textAlign="center">
-                        <Typography variant="body1">
-                            Te interesa tener tu propio MENÚ DIGITAL
-                        </Typography>
-                        <Typography variant="body1">
-                            Contactanos
-                        </Typography>
-                    </Box>
-                    <Box  display="flex" justifyContent="center" alignItems="center">
-                        <Box mr={2}>
-                            <PhoneForwardedIcon style={{fontSize: 35}}/>
-                        </Box>
-                        <Typography variant="h5">
-                            +52 317-103-5768
-                        </Typography>
-                    </Box>
-                    <Box display="flex" justifyContent="center" alignItems="center" alignItems="center">
-                        <Box mr={2}>
-                            <MailOutlineIcon style={{fontSize: 35}}/>
-                        </Box>
-                        <Typography variant="body1">
-                            contacto@comody.mx
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Hidden xsDown>
-                    <Grid item sm={4}>
-                        <Box mb={2} mt={2}>
-                            <div className={classes.containerImage}>
-                                <img className={classes.image} alt="logotipo" src={comody}/>
-                            </div>
-                        </Box>
-                    </Grid>
-                </Hidden>
-                <Grid lg={4} xs={12} >
-                    <Box p={1} textAlign="center">
-                        <Typography variant="body1">
-                            ¡Encuéntranos y Siguenos!
-                        </Typography>
-                        <Box display="flex" justifyContent="center">
-                            <Box p={1} >
-                                <a target="_blank" href="https://www.facebook.com/Comody-tu-men%C3%BA-digital-101302482046695">
-                                <FacebookIcon style={{color: "white",fontSize: 50}}/>
-                                </a>
-                            </Box>
-                            <Box p={1}>
-                                <InstagramIcon style={{fontSize: 35}} />
-                            </Box> 
-                        </Box>
-                        
-                        <Box p={1} display="flex" justifyContent="center" alignItems="center" >
-                            <LanguageIcon  mr={2} style={{fontSize: 35}}/>
-                            <Typography variant="h6">
-                                WWW.COMODY.MX
-                            </Typography>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid  lg={12} xs={12}>
-                    <Box textAlign="center">
-                        <Typography variant="body1">
-                            Todos los derechos reservados de COMODY, AB Soluciones Empresariales 2021
-                        </Typography>
-                    </Box>
-                </Grid>
-            </Grid>
-			);
+            return(
+                null
+            )
 		}
 	}
 };

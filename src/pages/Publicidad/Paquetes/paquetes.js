@@ -1,8 +1,10 @@
-import { Box, Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Card, Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import React, { Fragment } from 'react'
 
 import useStyles from '../estilos';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
 
 const stylesLocal = makeStyles((theme) => ({
     precio:{
@@ -17,6 +19,10 @@ const stylesLocal = makeStyles((theme) => ({
         marginLeft: '39%',
         width: '20%',
         background: '#bb2225'
+    },
+    root: {
+        maxWidth: 480,
+        maxHeight: 600
     },
 }))
 
@@ -47,85 +53,165 @@ export default function Paquetes() {
                         </Grid>
                         <Grid container justify="center">
                             <Grid lg={5} md={4} xs={11}>
-                                <Box textAlign="center" mt={3} p={3} className={estilo.fondoColor}>
-                                    <Typography variant="h4">
-                                        Basico
-                                    </Typography>
-                                </Box>
-                                <Box mt={2}>
-                                    <Typography  className={estilo.precio}>
-                                        $300 / Mes
-                                    </Typography>
-                                </Box>
-                                <Box mt={4} className={estilo.fondoColor} >
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography variant="h6" >
-                                            <DoneIcon /> Recibir pedidos WhatsApp
+                            <Box mt={2} />
+                                <Card className={estilo.root}>
+                                    <Box textAlign="center" mt={3} p={1}>
+                                        <Typography variant="h4">
+                                            Basico
                                         </Typography>
                                     </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Generar Codigo QR
+                                    <Box mt={2} p={2} className={estilo.fondoColor}> 
+                                        <Typography  className={estilo.precio}>
+                                            $300 / Mes
                                         </Typography>
                                     </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Recibir Reservaciones
-                                        </Typography>
+                                    <Box mt={4} >
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography variant="h6" >
+                                                <DoneIcon /> Recibir pedidos WhatsApp
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Generar Codigo QR
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Recibir Reservaciones
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Editar Publicidad
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> SubDominio GRATIS
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Espacio ILIMITADO
+                                            </Typography>
+                                        </Box>
                                     </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Editar Publicidad
-                                        </Typography>
-                                    </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> SubDominio GRATIS
-                                        </Typography>
-                                    </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Espacio ILIMITADO
-                                        </Typography>
-                                    </Box>
-                                </Box>
+                                </Card>
                             </Grid>
-                           
                             <Grid lg={5} md={4} xs={11}>
-                                <Box textAlign="center" mt={3} p={3} className={estilo.fondoColor}> 
-                                    <Typography  variant="h4">
-                                        Paquete Publicitario
-                                    </Typography>
-                                </Box>
-                                <Box mt={2}>
-                                    <Typography className={estilo.precio}>
-                                        $500 (Un solo pago)
-                                    </Typography>
-                                </Box>
-                                <Box mt={4} className={estilo.fondoColor} >
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography variant="h6" >
-                                            <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                            <Box mt={2} />
+                                <Card className={estilo.root}>
+                                    <Box textAlign="center" mt={3} p={1} > 
+                                        <Typography  variant="h4">
+                                            Paquete Publicitario
                                         </Typography>
                                     </Box>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Subir todos tus productos a tu pagina
+                                    <Box mt={2} p={2} className={estilo.fondoColor}>
+                                        <Typography className={estilo.precio}>
+                                            Un solo pago de $500
                                         </Typography>
                                     </Box>
-                                </Box>
-                                <Box mt={2}>
-                                    <Typography  className={estilo.precio}>
-                                        $300 / Renta Mensual
-                                    </Typography>
-                                </Box>
-                                <Box p={3} mt={3} className={estilo.fondoColor}>
-                                    <Box p={1} display="flex" justifyContent="center" >
-                                        <Typography  variant="h6" >
-                                            <DoneIcon /> Paquete Basico
+                                    <Box mt={4} >
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography variant="h6" >
+                                                <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Subir todos tus productos a tu pagina
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" alignItems="center" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <CloseIcon /> No incluye renta mensual
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                            
+                        <Grid container justify="center">
+                            <Grid lg={5} md={4} xs={11}>
+                            <Box mt={2} />
+                                <Card className={estilo.root}>
+                                    <Box textAlign="center" mt={3} p={1}>
+                                        <Typography variant="h4">
+                                            Paquete Social
                                         </Typography>
                                     </Box>
-                                </Box>
+                                    <Box mt={2} p={2} className={estilo.fondoColor}> 
+                                        <Typography  className={estilo.precio}>
+                                            $2,000 / Mes
+                                        </Typography>
+                                    </Box>
+                                    <Box mt={4} >
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography variant="h6" >
+                                                <DoneIcon /> Manejo de una red social
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Cinco Post por semana
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> Tres fotos de portada
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <AddIcon style={{fontSize: 45}} /> 
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> PAQUETE BASICO
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Card>
+                            </Grid>
+                            <Grid lg={5} md={4} xs={11}>
+                            <Box mt={2} />
+                                <Card className={estilo.root}>
+                                    <Box textAlign="center" mt={3} p={1} > 
+                                        <Typography  variant="h4">
+                                            Paquete Premium
+                                        </Typography>
+                                    </Box>
+                                    <Box mt={2} p={2} className={estilo.fondoColor}>
+                                        <Typography className={estilo.precio}>
+                                           $500 / Mes
+                                        </Typography>
+                                    </Box>
+                                    <Box mt={4} >
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography variant="h6" >
+                                                <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center"  textAlign="center">
+                                            <Typography variant="h6" >
+                                                <DoneIcon /> Subir todos tus productos a tu pagina y actualizaciones
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <AddIcon style={{fontSize: 45}} /> 
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1} display="flex" justifyContent="center" >
+                                            <Typography  variant="h6" >
+                                                <DoneIcon /> PAQUETE BASICO
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Card>
                             </Grid>
                         </Grid>
                 </Grid>

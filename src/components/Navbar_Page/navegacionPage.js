@@ -77,7 +77,7 @@ function NavegacionPage(props) {
         <div>
             <AppBar  className={classes.appbar}>
 					<Toolbar>
-						<Hidden mdUp>
+						{/* <Hidden mdUp>
 							<IconButton
 								edge="start"
 								aria-label="show more"
@@ -88,12 +88,24 @@ function NavegacionPage(props) {
 							>
 								<MenuIcon />
 							</IconButton>
-						</Hidden>
-						<Hidden smDown>
+						</Hidden> */}
+						{/* <Hidden smDown> */}
 							<Box component={Link} to={`/`} className={classes.containerImage}>  
 								<img  className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
-						</Hidden>
+						{/* </Hidden> */}
+						<Grid container justify="flex-end" >
+							<Grid>
+								<ListItem button component={Link} to={`/`} >
+									<ListItemText primary="Inicio" />
+								</ListItem>
+							</Grid>
+							<Grid>
+								<ListItem button component={Link} to={`/login`}>
+									<ListItemText primary="Entrar" />
+								</ListItem>
+							</Grid>
+						</Grid>
 						{/* <div className={classes.search}>
 							
 							<InputBase
@@ -169,20 +181,23 @@ function NavegacionPage(props) {
 						</ListItem>
 					) : (
 						<div />
-					)}
+					)} */}
 					<List>
-						<ListItem button component={Link} to={`/${slug}`} >
+						{/* <ListItem button component={Link} to={`/`} >
 							<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
-						</ListItem>
-						<ListItem button component={Link} to={`/${slug}`} >
+						</ListItem> */}
+						<ListItem button component={Link} to={`/`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
+						<ListItem button component={Link} to={`/login`} >
+							<ListItemText primary="Entrar" />
+						</ListItem>
 
 						
-						{decoded ? (
+						{/* {decoded ? (
 							<ListItem>
 								<ListItemIcon>
 									<ExitToAppIcon/>
@@ -203,8 +218,8 @@ function NavegacionPage(props) {
 							) : (
 								null
 							)
-						}
-					</List> */}
+						} */}
+					</List>
                 </Drawer>
         </div>
     )

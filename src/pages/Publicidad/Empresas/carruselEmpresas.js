@@ -8,8 +8,8 @@ export default function Carrusel() {
     return (
     <>
       <Box textAlign="center" >
-        <Typography color="primary" variant="h3">
-          Empresas Afiliadas
+        <Typography color="primary" style={{fontSize: 35, fontWeight: 600}}>
+          Empresas Afiliadas con Comody
         </Typography>
       </Box>
       <InfiniteCarousel
