@@ -3,7 +3,7 @@ import './banner.scss'
 import BannerAnim, { Element } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 import Banner1 from '../img/comodyBanner.jpg'
-import Banner2 from '../img/comodyBannerDos.jpeg'
+import Banner2 from '../img/ComodyBannerDos.jpg'
 
 export default function BannerPrincipal() {
 
