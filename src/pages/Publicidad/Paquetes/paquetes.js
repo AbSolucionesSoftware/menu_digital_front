@@ -73,7 +73,7 @@ export default function Paquetes() {
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center" >
                                             <Typography  variant="h6" >
-                                                <DoneIcon /> Generar Codigo QR
+                                                <DoneIcon /> Generar Código QR
                                             </Typography>
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center" >
@@ -88,7 +88,7 @@ export default function Paquetes() {
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center" >
                                             <Typography  variant="h6" >
-                                                <DoneIcon /> SubDominio GRATIS
+                                                <DoneIcon /> Subdominio GRATIS
                                             </Typography>
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center" >
@@ -115,7 +115,7 @@ export default function Paquetes() {
                                     <Box mt={4} >
                                         <Box p={1} display="flex" justifyContent="center" >
                                             <Typography variant="h6" >
-                                                <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                                                <DoneIcon /> 3 Imágenes publicitarias (Banners)
                                             </Typography>
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center" >
@@ -192,7 +192,7 @@ export default function Paquetes() {
                                     <Box mt={4} >
                                         <Box p={1} display="flex" justifyContent="center" >
                                             <Typography variant="h6" >
-                                                <DoneIcon /> 3 Imagenes publcitarias (Banners)
+                                                <DoneIcon /> 3 Imágenes publicitarias (Banners)
                                             </Typography>
                                         </Box>
                                         <Box p={1} display="flex" justifyContent="center"  textAlign="center">

@@ -71,7 +71,7 @@ export default function Primera() {
                                 </Typography>
                                 <Typography component="div" variant="h6">
                                     <Box textAlign="right" mt={2}>
-                                        Podras agregar todos los platillos que desees sin limite de espacio
+                                        Podrás agregar todos los platillos que desees sin límite de espacio
                                     </Box>
                                 </Typography>
                             </Box>
@@ -93,7 +93,7 @@ export default function Primera() {
                                     </Typography>
                                     <Typography component="div" variant="h6">
                                     <Box textAlign="right" mt={2}>
-                                        Si tus platillos sufren cambios podras actualizarlos en cualquier momento con un solo click
+                                        Si tus platillos sufren cambios podrás actualizarlos en cualquier momento 
                                     </Box>
                                 </Typography>
                             </Box>
@@ -115,7 +115,7 @@ export default function Primera() {
                                 </Typography>
                                 <Typography component="div" variant="h6">
                                     <Box textAlign="right" mt={2}>
-                                        Tendras tu propio carrusel publicitario, el cual podras editar cuantas veces desees                                        
+                                        Tendrás tu propio carrusel publicitario, el cual podrás editar cuantas veces desees
                                     </Box>
                                 </Typography>
                             </Box>
@@ -152,12 +152,12 @@ export default function Primera() {
                             <Box ml={3}>
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="left" mt={2}>
-                                        Pedidos a WhattsApp
+                                        Pedidos a WhatsApp
                                     </Box>
                                 </Typography>
                                 <Typography component="div" variant="h6">
                                     <Box textAlign="left" mt={2}>
-                                        Todos los pedidos que realicen tus clientes se redireccionan directo al WhattsApp que tu definas, que podras editar las veces que sea necesario 
+                                        Todos los pedidos que realicen tus clientes se redireccionan directo al WhatsApp que tu definas, que podrás editar las veces que sea necesario
                                     </Box>
                                 </Typography>
                             </Box>
@@ -174,12 +174,12 @@ export default function Primera() {
                             <Box ml={3}>
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="left" mt={2}>
-                                        ¡Codigo QR!
+                                        ¡Código QR!
                                     </Box>
                                 </Typography>
                                 <Typography component="div" variant="h6">
                                     <Box textAlign="left" mt={2}>
-                                        Genera un codigo QR unico para que tus clientes puedan encontrarte de una manera mas rapida.
+                                        Genera un Código QR único para que tus clientes puedan encontrarte de una manera más rápida.
                                     </Box>
                                 </Typography>
                             </Box>
@@ -201,7 +201,7 @@ export default function Primera() {
                                 </Typography>
                                 <Typography component="div" variant="h6">
                                     <Box textAlign="left" mt={2}>
-                                        Tus clientes podran solicitar disponibilidad a tu restaurante, la cual llegara directo a tu WhattsApp
+                                        Tus clientes podrán solicitar disponibilidad a tu restaurante, la cual llegara directo a tu WhatsApp
                                     </Box>
                                 </Typography>
                             </Box>

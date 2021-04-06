@@ -49,7 +49,7 @@ export default function Tercera() {
                 <Grid lg={5} xs={11}>
                     <Typography component="div" variant="h4" color="primary">
                         <Box p={2} textAlign="left">
-                            Gerandes beneficios en tu propio Menú Digital
+                            Grandes beneficios en tu propio Menú Digital
                         </Box>
                     </Typography>
                     
@@ -59,7 +59,7 @@ export default function Tercera() {
                                 <DoneAllIcon color="primary" />
                             </Box>
                             <Box>
-                                Lograr editar la informacion de pagina sin ayuda de nadie mas
+                                Lograr editar la información de página sin ayuda de nadie mas
                             </Box>
                         </Box>
                         <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
@@ -67,7 +67,7 @@ export default function Tercera() {
                                 <DoneAllIcon color="primary" />
                             </Box>
                             <Box>
-                                Tendras tu propio subdominio dentro de la web para ser localizado mas facil
+                                Tendrás tu propio subdominio dentro de la web para ser localizado más fácil
                             </Box>
                         </Box>
                         <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
@@ -75,7 +75,7 @@ export default function Tercera() {
                                 <DoneAllIcon color="primary" />
                             </Box>
                             <Box>
-                                Tus usuarios tendran una mayor experiencia al pedir de forma online
+                                Tus usuarios tendrán una mayor experiencia al pedir de forma online
                             </Box> 
                         </Box>
                         <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
@@ -83,7 +83,7 @@ export default function Tercera() {
                                 <DoneAllIcon color="primary" />
                             </Box>
                             <Box>
-                                Todos los pedidos llegaran a tu WhatsApp, con las caracteristicas y nnotas que tus clientes deseen agregar
+                                Todos los pedidos llegaran a tu WhatsApp, con las características y notas que tus clientes deseen agregar
                             </Box>
                         </Box>
                         <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
@@ -91,7 +91,7 @@ export default function Tercera() {
                                 <DoneAllIcon color="primary" />
                             </Box>
                             <Box>
-                                Tendras tu espacio dentro de nuestra publicidad para tener un mayor crecimiento ante los usuarios
+                                Tendrás tu espacio dentro de nuestra publicidad para tener un mayor crecimiento ante los usuarios
                             </Box>
                         </Box>
                     </Typography>
