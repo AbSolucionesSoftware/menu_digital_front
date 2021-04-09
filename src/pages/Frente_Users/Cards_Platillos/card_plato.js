@@ -59,23 +59,25 @@ export default function Cards_Platos(props) {
 											</Box>
 										</Grid>
 									</Tooltip>
-									<Grid xs zeroMinWidth >
+									<Grid item xs>
 										<Box display="flex" justifyContent="center">
-											<Typography className={classes.rootTitulo} variant="h6" noWrap>
+											<Typography className={classes.rootTitulo} variant="h2" >
 												{producto.description} 
 											</Typography>
 										</Box>
 									</Grid>
 									<Grid item xs zeroMinWidth>
-										<Typography variant="h3" color="textSecondary">
-											${formatoMexico(producto.price)} 
-										</Typography>
+										<Box mt={2}>
+											<Typography variant="h3" color="textSecondary">
+												${formatoMexico(producto.price)} 
+											</Typography>
+										</Box>
 									</Grid>
 									{sesion ? (
 										null
 									) : (
 										<Grid lg={12}>
-											<Box p={1} mt={2}>
+											<Box p={1}>
 												<Button
 													variant="contained" 
 													color="primary" 
@@ -167,7 +169,8 @@ export default function Cards_Platos(props) {
 					<AgregarCarrito 
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
-						precio={agregarProducto.price} 
+						precio={agregarProducto.price}
+						productos={agregarProducto}
 						setOpen={setOpen}  
 					/>
 				</Drawer>
@@ -177,7 +180,8 @@ export default function Cards_Platos(props) {
 					<AgregarCarrito 
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
-						precio={agregarProducto.price} 
+						precio={agregarProducto.price}
+						productos={agregarProducto}
 						setOpen={setOpen}  
 					/>
                 </Dialog>

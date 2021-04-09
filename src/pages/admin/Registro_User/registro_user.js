@@ -97,6 +97,7 @@ function Registro_User(props) {
           }
           ).then((res) => {
             console.log(res.data);
+            console.log(res);
             setLoading(false);
             props.history.push(`/admin`)
             setRegistro([])
@@ -108,6 +109,7 @@ function Registro_User(props) {
           }
           ).catch((err) => {
             console.log(err);
+            console.log(err.response);
             if (err.response) {
                 setLoading(false);
 					setSnackbar({
@@ -125,7 +127,6 @@ function Registro_User(props) {
                 }
           });
     }
-    console.log(registro);
 
     return (
         <div>

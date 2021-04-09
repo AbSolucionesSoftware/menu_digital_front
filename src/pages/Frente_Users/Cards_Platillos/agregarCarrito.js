@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
+import { Avatar, Box, Button, Chip, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AgregarCarrito(props) {
-    const {nombre, precio, imagen, setOpen} = props;
+    const {nombre, precio, imagen, setOpen, productos} = props;
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
 
@@ -77,6 +77,10 @@ export default function AgregarCarrito(props) {
 
 	}
 
+    const [ extras, setExtras] = useState(productos.extras.split(","))
+    console.log(productos);
+    console.log(extras);
+
     return (
         <div>
             <Grid lg={12}>
@@ -112,14 +116,42 @@ export default function AgregarCarrito(props) {
                         </IconButton>
                     </Box>
                 </Box>
-                <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
-                    <Alert severity="info">Agrega notas a tu platillo. Ejemplo: 2 sin cebolla"</Alert>
-                </Box>
+                {
+                    productos.extrasActive === true ? (
+                        <>
+                            <Box textAlign="center">
+                                <Typography>
+                                    Agrega extras a tu platillo
+                                </Typography>
+                            </Box>
+                            <Box textAlign>
+                                {extras.map((extra) => {
+                                    return(
+                                        <Chip>
+                                            {extra}
+                                        </Chip>
+                                    )
+                                })}
+                            </Box>
+                            <Box>
+                                <TextField>
+
+                                </TextField>
+                            </Box>
+                        </>
+                    ):(
+                        null
+                    )
+                }
+                
+                {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
+                    <Alert severity="info">Agrega notas a tu platillo o ingrendientes extras</Alert>
+                </Box> */}
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField
                         id="notas"
                         label="Notas"
-                        placeholder="Notas"
+                        placeholder="Ejemplo: 2 sin cebolla"
                         multiline
                         variant="outlined"
                         InputLabelProps={{ shrink: true }}

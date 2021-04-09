@@ -6,6 +6,7 @@ import Panel_Admin from '../pages/admin/panel_admin'
 import Registro_User from '../pages/admin/Registro_User/registro_user'
 
 import Publicidad from '../pages/Users/Publicidad/publicidad';
+import RegistroProducto from '../pages/Users/Menu/services/registroProducto'
 import PanelUser from '../pages/Users/PanelUsuario/panel_usario';
 import Menu from '../pages/Users/Menu/menu';
 
@@ -89,6 +90,11 @@ const routes = [
 			},
 			{
 				path: '/:slug/:idEmpresa/subCategorias/:subCategoria',
+				component: BusquedaSubCates,
+				exact: true
+			},
+			{
+				path: '/:slug/:idEmpresa/categorias/:categoria',
 				component: BusquedaSubCates,
 				exact: true
 			},

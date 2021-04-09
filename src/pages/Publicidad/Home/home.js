@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import BannerPrincipal from '../BannerPrincipal/bannerPrincipal'
 import FrenteScroll from '../Scroll/scroll'
 import Paquetes from '../Paquetes/paquetes';
+import Contacto from '../Contacto/contacto'
 import CarruselEmpresas from '../Empresas/empresas'
 import Carrusel from '../Empresas/carruselEmpresas'
 
@@ -27,15 +28,16 @@ export default function HomePublicidad() {
     return (
         <div >
             <BannerPrincipal/>
-            {/* <Box p={5}>
+            <Box p={5}>
                 <Carrusel/>
-            </Box> */}
+            </Box>
             <Container>
                 <FrenteScroll/>
             </Container>
             <Box mb={3}>
                 <Paquetes/>
             </Box>
+            <Contacto />
             {/* <CarruselEmpresas /> */}
         </div>
     )

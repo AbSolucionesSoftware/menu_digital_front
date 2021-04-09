@@ -100,9 +100,12 @@ function Lista({categoria, props, empresa, slug}) {
                 aria-haspopup="true"
                 variant="contained"
                 color="primary"
-                onClick={(e) => {
+                // onClick={() => {
+                //     props.history.push(`/${slug}/${empresa}/categorias/${categoria.categoria}`)
+                // }}  
+                onClick={(e) =>
                     handleClick(e)
-                }}
+                }
             >
                 <Box>
                     <RestaurantMenuIcon className={classes.large}/>

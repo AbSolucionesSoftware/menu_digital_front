@@ -12,10 +12,12 @@ import Categorias from './categorias';
 
 function BusquedaSubCates(props) {
     const subCategoria = props.match.params.subCategoria;
+    const categoria = props.match.params.categoria;
     const idEmpresa = props.match.params.idEmpresa;
     const slug = props.match.params.slug;
-
     const [productos, setProductos] = useState([]);
+    const [productosCate, setProductosCate] = useState([]);
+
     const [loading, setLoading] = useState(false)
     const [empresa, setEmpresa] = useState([])
 
@@ -32,7 +34,7 @@ function BusquedaSubCates(props) {
 			})
 	}
 
-    const buscarProductos = () => {
+    const buscarProductosSubCategoria = () => {
         setLoading(true)
         clienteAxios
             .post(`/product/search/subCategory/`, {subCategory: subCategoria, company: idEmpresa})
@@ -45,11 +47,30 @@ function BusquedaSubCates(props) {
             })
     }
 
+    const buscarProductosCategorias = () => {
+        setLoading(true)
+        clienteAxios
+            .post(`/product/search/company/category`,{company: idEmpresa, category: "Tacos"})
+            .then((res) => {
+                setLoading(false)
+                setProductosCate(res.data);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                setLoading(false)
+                console.log(err.response);
+                console.log(err);
+            })
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
         consultarDatos();
-        buscarProductos();
+        // buscarProductosCategorias();
+        buscarProductosSubCategoria();
     }, [])
+
+    // console.log(productosCate);
 
     return (
         <div>

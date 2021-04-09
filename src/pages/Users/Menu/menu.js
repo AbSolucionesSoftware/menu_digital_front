@@ -1,3 +1,4 @@
+  
 import { Box, Button, Grid, Typography, Drawer } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 
@@ -44,6 +45,7 @@ export default function Menu() {
         setUpload(!upload);
 		setOpen(false);
 	};
+    console.log(productos);
 
     return (
         <div>
