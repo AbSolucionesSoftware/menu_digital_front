@@ -20,7 +20,7 @@ const stylesLocal = makeStyles((theme) => ({
       borderRadius: 6
   },
   imagen:{
-      marginLeft: 80,
+      marginLeft: 35,
       maxWidth: "100%",
       maxHeight: "100%",
       display: "flex",
@@ -74,7 +74,7 @@ export default function Carrusel() {
     }, [])
 
 	  const render = empresas.map((empresa) => {
-      if (empresa.type === true) {
+      if (empresa.type === true || !empresa.logoImagenUrl) {
         return null;
       }else{
         return( 

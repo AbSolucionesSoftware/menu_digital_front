@@ -168,11 +168,11 @@ export default function RegistroProducto(props) {
             formData.append("price", platillos.price);
             formData.append("description", platillos.description);
             formData.append("imagen", datos.imagen);
-            if (openExtra.checkedB === true) {
-                formData.append("extrasActive", openExtra.checkedB);
-                formData.append("extras", platillos.extras);
-                formData.append("precioExtra", platillos.precioExtra);
-            }
+            // if (openExtra.checkedB === true) {
+            //     formData.append("extrasActive", openExtra.checkedB);
+            //     formData.append("extras", platillos.extras);
+            //     formData.append("precioExtra", platillos.precioExtra);
+            // }
 
             await clienteAxios
                 .post(`/product/${company._id}`, formData, {
@@ -212,11 +212,11 @@ export default function RegistroProducto(props) {
             formData.append("name", platillos.name);
             formData.append("price", platillos.price);
             formData.append("description", platillos.description);
-            if (openExtra.checkedB === true) {
-                formData.append("extrasActive", openExtra.checkedB);
-                formData.append("extras", platillos.extras);
-                formData.append("precioExtra", platillos.precioExtra);
-            }
+            // if (openExtra.checkedB === true) {
+            //     formData.append("extrasActive", openExtra.checkedB);
+            //     formData.append("extras", platillos.extras);
+            //     formData.append("precioExtra", platillos.precioExtra);
+            // }
             
             if (datos.imagen) {
                 formData.append("imagen", datos.imagen);
@@ -527,7 +527,7 @@ export default function RegistroProducto(props) {
                                 </Box>
                                 {/* AGREGAR EXTRAS */}
                                 <Grid>
-                                    <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
+                                    {/* <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
                                         <Switch
                                             checked={openExtra.checkedB }
                                             // value={platillos.extrasActive ? platillos.extrasActive : ''}
@@ -539,8 +539,8 @@ export default function RegistroProducto(props) {
                                         <Typography variant="h5">
                                             Extras
                                         </Typography>
-                                    </Box>
-                                    {
+                                    </Box> */}
+                                    {/* {
                                         openExtra.checkedB || platillos.extrasActive === true ? (
                                             <>
                                                 <Grid>
@@ -593,7 +593,7 @@ export default function RegistroProducto(props) {
                                             <>
                                             </>
                                         )
-                                    }
+                                    } */}
                                 </Grid>
                                 {/* TERMINAR DE AGREGAR EXTRAS */}
                                 <Grid item lg={12}>
