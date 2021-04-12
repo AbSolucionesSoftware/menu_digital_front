@@ -65,7 +65,7 @@ export default function Contacto() {
         try {
             await clienteAxios
             .post(`/company/contact/send/email/`, {
-                "pagina": "cafi",
+                "pagina": "comody",
                 "mensaje": correo.mensaje,
                 "nombre": correo.nombre,
                 "telefono": correo.telefono,
