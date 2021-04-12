@@ -1,9 +1,16 @@
-import { AppBar,Button, IconButton, Toolbar, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid } from '@material-ui/core'
+import { AppBar,Button, IconButton, Toolbar, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid, Hidden } from '@material-ui/core'
 import { HashLink } from 'react-router-hash-link';
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+import DvrIcon from '@material-ui/icons/Dvr';
 
 import Comody from '../../img/Comody.jpeg'
 
@@ -67,9 +74,9 @@ function NavegacionPage(props) {
 	const classes = useStyles();
     return (
         <div>
-            <AppBar  className={classes.appbar}>
+            <AppBar className={classes.appbar}>
 					<Toolbar>
-						{/* <Hidden mdUp>
+						<Hidden mdUp>
 							<IconButton
 								edge="start"
 								aria-label="show more"
@@ -80,39 +87,41 @@ function NavegacionPage(props) {
 							>
 								<MenuIcon />
 							</IconButton>
-						</Hidden> */}
-						{/* <Hidden smDown> */}
+						</Hidden>
 							<Box component={Link} to={`/`} className={classes.containerImage}>  
 								<img  className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
-						{/* </Hidden> */}
-						<Grid container justify="flex-end" >
-							<Grid>
-								<ListItem button component={Link} to={`/`} >
-									<ListItemText primary="Inicio" />
-								</ListItem>
+						<Hidden smDown>
+							<Grid container justify="flex-end" >
+								<Grid>
+									<ListItem button component={Link} to={`/`} >
+										<ListItemText primary="Inicio" />
+									</ListItem>
+								</Grid>
+								
+								<HashLink to="/#contacto" style={{textDecoration: "none", color:"white"}}>
+									<ListItem>
+										<ListItemText primary="Contacto" />
+									</ListItem>
+								</HashLink>
+								<HashLink to="/#informacion" style={{textDecoration: "none", color:"white"}}>
+									<ListItem>
+										<ListItemText primary="Información" />
+									</ListItem>
+								</HashLink>
+								<HashLink to="/#paquetes" style={{textDecoration: "none", color:"white"}}>
+									<ListItem>
+										<ListItemText primary="Paquetes" />
+									</ListItem>
+								</HashLink>
+								<Grid>
+									<ListItem button component={Link} to={`/login`}>
+										<ListItemText primary="Entrar" />
+									</ListItem>
+								</Grid>
 							</Grid>
-							<Grid>
-								<ListItem button component={Link} to={`/login`}>
-									<ListItemText primary="Entrar" />
-								</ListItem>
-							</Grid>
-							{/* <HashLink to="/#contacto" style={{textDecoration: "none" }}>
-								<ListItem>
-									<ListItemText primary="Contacto" />
-								</ListItem>
-							</HashLink>
-							<HashLink to="/#informacion" style={{textDecoration: "none" }}>
-								<ListItem>
-									<ListItemText primary="Información" />
-								</ListItem>
-							</HashLink>
-							<HashLink to="/#paquetes" style={{textDecoration: "none" }}>
-								<ListItem>
-									<ListItemText primary="Paquetes" />
-								</ListItem>
-							</HashLink> */}
-						</Grid>
+						</Hidden>
+
 						{/* <div className={classes.search}>
 							
 							<InputBase
@@ -179,16 +188,16 @@ function NavegacionPage(props) {
 						</Box>
 					</div>
 					<Divider />
-					{/* {decoded ? (
+					{decoded ? (
 						<ListItem button component={Link} to="/user" >
 							<ListItemIcon>
-								<AccountCircleSharpIcon/>
+								<AccountCircleIcon/>
 							</ListItemIcon>
 							<ListItemText primary="Mi cuenta" />
 						</ListItem>
 					) : (
 						<div />
-					)} */}
+					)}
 					<List>
 						{/* <ListItem button component={Link} to={`/`} >
 							<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
@@ -199,12 +208,38 @@ function NavegacionPage(props) {
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
+						<HashLink to="/#contacto" style={{textDecoration: "none", color:"black"}}>
+							<ListItem onClick={handleDrawerClose}>
+								<ListItemIcon>
+									<ContactMailIcon />
+								</ListItemIcon>
+								<ListItemText primary="Contacto" />
+							</ListItem>
+						</HashLink>
+						<HashLink to="/#informacion" style={{textDecoration: "none", color:"black"}}>
+							<ListItem onClick={handleDrawerClose}>
+								<ListItemIcon>
+									<AssignmentLateIcon />
+								</ListItemIcon>
+								<ListItemText primary="Información" />
+							</ListItem>
+						</HashLink>
+						<HashLink to="/#paquetes" style={{textDecoration: "none", color:"black"}}>
+							<ListItem onClick={handleDrawerClose}>
+								<ListItemIcon>
+									<DvrIcon />
+								</ListItemIcon>
+								<ListItemText primary="Paquetes" />
+							</ListItem>
+						</HashLink>
 						<ListItem button component={Link} to={`/login`} >
+							<ListItemIcon>
+								<ExitToAppIcon/>
+							</ListItemIcon>
 							<ListItemText primary="Entrar" />
 						</ListItem>
 
-						
-						{/* {decoded ? (
+						{decoded ? (
 							<ListItem>
 								<ListItemIcon>
 									<ExitToAppIcon/>
@@ -225,7 +260,7 @@ function NavegacionPage(props) {
 							) : (
 								null
 							)
-						} */}
+						}
 					</List>
                 </Drawer>
         </div>

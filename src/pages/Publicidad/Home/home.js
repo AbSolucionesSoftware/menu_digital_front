@@ -32,12 +32,18 @@ export default function HomePublicidad() {
                 <Carrusel/>
             </Box>
             <Container>
+            <div id="informacion">
                 <FrenteScroll/>
+            </div>
             </Container>
             <Box mb={3}>
-                <Paquetes/>
+                <div id="paquetes">
+                    <Paquetes />
+                </div>
             </Box>
-            <Contacto />
+            <div id="contacto">
+                <Contacto />
+            </div>
             {/* <CarruselEmpresas /> */}
         </div>
     )

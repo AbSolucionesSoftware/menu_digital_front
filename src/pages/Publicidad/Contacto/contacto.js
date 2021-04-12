@@ -21,7 +21,7 @@ const stylesLocal = makeStyles((theme) => ({
         borderRadius: 5,
     },
     textLarge: {
-        width: "50%", 
+        width: "60%", 
         background: "white",
         borderRadius: 5,
     },
