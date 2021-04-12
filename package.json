@@ -36,6 +36,7 @@
     "react-multi-carousel": "^2.6.2",
     "react-number-format": "^4.4.4",
     "react-router-dom": "^5.2.0",
+    "react-router-hash-link": "^2.4.0",
     "react-scripts": "4.0.2",
     "react-share": "^4.4.0",
     "react-text-mask": "^5.4.3",

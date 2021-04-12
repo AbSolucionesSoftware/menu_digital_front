@@ -1,16 +1,8 @@
-import { AppBar, Badge, Button, fade, Hidden, IconButton,  
-		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
-		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid 
-		} from '@material-ui/core'
+import { AppBar,Button, IconButton, Toolbar, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid } from '@material-ui/core'
+import { HashLink } from 'react-router-hash-link';
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import SearchIcon from '@material-ui/icons/Search';
-// import clienteAxios from '../../config/axios';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 
 import Comody from '../../img/Comody.jpeg'
@@ -105,6 +97,21 @@ function NavegacionPage(props) {
 									<ListItemText primary="Entrar" />
 								</ListItem>
 							</Grid>
+							{/* <HashLink to="/#contacto" style={{textDecoration: "none" }}>
+								<ListItem>
+									<ListItemText primary="Contacto" />
+								</ListItem>
+							</HashLink>
+							<HashLink to="/#informacion" style={{textDecoration: "none" }}>
+								<ListItem>
+									<ListItemText primary="Información" />
+								</ListItem>
+							</HashLink>
+							<HashLink to="/#paquetes" style={{textDecoration: "none" }}>
+								<ListItem>
+									<ListItemText primary="Paquetes" />
+								</ListItem>
+							</HashLink> */}
 						</Grid>
 						{/* <div className={classes.search}>
 							

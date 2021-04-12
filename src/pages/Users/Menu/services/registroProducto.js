@@ -545,7 +545,7 @@ export default function RegistroProducto(props) {
                                             <>
                                                 <Grid>
                                                     <Box>
-                                                        <Typography variant="h6">
+                                                        <Typography variant="body1">
                                                             Agrega los extras que pueda tener tu producto
                                                         </Typography>
                                                     </Box>
@@ -568,7 +568,7 @@ export default function RegistroProducto(props) {
                                                             </TextField>
                                                         </Box>
                                                         <Box mt={2}>
-                                                            <Typography>
+                                                            <Typography variant="body1">
                                                                 Agrega tus extras separados por comas.
                                                             </Typography>
                                                         </Box>

@@ -77,7 +77,7 @@ export default function AgregarCarrito(props) {
 
 	}
 
-    const [ extras, setExtras] = useState(productos.extras.split(","))
+    const [ extras, setExtras] = useState([]);
     console.log(productos);
     console.log(extras);
 
@@ -116,7 +116,7 @@ export default function AgregarCarrito(props) {
                         </IconButton>
                     </Box>
                 </Box>
-                {/* {
+                {
                     productos.extrasActive === true ? (
                         <>
                             <Box textAlign="center">
@@ -142,7 +142,7 @@ export default function AgregarCarrito(props) {
                     ):(
                         null
                     )
-                } */}
+                }
                 
                 {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
                     <Alert severity="info">Agrega notas a tu platillo o ingrendientes extras</Alert>
