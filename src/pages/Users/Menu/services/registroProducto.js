@@ -330,7 +330,7 @@ export default function RegistroProducto(props) {
 			...platillos,
 			[e.target.name]: e.target.value
 		});
-        setExtras(openExtra === true ? platillos.extras.split(",") : [])
+        setExtras(platillos.extras ? platillos.extras.split(",") : [])
 	};
 
     

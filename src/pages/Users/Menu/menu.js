@@ -1,19 +1,22 @@
-  
-import { Box, Button, Grid, Typography, Drawer } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 
+import { Box, Button, Grid, Typography, Drawer, InputBase, IconButton} from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import RegistroProducto from './services/registroProducto';
 import CardPlato from './cardPlato';
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
+import useStyles from './styles';
 
-export default function Menu() {
+export default function Menu(props) {
 
     const user = JSON.parse(localStorage.getItem('user'))
 
     const [ productos, setProductos ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ upload, setUpload ] = useState(false);
+	const [ busqueda, setBusqueda ] = useState('');
 
     const traerProdutos = async () => {
         setLoading(true)
@@ -30,6 +33,21 @@ export default function Menu() {
 			});
     };
 
+
+    const obtenerBusqueda = (e) => setBusqueda(e.target.value);
+
+	const buscarBD = () => {
+		if (!busqueda) {
+			return;
+		}
+		props.history.push(`/user/${user._id}/${busqueda}`);
+	};
+
+    const pressEnter = (e) => {
+		if(!e.target.defaultValue) return;
+		if(e.key === "Enter") props.history.push(`/user/${user._id}/${e.target.defaultValue}`);
+	};
+
     useEffect(() => {
         traerProdutos(); 
     }, [upload])
@@ -45,6 +63,8 @@ export default function Menu() {
 		setOpen(false);
 	};
 
+	const classes = useStyles();
+
     return (
         <div>
             <Spin loading={loading} />
@@ -56,17 +76,36 @@ export default function Menu() {
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid lg={12}>
-                    <Box p={2} display="flex" justifyContent="center">
-                        <Button
-                            variant="contained" 
-                            color="primary"
-                            size="large"
-                            onClick={handleDrawerOpen}
-                        >
-                            Agregar Nuevo
-                        </Button>
-                    </Box>
+                <Grid container>
+                    <Grid lg={5}>
+                        <Box p={1}>
+                            <Box className={classes.search}>
+                                <InputBase
+                                    placeholder="¿Buscas algun platillo?"
+                                    className={classes.inputSearch}
+                                    value={busqueda}
+                                    onChange={obtenerBusqueda}
+                                    onKeyPress={pressEnter}
+                                />
+                                <Box className={classes.grow} />
+                                <IconButton size="large" color="inherit"  onClick={() => buscarBD()} >
+                                    <SearchIcon />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid lg={7}>
+                        <Box p={2} display="flex" justifyContent="center">
+                            <Button
+                                variant="contained" 
+                                color="primary"
+                                size="large"
+                                onClick={handleDrawerOpen}
+                            >
+                                Agregar Nuevo
+                            </Button>
+                        </Box>
+                    </Grid>
                 </Grid>
                 <Grid container>
                     <Grid lg={12}>

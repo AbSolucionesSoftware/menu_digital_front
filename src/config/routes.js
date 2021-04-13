@@ -8,6 +8,7 @@ import Registro_User from '../pages/admin/Registro_User/registro_user'
 import Publicidad from '../pages/Users/Publicidad/publicidad';
 import RegistroProducto from '../pages/Users/Menu/services/registroProducto'
 import PanelUser from '../pages/Users/PanelUsuario/panel_usario';
+import BusquedaUser from '../pages/Users/Busqueda/busqueda'
 import Menu from '../pages/Users/Menu/menu';
 
 import Home from '../pages/Frente_Users/home'
@@ -61,6 +62,11 @@ const routes = [
 			{
 				path: '/user/publicidad',
 				component: Publicidad,
+				exact: true,
+			},
+			{
+				path: '/user/:idEmpresa/:busqueda',
+				component: BusquedaUser,
 				exact: true,
 			},
 			{

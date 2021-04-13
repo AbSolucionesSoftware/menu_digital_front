@@ -34,7 +34,6 @@ function Navegacion(props) {
 	const id = localStorage.getItem('idEmpresa');
 	const login = props.location.pathname;
 	const [ busqueda, setBusqueda ] = useState('');
-
 	
 	var decoded = Jwt(token);
 
