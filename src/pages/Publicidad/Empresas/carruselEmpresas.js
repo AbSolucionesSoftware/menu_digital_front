@@ -74,7 +74,7 @@ export default function Carrusel() {
     }, [])
 
 	  const render = empresas.map((empresa) => {
-      if (empresa.type === true || !empresa.logoImagenUrl) {
+      if (empresa.type === true || !empresa.logoImagenUrl || empresa.test === true) {
         return null;
       }else{
         return( 

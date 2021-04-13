@@ -4,7 +4,7 @@ import BannerPrincipal from '../BannerPrincipal/bannerPrincipal'
 import FrenteScroll from '../Scroll/scroll'
 import Paquetes from '../Paquetes/paquetes';
 import Contacto from '../Contacto/contacto'
-import CarruselEmpresas from '../Empresas/empresas'
+// import CarruselEmpresas from '../Empresas/empresas'
 import Carrusel from '../Empresas/carruselEmpresas'
 
 import { Box,Container, makeStyles } from '@material-ui/core';

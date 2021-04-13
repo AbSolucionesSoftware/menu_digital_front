@@ -79,7 +79,7 @@ export default function Carrito(props) {
         setOpen(false);
         setTimeout(() => { 
         localStorage.removeItem('usuario');
-        }, 3000)
+        }, 2000)
     }
 
     function borrarProducto(key) {
@@ -106,7 +106,7 @@ export default function Carrito(props) {
 	};
 
     const mensaje =
-        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +` = $`+ (pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  `(`+ pedido.notas.notas +`)` : "")+ `%0A`
+        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +`  `+ ( pedido.ingredienteExtra.length === 0 ? "" : `Extras (`+ pedido.ingredienteExtra +`)` ) + ` = $`+ (pedido.precio*pedido.cantidad+pedido.totalExtra) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
         ))} ${envio === "domicilio" ? `%0ACosto de envio: $${empresa.priceEnvio}` : "" } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
         ${envio === "domicilio" ? `%0AA mi domicilio ${!usuario ? "" : usuario.domicilio}, Col. ${!usuario ? "" : usuario.colonia}.%0A` : `%0A Recogeré mi pedido en sucursal. %0A` }
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`;
@@ -118,7 +118,7 @@ export default function Carrito(props) {
                 
             }else{
                 pedidos.forEach((res) => {
-                    subtotal += res.precio * res.cantidad;
+                    subtotal += res.precio * res.cantidad + res.totalExtra;
                     total = subtotal;
                     setTotal(total);
                 })
@@ -147,6 +147,7 @@ export default function Carrito(props) {
                                         <TableCell align="center" style={{ fontWeight: 600}} >Cantidad</TableCell>
                                         <TableCell align="center" style={{ fontWeight: 600}} >Platillo</TableCell>
                                         <TableCell align="center" style={{ fontWeight: 600}} >Precio</TableCell>
+                                        <TableCell align="center" style={{ fontWeight: 600}} >Extras</TableCell>
                                         <TableCell align="center" style={{ fontWeight: 600}} >Total</TableCell>
                                         <TableCell align="center" style={{ fontWeight: 600}} ></TableCell>
                                     </TableRow>
@@ -159,7 +160,10 @@ export default function Carrito(props) {
                                                         <TableCell align="center">{pedido.cantidad}</TableCell>
                                                         <TableCell align="center">{pedido.nombre}</TableCell>
                                                         <TableCell align="center">${formatoMexico(pedido.precio)}</TableCell>
-                                                        <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad)}</TableCell>
+                                                        {
+                                                            pedido.ingredienteExtra.length === 0 ? <TableCell align="center"/> : <TableCell align="center">${formatoMexico(pedido.totalExtra)}</TableCell>
+                                                        }
+                                                        <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad + pedido.totalExtra)}</TableCell>
                                                         <TableCell align="center">
                                                             <IconButton 
                                                                 onClick={

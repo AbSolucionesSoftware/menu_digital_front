@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select, MenuItem, InputAdornment, FormControlLabel, Switch, Accordion, AccordionSummary, AccordionDetails, Chip } from '@material-ui/core'
+import { Grid, Typography, Box, Button, TextField, makeStyles, FormControl, InputLabel, Select, MenuItem, InputAdornment, FormControlLabel, Switch, Accordion, AccordionSummary, AccordionDetails, Chip, Checkbox } from '@material-ui/core'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ImageContext } from '../../../../context/curso_context';
 import clienteAxios from '../../../../config/axios';
@@ -84,7 +84,7 @@ const FormStyles = makeStyles((theme) => ({
 export default function RegistroProducto(props) {
     const {productos, editarProducto, upload, setUpload, handleDrawerClose} = props;
 	const [ validate, setValidate ] = useState(false);
-
+    // console.log(productos);
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'));
     String.prototype.capitalize = function() {
@@ -93,19 +93,18 @@ export default function RegistroProducto(props) {
 	const classes = useStyles();
 
     const { update, setUpdate} = useContext(ImageContext);
-    
     const [ preview, setPreview ] = useState('');
 	const [ loading, setLoading ] = useState(false);
     const [ buttonCat, setButtonCat ] = useState(true);
     const [ buttonSubCat, setButtonSubCat ] = useState(true);
     const [ control, setControl ] = useState(false);
+
     
     const [ categories, setCategories ] = useState([ { categorie: '', subCategoria: [ { subcategoria: '' } ] } ]);
     const [ datos, setDatos] = useState([]);
     const [ platillos, setPlatillos ] = useState([]);
     const [ item, setItem ] = useState();
     const [ subCategorias, setSubCategorias ] = useState([]);
-    const [ extras, setExtras ] = useState([]);
 
     const [ categoriasDefault, setCategoriasDefault] = useState([]);
     const [ subcategoriasDefault, setSubcategoriasDefault ] = useState([]);
@@ -119,6 +118,8 @@ export default function RegistroProducto(props) {
     // Valores de Categorias
     const [ select, setSelect ] = useState();
     const [ selectSub, setSelectSub ] = useState();
+
+    
 
     const onSelect = (e) => {
         if (e.target.name === 'category') {
@@ -153,6 +154,14 @@ export default function RegistroProducto(props) {
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+
+    const [ openExtra, setOpenExtra] = useState(editarProducto.extrasActive ? true : false);
+
+    const handleSwitch = (e) => {
+        setOpenExtra(e.target.checked);
+    }
+
+
     const agregarPlatilloBD = async () => {
         if (!platillos.category  || !platillos.subCategory || !platillos.name || !platillos.price ) {
 			setValidate(true);
@@ -168,11 +177,10 @@ export default function RegistroProducto(props) {
             formData.append("price", platillos.price);
             formData.append("description", platillos.description);
             formData.append("imagen", datos.imagen);
-            // if (openExtra.checkedB === true) {
-            //     formData.append("extrasActive", openExtra.checkedB);
-            //     formData.append("extras", platillos.extras);
-            //     formData.append("precioExtra", platillos.precioExtra);
-            // }
+
+            formData.append("extrasActive", openExtra);
+            formData.append("extras", platillos.extras);
+            formData.append("precioExtra", platillos.precioExtra);
 
             await clienteAxios
                 .post(`/product/${company._id}`, formData, {
@@ -212,11 +220,10 @@ export default function RegistroProducto(props) {
             formData.append("name", platillos.name);
             formData.append("price", platillos.price);
             formData.append("description", platillos.description);
-            // if (openExtra.checkedB === true) {
-            //     formData.append("extrasActive", openExtra.checkedB);
-            //     formData.append("extras", platillos.extras);
-            //     formData.append("precioExtra", platillos.precioExtra);
-            // }
+            
+            formData.append("extrasActive", openExtra);
+            formData.append("extras", platillos.extras);
+            formData.append("precioExtra", platillos.precioExtra);
             
             if (datos.imagen) {
                 formData.append("imagen", datos.imagen);
@@ -254,7 +261,7 @@ export default function RegistroProducto(props) {
         }
 
 	}
-    // console.log(platillos);
+  
 
     const consultarCates = async () => {
 		await clienteAxios
@@ -307,6 +314,7 @@ export default function RegistroProducto(props) {
 		}
 	};
 
+    const [ extras, setExtras] = useState([]);
 
     const obtenerCampos = (e) => {
         if (e.target.name === 'category') {
@@ -320,16 +328,12 @@ export default function RegistroProducto(props) {
 			...platillos,
 			[e.target.name]: e.target.value
 		});
+        setExtras(openExtra === true ? platillos.extras.split(",") : [])
 	};
 
-    const [ openExtra, setOpenExtra] = useState({
-        checkedA: true,
-        checkedB: false,
-    })
-
-    const handleSwitch = (e) => {
-        setOpenExtra({ ...openExtra, [e.target.name]: e.target.checked });
-    }
+    
+    console.log(platillos.extras);
+    console.log(extras);
 
     return (
         <div>
@@ -527,25 +531,24 @@ export default function RegistroProducto(props) {
                                 </Box>
                                 {/* AGREGAR EXTRAS */}
                                 <Grid>
-                                    {/* <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
+                                    <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
                                         <Switch
-                                            checked={openExtra.checkedB }
-                                            // value={platillos.extrasActive ? platillos.extrasActive : ''}
+                                            checked={openExtra}
                                             onChange={handleSwitch}
                                             color="primary"
                                             name="checkedB"
                                         />
-                                        {console.log(platillos.extrasActive)}
+                                        {/* <Checkbox checked={openExtra} onChange={handleSwitch} name="checkedA" /> */}
                                         <Typography variant="h5">
                                             Extras
                                         </Typography>
-                                    </Box> */}
-                                    {/* {
-                                        openExtra.checkedB || platillos.extrasActive === true ? (
+                                    </Box>
+                                    {
+                                        openExtra === true ? (
                                             <>
                                                 <Grid>
                                                     <Box>
-                                                        <Typography variant="body1">
+                                                        <Typography variant="h6">
                                                             Agrega los extras que pueda tener tu producto
                                                         </Typography>
                                                     </Box>
@@ -568,11 +571,11 @@ export default function RegistroProducto(props) {
                                                             </TextField>
                                                         </Box>
                                                         <Box mt={2}>
-                                                            <Typography variant="body1">
+                                                            <Typography variant="h6">
                                                                 Agrega tus extras separados por comas.
                                                             </Typography>
                                                         </Box>
-                                                        <Box p={2}>
+                                                        <Box p={1}>
                                                             <TextField
                                                                 className={classes.text}
                                                                 id="extras"
@@ -582,9 +585,26 @@ export default function RegistroProducto(props) {
                                                                 multiline
                                                                 variant="outlined"
                                                                 value={platillos.extras ? platillos.extras : ''}
-                                                                onChange={obtenerCampos}
+                                                                onChange={obtenerCampos }
                                                             >
                                                             </TextField>
+                                                        </Box>
+                                                        <Box display="flex" justifyContent="center" textAlign="center" p={1}>
+                                                            {
+                                                                extras.map((extra, index) => {
+                                                                    return(
+                                                                        <Box p={1}>
+                                                                            <Chip
+                                                                                color="primary" 
+                                                                                key={index} 
+                                                                                // onDelete={() => borrarExtra(index)} 
+                                                                                label={extra} 
+                                                                                // onClick={() => agregarExtras(extra)} 
+                                                                            />
+                                                                        </Box>
+                                                                    )
+                                                                })
+                                                            }
                                                         </Box>
                                                     </Grid>
                                                 </Grid>
@@ -593,7 +613,7 @@ export default function RegistroProducto(props) {
                                             <>
                                             </>
                                         )
-                                    } */}
+                                    }
                                 </Grid>
                                 {/* TERMINAR DE AGREGAR EXTRAS */}
                                 <Grid item lg={12}>

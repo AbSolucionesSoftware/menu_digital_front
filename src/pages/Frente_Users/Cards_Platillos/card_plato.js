@@ -30,7 +30,21 @@ export default function Cards_Platos(props) {
     const handleClose = (value) => {
         setOpen(false);
     };
-	
+
+	// const [ extras, setExtras] = useState([]);
+	// var variables
+	// function extrasProductos(producto) {
+	// 	console.log(producto);
+	// 	if (producto.extrasActive) {
+	// 		setExtras(producto.extras.split(","));
+	// 		for (let extra = 0; extra < extras.length; extra++) {
+	// 			variables = extras[extra];
+	// 			// console.log(element);
+	// 		}
+	// 	}else{
+	// 		return null;
+	// 	}
+	// }
 
 	const render = productos.map((producto, index) => {
 		return (
@@ -84,6 +98,7 @@ export default function Cards_Platos(props) {
 													onClick={() => {
 													handleClickOpen()
 													setagregarProducto(producto)
+													// extrasProductos(producto)
 													}}
 												>
 													Agregar a orden
@@ -170,7 +185,7 @@ export default function Cards_Platos(props) {
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
 						precio={agregarProducto.price}
-						productos={agregarProducto}
+						producto={agregarProducto}
 						setOpen={setOpen}  
 					/>
 				</Drawer>
@@ -181,7 +196,7 @@ export default function Cards_Platos(props) {
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
 						precio={agregarProducto.price}
-						productos={agregarProducto}
+						producto={agregarProducto}
 						setOpen={setOpen}  
 					/>
                 </Dialog>

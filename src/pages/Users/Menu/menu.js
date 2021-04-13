@@ -27,7 +27,6 @@ export default function Menu() {
 			.catch((err) => {
                 setUpload(true);
                 setLoading(false);
-                console.log(err);
 			});
     };
 
@@ -45,7 +44,6 @@ export default function Menu() {
         setUpload(!upload);
 		setOpen(false);
 	};
-    console.log(productos);
 
     return (
         <div>

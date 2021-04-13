@@ -26,19 +26,38 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AgregarCarrito(props) {
-    const {nombre, precio, imagen, setOpen, productos} = props;
+    const {nombre, precio, imagen, setOpen, producto}  = props;
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
 
-    const [disable, setDisable] = useState(false)
-    const [contador , setContador] = useState(1)
-    const [carrito, setCarrito] = useState([]);
+    const [ disable, setDisable] = useState(false)
+    const [ contador , setContador] = useState(1)
+    const [ carrito, setCarrito] = useState([]);
+    const [ upload, setUpload] = useState(false);
     const [ notas, setNotas] = useState("");
+    const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
+    const [ ingredienteExtra, setIngredienteExtra] = useState([]);
+    const [ totalExtra, setTotalExtra ] = useState(0);
 
     const Agregar = () => {
 		setContador(contador+1);
         setDisable(false);
-	}; 
+	};
+
+    const agregarExtras = (extra) => {
+        setUpload(!upload);
+        ingredienteExtra.push(extra)
+    }
+
+    function borrarExtra(key) {
+        setUpload(!upload);
+        ingredienteExtra.forEach(function(elemento, indice, array) {
+            if(key === indice){
+                ingredienteExtra.splice(key, 1);
+                setUpload(!upload);
+            }
+        })
+    };
 
 	const Quitar = () => {
         if (contador === 1 ) {
@@ -47,15 +66,18 @@ export default function AgregarCarrito(props) {
             setContador(contador-1);
         }
 	};
+
     let array = [ 
         {
             nombre,
             precio,
             "cantidad": contador,
-            notas
+            notas,
+            ingredienteExtra,
+            totalExtra
         }
     ];
-    
+
 	const agregarCarrito = () => {
         setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
 
@@ -68,8 +90,8 @@ export default function AgregarCarrito(props) {
                 setOpen(false);
             } else {
                 let data = JSON.parse(datos)
-                let newCar = {nombre, precio, cantidad: contador, notas}
-                data.push(newCar)
+                let newCar = {nombre, precio, cantidad: contador, notas, ingredienteExtra, totalExtra}
+                data.push(newCar);
                 localStorage.setItem("carritoUsuario", JSON.stringify(data));
                 setOpen(false)
             }
@@ -77,9 +99,16 @@ export default function AgregarCarrito(props) {
 
 	}
 
-    const [ extras, setExtras] = useState([]);
-    console.log(productos);
-    console.log(extras);
+    useEffect(() => {
+        var total = 0;
+        if(ingredienteExtra === null){
+
+        }else{
+            total = ingredienteExtra.length * producto.precioExtra;
+            setTotalExtra(total);
+        }
+    }, [upload, totalExtra])
+
 
     return (
         <div>
@@ -117,36 +146,54 @@ export default function AgregarCarrito(props) {
                     </Box>
                 </Box>
                 {
-                    productos.extrasActive === true ? (
+                    producto.extrasActive === true ? (
                         <>
                             <Box textAlign="center">
-                                <Typography>
+                                <Typography color="primary">
                                     Agrega extras a tu platillo
                                 </Typography>
                             </Box>
-                            <Box textAlign>
-                                {extras.map((extra) => {
-                                    return(
-                                        <Chip>
-                                            {extra}
-                                        </Chip>
-                                    )
-                                })}
+                            <Box p={1} textAlign="center">
+                                {
+                                    extras.map((extra, index) => {
+                                        return(
+                                            <Chip key={index} label={extra} onClick={() => agregarExtras(extra)} />
+                                        )
+                                    })
+                                }
                             </Box>
-                            <Box>
-                                <TextField>
-
-                                </TextField>
+                            <Box textAlign="center">
+                                <Typography>
+                                    Extras: 
+                                </Typography>
                             </Box>
+                            <Grid container wrap="nowrap">
+                                <Grid item xs>
+                                    <Box p={2}>
+                                        <Box border={2} borderColor="primary.main" p={2}>
+                                            {
+                                                ingredienteExtra.map((extra, index) => {
+                                                    return(
+                                                        <Chip
+                                                            color="primary" 
+                                                            key={index} 
+                                                            onDelete={() => borrarExtra(index)} 
+                                                            label={extra} 
+                                                            onClick={() => agregarExtras(extra)} 
+                                                        />
+                                                    )
+                                                })
+                                            }
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </>
                     ):(
                         null
                     )
                 }
                 
-                {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
-                    <Alert severity="info">Agrega notas a tu platillo o ingrendientes extras</Alert>
-                </Box> */}
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField
                         id="notas"
@@ -170,7 +217,7 @@ export default function AgregarCarrito(props) {
                             color="primary"
                             disabled={disable}
                         >
-                            <AddShoppingCartIcon /> Agregar a Oden 
+                            <AddShoppingCartIcon /> Agregar a Orden
                         </Button>
                     </Tooltip>
                 </Box>
