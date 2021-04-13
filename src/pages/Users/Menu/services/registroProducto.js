@@ -149,13 +149,15 @@ export default function RegistroProducto(props) {
     useEffect(() => {
         if (editarProducto) {
             setPreview(editarProducto.imagenProductUrl);
+            setOpenExtra(editarProducto.extrasActive ? true : false)
         }
+        
     }, [])
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 
-    const [ openExtra, setOpenExtra] = useState(editarProducto.extrasActive ? true : false);
+    const [ openExtra, setOpenExtra] = useState(false);
 
     const handleSwitch = (e) => {
         setOpenExtra(e.target.checked);
