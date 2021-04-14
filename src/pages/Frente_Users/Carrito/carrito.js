@@ -106,7 +106,7 @@ export default function Carrito(props) {
 	};
 
     const mensaje =
-        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +`  `+ ( pedido.ingredienteExtra.length === 0 ? "" : `Extras (`+ pedido.ingredienteExtra +`)` ) + ` = $`+ (pedido.precio*pedido.cantidad+pedido.totalExtra) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
+        `¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +`  `+ ( pedido.ingredienteExtra ? ( pedido.ingredienteExtra.length === 0 ? "" : `Extras (`+ pedido.ingredienteExtra +`)`) : null ) + ` = $`+ (pedido.totalExtra ? (pedido.precio*pedido.cantidad+pedido.totalExtra) : (pedido.precio*pedido.cantidad) ) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
         ))} ${envio === "domicilio" ? `%0ACosto de envio: $${empresa.priceEnvio}` : "" } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
         ${envio === "domicilio" ? `%0AA mi domicilio ${!usuario ? "" : usuario.domicilio}, Col. ${!usuario ? "" : usuario.colonia}.%0A` : `%0A Recogeré mi pedido en sucursal. %0A` }
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`;
@@ -118,9 +118,16 @@ export default function Carrito(props) {
                 
             }else{
                 pedidos.forEach((res) => {
-                    subtotal += res.precio * res.cantidad + res.totalExtra;
-                    total = subtotal;
-                    setTotal(total);
+                    if (res.totalExtra) {
+                        subtotal += res.precio * res.cantidad + res.totalExtra;
+                        total = subtotal;
+                        setTotal(total);
+                    }else{
+                        subtotal += res.precio * res.cantidad;
+                        total = subtotal;
+                        setTotal(total);
+                    }
+                    
                 })
             }
 		},[pedidos, carrito, total]
@@ -161,9 +168,13 @@ export default function Carrito(props) {
                                                         <TableCell align="center">{pedido.nombre}</TableCell>
                                                         <TableCell align="center">${formatoMexico(pedido.precio)}</TableCell>
                                                         {
-                                                            pedido.ingredienteExtra.length === 0 ? <TableCell align="center"/> : <TableCell align="center">${formatoMexico(pedido.totalExtra)}</TableCell>
+                                                            pedido.ingredienteExtra ? (
+                                                                pedido.ingredienteExtra.length === 0 ?  <TableCell align="center"/> : <TableCell align="center">${formatoMexico(pedido.totalExtra)}</TableCell>
+                                                            ) : (
+                                                                <TableCell align="center"/>
+                                                            )
                                                         }
-                                                        <TableCell align="center">${formatoMexico(pedido.precio * pedido.cantidad + pedido.totalExtra)}</TableCell>
+                                                        <TableCell align="center">${formatoMexico(pedido.totalExtra ? (pedido.precio * pedido.cantidad + pedido.totalExtra) : (pedido.precio * pedido.cantidad))}</TableCell>
                                                         <TableCell align="center">
                                                             <IconButton 
                                                                 onClick={

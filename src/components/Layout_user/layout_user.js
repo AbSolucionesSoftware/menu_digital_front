@@ -88,7 +88,7 @@ export default function LayoutUser(props) {
 			</nav>
 			<div className={classes.content}>
 				<NavProvider>
-					<div style={{ minHeight: '90vh' }}>
+					<div style={{ minHeight: '100vh' }}>
 						<LoadRoutes routes={routes} />
 					</div>
 					
