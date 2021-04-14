@@ -77,6 +77,10 @@ export default function Carrusel() {
         return( 
           <Box className={classes.containerImagen}>
             <Link to={`/${empresa.slug}`}>
+              {
+                localStorage.removeItem("carritoUsuario"),
+                localStorage.removeItem('usuario')
+              }
               <img
                 className={classes.imagen}
                 alt='No imagen'
