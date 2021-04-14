@@ -73,7 +73,6 @@ export default function Contacto() {
                 "correo": correo.correo
             })
             .then((res) => {
-                console.log(res);
                 setSnackbar({
                     open: true,
                     mensaje: "Correo enviado exitosmente, pronto nos contataremos contigo.",
@@ -81,7 +80,6 @@ export default function Contacto() {
                 });
             })
             .catch((err) => {
-                console.log(err);
                 setSnackbar({
                     open: true,
                     mensaje: "Ocurrio un problema con el servidor",
@@ -89,7 +87,6 @@ export default function Contacto() {
                 });
             });
         } catch (error) {
-            console.log(error);  
         }
     }
 

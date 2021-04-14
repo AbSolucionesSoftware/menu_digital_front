@@ -44,7 +44,6 @@ function Categorias(props) {
     const {empresa, slug} = props;
     const [categorias , setCategorias] = useState([]);
     
-    // console.log(empresa._id);
 
     const consultarCates = async () => {
 		await clienteAxios

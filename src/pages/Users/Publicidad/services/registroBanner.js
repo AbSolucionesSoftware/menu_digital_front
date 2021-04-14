@@ -77,7 +77,6 @@ export default function RegistroBanner( props ) {
 					}
 				})
 				.then((res) => {
-					console.log(res);
 					handleDrawerClose(false);
 					setLoading(false);
 					setSnackbar({
@@ -89,7 +88,6 @@ export default function RegistroBanner( props ) {
 				})
 				.catch((err) => {
 					handleDrawerClose(false)
-					console.log(err);
 					setLoading(false);
 					setSnackbar({
 						open: true,
@@ -129,7 +127,6 @@ export default function RegistroBanner( props ) {
 				})
 				.catch((err) => {
 					setLoading(false);
-					console.log(err);
 					setSnackbar({
 						open: true,
 						mensaje: 'Al parecer no se a podido conectar al servidor.',

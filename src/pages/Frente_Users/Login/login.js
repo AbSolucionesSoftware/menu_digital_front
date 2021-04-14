@@ -72,7 +72,6 @@ export default function LoginAdmin(props) {
 				}
 			})
 			.catch((err) => {
-				console.log(datos);
 				setLoading(false);
 				if (err.response){
 					setSnackbar({

@@ -84,7 +84,6 @@ const FormStyles = makeStyles((theme) => ({
 export default function RegistroProducto(props) {
     const {productos, editarProducto, upload, setUpload, handleDrawerClose} = props;
 	const [ validate, setValidate ] = useState(false);
-    // console.log(productos);
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'));
     String.prototype.capitalize = function() {
@@ -193,7 +192,6 @@ export default function RegistroProducto(props) {
                 })
                 .then((res) => {
                     // setUpload(!upload);
-                    console.log(res);
                     handleDrawerClose()
                     setLoading(false);
                     setSnackbar({
@@ -204,8 +202,6 @@ export default function RegistroProducto(props) {
                 })
                 .catch((err) => {
                     // setUpload(!upload);
-                    console.log(err);
-                    console.log(err.response);
                     handleDrawerClose()
                     setLoading(false);
                     setSnackbar({
@@ -230,7 +226,6 @@ export default function RegistroProducto(props) {
             if (datos.imagen) {
                 formData.append("imagen", datos.imagen);
             }
-            console.log(formData);
             await clienteAxios
             .put(`/product/edit/${platillos._id}`,formData,  {
                 headers: {
@@ -239,7 +234,6 @@ export default function RegistroProducto(props) {
                 }
             })
             .then((res) => {
-                console.log(res);
                 setUpload(!upload);
                 handleDrawerClose();
                 setLoading(false);
@@ -250,8 +244,6 @@ export default function RegistroProducto(props) {
                 });
             })
             .catch((err) => {
-                console.log(err);
-                console.log(err.response);
                 setUpload(!upload);
                 setLoading(false);
                 setSnackbar({
@@ -334,9 +326,6 @@ export default function RegistroProducto(props) {
 	};
 
     
-    console.log(platillos.extras);
-    console.log(extras);
-
     return (
         <div>
             <MessageSnackbar

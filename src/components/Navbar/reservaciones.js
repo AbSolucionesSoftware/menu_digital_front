@@ -35,8 +35,6 @@ export default function Reservaciones(props) {
     const [empresa, setEmpresa]  = useState([]);
     const [validate, setValidate] = useState(true);
 
-    console.log(slug);
-
     const consultarDatos = async () => {
 		await clienteAxios
 			.get(`/company/slug/company/${slug}`)

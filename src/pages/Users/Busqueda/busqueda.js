@@ -10,9 +10,6 @@ export default function BusquedaUser(props) {
 
     const idEmpresa = props.match.params.idEmpresa;
     const busqueda = props.match.params.busqueda;
-    console.log(idEmpresa);
-    console.log(busqueda);
-
 
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false);

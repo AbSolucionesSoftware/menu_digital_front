@@ -50,7 +50,6 @@ export default function Eliminar(props){
 			.catch((err) => {
 				setUpload(!upload);
                 setLoading(false);
-                console.log(err);
 				setSnackbar({
 					open: true,
 					mensaje: "Ocurrio un problema en el servidor!.",

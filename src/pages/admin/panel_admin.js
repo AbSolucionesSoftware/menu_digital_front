@@ -27,7 +27,6 @@ import Cards_Restaurate from './Card_Restaurante/card_restaurante'
 			.then((res) => {
 		        setLoading(false);
                 setUpload(true);
-                console.log(res);
 				setEmpresas(res.data);
 			})
 			.catch((err) => {

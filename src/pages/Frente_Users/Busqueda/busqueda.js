@@ -11,9 +11,6 @@ import BotonCarrito from '../Carrito/botonCarrito';
     const idEmpresa = props.match.params.idEmpresa;
     const slug = props.match.params.slug;
     const busqueda = props.match.params.busqueda;
-    console.log(slug);
-    console.log(idEmpresa);
-
 
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false)

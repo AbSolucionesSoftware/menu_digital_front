@@ -54,12 +54,9 @@ function BusquedaSubCates(props) {
             .then((res) => {
                 setLoading(false)
                 setProductosCate(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 setLoading(false)
-                console.log(err.response);
-                console.log(err);
             })
     }
 
@@ -70,7 +67,6 @@ function BusquedaSubCates(props) {
         buscarProductosSubCategoria();
     }, [])
 
-    // console.log(productosCate);
 
     return (
         <div>

@@ -131,7 +131,6 @@ export default function Editar_User(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 //---------------------------FIN EDICION DE IMAGENES-----------------------------------------------
-console.log(datosEmpresa);
     
 const editarDatos = async () => {
 	    setLoading(true);
@@ -153,8 +152,6 @@ const editarDatos = async () => {
 				}
 			})
 			.then((res) => {
-                console.log(formData);
-                console.log(res.data);
                 setLoading(false);
                 handleDrawerClose();
                 setUpload(!upload);

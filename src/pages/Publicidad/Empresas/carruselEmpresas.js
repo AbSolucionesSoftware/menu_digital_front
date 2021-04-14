@@ -60,12 +60,9 @@ export default function Carrusel() {
       await clienteAxios
         .get('/company/fullCompanys/')
         .then((res) => {
-          console.log(res);
           setEmpresas(res.data);
         })
         .catch((err) => {
-          console.log(err);
-          console.log(err.response);
         })
     }
 

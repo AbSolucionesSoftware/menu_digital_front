@@ -16,10 +16,8 @@ export default function Banner(props) {
 			.get(`/banner/banner-company/${empresa._id}`)
 			.then((res) => {
                 setBanners(res.data);
-                // console.log("si hay datos");
 			})
 			.catch((err) => {
-                console.log(err);
 			});
     };
 

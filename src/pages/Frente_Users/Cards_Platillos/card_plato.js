@@ -34,12 +34,10 @@ export default function Cards_Platos(props) {
 	// const [ extras, setExtras] = useState([]);
 	// var variables
 	// function extrasProductos(producto) {
-	// 	console.log(producto);
 	// 	if (producto.extrasActive) {
 	// 		setExtras(producto.extras.split(","));
 	// 		for (let extra = 0; extra < extras.length; extra++) {
 	// 			variables = extras[extra];
-	// 			// console.log(element);
 	// 		}
 	// 	}else{
 	// 		return null;
