@@ -92,6 +92,14 @@ function Navegacion(props) {
 		);
 	});
 	
+	const cerrarSesiones = () => {
+		localStorage.removeItem('carritoUsuario');
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		localStorage.removeItem('idEmpresa');
+		localStorage.removeItem('slug');
+	}
+
 	const obtenerBusqueda = (e) => setBusqueda(e.target.value);
 
 	const buscarBD = () => {
@@ -133,8 +141,8 @@ function Navegacion(props) {
 								</IconButton>
 							</Hidden>
 							<Hidden smDown>
-								<Box component={Link} to={`/${slug}`} className={classes.containerImage}>  
-									<img  className={classes.image} alt="logotipo" src={Comody}/>
+								<Box component={Link} to={`/`} className={classes.containerImage}>  
+									<img onClick={() => cerrarSesiones()} className={classes.image} alt="logotipo" src={Comody}/>
 								</Box>
 							</Hidden>
 							<div className={classes.search}>
@@ -203,7 +211,10 @@ function Navegacion(props) {
 							<IconButton onClick={handleDrawerClose}>
 								<ChevronLeftIcon />
 							</IconButton>
-							<Box onClick={handleDrawerClose} component={Link} to={`/${slug}`} className={classes.containerImage}>  
+							<Box onClick={() => {
+								cerrarSesiones()
+								handleDrawerClose()
+							}} component={Link} to={`/`} className={classes.containerImage}>  
 								<img className={classes.image} alt="logotipo" src={Comody}/>
 							</Box>
 						</div>

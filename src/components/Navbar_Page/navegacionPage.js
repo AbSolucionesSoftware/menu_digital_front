@@ -183,7 +183,7 @@ function NavegacionPage(props) {
 						<IconButton onClick={handleDrawerClose}>
 							<ChevronLeftIcon />
 						</IconButton>
-						<Box component={Link} to={`/`} className={classes.containerImage}>  
+						<Box component={Link} to={`/`}  onClick={handleDrawerClose} className={classes.containerImage}>  
 							<img className={classes.image} alt="logotipo" src={Comody}/>
 						</Box>
 					</div>

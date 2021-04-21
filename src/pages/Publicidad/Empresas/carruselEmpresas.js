@@ -1,18 +1,19 @@
 import ReactDOM from 'react-dom';
 import { Box, Grid,  Hidden,  IconButton,  makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import clienteAxios from '../../../config/axios';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Link } from 'react-router-dom';
+import ItemsCarousel from 'react-items-carousel';
+
 // import Carousel from 'react-multi-carousel';
 // import 'react-multi-carousel/lib/styles.css';
-import { Link } from 'react-router-dom';
 // import './empresas.scss'
 
-import ItemsCarousel from 'react-items-carousel';
 // import InfiniteCarousel from 'react-leaf-carousel';
 // import { ScrollingCarousel  } from '@trendyol-js/react-carousel';
 
-import clienteAxios from '../../../config/axios';
 
 const stylesLocal = makeStyles((theme) => ({
   containerImagen:{
@@ -26,7 +27,7 @@ const stylesLocal = makeStyles((theme) => ({
       borderRadius: 6
   },
   imagen:{
-      // marginLeft: 35,
+      marginLeft: 30,
       maxWidth: "100%",
       maxHeight: "100%",
       display: "flex",
@@ -41,7 +42,8 @@ const stylesLocal = makeStyles((theme) => ({
 export default function Carrusel() {
   
     const [activeItemIndex, setActiveItemIndex] = useState(0);
-    const chevronWidth = 40;
+    const chevronWidth = 30;
+
     const [ empresas, setEmpresas ] = useState([]);
     const classes = stylesLocal();
 
@@ -92,22 +94,6 @@ export default function Carrusel() {
           </Box>
         </Grid>
         <Grid lg={12} xs={12}>
-            {/* <Carousel
-              responsive={responsive}  
-              // showDots
-              sliderClass=""
-              swipeable
-              infinite
-              autoPlay
-              autoPlaySpeed={1800}
-              containerClass="carousel-container"
-            >
-              {render}
-            </Carousel> */}
-            {/* <ScrollingCarousel show={3} slide={2} infinite={true} >
-              {render}
-            </ScrollingCarousel > */}
-
           <Hidden xsDown>
             <ItemsCarousel
               requestToChangeActive={setActiveItemIndex}
@@ -154,7 +140,6 @@ export default function Carrusel() {
               {render}
             </ItemsCarousel>
           </Hidden>
-
         </Grid>
       </Grid>
   )
