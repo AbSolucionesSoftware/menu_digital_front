@@ -1,11 +1,17 @@
 import ReactDOM from 'react-dom';
-import { Box, Grid,  makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid,  Hidden,  IconButton,  makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+// import Carousel from 'react-multi-carousel';
+// import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
+// import './empresas.scss'
 
+import ItemsCarousel from 'react-items-carousel';
 // import InfiniteCarousel from 'react-leaf-carousel';
+// import { ScrollingCarousel  } from '@trendyol-js/react-carousel';
+
 import clienteAxios from '../../../config/axios';
 
 const stylesLocal = makeStyles((theme) => ({
@@ -20,7 +26,7 @@ const stylesLocal = makeStyles((theme) => ({
       borderRadius: 6
   },
   imagen:{
-      marginLeft: 35,
+      // marginLeft: 35,
       maxWidth: "100%",
       maxHeight: "100%",
       display: "flex",
@@ -31,28 +37,11 @@ const stylesLocal = makeStyles((theme) => ({
   }
 }))
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 4
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 4
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1
-  },
-  mobile: {
-    breakpoint: { max: 400, min: 0 },
-    items: 1,
-  },
-};
-
 
 export default function Carrusel() {
-
+  
+    const [activeItemIndex, setActiveItemIndex] = useState(0);
+    const chevronWidth = 40;
     const [ empresas, setEmpresas ] = useState([]);
     const classes = stylesLocal();
 
@@ -103,7 +92,7 @@ export default function Carrusel() {
           </Box>
         </Grid>
         <Grid lg={12} xs={12}>
-            <Carousel
+            {/* <Carousel
               responsive={responsive}  
               // showDots
               sliderClass=""
@@ -111,10 +100,61 @@ export default function Carrusel() {
               infinite
               autoPlay
               autoPlaySpeed={1800}
-              containerClass="container"
+              containerClass="carousel-container"
             >
               {render}
-            </Carousel>
+            </Carousel> */}
+            {/* <ScrollingCarousel show={3} slide={2} infinite={true} >
+              {render}
+            </ScrollingCarousel > */}
+
+          <Hidden xsDown>
+            <ItemsCarousel
+              requestToChangeActive={setActiveItemIndex}
+              activeItemIndex={activeItemIndex}
+              numberOfCards={4}
+              gutter={40}
+              leftChevron={
+                <IconButton aria-label="delete" disabled color="primary">
+                  <ArrowBackIosIcon />
+                </IconButton>
+              }
+              rightChevron={
+                <IconButton aria-label="delete" disabled color="primary">
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              }
+              outsideChevron
+              infiniteLoop={true}
+              chevronWidth={chevronWidth}
+            >
+              {render}
+            </ItemsCarousel>
+          </Hidden>
+          <Hidden smUp>
+            <ItemsCarousel
+              requestToChangeActive={setActiveItemIndex}
+              activeItemIndex={activeItemIndex}
+              numberOfCards={1}
+              gutter={40}
+              leftChevron={
+                <IconButton aria-label="delete" disabled color="primary">
+                  <ArrowBackIosIcon />
+                </IconButton>
+              }
+              rightChevron={
+                <IconButton aria-label="delete" disabled color="primary">
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              }
+              outsideChevron
+              infiniteLoop={true}
+              chevronWidth={chevronWidth}
+            >
+              {render}
+            </ItemsCarousel>
+          </Hidden>
+
         </Grid>
       </Grid>
   )
