@@ -5,8 +5,8 @@ import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-export default function Eliminar(props){
-	const { clase, setUpload, upload } = props;
+export default function EliminarSubTypes(props){
+	const { clase, subType, setUpload, upload } = props;
 	const token = localStorage.getItem('token');
 	const [ loading, setLoading ] = useState(false);
 
@@ -29,10 +29,10 @@ export default function Eliminar(props){
 		status: ''
 	});
 
-	const eliminarPlatilloBD = async (idClase) => {
+	const eliminarPlatilloBD = async (idSubType) => {
 		setLoading(true);
         await clienteAxios
-			.delete(`/classification/action/${idClase}`, {
+			.delete(`/classification/action/${clase}/subClassification/${idSubType}`, {
                 headers: {
 					Authorization: `bearer ${token}`
 				}
@@ -74,7 +74,7 @@ export default function Eliminar(props){
 				eliminarPlatilloBD={eliminarPlatilloBD}
 			/>
             <IconButton 
-                onClick={() => handleDeleteConfimation(clase)}
+                onClick={() => handleDeleteConfimation(subType)}
                 ariant="contained" 
                 color="secondary"
             >
@@ -94,7 +94,7 @@ function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, el
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de eliminar esta clasificación?'}</DialogTitle>
+				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de eliminar esta clasificiación?'}</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleDeleteConfimation} color="primary">
 						Cancelar

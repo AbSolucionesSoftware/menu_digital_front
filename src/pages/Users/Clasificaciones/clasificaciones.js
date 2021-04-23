@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Eliminar from './services/eliminarClase'
+import EliminarSubTypes from './services/eliminarSubTypes'
 import clienteAxios from '../../../config/axios'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
 
@@ -13,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
+import { sub } from 'date-fns';
 
 NumberFormatCustom.propTypes = {
     inputRef: PropTypes.func.isRequired,
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
     column: {
-        flexBasis: '33.33%',
+        flexBasis: '90%',
     },
 }));
 
@@ -63,6 +66,7 @@ export default function Clasificaciones() {
     const [ clasificacion, setClasificacion ] = useState([]);
     const [ clases, setClases ] = useState([]);
     const [ types, setTypes ] = useState([]);
+    const [ subTypes, setSubTypes ] = useState({})
 
     const [ upload, setUpload ] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -100,7 +104,7 @@ export default function Clasificaciones() {
 			[e.target.name]: e.target.value
 		});
     };
-    console.log(clasificacion);
+    // console.log(clasificacion);
 
     const handleChangeColor = (color) => {
         setBackground(color.hex);
@@ -115,6 +119,7 @@ export default function Clasificaciones() {
 			.get(`/type`)
 			.then((res) => {
                 setClases(res.data);
+                setUpload(true);
 			})
 			.catch((err) => {
                 setSnackbar({
@@ -126,16 +131,20 @@ export default function Clasificaciones() {
     }
 
     const consultaTypes = async () => {
+        setLoading(true);
         await clienteAxios
         .get(`/classification/${company._id}`, {
             headers: {
                 Authorization: `bearer ${token}`
             }
         }).then((res) => {
+            setLoading(false);
             setTypes(res.data);
-            console.log(res.data);
+            setUpload(true);
         })
         .catch((err) => {
+            setUpload(true);
+            setLoading(false);
             setSnackbar({
                 open: true,
                 mensaje: "Ocurrio un problema en el servidor", 
@@ -155,7 +164,8 @@ export default function Clasificaciones() {
                 }
             }).then((res) => {
                 setLoading(false);
-                setUpload(true);
+                setUpload(!upload);
+                setClasificacion([]);
                 setSnackbar({
 					open: true,
 					mensaje: res.data.message,
@@ -163,6 +173,7 @@ export default function Clasificaciones() {
 				});
 			})
 			.catch((err) => {
+                setUpload(!upload);
                 setSnackbar({
 					open: true,
 					mensaje: "Problemas al agregar clasificacion",
@@ -170,11 +181,127 @@ export default function Clasificaciones() {
 				});
 			});
     }
-    
+
+    const guardarSubTypes = async (idSubType) => {
+        setLoading(true)
+        await clienteAxios
+			.post(`/classification/action/${idSubType._id}/subClassification/`,{
+                "name": clasificacion.name,
+                "price": clasificacion.precio ? clasificacion.precio : 0
+            }, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            }).then((res) => {
+                setClasificacion([]);
+                setLoading(false);
+                setUpload(!upload);
+                setSnackbar({
+					open: true,
+					mensaje: res.data.message,
+					status: 'success'
+				});
+			})
+			.catch((err) => {
+                setUpload(!upload);
+                setSnackbar({
+					open: true,
+					mensaje: "Problemas al agregar clasificacion",
+					status: 'error'
+				});
+			});
+    }
+
     useEffect(() => {
         consultaClases()
         consultaTypes()
-    }, [upload])
+    }, [ upload])
+
+    const render = types?.map((type) => {
+        return(
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Box  className={classes.column}>
+                        <Typography variant="h6">{type.type}</Typography>
+                    </Box>
+                    <Box >
+                        <Eliminar clase={type._id} upload={upload} setUpload={setUpload} />
+                    </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Button
+                        onClick={() => {
+                            handleClickOpen()
+                            setSubTypes(type)
+                        }}
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<AddIcon color="primary" />}
+                    >
+                        Agregar
+                    </Button>
+                </AccordionDetails>
+                <AccordionDetails>
+                    <Grid item lg={4} xs={12} >
+                        <Box textAlign="center">
+                            <Typography variant="h6">
+                                Concepto
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item lg={3} xs={12}>
+                        <Box textAlign="center" display="flex" alignItems="center" justifyContent="center" justifyItems="center">
+                            <Box>
+                                <Typography variant="h6">
+                                    Precio
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <AttachMoneyIcon/>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </AccordionDetails>
+                    {
+                        type.types?.map((subType) => {
+                            return(
+                                <AccordionDetails>
+                                    <Grid item lg={4} xs={12}>
+                                        <Box textAlign="center">
+                                            <ListItemText primary={subType.name} />
+                                        </Box>
+                                    </Grid>
+                                    <Grid item lg={3} justify="center" xs={12}>
+                                    
+                                        {
+                                            subType.price === "0" ? (
+                                                null
+                                            ) : (
+                                                <Box textAlign="center">
+                                                    <Typography>
+                                                        ${subType.price}
+                                                    </Typography>
+                                                </Box>
+                                            )
+                                        }
+                                    </Grid>
+                                    <Grid item lg={5} xs={12}>
+                                        <Box display="flex" justifyItems="center" justifyContent="flex-end">
+                                            <EliminarSubTypes upload={upload} setUpload={setUpload} clase={type._id} subType={subType._id} />
+                                        </Box>
+                                    </Grid>
+                                </AccordionDetails>
+                            )
+                        })
+                    }
+
+            </Accordion>
+        )
+    })
 
     return (
         <>
@@ -240,48 +367,7 @@ export default function Clasificaciones() {
             
             <Grid container justify="center">
                 <Grid item lg={9}>
-                    {
-                        types.map((type) => {
-                            return(
-                                <Accordion>
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                    >
-                                        <Box className={classes.column}>
-                                            <Typography variant="h6">{type.type}</Typography>
-                                        </Box>
-                                        <Box className={classes.column}>
-                                            <Eliminar clase={type._id} upload={upload} setUpload={setUpload} />
-                                        </Box>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Button
-                                            onClick={handleClickOpen}
-                                            variant="outlined"
-                                            color="primary"
-                                            startIcon={<AddIcon color="primary" />}
-                                        >
-                                            Agregar
-                                        </Button>
-                                    </AccordionDetails>
-                                    <AccordionDetails>
-                                        <Grid item lg={12}>
-                                            <List aria-label="main mailbox folders">
-                                                <ListItem >
-                                                    <ListItemText primary="Drafts" />
-                                                    <ListItemSecondaryAction>
-                                                        {/* <Eliminar /> */}
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                            </List>
-                                        </Grid>
-                                    </AccordionDetails>
-                                </Accordion>
-                            )
-                        })
-                    }
+                    {render}
                 </Grid>
             </Grid>
 
@@ -290,6 +376,7 @@ export default function Clasificaciones() {
                 open={open}
                 onClose={handleClose}
             >
+                {/* {console.log(subTypes)} */}
                 <Box p={2} textAlign="center">
                     <Typography variant="h6">
                         Agrega un nuevo valor
@@ -319,7 +406,7 @@ export default function Clasificaciones() {
                                 onChange={obtenerCampos}
                             />
                         </Box>
-                        <Box textAlign="center">
+                        {/* <Box textAlign="center">
                             <Box display="flex" textAlign="center" alignItems="center" justifyContent="center">
                                 <Typography>
                                     Color
@@ -345,11 +432,14 @@ export default function Clasificaciones() {
                                     null
                                 )
                             }
-                        </Box>
+                        </Box> */}
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={() => {
+                        handleClose()
+                        guardarSubTypes(subTypes)
+                    }} color="primary">
                         Agregar
                     </Button>
                     <Button onClick={handleClose} color="primary" autoFocus>
