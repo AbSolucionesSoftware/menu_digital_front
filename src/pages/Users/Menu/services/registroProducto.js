@@ -94,31 +94,18 @@ export default function RegistroProducto(props) {
     const { update, setUpdate} = useContext(ImageContext);
     const [ preview, setPreview ] = useState('');
 	const [ loading, setLoading ] = useState(false);
-    const [ buttonCat, setButtonCat ] = useState(true);
-    const [ buttonSubCat, setButtonSubCat ] = useState(true);
     const [ control, setControl ] = useState(false);
-
+    const [ types, setTypes ] = useState([]);
     
     const [ categories, setCategories ] = useState([ { categorie: '', subCategoria: [ { subcategoria: '' } ] } ]);
     const [ datos, setDatos] = useState([]);
     const [ platillos, setPlatillos ] = useState([]);
-    const [ item, setItem ] = useState();
-    const [ subCategorias, setSubCategorias ] = useState([]);
-
-    const [ categoriasDefault, setCategoriasDefault] = useState([]);
-    const [ subcategoriasDefault, setSubcategoriasDefault ] = useState([]);
 
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
 		mensaje: '',
 		status: ''
 	});
-
-    // Valores de Categorias
-    const [ select, setSelect ] = useState();
-    const [ selectSub, setSelectSub ] = useState();
-
-    
 
     const onSelect = (e) => {
         if (e.target.name === 'category') {
@@ -128,10 +115,6 @@ export default function RegistroProducto(props) {
 			});
 			return;
 		}
-	};
-
-    const onSelectSub = (event) => {
-        setSelectSub(event.target.value);
 	};
 
     const onDrop = useCallback(
@@ -161,7 +144,6 @@ export default function RegistroProducto(props) {
     const handleSwitch = (e) => {
         setOpenExtra(e.target.checked);
     }
-
 
     const agregarPlatilloBD = async () => {
         if (!platillos.category  || !platillos.subCategory || !platillos.name || !platillos.price ) {
@@ -256,10 +238,9 @@ export default function RegistroProducto(props) {
 
 	}
   
-
-    const consultarCates = async () => {
+    const consultarCatesNuevas = async () => {
 		await clienteAxios
-			.get(`/product/categories/${company._id}`)
+			.get(`/categories/${company._id}`)
 			.then((res) => {
 				setCategories(res.data);
 			})
@@ -267,8 +248,29 @@ export default function RegistroProducto(props) {
 			})
 	}
 
+    const consultaTypes = async () => {
+        await clienteAxios
+        .get(`/classification/${company._id}`, {
+            headers: {
+                Authorization: `bearer ${token}`
+            }
+        }).then((res) => {
+            setTypes(res.data);
+            console.log(res.data);
+        })
+        .catch((err) => {
+            setSnackbar({
+                open: true,
+                mensaje: "Ocurrio un problema en el servidor", 
+                status: 'error'
+            });
+        });
+    }
+
     useEffect(() => {
-        consultarCates();
+        consultaTypes();
+        consultarCatesNuevas();
+
         if (editarProducto !== undefined) {
             setControl(false);
             setPlatillos(editarProducto);
@@ -276,37 +278,6 @@ export default function RegistroProducto(props) {
             setControl(true);
         }
     }, []);
-
-    //TOMAR CATEGORIAS E INSERTAR UNA NUEVA
-
-    const addItemCategoria = () => {
-		setCategoriasDefault([ ...categoriasDefault, {category: item } ]);
-		setSelect(item);
-        
-	};
-
-    const addItemSubCategoria = () => {
-		setSubcategoriasDefault([ ...subcategoriasDefault, {subcategory: item } ]);
-		setSelectSub(item);
-	};
-
-    const onCategoriaChange = (e) => {
-		if (e.target.value.length !== 0) {
-			setItem(e.target.value.capitalize());
-			setButtonCat(false);
-		} else {
-			setButtonCat(true);
-		}
-	};
-    
-    const onSubCategoriaChange = (e) => {
-		if (e.target.value.length !== 0) {
-			setItem(e.target.value.capitalize());
-			setButtonSubCat(false);
-		} else {
-			setButtonSubCat(true);
-		}
-	};
 
     const [ extras, setExtras] = useState([]);
 
@@ -324,6 +295,8 @@ export default function RegistroProducto(props) {
 		});
         setExtras(platillos.extras ? platillos.extras.split(",") : [])
 	};
+
+    
 
     
     return (
@@ -348,35 +321,6 @@ export default function RegistroProducto(props) {
                         <Box textAlign="center" display="flex" justifyContent="center">
                             <form noValidate autoComplete="off">
                                 <Box p={2}>
-                                    <Box p={2}>
-                                        <Grid container >
-                                            <Grid lg={9} xs={8}>
-                                                <TextField
-                                                    className={classes.text}
-                                                    id="nuevaCategoria"
-                                                    label="Nueva Categoria"
-                                                    placeholder="Nueva Categoria"
-                                                    multiline
-                                                    // value={platillos.category ? '' : platillos.category}
-                                                    variant="outlined"
-                                                    onChange={onCategoriaChange}
-                                                />
-                                            </Grid>
-                                            <Grid lg={2}  xs={3}>
-                                                <Box p={1}>
-                                                    <Button
-                                                        disabled={buttonCat}
-                                                        variant="contained" 
-                                                        color="primary"
-                                                        size="large"
-                                                        onClick={addItemCategoria}
-                                                    >
-                                                        Anadir
-                                                    </Button>
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
                                         <Select
@@ -388,54 +332,21 @@ export default function RegistroProducto(props) {
                                             onChange={onSelect}
                                             renderValue={(value) => value}
                                         >
-                                            {/* <option aria-label="None" value="" /> */}
-                                            {categoriasDefault && categoriasDefault.length !== 0 ? (
-                                                categoriasDefault.map((item, index) => (
-                                                    <option key={index} value={item.category}>
-                                                        {item.category}
-                                                    </option>
-                                                ))
-                                            ) : null}
+                                            
                                             {
-                                                categories.map((item, index) => (
-                                                    <option key={index} value={item.categoria}>
-                                                        {item.categoria}
-                                                    </option>
-                                                ))
+                                                categories.length !== 0 ? (
+                                                    categories.map((item, index) => (
+                                                        <option key={index} value={item.category}>
+                                                            {item.category}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    null
+                                                )
                                             }
                                         </Select>
                                     </FormControl>
 
-
-                                    <Box p={2}>
-                                        <Grid container >
-                                            <Grid lg={9} xs={8}>
-                                                <TextField
-                                                    className={classes.text}
-                                                    id=""
-                                                    label="Nueva SubCategoria"
-                                                    placeholder="Nueva SubCategoria"
-                                                    multiline
-                                                    // value={platillos.subCategory ? '' : platillos.subCategory}
-                                                    variant="outlined"
-                                                    onChange={onSubCategoriaChange}
-                                                />
-                                            </Grid>
-                                            <Grid lg={2} xs={2}>
-                                                <Box p={1}>
-                                                    <Button
-                                                        disabled={buttonSubCat}
-                                                        variant="contained" 
-                                                        color="primary"
-                                                        size="large"
-                                                        onClick={addItemSubCategoria}
-                                                    >
-                                                        Añadir
-                                                    </Button>
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
                                     <FormControl className={classes.text}>
                                         <InputLabel htmlFor="age-native-simple">Sub-Categoria</InputLabel>
                                         <Select
@@ -447,30 +358,26 @@ export default function RegistroProducto(props) {
 										    onChange={obtenerCampos}
                                             renderValue={(value) => value}
                                         >
-                                            {/* <option aria-label="None" value="" /> */}
-                                            {subcategoriasDefault && subcategoriasDefault.length !== 0 ? (
-                                                subcategoriasDefault.map((item, index) => (
-                                                    <option key={index} value={item.subcategory}>
-                                                        {item.subcategory}
-                                                    </option>
-                                                ))
-                                            ) : null}
                                             {
-                                                categories.map((categorias) => {
-                                                if (platillos.category === categorias.categoria) {
-                                                    return categorias.subCategoria.map((subCategorias) => {
-                                                        return (
-                                                            <option
-                                                                key={subCategorias._id}
-                                                                value={subCategorias._id}
-                                                            >
-                                                                {subCategorias._id}
-                                                            </option>
-                                                        );
-                                                    });
-                                                }
-                                                return null;
-                                                })
+                                                categories.length !== 0  ? (
+                                                    categories.map((categorias) => {
+                                                    if (platillos.category === categorias.category) {
+                                                        return categorias.subCategories?.map((subCategorias) => {
+                                                            return (
+                                                                <option
+                                                                    key={subCategorias._id}
+                                                                    value={subCategorias.subCategory}
+                                                                >
+                                                                    {subCategorias.subCategory}
+                                                                </option>
+                                                            );
+                                                        });
+                                                    }
+                                                        return null;
+                                                    })
+                                                ) : (
+                                                    null
+                                                )
                                             }
                                         </Select>
                                     </FormControl>
@@ -522,88 +429,95 @@ export default function RegistroProducto(props) {
                                 </Box>
                                 {/* AGREGAR EXTRAS */}
                                 <Grid>
-                                    <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
-                                        <Switch
-                                            checked={openExtra}
-                                            onChange={handleSwitch}
-                                            color="primary"
-                                            name="checkedB"
-                                        />
-                                        {/* <Checkbox checked={openExtra} onChange={handleSwitch} name="checkedA" /> */}
-                                        <Typography variant="h5">
-                                            Extras
-                                        </Typography>
-                                    </Box>
+                                    
                                     {
-                                        openExtra === true ? (
-                                            <>
-                                                <Grid>
-                                                    <Box>
-                                                        <Typography variant="h6">
-                                                            Agrega los extras que pueda tener tu producto
+                                        types.map((type) => {
+                                            return(
+                                                <>
+                                                    <Box display="flex" justifyContent="center" alignItems="center" textAlign="center">
+                                                        <Switch
+                                                            checked={openExtra}
+                                                            onChange={handleSwitch}
+                                                            color="primary"
+                                                            name="checkedB"
+                                                        />
+                                                        {/* <Checkbox checked={openExtra} onChange={handleSwitch} name="checkedA" /> */}
+                                                        <Typography variant="h5">
+                                                            Extras
                                                         </Typography>
                                                     </Box>
-                                                    <Grid>
-                                                        <Box p={2}>
-                                                            <TextField
-                                                                className={classes.text}
-                                                                id="precioExtra"
-                                                                name="precioExtra"
-                                                                label="Precio de Extras"
-                                                                placeholder="Precio de Extras"
-                                                                multiline
-                                                                variant="outlined"
-                                                                InputProps={{
-                                                                    inputComponent: NumberFormatCustom,
-                                                                }}
-                                                                value={platillos.precioExtra ? platillos.precioExtra : ''}
-                                                                onChange={obtenerCampos}
-                                                            >
-                                                            </TextField>
-                                                        </Box>
-                                                        <Box mt={2}>
-                                                            <Typography variant="h6">
-                                                                Agrega tus extras separados por comas.
-                                                            </Typography>
-                                                        </Box>
-                                                        <Box p={1}>
-                                                            <TextField
-                                                                className={classes.text}
-                                                                id="extras"
-                                                                name="extras"
-                                                                label="Nuevos Extras"
-                                                                placeholder="cebolla, pepino, carne, arrache"
-                                                                multiline
-                                                                variant="outlined"
-                                                                value={platillos.extras ? platillos.extras : ''}
-                                                                onChange={obtenerCampos }
-                                                            >
-                                                            </TextField>
-                                                        </Box>
-                                                        <Box display="flex" justifyContent="center" textAlign="center" p={1}>
-                                                            {
-                                                                extras.map((extra, index) => {
-                                                                    return(
-                                                                        <Box p={1}>
-                                                                            <Chip
-                                                                                color="primary" 
-                                                                                key={index} 
-                                                                                // onDelete={() => borrarExtra(index)} 
-                                                                                label={extra} 
-                                                                                // onClick={() => agregarExtras(extra)} 
-                                                                            />
-                                                                        </Box>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </Box>
-                                                    </Grid>
-                                                </Grid>
-                                            </>
-                                        ) : (
-                                            <>
-                                            </>
-                                        )
+                                                </>
+                                            )
+                                        })
+                                        // openExtra === true ? (
+                                        //     <>
+                                        //         <Grid>
+                                        //             <Box>
+                                        //                 <Typography variant="h6">
+                                        //                     Agrega los extras que pueda tener tu producto
+                                        //                 </Typography>
+                                        //             </Box>
+                                        //             <Grid>
+                                        //                 <Box p={2}>
+                                        //                     <TextField
+                                        //                         className={classes.text}
+                                        //                         id="precioExtra"
+                                        //                         name="precioExtra"
+                                        //                         label="Precio de Extras"
+                                        //                         placeholder="Precio de Extras"
+                                        //                         multiline
+                                        //                         variant="outlined"
+                                        //                         InputProps={{
+                                        //                             inputComponent: NumberFormatCustom,
+                                        //                         }}
+                                        //                         value={platillos.precioExtra ? platillos.precioExtra : ''}
+                                        //                         onChange={obtenerCampos}
+                                        //                     >
+                                        //                     </TextField>
+                                        //                 </Box>
+                                        //                 <Box mt={2}>
+                                        //                     <Typography variant="h6">
+                                        //                         Agrega tus extras separados por comas.
+                                        //                     </Typography>
+                                        //                 </Box>
+                                        //                 <Box p={1}>
+                                        //                     <TextField
+                                        //                         className={classes.text}
+                                        //                         id="extras"
+                                        //                         name="extras"
+                                        //                         label="Nuevos Extras"
+                                        //                         placeholder="cebolla, pepino, carne, arrache"
+                                        //                         multiline
+                                        //                         variant="outlined"
+                                        //                         value={platillos.extras ? platillos.extras : ''}
+                                        //                         onChange={obtenerCampos }
+                                        //                     >
+                                        //                     </TextField>
+                                        //                 </Box>
+                                        //                 <Box display="flex" justifyContent="center" textAlign="center" p={1}>
+                                        //                     {
+                                        //                         extras.map((extra, index) => {
+                                        //                             return(
+                                        //                                 <Box p={1}>
+                                        //                                     <Chip
+                                        //                                         color="primary" 
+                                        //                                         key={index} 
+                                        //                                         // onDelete={() => borrarExtra(index)} 
+                                        //                                         label={extra} 
+                                        //                                         // onClick={() => agregarExtras(extra)} 
+                                        //                                     />
+                                        //                                 </Box>
+                                        //                             )
+                                        //                         })
+                                        //                     }
+                                        //                 </Box>
+                                        //             </Grid>
+                                        //         </Grid>
+                                        //     </>
+                                        // ) : (
+                                        //     <>
+                                        //     </>
+                                        // )
                                     }
                                 </Grid>
                                 {/* TERMINAR DE AGREGAR EXTRAS */}
@@ -665,5 +579,14 @@ export default function RegistroProducto(props) {
                 </Grid>
             </Grid>
         </div>
+    )
+}
+
+function Clasificaciones() {
+
+    return(
+        <>
+            
+        </>
     )
 }
