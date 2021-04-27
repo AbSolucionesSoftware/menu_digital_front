@@ -99,8 +99,6 @@ export default function AgregarCarrito(props) {
         }
     ];
     
-    console.log(array);
-
 	const agregarCarrito = () => {
         setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
 
@@ -132,9 +130,10 @@ export default function AgregarCarrito(props) {
     }, [upload, totalExtra])
 
     const handleChange = (valor) => {
-        setTypes({ ...types, [valor.name]: valor });
+         setTypes( {...types, [valor.name]:  valor});
     };
-    // console.log(types);
+
+    console.log(types);
     console.log(typeClass);
 
     const render = producto.classifications?.map((clases, index) => {
