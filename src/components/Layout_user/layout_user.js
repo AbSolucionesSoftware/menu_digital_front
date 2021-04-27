@@ -66,7 +66,7 @@ export default function LayoutUser(props) {
 	const classes = useStyles();
 	let thema = localStorage.getItem('tema');
 	let tema = JSON.parse(thema);
-	const { routes } = props;
+	const { routes} = props;
 
 	useEffect(
 		() => {

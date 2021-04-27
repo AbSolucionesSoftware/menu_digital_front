@@ -1,7 +1,7 @@
-import { Avatar, Box, Button, Chip, Divider, Grid, TextField, Tooltip } from '@material-ui/core'
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Checkbox, Chip, Dialog, DialogContent, DialogTitle, Divider, FormControlLabel, Grid, TextField, Tooltip } from '@material-ui/core'
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Alert } from '@material-ui/lab';
 import { ImageContext } from '../../../context/curso_context';
+import { Class } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     controls: {
@@ -22,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(10),
         height: theme.spacing(10),
     },
+    agregar:{
+        minWidth: 300
+    },
+    column: {
+        flexBasis: '100%',
+    }
 }))
+
 
 
 export default function AgregarCarrito(props) {
@@ -30,10 +38,16 @@ export default function AgregarCarrito(props) {
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
 
+    // console.log(producto);
+
     const [ disable, setDisable] = useState(false)
-    const [ contador , setContador] = useState(1)
-    const [ carrito, setCarrito] = useState([]);
+	const [abrir, setAbrir] = useState(false);
     const [ upload, setUpload] = useState(false);
+    const [ contador , setContador] = useState(1)
+    const [ types, setTypes] = useState([])
+    const [ typeClass, setTypeClass] = useState([])
+
+    const [ carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
     const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
     const [ ingredienteExtra, setIngredienteExtra] = useState([]);
@@ -48,6 +62,14 @@ export default function AgregarCarrito(props) {
         setUpload(!upload);
         ingredienteExtra.push(extra)
     }
+
+    const handleClickOpen = () => {
+        setAbrir(true);
+    };
+
+    const handleClose = () => {
+        setAbrir(false);
+    };
 
     function borrarExtra(key) {
         setUpload(!upload);
@@ -73,10 +95,11 @@ export default function AgregarCarrito(props) {
             precio,
             "cantidad": contador,
             notas,
-            ingredienteExtra,
-            totalExtra
+            types
         }
     ];
+    
+    console.log(array);
 
 	const agregarCarrito = () => {
         setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
@@ -90,13 +113,12 @@ export default function AgregarCarrito(props) {
                 setOpen(false);
             } else {
                 let data = JSON.parse(datos)
-                let newCar = {nombre, precio, cantidad: contador, notas, ingredienteExtra, totalExtra}
+                let newCar = {nombre, precio, cantidad: contador, types: types, notas}
                 data.push(newCar);
                 localStorage.setItem("carritoUsuario", JSON.stringify(data));
                 setOpen(false)
             }
         }
-
 	}
 
     useEffect(() => {
@@ -109,10 +131,49 @@ export default function AgregarCarrito(props) {
         }
     }, [upload, totalExtra])
 
+    const handleChange = (valor) => {
+        setTypes({ ...types, [valor.name]: valor });
+    };
+    // console.log(types);
+    console.log(typeClass);
+
+    const render = producto.classifications?.map((clases, index) => {
+        return(
+            <Box key={clases._id} display="flex" justifyContent="center" p={1}>
+                <Accordion className={classes.column} onClick={()=> {
+                    setTypeClass(clases)
+                }}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                        <Box className={classes.column}>
+                            <Typography variant="h2">
+                                {clases.typeClassification}
+                            </Typography>
+                        </Box>
+                    </AccordionSummary>
+                        { 
+                            clases.types?.map((type, index) => {
+                                return(
+                                    <Box key={index} pl={1} display="flex" alignItems="center">
+                                        <Checkbox onChange={() => handleChange(type)} name={type.name} />
+                                        <Typography variant="h2">
+                                            {type.name}
+                                        </Typography>
+                                    </Box>
+                                )
+                            })
+                        }
+                </Accordion>
+            </Box>
+        )
+    })
 
     return (
         <div>
-            <Grid lg={12}>
+            <Grid lg={12} className={classes.agregar}>
                 <Box mt={1} display="flex" justifyContent="center" textAlign="center">
                     {!imagen ? null : (
                         <Avatar
@@ -122,12 +183,6 @@ export default function AgregarCarrito(props) {
                         />
                     )}
                 </Box>
-                {/* <Box display="flex" justifyContent="center" textAlign="center">
-                    <Divider style={{width: "80%"}}/>
-                </Box> */}
-                {/* <Box  display="flex" justifyContent="center" textAlign="center">
-                    <Divider style={{width: "50%"}}/>
-                </Box> */}
                 <Box mt={2} display="flex" justifyContent="center" textAlign="center">
                     <Box p={1}>
                         <IconButton aria-label="play/pause" onClick={()=> Quitar() }>
@@ -135,7 +190,7 @@ export default function AgregarCarrito(props) {
                         </IconButton>
                     </Box>
                     <Box p={2}>
-                        <Typography variant="h3">
+                        <Typography component={'span'} variant="h3">
                             {contador}
                         </Typography>
                     </Box>
@@ -146,54 +201,8 @@ export default function AgregarCarrito(props) {
                     </Box>
                 </Box>
                 {
-                    producto.extrasActive === true ? (
-                        <>
-                            <Box textAlign="center">
-                                <Typography color="primary">
-                                    Agrega extras a tu platillo
-                                </Typography>
-                            </Box>
-                            <Box p={1} textAlign="center">
-                                {
-                                    extras.map((extra, index) => {
-                                        return(
-                                            <Chip key={index} label={extra} onClick={() => agregarExtras(extra)} />
-                                        )
-                                    })
-                                }
-                            </Box>
-                            <Box textAlign="center">
-                                <Typography>
-                                    Extras: 
-                                </Typography>
-                            </Box>
-                            <Grid container wrap="nowrap">
-                                <Grid item xs>
-                                    <Box p={2}>
-                                        <Box border={2} borderColor="primary.main" p={2}>
-                                            {
-                                                ingredienteExtra.map((extra, index) => {
-                                                    return(
-                                                        <Chip
-                                                            color="primary" 
-                                                            key={index} 
-                                                            onDelete={() => borrarExtra(index)} 
-                                                            label={extra} 
-                                                            onClick={() => agregarExtras(extra)} 
-                                                        />
-                                                    )
-                                                })
-                                            }
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </>
-                    ):(
-                        null
-                    )
+                    render
                 }
-                
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField
                         id="notas"
