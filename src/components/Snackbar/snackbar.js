@@ -32,7 +32,7 @@ export default function MessageSnackbar({ open, mensaje, status, setSnackbar }) 
 	};
 
 	return (
-		<div className={classes.root}>
+		<div /* className={classes.root} */>
 			<Snackbar
 				open={open}
 				autoHideDuration={3000}
