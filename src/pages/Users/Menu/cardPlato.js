@@ -13,7 +13,7 @@ export default function CardPlato(props) {
     const classes = useStyles();
 
     const [ open, setOpen ] = useState(false);
-    const [editarProducto, setEditarProducto] = useState([])
+    const [editarProducto, setEditarProducto] = useState({})
 
     const handleDrawerOpen = () => {
 		setOpen(true);
@@ -102,10 +102,8 @@ export default function CardPlato(props) {
             >
                 
                 <RegistroProducto 
-                    handleDrawerClose={handleDrawerClose} 
                     setUpload={setUpload}
                     upload={upload}
-                    productos={productos} 
                     editarProducto={editarProducto}
                 />
                 <Box textAlign="center" mt={1}>

@@ -10,6 +10,7 @@ import clienteAxios from '../../../config/axios';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 export default function ModalEditarCategorias({ tipo, update, setUpdate, categoria, subCategory }) {
+	const token = localStorage.getItem('token');
 	const [ open, setOpen ] = useState(false);
 	const [ openDelete, setOpenDelete ] = useState(false);
 	const [ value, setValue ] = useState('');
@@ -19,6 +20,10 @@ export default function ModalEditarCategorias({ tipo, update, setUpdate, categor
 		mensaje: '',
 		status: ''
 	});
+
+	let company = { _id: '' };
+
+	if (token !== null) company = JSON.parse(localStorage.getItem('user'));
 
 	String.prototype.capitalize = function() {
 		return this.charAt(0).toUpperCase() + this.slice(1);
@@ -51,6 +56,10 @@ export default function ModalEditarCategorias({ tipo, update, setUpdate, categor
 			await clienteAxios
 				.put(`/categories/action/${categoria._id}`, {
 					category: value
+				}, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
 				})
 				.then((res) => {
 					setLoading(false);
@@ -65,8 +74,12 @@ export default function ModalEditarCategorias({ tipo, update, setUpdate, categor
 				});
 		} else {
 			await clienteAxios
-				.put(`/categories/action/${categoria._id}/subCategory/${subCategory._id}`, {
+				.put(`/categories/action/${categoria._id}/subCategory/${subCategory._id}/company/${company._id}`, {
 					subCategory: value
+				}, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
 				})
 				.then((res) => {
 					setLoading(false);
@@ -86,7 +99,11 @@ export default function ModalEditarCategorias({ tipo, update, setUpdate, categor
 		setLoading(true);
 		if (tipo === 'category') {
 			await clienteAxios
-				.delete(`/categories/action/${categoria._id}`)
+				.delete(`/categories/action/${categoria._id}`, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
+				})
 				.then((res) => {
 					setLoading(false);
 					setUpdate(!update);
@@ -100,7 +117,11 @@ export default function ModalEditarCategorias({ tipo, update, setUpdate, categor
 				});
 		} else {
 			await clienteAxios
-				.delete(`/categories/action/${categoria._id}/subCategory/${subCategory._id}`)
+				.delete(`/categories/action/${categoria._id}/subCategory/${subCategory._id}/company/${company._id}`, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
+				})
 				.then((res) => {
 					setLoading(false);
 					setUpdate(!update);

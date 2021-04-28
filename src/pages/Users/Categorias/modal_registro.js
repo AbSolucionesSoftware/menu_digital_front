@@ -9,6 +9,7 @@ import clienteAxios from '../../../config/axios';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 export default function ModalRegistroCategorias({ tipo, update, setUpdate, company, categoria }) {
+	const token = localStorage.getItem('token');
 	const [ open, setOpen ] = useState(false);
 	const [ value, setValue ] = useState('');
 	const [ loading, setLoading ] = useState(false);
@@ -45,6 +46,10 @@ export default function ModalRegistroCategorias({ tipo, update, setUpdate, compa
 			await clienteAxios
 				.post(`/categories/${company._id}`, {
 					category: value
+				}, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
 				})
 				.then((res) => {
 					setLoading(false);
@@ -61,6 +66,10 @@ export default function ModalRegistroCategorias({ tipo, update, setUpdate, compa
 			await clienteAxios
 				.post(`/categories/action/${categoria._id}/subCategory`, {
 					subCategory: value
+				}, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
 				})
 				.then((res) => {
 					setLoading(false);
