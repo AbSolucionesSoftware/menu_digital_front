@@ -126,7 +126,7 @@ export default function ListaClases({clases, clasesTotal}) {
                                 { 
                                     clases.types?.map((type, index) => {
                                         return(
-                                            <ListTypes  clasesTotal={clasesTotal} index={index} type={type} typeClass={typeClass} />
+                                            <ListTypes  clasesTotal={clasesTotal} index={index} type={type} ClassificationCarrito={typeClass} />
                                         )
                                     })
                                 }
