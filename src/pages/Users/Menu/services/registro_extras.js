@@ -157,7 +157,8 @@ const Extras = ({ type, producto, update, setUpdate }) => {
 		if (!event.target.checked) {
 			setExtras({
 				...extras,
-				amountClassification: 0
+				amountClassification: 0,
+				statusAmount: event.target.checked
 			});
 		}
 	};
@@ -282,7 +283,7 @@ const Extras = ({ type, producto, update, setUpdate }) => {
 						<FormControlLabel
 							control={
 								<Checkbox
-									checked={limiteExtrasCheck}
+									checked={extras.statusAmount}
 									onChange={handleChangeCheckLimite}
 									disabled={!openExtra}
 								/>
