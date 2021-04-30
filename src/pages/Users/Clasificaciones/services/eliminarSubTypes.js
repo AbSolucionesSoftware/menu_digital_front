@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function EliminarSubTypes(props){
 	const { clase, subType, setUpload, upload } = props;
 	const token = localStorage.getItem('token');
+	const company = JSON.parse(localStorage.getItem('user'));
 	const [ loading, setLoading ] = useState(false);
 
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
@@ -31,8 +32,9 @@ export default function EliminarSubTypes(props){
 
 	const eliminarPlatilloBD = async (idSubType) => {
 		setLoading(true);
+		console.log(clase, idSubType, company._id);
         await clienteAxios
-			.delete(`/classification/action/${clase}/subClassification/${idSubType}`, {
+			.delete(`/classification/action/${clase}/subClassification/${idSubType}/company/${company._id}`, {
                 headers: {
 					Authorization: `bearer ${token}`
 				}
@@ -40,21 +42,31 @@ export default function EliminarSubTypes(props){
 			.then((res) => {
 				setUpload(!upload);
                 setLoading(false);
+				console.log(res);
                 setResourceDel({open: false, resource: ''});
 				setSnackbar({
 					open: true,
-					mensaje: 'Clasificación eliminada con exito',
+					mensaje: res.data.message,
 					status: 'success'
 				});
 			})
 			.catch((err) => {
 				setUpload(!upload);
-                setLoading(false);
-				setSnackbar({
-					open: true,
-					mensaje: "Ocurrio un problema en el servidor!.",
-					status: 'success'
-				});
+				if (err.response) {
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: err.response.data.message,
+						status: 'error'
+					});
+				}else{
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: "Error en el servidor",
+						status: 'error'
+					});
+				}
 			});
 	}
 	

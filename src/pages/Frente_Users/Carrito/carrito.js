@@ -81,6 +81,7 @@ export default function Carrito(props) {
         "domicilio": "",
         "colonia": ""
     }
+
     function borrarCarrito() {
         localStorage.removeItem("carritoUsuario");
         setOpen(false);
@@ -113,7 +114,7 @@ export default function Carrito(props) {
 	};
 
     
-    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre +`  `+ ( pedido.ingredienteExtra ? ( pedido.ingredienteExtra.length === 0 ? "" : `Extras (`+ pedido.ingredienteExtra +`)`) : null ) + ` = $` + (pedido.totalExtra ? (pedido.precio*pedido.cantidad+pedido.totalExtra) : (pedido.precio*pedido.cantidad) ) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`))}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+empresa.priceEnvio+`` : '' } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
+    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre + ` = $` + (pedido.totalExtra ? (pedido.precio*pedido.cantidad+pedido.totalExtra) : (pedido.precio*pedido.cantidad) ) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`))}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+empresa.priceEnvio+`` : '' } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
         ${envio === 'domicilio' ? (`%0AA mi domicilio `+(!usuario ? "" : (usuario.domicilio))+` , Col. `+(!usuario ? "" : (usuario.colonia))+`.%0A `) : `%0A Recogeré mi pedido en sucursal. %0A` }
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`);
 
@@ -125,15 +126,9 @@ export default function Carrito(props) {
                 return null
             }else{
                 pedidos.forEach((res) => {
-                    if (res.totalExtra) {
-                        subtotal += res.precio * res.cantidad + res.totalExtra;
-                        total = subtotal;
-                        setTotal(total);
-                    }else{
-                        subtotal += res.precio * res.cantidad;
-                        total = subtotal;
-                        setTotal(total);
-                    }
+                    subtotal += res.precio * res.cantidad;
+                    total = subtotal;
+                    setTotal(total);
                 })
             }
 		},[pedidos, carrito, total]
@@ -155,7 +150,7 @@ export default function Carrito(props) {
                         {   pedidos === null ? (
                             <Box></Box>
                         ) : (
-                            pedidos.map((pedido, index) => {
+                            pedidos.map((producto, index) => {
                                 return(
                                     <Accordion key={index}>
                                         <AccordionSummary
@@ -164,10 +159,10 @@ export default function Carrito(props) {
                                             id="panel1a-header"
                                         >
                                             <Box display="flex" alignItems="center" className={classes.column}>
-                                                <Typography component={'span'} variant="h2" >{pedido.nombre}</Typography>
+                                                <Typography component={'span'} variant="h2" >{producto.nombre}</Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center" className={classes.column2}>
-                                                ${formatoMexico(pedido.totalExtra ? (pedido.precio * pedido.cantidad + pedido.totalExtra) : (pedido.precio * pedido.cantidad))}
+                                                ${formatoMexico(producto.precio * producto.cantidad)}
                                             </Box>
                                             <Box  display="flex" alignItems="center" className={classes.column2} >
                                                 <IconButton
@@ -184,11 +179,31 @@ export default function Carrito(props) {
                                         <AccordionDetails>
                                             <Box>
                                                 <Typography component={'span'} variant="h2">
-                                                    MXN ${formatoMexico(pedido.precio)} c/u
+                                                    MXN ${formatoMexico(producto.precio)} c/u
                                                 </Typography>
                                             </Box>
-                                            
                                         </AccordionDetails>
+                                       
+                                            {producto.types.map((tipo) => (
+                                                // console.log(tipo.tipo.name, tipo.tipo.price)
+                                                // <AccordionDetails>
+                                                    <Box mt={1} display="flex" alignItems="center">
+                                                        <Box>
+                                                            
+                                                        </Box>
+                                                        <Box>
+                                                            <Typography variant="h2">
+                                                                {tipo.tipo.name}
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box>
+                                                            <Typography variant="h2">
+                                                                {tipo.tipo.price === "0" ? null : tipo.tipo.price }
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+                                                // </AccordionDetails>
+                                            ))}
                                     </Accordion>
                                 )
                             })

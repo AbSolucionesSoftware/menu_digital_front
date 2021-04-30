@@ -1,7 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Checkbox, Chip, Dialog, DialogContent, DialogTitle, Divider, FormControlLabel, Grid, TextField, Tooltip } from '@material-ui/core'
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { Avatar, Box, Button, Grid, TextField, Tooltip } from '@material-ui/core'
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ListaClases from './services/listaClases'
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,31 +37,42 @@ export default function AgregarCarrito(props) {
     const {nombre, precio, imagen, setOpen, producto}  = props;
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
-
-    // console.log(producto);
+    const [clasesTotal, setClasesTotal] = useState([])
+    const [ control, setControl ] =useState(false);
 
     const [ disable, setDisable] = useState(false)
 	const [abrir, setAbrir] = useState(false);
     const [ upload, setUpload] = useState(false);
     const [ contador , setContador] = useState(1)
     const [ types, setTypes] = useState([])
-    const [ typeClass, setTypeClass] = useState([])
+    // const [ typeClass, setTypeClass] = useState([])
+    const [ totalTypes, setTtotalTypes] = useState(0);
 
     const [ carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
-    const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
-    const [ ingredienteExtra, setIngredienteExtra] = useState([]);
-    const [ totalExtra, setTotalExtra ] = useState(0);
+    // const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
+    // const [ totalExtra, setTotalExtra ] = useState(0);
+
+    useEffect(() => {
+        producto.classifications?.map((clases) => (
+            clasesTotal.push(
+                {
+                    "statusAmount": clases.statusAmount,
+                    "maximo": clases.amountClassification,
+                    "_idClass": clases._idClassification,
+                    "nombre" : clases.typeClassification,
+                    "types" : []
+                }
+            )
+        ))
+    }, [])
+    
+    console.log(clasesTotal);
 
     const Agregar = () => {
 		setContador(contador+1);
         setDisable(false);
 	};
-
-    const agregarExtras = (extra) => {
-        setUpload(!upload);
-        ingredienteExtra.push(extra)
-    }
 
     const handleClickOpen = () => {
         setAbrir(true);
@@ -71,15 +82,15 @@ export default function AgregarCarrito(props) {
         setAbrir(false);
     };
 
-    function borrarExtra(key) {
-        setUpload(!upload);
-        ingredienteExtra.forEach(function(elemento, indice, array) {
-            if(key === indice){
-                ingredienteExtra.splice(key, 1);
-                setUpload(!upload);
-            }
-        })
-    };
+    // function borrarExtra(key) {
+    //     setUpload(!upload);
+    //     ingredienteExtra.forEach(function(elemento, indice, array) {
+    //         if(key === indice){
+    //             ingredienteExtra.splice(key, 1);
+    //             setUpload(!upload);
+    //         }
+    //     })
+    // };
 
 	const Quitar = () => {
         if (contador === 1 ) {
@@ -95,10 +106,9 @@ export default function AgregarCarrito(props) {
             precio,
             "cantidad": contador,
             notas,
-            types
+            "types": types
         }
     ];
-    
 	const agregarCarrito = () => {
         setDatos(JSON.parse(localStorage.getItem('carritoUsuario')));
 
@@ -119,56 +129,32 @@ export default function AgregarCarrito(props) {
         }
 	}
 
-    useEffect(() => {
-        var total = 0;
-        if(ingredienteExtra === null){
+    // const handleChange = (valor) => {
+    //     clasesTotal?.map((clase) => {
+    //         if (clase._idClass === typeClass._idClassification) {
+    //             clase.types.push(valor);
+    //             if (clase.types.length === 2) {
+    //                 setControl(true);
+    //             }else{
+    //                 console.log("Aun mas nene");
+    //             }
+    //         }else{
+    //             return null;
+    //         }
+    //     })
+    //     // types.push( 
+    //     //     {tipo: valor, nombre: typeClass.typeClassification}
+    //     // );
+    //     // setTypeClass({ ...typeClass, [valor.target.name]: valor.target.checked });
+    // };
 
-        }else{
-            total = ingredienteExtra.length * producto.precioExtra;
-            setTotalExtra(total);
-        }
-    }, [upload, totalExtra])
-
-    const handleChange = (valor) => {
-         setTypes( {...types, [valor.name]:  valor});
-    };
-
-    console.log(types);
-    console.log(typeClass);
-
-    const render = producto.classifications?.map((clases, index) => {
-        return(
-            <Box key={clases._id} display="flex" justifyContent="center" p={1}>
-                <Accordion className={classes.column} onClick={()=> {
-                    setTypeClass(clases)
-                }}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Box className={classes.column}>
-                            <Typography variant="h2">
-                                {clases.typeClassification}
-                            </Typography>
-                        </Box>
-                    </AccordionSummary>
-                        { 
-                            clases.types?.map((type, index) => {
-                                return(
-                                    <Box key={index} pl={1} display="flex" alignItems="center">
-                                        <Checkbox onChange={() => handleChange(type)} name={type.name} />
-                                        <Typography variant="h2">
-                                            {type.name}
-                                        </Typography>
-                                    </Box>
-                                )
-                            })
-                        }
-                </Accordion>
-            </Box>
-        )
-    })
+    const render = producto.classifications?.map((clases, index) => (
+        <ListaClases 
+            key={index}
+            clases={clases} 
+            clasesTotal={clasesTotal} 
+        />
+    ))
 
     return (
         <div>
@@ -199,9 +185,9 @@ export default function AgregarCarrito(props) {
                         </IconButton>
                     </Box>
                 </Box>
-                {
-                    render
-                }
+
+                {render}
+
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField
                         id="notas"
