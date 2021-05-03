@@ -1,4 +1,4 @@
-import { Box, Card,  Grid, Typography, Button, TextField, Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core'
+import { Box, Card,  Grid, Typography, Button, TextField, Accordion, AccordionSummary, AccordionDetails, IconButton, Chip } from '@material-ui/core'
 import React, {  useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { formatoMexico }from '../../../config/reuserFunction';
@@ -183,26 +183,22 @@ export default function Carrito(props) {
                                             </Box>
                                         </AccordionDetails>
                                        
-                                            {/* {producto.types?.map((tipo) => (
-                                                // console.log(tipo.tipo.name, tipo.tipo.price)
-                                                // <AccordionDetails>
-                                                    <Box mt={1} display="flex" alignItems="center">
-                                                        <Box>
-                                                            
-                                                        </Box>
+                                            {producto.clases?.map((tipo) => (
+                                                <AccordionDetails>
+                                                    <Box display="flex" alignItems="center">
                                                         <Box>
                                                             <Typography variant="h2">
-                                                                {tipo.tipo.name}
+                                                                {tipo.nombre}
                                                             </Typography>
                                                         </Box>
-                                                        <Box>
-                                                            <Typography variant="h2">
-                                                                {tipo.tipo.price === "0" ? null : tipo.tipo.price }
-                                                            </Typography>
+                                                        <Box ml={2}>
+                                                            {tipo.types?.map((type) => (
+                                                                <Chip color="primary" label={type.name} />
+                                                            ) )}
                                                         </Box>
                                                     </Box>
-                                                // </AccordionDetails>
-                                            ))} */}
+                                                </AccordionDetails>
+                                            ))}
                                     </Accordion>
                                 )
                             })

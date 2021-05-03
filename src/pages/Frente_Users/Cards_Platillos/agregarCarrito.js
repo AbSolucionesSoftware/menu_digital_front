@@ -163,7 +163,7 @@ export default function AgregarCarrito(props) {
                     </Box>
                 </Box>
 
-                {/* {render} */}
+                {render}
 
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField
