@@ -10,6 +10,8 @@ import RegistroProducto from '../pages/Users/Menu/services/registroProducto'
 import PanelUser from '../pages/Users/PanelUsuario/panel_usario';
 import BusquedaUser from '../pages/Users/Busqueda/busqueda'
 import Menu from '../pages/Users/Menu/menu';
+import Categorias from '../pages/Users/Categorias/categorias'
+import Clasificaciones from '../pages/Users/Clasificaciones/clasificaciones'
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
@@ -57,6 +59,16 @@ const routes = [
 			{
 				path: '/user/menu',
 				component: Menu,
+				exact: true,
+			},
+			{
+				path: '/user/categoriasmenu',
+				component: Categorias,
+				exact: true,
+			},
+			{
+				path: '/user/clasificacionmenu',
+				component: Clasificaciones,
 				exact: true,
 			},
 			{

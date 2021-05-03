@@ -98,7 +98,7 @@ export default function BotonCarrito(props) {
                     open={open}
                     onClose={handleClose}
                     classes={{
-                        paper: classes.drawerPaper
+                        // paper: classes.drawerPaper
                     }}
                 >
                     <DialogTitle id="customized-dialog-title" onClose={handleClose} />

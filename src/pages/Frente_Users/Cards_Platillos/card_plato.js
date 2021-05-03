@@ -48,7 +48,7 @@ export default function Cards_Platos(props) {
 		return (
 			<>
 			<Hidden smDown>
-				<Grid key={index} item lg={6} className={classes.paper}>
+				<Grid  key={producto._id} item lg={6} className={classes.paper}>
 					<Card className={classes.root}>
 					
 						<Box display="flex" flexWrap="wrap">
@@ -112,7 +112,7 @@ export default function Cards_Platos(props) {
 				</Grid>
 			</Hidden>
 			<Hidden mdUp>
-				<Grid key={index} item xs={12} className={classes.paper}>
+				<Grid key={producto._id} item xs={12} className={classes.paper}>
 				{/* <Card> */}
 					<Grid container>
 						<Grid xs={8} >
@@ -136,8 +136,8 @@ export default function Cards_Platos(props) {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid xs={2}>
-							<Grid xs zeroMinWidth >
+						<Grid item xs={2}>
+							<Grid item xs zeroMinWidth>
 								<Box display="flex" alignItems="center" justifyContent="center">
 									<IconButton 
 										variant="contained" 

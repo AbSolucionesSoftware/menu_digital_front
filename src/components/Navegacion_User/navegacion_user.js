@@ -140,7 +140,19 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user/menu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
-								Menú
+								Productos Menú
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/user/categoriasmenu" onClick={handleDrawerToggle}>
+							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
+							<Typography>
+								Categorias Menú
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/user/clasificacionmenu" onClick={handleDrawerToggle}>
+							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
+							<Typography>
+								Clasificaciones Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad" onClick={handleDrawerToggle}>
@@ -223,7 +235,19 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
 							<Typography>
-								Menú
+								Productos Menú
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/user/categoriasmenu">
+							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
+							<Typography>
+								Categorias Menú
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/user/clasificacionmenu">
+							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
+							<Typography>
+								Clasificaciones Menú
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
