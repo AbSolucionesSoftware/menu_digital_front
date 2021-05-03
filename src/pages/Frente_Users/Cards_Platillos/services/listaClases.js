@@ -28,78 +28,7 @@ export default function ListaClases({clases, clasesTotal}) {
     const [ controlCheck, setControlCheck] = useState(true)
     const classes = useStyles();
 
-    const handleChange = (valor, index) => {
-        clasesTotal?.map((clase) => {
-            valor.index = index;
-            if (clase._idClass === typeClass._idClassification) {
-                if (clase.types.length === 0) {
-                    if (clase.statusAmount === true) {
-                        clase.types.push(valor);
-                        console.log(index);
-                        console.log(clase.types);
-                        if (clase.types.length === clase.maximo) {
-                            setControl(true);
-                        }
-                    }else{
-                        clase.types.push(valor);
-                    }
-                }else{
-                    for(let index = 0; index < clase.types.length; index++) {
-                        const element = clase.types[index];
-                        if (element._idType === valor._idType) {
-                            clase.types.splice(index, 1);
-                            return clase.types;
-                        }else {
-                            setControlCheck(true);
-                        }
-                    }
-                    if (controlCheck === true) {
-                        if (clase.statusAmount === true) {
-                            clase.types.push(valor); 
-                            if (clase.types.length === clase.maximo) {
-                                setControl(true);
-                            }
-                            return clase.types;
-                        }else{
-                            clase.types.push(valor);
-                            return clase.types;
-                        }
-                    }
-                }
-            }else{
-                return null;
-            }
-        })
-    };
 
-    // function bloqueo(clase, valor) {
-    //     if (clase._idClass === typeClass._idClassification) {
-    //         if (clase.types.length === 0) {
-    //             clase.types.push(valor);
-    //         }else{
-    //             for(let index = 0; index < clase.types.length; index++) {
-    //                 const element = clase.types[index];
-    //                 if (element._idType === valor._idType) {
-    //                     clase.types.splice(index, 1);
-    //                     return clase.types;
-    //                 }else{
-    //                     setControlCheck(true);
-    //                 }
-    //             }
-    //             if (controlCheck === true) {
-    //                 clase.types.push(valor);
-    //                 return clase.types;
-    //             }
-    //         }
-    //     }else{
-    //         return null;
-    //     }
-    // }
-    //FUNCION ORIGINAL QUE AYUDA A GUARDAR Y ELIMINAR
-    
-
-   
-    
     return (
         <div>
             <Box key={clases._id} display="flex" justifyContent="center" p={1}>
@@ -121,12 +50,18 @@ export default function ListaClases({clases, clasesTotal}) {
                         </Box>
                     </AccordionSummary>
                         <FormControl component="fieldset" className={classes.formControl}>
-                        <FormLabel >Puedes elegir {clases.amountClassification}</FormLabel>
+                            {
+                                clases.statusAmount === true ? (
+                                    <FormLabel>Puedes elegir {clases.amountClassification}</FormLabel>
+                                ):(
+                                    null
+                                )
+                            }
                             <FormGroup>
                                 { 
                                     clases.types?.map((type, index) => {
                                         return(
-                                            <ListTypes  clasesTotal={clasesTotal} index={index} type={type} ClassificationCarrito={typeClass} />
+                                            <ListTypes clasesTotal={clasesTotal} index={index} type={type} ClassificationCarrito={typeClass} />
                                         )
                                     })
                                 }

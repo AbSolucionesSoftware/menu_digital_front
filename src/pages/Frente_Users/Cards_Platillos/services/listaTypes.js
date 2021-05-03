@@ -24,52 +24,15 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
                     }
                 }
                 if(encontrado){
-                    // clase.types.splice(index, 1);
                     setControlCheck(true);
                     setControlDisabled(false);
-                    // if(classificationBase.statusAmount === true && classificationBase.types.length < classificationBase.maximo){
-                    //     setControlDisabled(false);
-                    // }
                 }else{
-                    // clase.types.push(valor);
                     setControlCheck(false);
                     setControlDisabled(false); 
                 }
 
-                // if (classificationBase.types.length === 0) {
-                //     clase.types.push(valor);
-                //     setControlCheck(true);
-                //     setControlDisabled(false);
-                //     if (clase.statusAmount === true && clase.types.length === clase.maximo) {
-                //         setControl(true);
-                //     }
-                // }else{
-                //     if (classificationBase.statusAmount === true && classificationBase.types.length === classificationBase.maximo) {
-                //         setControlCheck(false);
-                //         setControlDisabled(true);
-                //     }else{
-                //         let encontrado = false;
-                        
-
-                        
-                //     }
-                //     if (controlCheck === true) {
-                //         if (clase.statusAmount === true) {
-                //             clase.types.push(valor); 
-                //             if (clase.types.length === clase.maximo) {
-                //                 setControl(true);
-                //             }
-                //             return clase.types;
-                //         }else{
-                //             clase.types.push(valor);
-                //             return clase.types;
-                //         }
-                //     }
-                // }
             }
-            // console.log(classificationBase.types);
         })
-        // console.log(controlDisabled);
     }
 
 
@@ -77,7 +40,7 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
         clasesTotal?.map((clase) => {
             if (clase._idClass === ClassificationCarrito._idClassification) {
                 if (clase.types.length === 0) {
-                    console.log(clase.statusAmount);
+                    // console.log(clase.statusAmount);
                     clase.types.push(valor);
                     setControlCambio(!controlCambio);
                     return false;
@@ -89,7 +52,7 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
                         if (tiposArregloCarrito._idType === valor._idType) {
                             encontrado = true;
                             index = i;
-                            console.log(encontrado);
+                            // console.log(encontrado);
                         }
                     }
                     if(encontrado){
@@ -108,88 +71,9 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
                 }
 
             }
-            // console.log(clase.types);
         })
-        console.log(clasesTotal);
+        // console.log(clasesTotal);
     }
-
-    /* const handleChange = (valor, index) => {       
-        clasesTotal?.map((clase) => {
-            valor.index = index;
-            if (clase._idClass === typeClass._idClassification) {
-                if (clase.types.length === 0) {
-                    clase.types.push(valor);
-                    setControlCheck(true);
-                    setControlDisabled(false);
-                    // if (clase.statusAmount === true && clase.types.length === clase.maximo) {
-                    //     setControl(true);
-                    // }
-                }else{
-                    if (clase.statusAmount === true && clase.types.length === clase.maximo) {
-                        setControlCheck(false);
-                        setControlDisabled(true);
-                    }else{
-                        let encontrado = false;
-                        for(let index = 0; index < clase.types.length; index++) {
-                            const tiposArregloCarrito = clase.types[index];
-                            if (tiposArregloCarrito._idType === valor._idType) {
-                                encontrado = true;
-                            }
-                        }
-
-                        if(encontrado){
-                            clase.types.splice(index, 1);
-                            setControlCheck(false);
-                            if(clase.statusAmount === true && clase.types.length < clase.maximo){
-                                setControlDisabled(false);
-                            }
-                        }else{
-                            clase.types.push(valor);
-                            setControlCheck(true);
-                            setControlDisabled(false); 
-                        }
-                    }
-                    // if (controlCheck === true) {
-                    //     if (clase.statusAmount === true) {
-                    //         clase.types.push(valor); 
-                    //         if (clase.types.length === clase.maximo) {
-                    //             setControl(true);
-                    //         }
-                    //         return clase.types;
-                    //     }else{
-                    //         clase.types.push(valor);
-                    //         return clase.types;
-                    //     }
-                    // }
-                }
-            }
-            console.log(clase.types);
-        })
-        console.log(controlDisabled);
-    }; */
-
-    /* function bloqueo() {
-        clasesTotal?.map((clase) => {
-
-            if (clase._idClass === typeClass._idClassification) {
-                
-                for(let index = 0; index < clase.types.length; index++) {
-                    const tipos = clase.types[index];
-                    let cont = false;
-                    for (let i = 0; i < typeClass.types.length; i++) {
-                        const element = typeClass.types[i];
-                        if (element._idType === tipos._idType) {
-                            cont = true;
-                        }
-                    }
-                    return cont;
-                }
-
-            }else{
-                return null;
-            }
-        })
-    } */
 
     return (
         <div>

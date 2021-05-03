@@ -38,15 +38,11 @@ export default function AgregarCarrito(props) {
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
     const [clasesTotal, setClasesTotal] = useState([])
-    const [ control, setControl ] =useState(false);
 
     const [ disable, setDisable] = useState(false)
 	const [abrir, setAbrir] = useState(false);
-    const [ upload, setUpload] = useState(false);
     const [ contador , setContador] = useState(1)
     const [ types, setTypes] = useState([])
-    // const [ typeClass, setTypeClass] = useState([])
-    const [ totalTypes, setTtotalTypes] = useState(0);
 
     const [ carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
@@ -67,7 +63,7 @@ export default function AgregarCarrito(props) {
         ))
     }, [])
     
-    console.log(clasesTotal);
+    // console.log(clasesTotal);
 
     const Agregar = () => {
 		setContador(contador+1);
@@ -106,7 +102,7 @@ export default function AgregarCarrito(props) {
             precio,
             "cantidad": contador,
             notas,
-            "types": types
+            "clases": clasesTotal
         }
     ];
 	const agregarCarrito = () => {
@@ -121,32 +117,13 @@ export default function AgregarCarrito(props) {
                 setOpen(false);
             } else {
                 let data = JSON.parse(datos)
-                let newCar = {nombre, precio, cantidad: contador, types: types, notas}
+                let newCar = {nombre, precio, cantidad: contador, clases: clasesTotal, notas}
                 data.push(newCar);
                 localStorage.setItem("carritoUsuario", JSON.stringify(data));
                 setOpen(false)
             }
         }
 	}
-
-    // const handleChange = (valor) => {
-    //     clasesTotal?.map((clase) => {
-    //         if (clase._idClass === typeClass._idClassification) {
-    //             clase.types.push(valor);
-    //             if (clase.types.length === 2) {
-    //                 setControl(true);
-    //             }else{
-    //                 console.log("Aun mas nene");
-    //             }
-    //         }else{
-    //             return null;
-    //         }
-    //     })
-    //     // types.push( 
-    //     //     {tipo: valor, nombre: typeClass.typeClassification}
-    //     // );
-    //     // setTypeClass({ ...typeClass, [valor.target.name]: valor.target.checked });
-    // };
 
     const render = producto.classifications?.map((clases, index) => (
         <ListaClases 
@@ -186,7 +163,7 @@ export default function AgregarCarrito(props) {
                     </Box>
                 </Box>
 
-                {render}
+                {/* {render} */}
 
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField

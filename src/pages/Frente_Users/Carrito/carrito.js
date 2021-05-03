@@ -65,7 +65,6 @@ function NumberFormatCustom(props) {
 export default function Carrito(props) {
     const {setOpen, empresa} = props;
     const carrito = JSON.parse(localStorage.getItem('carritoUsuario'));
-    console.log(carrito);
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
     const [ upload, setUpload ] = useState(false);
@@ -184,7 +183,7 @@ export default function Carrito(props) {
                                             </Box>
                                         </AccordionDetails>
                                        
-                                            {producto.types.map((tipo) => (
+                                            {/* {producto.types?.map((tipo) => (
                                                 // console.log(tipo.tipo.name, tipo.tipo.price)
                                                 // <AccordionDetails>
                                                     <Box mt={1} display="flex" alignItems="center">
@@ -203,7 +202,7 @@ export default function Carrito(props) {
                                                         </Box>
                                                     </Box>
                                                 // </AccordionDetails>
-                                            ))}
+                                            ))} */}
                                     </Accordion>
                                 )
                             })
