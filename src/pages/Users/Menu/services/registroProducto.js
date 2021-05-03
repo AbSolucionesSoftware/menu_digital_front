@@ -29,7 +29,7 @@ export default function RegistroProducto({ handleDrawerClose, editarProducto }) 
 	const classes = useStyles();
 	const [ activeStep, setActiveStep ] = useState(0);
 	const steps = getSteps();
-    const [ producto, setProducto ] = useState({});
+    const [ producto, setProducto ] = useState();
     const [ update, setUpdate ] = useState(false);
     const [ loading, setLoading ] = useState(false);
 
@@ -120,6 +120,7 @@ export default function RegistroProducto({ handleDrawerClose, editarProducto }) 
 								Atras
 							</Button>
 							<Button
+								disabled={producto === undefined ? true : false}
 								variant="outlined"
 								color="primary"
 								onClick={() => (activeStep === steps.length - 1 ? handleDrawerClose() : handleNext())}
