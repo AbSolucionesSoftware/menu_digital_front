@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         subCate:{
             height: 25,
             width: 250,
-            textTransform: 'uppercase'
+            // textTransform: 'uppercase'
         }
     }
 ));

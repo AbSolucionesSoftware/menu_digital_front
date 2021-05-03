@@ -308,6 +308,9 @@ export default function RegistroPlatillo(props) {
 										</Select>
 									</FormControl>
 								</Box>
+								<Box>
+									{/* {platillos} */}
+								</Box>
 								<Box p={2}>
 									<TextField
 										error={!platillos.name && validate}

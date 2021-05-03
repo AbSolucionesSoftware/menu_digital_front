@@ -96,6 +96,7 @@ function Lista({categoria, props, empresa, slug}) {
             <Button
                 className={classes.root}
                 aria-controls="customized-menu"
+                style={{textTransform: 'none'}}
                 aria-haspopup="true"
                 variant="contained"
                 color="primary"
