@@ -19,17 +19,16 @@ export default function Menu(props) {
 	const [ editarProducto, setEditarProducto ] = useState();
 
 	const traerProdutos = async () => {
-		setLoading(true);
 		await clienteAxios
 			.get(`/product/${user._id}`)
 			.then((res) => {
-				/* setUpload(true); */
 				setLoading(false);
+				setUpload(!upload);
 				setProductos(res.data);
 			})
 			.catch((err) => {
-				/* setUpload(true); */
 				setLoading(false);
+				setUpload(!upload);
 			});
 	};
 
@@ -50,9 +49,8 @@ export default function Menu(props) {
 	useEffect(
 		() => {
 			traerProdutos();
-		},
-		[ upload ]
-	);
+		},[ upload ]
+		);
 
 	const [ open, setOpen ] = useState(false);
 

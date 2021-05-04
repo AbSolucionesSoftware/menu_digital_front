@@ -11,6 +11,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { Alert } from '@material-ui/lab';
 import { ImageContext } from '../../../context/curso_context';
 import { Class } from '@material-ui/icons';
+import { formatoMexico } from '../../../config/reuserFunction';
 
 const useStyles = makeStyles((theme) => ({
     controls: {
@@ -38,16 +39,23 @@ export default function AgregarCarrito(props) {
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
     const [clasesTotal, setClasesTotal] = useState([])
+    const [ types, setTypes] = useState([])
+    const [ carrito, setCarrito] = useState([]);
+    const [ notas, setNotas] = useState("");
 
     const [ disable, setDisable] = useState(false)
 	const [abrir, setAbrir] = useState(false);
-    const [ contador , setContador] = useState(1)
-    const [ types, setTypes] = useState([])
+    const [load, setLoad] = useState(false)
 
-    const [ carrito, setCarrito] = useState([]);
-    const [ notas, setNotas] = useState("");
+    const [ contador , setContador] = useState(1)
+    const [ total, setTotal] = useState(0);
+
+
+    
     // const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
     // const [ totalExtra, setTotalExtra ] = useState(0);
+    
+    // console.log(producto);
 
     useEffect(() => {
         producto.classifications?.map((clases) => (
@@ -57,17 +65,26 @@ export default function AgregarCarrito(props) {
                     "maximo": clases.amountClassification,
                     "_idClass": clases._idClassification,
                     "nombre" : clases.typeClassification,
-                    "types" : []
+                    "types" : [],
+                    "totalClasificacion": 0
                 }
             )
         ))
     }, [])
     
-    // console.log(clasesTotal);
-
     const Agregar = () => {
 		setContador(contador+1);
         setDisable(false);
+        setLoad(!load);
+	};
+
+    const Quitar = () => {
+        if (contador === 1 ) {
+            return;
+        }else{
+            setContador(contador-1);
+            setLoad(!load);
+        }
 	};
 
     const handleClickOpen = () => {
@@ -88,13 +105,7 @@ export default function AgregarCarrito(props) {
     //     })
     // };
 
-	const Quitar = () => {
-        if (contador === 1 ) {
-            return;
-        }else{
-            setContador(contador-1);
-        }
-	};
+	
 
     let array = [ 
         {
@@ -128,10 +139,31 @@ export default function AgregarCarrito(props) {
     const render = producto.classifications?.map((clases, index) => (
         <ListaClases 
             key={index}
+            setLoad={setLoad}
+            load={load}
             clases={clases} 
             clasesTotal={clasesTotal} 
         />
     ))
+
+    useEffect(() => {
+        var subtotal = 0;
+
+        var subTotalClases = 0;
+        var totalClases = 0;
+
+        if(producto === null){
+            return null
+        }else{
+            clasesTotal.forEach(res => {
+                subTotalClases += parseInt(res.totalClasificacion);
+                totalClases = subTotalClases;
+            });
+
+            subtotal = contador * producto.price
+            setTotal(subtotal+totalClases);
+        }
+        },[load, total]);
 
     return (
         <div>
@@ -163,7 +195,14 @@ export default function AgregarCarrito(props) {
                     </Box>
                 </Box>
 
-                {/* {render} */}
+                <Box p={1} display="flex" justifyContent="center">
+                    <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
+                        TOTAL: $
+                        {formatoMexico(total)}
+                    </Typography>
+                </Box>
+
+                {render}
 
                 <Box p={2} display="flex" justifyContent="center">
                     <TextField

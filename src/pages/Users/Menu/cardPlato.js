@@ -5,7 +5,6 @@ import Eliminar from './services/eliminar';
 import RegistroProducto from './services/registroProducto';
 import useStyles from './styles';
 import {formatoMexico} from '../../../config/reuserFunction'
-import { Link } from 'react-router-dom';
 
 export default function CardPlato(props) {
     const {productos, setUpload, upload} = props;
@@ -65,19 +64,19 @@ export default function CardPlato(props) {
 
                         <Box p={1} display="flex" justifyContent="center">
                             <Box p={1}>
-                            <Button
-                                variant="contained" 
-                                color="primary"
-                                onClick={() => {
-									handleDrawerOpen()
-									setEditarProducto(producto)
-								}}
-                            >
-                                Editar
-                            </Button>
+                                <Button
+                                    variant="contained" 
+                                    color="primary"
+                                    onClick={() => {
+                                        handleDrawerOpen()
+                                        setEditarProducto(producto)
+                                    }}
+                                >
+                                    Editar
+                                </Button>
                             </Box>
                             <Box p={1}>
-                                <Eliminar upload={upload} setUpload={setUpload} platillo={producto._id}/>
+                                <Eliminar setUpload={setUpload} upload={upload}  platillo={producto._id}/>
                             </Box>
                         </Box>
                     </Grid>
@@ -93,7 +92,6 @@ export default function CardPlato(props) {
             <Grid container justify="center">
                 {render}
             </Grid>
-            
             
             <Drawer
                 anchor="right"

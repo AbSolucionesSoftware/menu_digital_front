@@ -63,7 +63,6 @@ function BusquedaSubCates(props) {
     useEffect(() => {
         window.scrollTo(0, 0);
         consultarDatos();
-        // buscarProductosCategorias();
         buscarProductosSubCategoria();
     }, [])
 

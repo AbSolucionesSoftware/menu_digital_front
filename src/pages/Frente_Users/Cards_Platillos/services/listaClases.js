@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function ListaClases({clases, clasesTotal}) {
+export default function ListaClases({clases, load, setLoad, clasesTotal}) {
     const [control, setControl] = useState(false)
     const [ typeClass, setTypeClass] = useState([]);
     const [ controlCheck, setControlCheck] = useState(true)
@@ -61,7 +61,13 @@ export default function ListaClases({clases, clasesTotal}) {
                                 { 
                                     clases.types?.map((type, index) => {
                                         return(
-                                            <ListTypes clasesTotal={clasesTotal} index={index} type={type} ClassificationCarrito={typeClass} />
+                                            <ListTypes 
+                                                clasesTotal={clasesTotal} 
+                                                index={index} type={type} 
+                                                ClassificationCarrito={typeClass} 
+                                                load={load} 
+                                                setLoad={setLoad} 
+                                            />
                                         )
                                     })
                                 }

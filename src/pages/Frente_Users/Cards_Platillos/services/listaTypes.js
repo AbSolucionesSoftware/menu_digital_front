@@ -1,10 +1,19 @@
-import { Box, Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import { Box, Checkbox, FormControlLabel, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
+import { formatoMexico } from '../../../../config/reuserFunction';
 
-export default function ListTypes({clasesTotal, type, ClassificationCarrito, index}) {
+const useStyles = makeStyles((theme) => ({
+    column: {
+        flexBasis: '50%',
+    }
+}))
+
+export default function ListTypes({clasesTotal, load, setLoad, type, ClassificationCarrito, index}) {
     const [controlDisabled, setControlDisabled] = useState(false)
     const [ controlCheck, setControlCheck] = useState(false);
     const [controlCambio, setControlCambio] = useState(false);
+
+    const classes = useStyles();
 
     useEffect(
 		() => {
@@ -35,13 +44,17 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
         })
     }
 
-
     const handleChange = (valor) => {
         clasesTotal?.map((clase) => {
             if (clase._idClass === ClassificationCarrito._idClassification) {
+                let totalClasificacion = clase.totalClasificacion;
                 if (clase.types.length === 0) {
-                    // console.log(clase.statusAmount);
                     clase.types.push(valor);
+                    if(clase.statusAmount !== true){
+                        totalClasificacion += parseInt(valor.price);
+                        clase.totalClasificacion = totalClasificacion;
+                        setLoad(!load);
+                    }
                     setControlCambio(!controlCambio);
                     return false;
                 }else{
@@ -57,9 +70,13 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
                     }
                     if(encontrado){
                         clase.types.splice(index, 1);
+                        totalClasificacion -= parseInt(valor.price);
+                        setLoad(!load);
                     }else{
                         if(clase.statusAmount === false){
                             clase.types.push(valor);
+                            totalClasificacion += parseInt(valor.price);
+                            setLoad(!load);
                         }else if (clase.statusAmount === true && clase.types.length < clase.maximo) {
                             clase.types.push(valor);
                         }else{
@@ -67,22 +84,31 @@ export default function ListTypes({clasesTotal, type, ClassificationCarrito, ind
                         }
                     }
                     setControlCambio(!controlCambio);
+                    clase.totalClasificacion = totalClasificacion
                     return null;
                 }
-
+                
             }
         })
         // console.log(clasesTotal);
     }
-
+    
     return (
         <div>
-             <Box  pl={1} display="flex" alignItems="center">
-                <FormControlLabel
-                    control={<Checkbox checked={controlCheck} disabled={controlDisabled} onChange={() =>handleChange(type) } name={type.name} />}
-                />
-                <Typography component="legend">{type.name}</Typography>
-            </Box>
+            <Grid container>
+                <Box display="flex">
+                    <Box display="flex" alignItems="center" ml={1} mr={10}>
+                        <FormControlLabel
+                            control={<Checkbox checked={controlCheck} disabled={controlDisabled} onChange={() =>handleChange(type) } name={type.name} />}
+                        />
+                        <Typography component="legend">{type.name}</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                        <Typography >{type.price === "0" ? "" : ("$" + type.price)} </Typography>
+                    </Box>
+                </Box>
+
+            </Grid>
         </div>
     )
 }
