@@ -20,6 +20,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { sub } from 'date-fns';
+import clienteAxios from '../../../config/axios';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
@@ -69,6 +71,7 @@ export default function Carrito(props) {
 	const [ validate, setValidate ] = useState(false);
     const [ upload, setUpload ] = useState(false);
     const [ total, setTotal] = useState(0);
+
     const [ pedidos, setPedidos] = useState(carrito)
     const [ envio, setEnvio] = useState('sucursal');
 
@@ -105,15 +108,39 @@ export default function Carrito(props) {
 
     const obtenerCampos = (e) => {
         setValidate(true);
-		setCliente({
-			...cliente,
-			[e.target.name]: e.target.value
-		});
-        localStorage.setItem('usuario', JSON.stringify({...usuario, [e.target.name]: e.target.value}))
+        if (e.target.name === "domicilio" || e.target.name === "colonia") {
+            setCliente({
+                ...cliente,
+                [e.target.name]: e.target.value.replace('#', 'No. ')
+            });
+        }else{
+            setCliente({
+                ...cliente,
+                [e.target.name]: e.target.value
+            });
+        }
+        
+		
+        localStorage.setItem('usuario', JSON.stringify({...usuario, [e.target.name]: e.target.value.replace('#', 'No. ')}))
 	};
 
+    const [totales, setTotales] = useState(0)
     
-    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre + ` = $` + (pedido.totalExtra ? (pedido.precio*pedido.cantidad+pedido.totalExtra) : (pedido.precio*pedido.cantidad) ) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`))}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+empresa.priceEnvio+`` : '' } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
+    const totalClases = (pedido) => {
+        var subTotal = 0;
+        var total = 0;
+        pedido.clases?.map(tipo => {
+            if (tipo.statusAmount === false) {
+                tipo.types?.forEach(res => {
+                    subTotal += parseInt(res.price);
+                    total = subTotal;
+                });
+            }
+        });
+        return total;
+    }
+
+    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : pedidos.map((pedido) => (pedido.cantidad +`  `+ pedido.nombre + (pedido.clases?.map((tipos) => (`%0A ( *`+ tipos.nombre + `* ` + (tipos.types?.map((tipo) => (` `+ tipo.name + (tipo.price === "0" ? "" : (` --> $`+ tipo.price)) ))) +`)` ))) +` = $` + (totalClases(pedido) + pedido.precio*pedido.cantidad) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`))}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+empresa.priceEnvio+`` : '' } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}%0A 
         ${envio === 'domicilio' ? (`%0AA mi domicilio `+(!usuario ? "" : (usuario.domicilio))+` , Col. `+(!usuario ? "" : (usuario.colonia))+`.%0A `) : `%0A Recogeré mi pedido en sucursal. %0A` }
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`);
 
@@ -121,14 +148,22 @@ export default function Carrito(props) {
     useEffect(() => {
 			var subtotal = 0;
 			var total = 0;
+
+            var subTotalClases = 0;
+            var totalClasificacion = 0;
+
             if(pedidos === null){
                 return null
             }else{
                 pedidos.forEach((res) => {
                     subtotal += res.precio * res.cantidad;
                     total = subtotal;
-                    setTotal(total);
+                    res.clases.forEach(clases => {
+                        subTotalClases += clases.totalClasificacion
+                        totalClasificacion = subTotalClases;
+                    });
                 })
+                setTotal(total+totalClasificacion);
             }
 		},[pedidos, carrito, total]
 	);
@@ -157,11 +192,15 @@ export default function Carrito(props) {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
+                                            <Box mr={2} display="flex" alignItems="center" >
+                                                <Typography component={'span'} variant="h2">{producto.cantidad}</Typography>
+                                            </Box>
                                             <Box display="flex" alignItems="center" className={classes.column}>
                                                 <Typography component={'span'} variant="h2" >{producto.nombre}</Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center" className={classes.column2}>
-                                                ${formatoMexico(producto.precio * producto.cantidad)}
+
+                                                ${totalClases(producto)+(producto.precio * producto.cantidad)}
                                             </Box>
                                             <Box  display="flex" alignItems="center" className={classes.column2} >
                                                 <IconButton
@@ -182,23 +221,24 @@ export default function Carrito(props) {
                                                 </Typography>
                                             </Box>
                                         </AccordionDetails>
-                                       
-                                            {producto.clases?.map((tipo) => (
-                                                <AccordionDetails>
-                                                    <Box display="flex" alignItems="center">
+                                        {producto.clases?.map((tipo) => (
+                                            <AccordionDetails>
+                                                <Box display="flex" alignItems="center">
+                                                    {tipo.types.length === 0 ? null : (
                                                         <Box>
                                                             <Typography variant="h2">
                                                                 {tipo.nombre}
                                                             </Typography>
                                                         </Box>
-                                                        <Box ml={2}>
-                                                            {tipo.types?.map((type) => (
-                                                                <Chip color="primary" label={type.name} />
-                                                            ) )}
-                                                        </Box>
+                                                    )}
+                                                    <Box ml={2}>
+                                                        {tipo.types?.map((type) => (
+                                                            <Chip color="primary" label={type.name} />
+                                                        ) )}
                                                     </Box>
-                                                </AccordionDetails>
-                                            ))}
+                                                </Box>
+                                            </AccordionDetails>
+                                        ))}
                                     </Accordion>
                                 )
                             })

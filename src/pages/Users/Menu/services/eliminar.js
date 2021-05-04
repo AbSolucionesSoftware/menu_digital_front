@@ -16,6 +16,7 @@ export default function Eliminar(props){
 
 	const handleClick = (resource) => {
 		setResourceDel({ open: !resourceDel.open, resource });
+		setUpload(!upload);
 	};
 
 	const handleDeleteConfimation = (idPlatillo) => {

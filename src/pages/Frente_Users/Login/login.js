@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, TextField, Button, Typography, Grid, Hidden, Divider } from '@material-ui/core';
 import './login.scss';
@@ -88,6 +88,10 @@ export default function LoginAdmin(props) {
 				}
 			});
 	};
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [])
 
 	return (
         <Grid container className={classes.color}>

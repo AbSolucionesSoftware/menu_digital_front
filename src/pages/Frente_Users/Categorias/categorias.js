@@ -42,12 +42,12 @@ const StyledMenu = withStyles({
 
 function Categorias(props) {
     const {empresa, slug} = props;
+    const idEmpresa = localStorage.getItem('idEmpresa');
     const [categorias , setCategorias] = useState([]);
-    
 
-    const consultarCates = async () => {
+    const consultaNuevaCategorias = async () => {
 		await clienteAxios
-			.get(`/product/categories/${empresa}`)
+			.get(`/categories/${idEmpresa}`)
 			.then((res) => {
 				setCategorias(res.data);
 			})
@@ -55,8 +55,19 @@ function Categorias(props) {
 			})
 	}
 
+    // const consultarCates = async () => {
+	// 	await clienteAxios
+	// 		.get(`/product/categories/${empresa}`)
+	// 		.then((res) => {
+	// 			setCategorias(res.data);
+	// 		})
+	// 		.catch((err) => {
+	// 		})
+	// }
+
     useEffect(() => {
-		consultarCates();
+		// consultarCates();
+        consultaNuevaCategorias();
 	}, [])
 
     
@@ -112,29 +123,29 @@ function Lista({categoria, props, empresa, slug}) {
                 </Box>
                 <Box>
                     <Typography variant="h5">
-                        {categoria.categoria}
+                        {categoria.category}
                     </Typography>
                 </Box>
             </Button>
 
             <StyledMenu
-                id={categoria.categoria}
+                id={categoria.category}
                 anchorEl={ancho}
                 open={Boolean(ancho)}
                 onClose={handleClose}
             >
                 {
-                    categoria.subCategoria.map((sub) => {
+                    categoria.subCategories.map((sub) => {
                         return(
                             <StyledMenuItem id={sub._id}>
                                 <ListItem button  
                                     onClick={() => {
-                                            props.history.push(`/${slug}/${empresa}/subCategorias/${sub._id}`)
+                                            props.history.push(`/${slug}/${empresa}/subCategorias/${sub.subCategory}`)
                                         }}  
                                 >
                                     <ListItemText className={classes.subCate} >
                                         <Typography variant="h6">
-                                            {sub._id}
+                                            {sub.subCategory}
                                         </Typography>
                                     </ListItemText>
                                 </ListItem>
