@@ -1,5 +1,7 @@
 import { Box, Checkbox, FormControlLabel, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
+import MessageSnackbar from '../../../../components/Snackbar/snackbar';
+import Alert from '@material-ui/lab/Alert';
 import { formatoMexico } from '../../../../config/reuserFunction';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,6 +14,12 @@ export default function ListTypes({clasesTotal, load, setLoad, type, Classificat
     const [controlDisabled, setControlDisabled] = useState(false)
     const [ controlCheck, setControlCheck] = useState(false);
     const [controlCambio, setControlCambio] = useState(false);
+
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
 
     const classes = useStyles();
 
@@ -80,7 +88,12 @@ export default function ListTypes({clasesTotal, load, setLoad, type, Classificat
                         }else if (clase.statusAmount === true && clase.types.length < clase.maximo) {
                             clase.types.push(valor);
                         }else{
-                            alert(`Solo puedes selecionar ${clase.maximo} de ${clase.nombre}`)
+                            // alert(`Solo puedes selecionar ${clase.maximo} de ${clase.nombre}`)
+                            setSnackbar({
+                                open: true,
+                                mensaje: `Solo se puedes seleccionar ${clase.maximo} de ${clase.nombre}`,
+                                status: 'error'
+                            });
                         }
                     }
                     setControlCambio(!controlCambio);
@@ -95,6 +108,12 @@ export default function ListTypes({clasesTotal, load, setLoad, type, Classificat
     
     return (
         <div>
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Grid container>
                 <Box display="flex">
                     <Box display="flex" alignItems="center" ml={1} mr={10}>
