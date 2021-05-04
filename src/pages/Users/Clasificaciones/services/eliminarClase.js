@@ -53,7 +53,7 @@ export default function Eliminar(props){
 				setSnackbar({
 					open: true,
 					mensaje: "Ocurrio un problema en el servidor!.",
-					status: 'success'
+					status: 'error'
 				});
 			});
 	}

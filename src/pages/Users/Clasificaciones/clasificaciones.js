@@ -104,7 +104,6 @@ export default function Clasificaciones() {
 			[e.target.name]: e.target.value
 		});
     };
-    // console.log(clasificacion);
 
     const handleChangeColor = (color) => {
         setBackground(color.hex);
@@ -118,7 +117,7 @@ export default function Clasificaciones() {
         await clienteAxios
 			.get(`/type`)
 			.then((res) => {
-                setClases(res.data);
+                // setClases(res.data);
                 setUpload(true);
 			})
 			.catch((err) => {
@@ -131,7 +130,7 @@ export default function Clasificaciones() {
     }
 
     const consultaTypes = async () => {
-        setLoading(true);
+        // setLoading(true);
         await clienteAxios
         .get(`/classification/${company._id}`, {
             headers: {
@@ -140,6 +139,7 @@ export default function Clasificaciones() {
         }).then((res) => {
             setLoading(false);
             setTypes(res.data);
+
             setUpload(true);
         })
         .catch((err) => {
@@ -154,10 +154,10 @@ export default function Clasificaciones() {
     }
 
     const guardarClasificacion = async () => {
-        setLoading(true)
+        // setLoading(true)
         await clienteAxios
 			.post(`/classification/${company._id}`,{
-                "type": clasificacion.type
+                "type": clasificacion.clasificacion
             }, {
                 headers: {
                     Authorization: `bearer ${token}`
@@ -165,7 +165,7 @@ export default function Clasificaciones() {
             }).then((res) => {
                 setLoading(false);
                 setUpload(!upload);
-                setClasificacion([]);
+                // setClasificacion([]);
                 setSnackbar({
 					open: true,
 					mensaje: res.data.message,
@@ -213,7 +213,7 @@ export default function Clasificaciones() {
     }
 
     useEffect(() => {
-        consultaClases()
+        // consultaClases()
         consultaTypes()
     }, [ upload])
 
@@ -331,7 +331,16 @@ export default function Clasificaciones() {
                             </Typography>
                         </Box>
                         <Box>
-                        <FormControl className={classes.formControl}>
+                            <TextField
+                                id="clasificacion"
+                                name="clasificacion"
+                                label="Clasificacion"
+                                placeholder="Clasificacion"
+                                multiline
+                                variant="outlined"
+                                onChange={obtenerCampos}
+                            />
+                        {/* <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="age-native-simple"></InputLabel>
                             <Select
                                 name='type'
@@ -346,7 +355,7 @@ export default function Clasificaciones() {
                                 })}
                                 
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
                         </Box>
                     </Box>
                 </Grid>
