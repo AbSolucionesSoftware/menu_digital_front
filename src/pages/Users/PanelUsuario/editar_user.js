@@ -138,7 +138,11 @@ const editarDatos = async () => {
         formData.append("nameCompany", datosEmpresa.nameCompany);
         formData.append("owner", datosEmpresa.owner);
         formData.append("phone", datosEmpresa.phone);
-        formData.append("priceEnvio", datosEmpresa.priceEnvio);
+        if (datosEmpresa.priceEnvio === "") {
+            formData.append("priceEnvio", "0");
+        }else{
+            formData.append("priceEnvio", datosEmpresa.priceEnvio);
+        }
         if (datos.imagen) {
             formData.append("imagen", datos.imagen);
         }
