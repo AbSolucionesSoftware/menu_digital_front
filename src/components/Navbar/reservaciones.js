@@ -73,7 +73,7 @@ export default function Reservaciones(props) {
         if (empresa.public === true) {
         return (
             <div>
-                <Grid lg={12}>
+                <Grid item lg={12}>
                     <Grid>
                         <Box mt={2} p={1} textAlign="center">
                             <Typography variant="h6">
@@ -87,7 +87,7 @@ export default function Reservaciones(props) {
                         </Box>
                     </Grid>
 
-                    <Grid lg={12} xs={12}>
+                    <Grid item lg={12} xs={12}>
                         <Box display="flex" justifyContent="center" flexWrap="wrap">
                             <Box p={2}>
                                 <TextField
@@ -163,7 +163,7 @@ export default function Reservaciones(props) {
         )
         }else{
 			return(
-                <Grid lg={12}>
+                <Grid item lg={12}>
                     <Grid>
                         <Box p={3} textAlign="center">
                             <Typography variant="h6">

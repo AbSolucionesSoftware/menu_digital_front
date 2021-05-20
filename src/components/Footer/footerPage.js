@@ -31,7 +31,7 @@ export default function FooterPage() {
 
             return(
             <Grid container className={classes.fondo}>
-                <Grid lg={4} xs={12}>
+                <Grid item lg={4} xs={12}>
                     <Box mt={2} p={1} textAlign="center">
                         <Typography variant="body1">
                             Te interesa tener tu propio MENÚ DIGITAL
@@ -66,7 +66,7 @@ export default function FooterPage() {
                         </Box>
                     </Grid>
                 </Hidden>
-                <Grid lg={4} xs={12} >
+                <Grid item lg={4} xs={12} >
                     <Box p={1} textAlign="center">
                         <Typography variant="body1">
                             ¡Encuéntranos y Siguenos!
@@ -74,7 +74,7 @@ export default function FooterPage() {
                         <Box display="flex" justifyContent="center">
                             <Box p={1} >
                                 <a target="_blank" href="https://www.facebook.com/Comody-tu-men%C3%BA-digital-101302482046695">
-                                <FacebookIcon style={{color: "white",fontSize: 50}}/>
+                                    <FacebookIcon style={{color: "white",fontSize: 50}}/>
                                 </a>
                             </Box>
                             <Box p={1}>
@@ -92,7 +92,7 @@ export default function FooterPage() {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid  lg={12} xs={12}>
+                <Grid item lg={12} xs={12}>
                     <Box textAlign="center">
                         <Typography variant="body1">
                             Todos los derechos reservados de COMODY, AB Soluciones Empresariales 2021

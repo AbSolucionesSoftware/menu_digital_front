@@ -63,7 +63,8 @@ export default function ListaClases({clases, load, setLoad, clasesTotal}) {
                                         return(
                                             <ListTypes 
                                                 clasesTotal={clasesTotal} 
-                                                index={index} type={type} 
+                                                index={index} 
+                                                type={type} 
                                                 ClassificationCarrito={typeClass} 
                                                 load={load} 
                                                 setLoad={setLoad} 

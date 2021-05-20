@@ -68,9 +68,9 @@ export default function Banner() {
     }, [update])
 
 
-    const render = banners.map((banner) => {
+    const render = banners.map((banner, index) => {
         return(
-            <Card className={classes.root}>
+            <Card key={index} className={classes.root}>
                 <Grid container>
                     <Grid item lg={12} xs={12}>
                         <Box  display="flex" justifyContent="center">

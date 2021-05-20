@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Box, Button, Grid, Typography, Drawer, InputBase, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -23,12 +23,10 @@ export default function Menu(props) {
 			.get(`/product/${user._id}`)
 			.then((res) => {
 				setLoading(false);
-				setUpload(!upload);
 				setProductos(res.data);
 			})
 			.catch((err) => {
 				setLoading(false);
-				setUpload(!upload);
 			});
 	};
 
@@ -49,6 +47,7 @@ export default function Menu(props) {
 	useEffect(
 		() => {
 			traerProdutos();
+			setUpload(false);
 		},[ upload ]
 		);
 
@@ -69,13 +68,13 @@ export default function Menu(props) {
 		<div>
 			<Spin loading={loading} />
 			<Grid>
-				<Grid lg={12}>
+				<Grid item lg={12}>
 					<Box textAlign="center">
 						<Typography variant="h4">Tus Platillos</Typography>
 					</Box>
 				</Grid>
 				<Grid container>
-					<Grid lg={5}>
+					<Grid item lg={5}>
 						<Box p={1}>
 							<Box className={classes.search}>
 								<InputBase
@@ -86,13 +85,13 @@ export default function Menu(props) {
 									onKeyPress={pressEnter}
 								/>
 								<Box className={classes.grow} />
-								<IconButton size="large" color="inherit" onClick={() => buscarBD()}>
+								<IconButton size="medium" color="inherit" onClick={() => buscarBD()}>
 									<SearchIcon />
 								</IconButton>
 							</Box>
 						</Box>
 					</Grid>
-					<Grid lg={7}>
+					<Grid item lg={7}>
 						<Box p={2} display="flex" justifyContent="center">
 							<Button variant="contained" color="primary" size="large" onClick={handleDrawerOpen}>
 								Agregar Nuevo
@@ -101,7 +100,7 @@ export default function Menu(props) {
 					</Grid>
 				</Grid>
 				<Grid container>
-					<Grid lg={12}>
+					<Grid item lg={12}>
 						<CardPlato setUpload={setUpload} upload={upload} productos={productos} />
 					</Grid>
 				</Grid>

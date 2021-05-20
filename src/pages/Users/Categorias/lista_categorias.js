@@ -21,7 +21,7 @@ export default function ListaCategorias({ categoria, update, setUpdate, company 
 	const classes = useStyles();
 
 	return (
-		<Accordion className={classes.summary}>
+		<Accordion key={categoria._id} className={classes.summary}>
 			<AccordionSummary expandIcon={<ExpandMoreIcon />} className="summary-acordion">
 				<Box
                     width="100%"
@@ -52,11 +52,11 @@ export default function ListaCategorias({ categoria, update, setUpdate, company 
 						{categoria.subCategories.length > 0 ? (
 							categoria.subCategories.map((subcategory, index) => {
 								return (
-									<Fragment>
+									<Fragment key={index}>
 										<Box
 											my={1}
 											display="flex"
-											key={index}
+											
 											width="100%"
 											onClick={(event) => event.stopPropagation()}
 											onFocus={(event) => event.stopPropagation()}

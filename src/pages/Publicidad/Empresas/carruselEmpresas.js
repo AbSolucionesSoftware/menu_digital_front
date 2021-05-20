@@ -66,7 +66,7 @@ export default function Carrusel() {
         return null;
       }else{
         return( 
-          <Box className={classes.containerImagen}>
+          <Box key={empresa._id} className={classes.containerImagen}>
             <Link to={`/${empresa.slug}`}>
               {
                 localStorage.removeItem("carritoUsuario"),
@@ -86,14 +86,14 @@ export default function Carrusel() {
 
     return (
       <Grid container>
-        <Grid lg={12} xs={12}>
+        <Grid item lg={12} xs={12}>
           <Box mt={2} textAlign="center" >
             <Typography color="primary" style={{fontSize: 35, fontWeight: 600}}>
               Empresas Afiliadas con Comody
             </Typography>
           </Box>
         </Grid>
-        <Grid lg={12} xs={12}>
+        <Grid item lg={12} xs={12}>
           <Hidden xsDown>
             <ItemsCarousel
               requestToChangeActive={setActiveItemIndex}

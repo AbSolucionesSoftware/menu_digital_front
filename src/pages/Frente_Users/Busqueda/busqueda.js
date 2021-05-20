@@ -53,14 +53,14 @@ import BotonCarrito from '../Carrito/botonCarrito';
         <div>
             <Spin loading={loading} />
             <Grid container>
-                <Grid lg={11}  xs={12}>
+                <Grid item lg={11}  xs={12}>
                     <Box display="flex" justifyContent="center" p={2}>
                         <Typography variant="h4">
                             Resultados de: {busqueda}
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid lg={1} xs={12}>
+                <Grid item lg={1} xs={12}>
                     <Box display="flex" justifyContent="center" p={1}>
                         <Button
                             color="primary"
@@ -73,10 +73,10 @@ import BotonCarrito from '../Carrito/botonCarrito';
                     </Box>
                 </Grid>
             </Grid>
-            <Grid lg={12} xs={12}>
-                <Divider variant="inset:" />
+            <Grid item lg={12} xs={12}>
+                <Divider variant="inset" />
             </Grid>
-            <Grid lg={12}>
+            <Grid item lg={12}>
                 <Cards_Platos productos={productos}/>
             </Grid>
             <BotonCarrito empresa={empresa}/>

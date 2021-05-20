@@ -10,9 +10,12 @@ import CropFreeIcon from '@material-ui/icons/CropFree';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 
 import GenerarQr from './generarQr';
-import { FacebookIcon, FacebookShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
+import { WhatsappIcon, WhatsappShareButton } from 'react-share';
 import useStyles from './styles';
 
 import comody from '../../img/Comody.jpeg'
@@ -125,8 +128,14 @@ export default function Navegacion_User(props) {
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
+						<ListItem button component={Link} >
+							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
+							<Typography>
+								Mis Sucursales
+							</Typography>
+						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
-							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
+							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menú
 							</Typography>
@@ -220,8 +229,14 @@ export default function Navegacion_User(props) {
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
+						<ListItem button component={Link} to={'/user/sucursales'}>
+							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
+							<Typography>
+								Mis Sucursales
+							</Typography>
+						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
-							<ListItemIcon><DoubleArrowIcon/></ListItemIcon>
+							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
 							<Typography>
 								Compartir Menú
 							</Typography>
@@ -233,7 +248,7 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
-							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
+							<ListItemIcon><FastfoodIcon /></ListItemIcon>
 							<Typography>
 								Productos Menú
 							</Typography>
@@ -306,7 +321,7 @@ export default function Navegacion_User(props) {
 						>
 						</TextField>
 					</Box>
-					<Grid spacing={3} justify="center">
+					<Grid container spacing={3}>
 						<Box>
 							<Typography variant="h6">
 								Comparte tu menú digital en WhatssAp

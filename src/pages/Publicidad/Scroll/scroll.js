@@ -18,7 +18,7 @@ export default function FrenteScroll() {
 		<div>
 			<Container>
 			<Hidden mdDown>
-				<Grid  xs={12}>
+				<Grid item xs={12}>
 					<Box
 						height="auto"
 						textAlign="center"

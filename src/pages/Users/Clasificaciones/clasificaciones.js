@@ -217,9 +217,9 @@ export default function Clasificaciones() {
         consultaTypes()
     }, [ upload])
 
-    const render = types?.map((type) => {
+    const render = types?.map((type, index) => {
         return(
-            <Accordion>
+            <Accordion key={index}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -267,16 +267,15 @@ export default function Clasificaciones() {
                     </Grid>
                 </AccordionDetails>
                     {
-                        type.types?.map((subType) => {
+                        type.types?.map((subType, index) => {
                             return(
-                                <AccordionDetails>
+                                <AccordionDetails key={index}>
                                     <Grid item lg={4} xs={12}>
                                         <Box textAlign="center">
                                             <ListItemText primary={subType.name} />
                                         </Box>
                                     </Grid>
-                                    <Grid item lg={3} justify="center" xs={12}>
-                                    
+                                    <Grid container item lg={3} justify="center" xs={12}>
                                         {
                                             subType.price === "0" ? (
                                                 null

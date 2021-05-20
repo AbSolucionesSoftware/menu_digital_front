@@ -1,14 +1,15 @@
-import { Button, Dialog, DialogActions, DialogTitle, IconButton } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useState } from 'react'
-import MessageSnackbar from '../../../../components/Snackbar/snackbar';
-import Spin from '../../../../components/Spin/spin';
-import clienteAxios from '../../../../config/axios';
-import DeleteIcon from '@material-ui/icons/Delete';
+import MessageSnackbar from '../../../components/Snackbar/snackbar';
+import Spin from '../../../components/Spin/spin';
+import clienteAxios from '../../../config/axios';
 
-export default function EliminarSubTypes(props){
-	const { clase, subType, setUpload, upload } = props;
-	const token = localStorage.getItem('token');
+
+export default function Eliminar(props){
 	const company = JSON.parse(localStorage.getItem('user'));
+
+	const { idSucursal } = props;
+	const token = localStorage.getItem('token');
 	const [ loading, setLoading ] = useState(false);
 
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
@@ -19,9 +20,8 @@ export default function EliminarSubTypes(props){
 		setResourceDel({ open: !resourceDel.open, resource });
 	};
 
-	const handleDeleteConfimation = (idClase) => {
-		setDeleteConfimation({ open: !deleteConfimation.open, id: idClase });
-		setUpload(!upload);
+	const handleDeleteConfimation = (idSucursal) => {
+		setDeleteConfimation({ open: !deleteConfimation.open, id: idSucursal });
 	};
 
 	const [ snackbar, setSnackbar ] = useState({
@@ -30,16 +30,15 @@ export default function EliminarSubTypes(props){
 		status: ''
 	});
 
-	const eliminarPlatilloBD = async (idSubType) => {
+	const eliminarSucursal = async (idSucursal) => {
 		setLoading(true);
         await clienteAxios
-			.delete(`/classification/action/${clase}/subClassification/${idSubType}/company/${company._id}`, {
+			.delete(`/company/action/company/${company._id}/sucursal/${idSucursal}`, {
                 headers: {
 					Authorization: `bearer ${token}`
 				}
             })
 			.then((res) => {
-				setUpload(!upload);
                 setLoading(false);
                 setResourceDel({open: false, resource: ''});
 				setSnackbar({
@@ -49,22 +48,12 @@ export default function EliminarSubTypes(props){
 				});
 			})
 			.catch((err) => {
-				setUpload(!upload);
-				if (err.response) {
-					setLoading(false);
-					setSnackbar({
-						open: true,
-						mensaje: err.response.data.message,
-						status: 'error'
-					});
-				}else{
-					setLoading(false);
-					setSnackbar({
-						open: true,
-						mensaje: "Error en el servidor",
-						status: 'error'
-					});
-				}
+                setLoading(false);
+				setSnackbar({
+					open: true,
+					mensaje: err.data.message,
+					status: 'error'
+				});
 			});
 	}
 	
@@ -81,21 +70,22 @@ export default function EliminarSubTypes(props){
 			<AlertConfimationDelete
 				deleteConfimation={deleteConfimation}
 				handleDeleteConfimation={handleDeleteConfimation}
-				eliminarPlatilloBD={eliminarPlatilloBD}
+				eliminarSucursal={eliminarSucursal}
 			/>
-            <IconButton 
-                onClick={() => handleDeleteConfimation(subType)}
-                ariant="contained" 
+            <Button
+                // className={classes.boton} 
+                variant="contained" 
                 color="secondary"
+				onClick={() => handleDeleteConfimation(idSucursal)}
             >
-                <DeleteIcon />
-            </IconButton>
+                Eliminar
+            </Button>
         </div>
     )
 }
 
 
-function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, eliminarPlatilloBD }) {
+function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, eliminarSucursal }) {
 	return (
 		<div>
 			<Dialog
@@ -104,7 +94,7 @@ function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, el
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de eliminar esta clasificiación?'}</DialogTitle>
+				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de eliminar este Platillo?'}</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleDeleteConfimation} color="primary">
 						Cancelar
@@ -112,7 +102,7 @@ function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, el
 					<Button
 						onClick={() => {
 							handleDeleteConfimation();
-							eliminarPlatilloBD(deleteConfimation.id);
+							eliminarSucursal(deleteConfimation.id);
 						}}
 						color="secondary"
 						autoFocus

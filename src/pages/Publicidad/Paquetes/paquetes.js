@@ -33,7 +33,7 @@ export default function Paquetes() {
     return (
             <Container>
                 <Grid container spacing={1} >
-                        <Grid lg={12} xs={11}>
+                        <Grid item lg={12} xs={11}>
                             <Typography component="div" variant="h4" color="primary">
                                 <Box textAlign="center" mt={5}>
                                     Adquiere uno de nuestros paquetes
@@ -52,7 +52,7 @@ export default function Paquetes() {
                             </Box>
                         </Grid>
                         <Grid container justify="center">
-                            <Grid lg={5} md={4} xs={11}>
+                            <Grid item lg={5} md={4} xs={11}>
                             <Box mt={2} />
                                 <Card className={estilo.root}>
                                     <Box textAlign="center" mt={3} p={1}>
@@ -99,7 +99,7 @@ export default function Paquetes() {
                                     </Box>
                                 </Card>
                             </Grid>
-                            <Grid lg={5} md={4} xs={11}>
+                            <Grid item lg={5} md={4} xs={11}>
                             <Box mt={2} />
                                 <Card className={estilo.root}>
                                     <Box textAlign="center" mt={3} p={1} > 
@@ -134,7 +134,7 @@ export default function Paquetes() {
                         </Grid>
                             
                         <Grid container justify="center">
-                            <Grid lg={5} md={4} xs={11}>
+                            <Grid item lg={5} md={4} xs={11}>
                             <Box mt={2} />
                                 <Card className={estilo.root}>
                                     <Box textAlign="center" mt={3} p={1}>
@@ -176,7 +176,7 @@ export default function Paquetes() {
                                     </Box>
                                 </Card>
                             </Grid>
-                            <Grid lg={5} md={4} xs={11}>
+                            <Grid item lg={5} md={4} xs={11}>
                             <Box mt={2} />
                                 <Card className={estilo.root}>
                                     <Box textAlign="center" mt={3} p={1} > 

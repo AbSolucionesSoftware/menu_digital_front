@@ -190,7 +190,7 @@ export default function Contacto() {
                         <IconButton 
                             variant="outlined"
                             color="primary"
-                            size="large"
+                            // size="large"
                             className={estilo.botonCorreo}
                             disableRipple
                             onClick={() => open === false ? (

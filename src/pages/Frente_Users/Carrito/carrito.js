@@ -199,7 +199,6 @@ export default function Carrito(props) {
                                                 <Typography component={'span'} variant="h2" >{producto.nombre}</Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center" className={classes.column2}>
-
                                                 ${totalClases(producto)+(producto.precio * producto.cantidad)}
                                             </Box>
                                             <Box  display="flex" alignItems="center" className={classes.column2} >
@@ -244,7 +243,7 @@ export default function Carrito(props) {
                             })
                         )
                         }
-                    <Grid lg={12}>
+                    <Grid item lg={12}>
                         <Box p={1} display="flex" justifyContent="center">
                             <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
                                 TOTAL: $
@@ -317,7 +316,7 @@ export default function Carrito(props) {
                 <Grid>
                     <Box display="flex" justifyContent="center" >
                         <Card>
-                            <Grid lg={12}>
+                            <Grid item lg={12}>
                                 <Box textAlign="center">
                                 <ToggleButtonGroup
                                     value={envio}
@@ -337,7 +336,7 @@ export default function Carrito(props) {
                                 </ToggleButtonGroup>
                                 </Box>
                                 <Box>
-                                    <form noValidate autoComplete="off">
+                                    {/* <form noValidate autoComplete="off"> */}
                                         <Box mt={2} textAlign="center">
                                             <Typography component={'span'} variant="h5">
                                                 Tus Datos
@@ -410,7 +409,7 @@ export default function Carrito(props) {
                                             </Box>
                                         </>
                                         ) : ( null )}
-                                    </form>
+                                    {/* </form> */}
                                 </Box>
                             </Grid>
 
@@ -469,7 +468,7 @@ export default function Carrito(props) {
                                     size="large"
                                     onClick={() => borrarCarrito()}
                                 >
-                                Nueva Orden
+                                    Nueva Orden
                                 </Button>
                             </Box>
                         </Card>

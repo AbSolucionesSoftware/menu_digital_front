@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react'
 
 import comody from '../../img/Comody.jpeg';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import LanguageIcon from '@material-ui/icons/Language';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import clienteAxios from '../../config/axios';
 import { withRouter } from 'react-router';
 
@@ -59,34 +58,43 @@ function Footer(props) {
 		if (empresa.public === true) {
 			return(
                 <Grid container className={classes.fondo}>
-                    <Grid lg={6} xs={12}>
-                        <Box mt={2} p={1} textAlign="center">
-                            <Typography variant="body1">
-                                {empresa.nameCompany}
-                            </Typography>
-                            <Typography variant="body1">
-                                
-                            </Typography>
-                        </Box>
-                        <Box  display="flex" justifyContent="center" alignItems="center">
-                            <Box mr={2}>
-                                <PhoneForwardedIcon style={{fontSize: 35}}/>
+                    <Grid item lg={4} xs={12}>
+                        <Box ml={9} dsiplay="flex" textAlign="center" justifyContent="center" alignItems="center">
+                            <Box mt={2} p={1} >
+                                <Typography variant="h4">
+                                    {empresa.nameCompany}
+                                </Typography>
                             </Box>
-                            <Typography variant="h5">
-                                {empresa.phone}
-                            </Typography>
-                        </Box>
-                        {/* <Box display="flex" justifyContent="center" alignItems="center" alignItems="center">
-                            <Box mr={2}>
-                                <MailOutlineIcon style={{fontSize: 35}}/>
+                            <Box display="flex" textAlign="center" justifyContent="center" alignItems="center">
+                                <Box mr={2}>
+                                    <PhoneForwardedIcon style={{fontSize: 35}}/>
+                                </Box>
+                                <Typography variant="h6">
+                                    {empresa.phone}
+                                </Typography>
                             </Box>
-                            <Typography variant="body1">
-                                contacto@comody.mx
-                            </Typography>
-                        </Box> */}
+                            {
+                                empresa.calleNumeroPrin && empresa.coloniaPrin ? (
+                                    <Box p={1}>
+                                        <Typography variant="h6"> 
+                                            Dom. {empresa.calleNumeroPrin}, Col. {empresa.coloniaPrin}
+                                        </Typography>
+                                    </Box>
+                                ):(null)
+                            }
+                            {
+                                empresa.cpPrin && empresa.ciudadPrin &&  empresa.estado ? (
+                                    <Box p={1}>
+                                        <Typography variant="h6">
+                                            CP. {empresa.cpPrin}, {empresa.ciudadPrin}, {empresa.estado}
+                                        </Typography>
+                                    </Box>
+                                ):(null)
+                            }
+                        </Box>
                     </Grid>
                     <Hidden xsDown>
-                        <Grid item sm={6}>
+                        <Grid item lg={4} >
                             <Box mb={2} mt={2}>
                                 {empresa.logoImagenUrl === "" ? (
                                     <div className={classes.containerImage}>
@@ -100,31 +108,52 @@ function Footer(props) {
                             </Box>
                         </Grid>
                     </Hidden>
-                    {/* <Grid lg={4} xs={12} >
-                        <Box p={1} textAlign="center">
-                            <Typography variant="body1">
-                                ¡Encuéntranos y Siguenos!
-                            </Typography>
-                            <Box display="flex" justifyContent="center">
-                                <Box p={1} >
-                                    <a target="_blank" href="https://www.facebook.com/Comody-tu-men%C3%BA-digital-101302482046695">
-                                    <FacebookIcon style={{color: "white",fontSize: 50}}/>
-                                    </a>
-                                </Box>
-                                <Box p={1}>
-                                    <InstagramIcon style={{fontSize: 35}} />
-                                </Box> 
-                            </Box>
-                            
-                            <Box p={1} display="flex" justifyContent="center" alignItems="center" >
-                                <LanguageIcon  mr={2} style={{fontSize: 35}}/>
-                                <Typography variant="h6">
-                                    WWW.COMODY.MX
+                    <Grid item lg={4} xs={12}>
+                        { empresa.redesSociales && empresa.redesSociales.length > 0  ? (
+                            <Box mt={2} p={1} textAlign="center"> 
+                                <Typography variant="body1">
+                                    Siguenos en nuestras redes
                                 </Typography>
                             </Box>
-                        </Box>
-                    </Grid> */}
-                    <Grid  lg={12} xs={12}>
+                        ):(
+                            null
+                        )
+                        }   
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        { empresa.redesSociales && empresa.redesSociales.facebook ? (
+                            <Box p={1}>
+                                <a target="_blank" href={empresa.redesSociales.facebook}>
+                                    <FacebookIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                        { empresa.redesSociales && empresa.redesSociales.instagram ? (
+                            <Box p={1}>
+                                <a target="_blank" href={empresa.redesSociales.instagram}>
+                                    <InstagramIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                        { empresa.redesSociales && empresa.redesSociales.twiter ? (
+                            <Box p={1}>
+                                <a target="_blank" href={empresa.redesSociales.twiter}>
+                                    <TwitterIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                    </Box>
+                    </Grid>
+
+                    <Grid item lg={12} xs={12}>
                         <Box textAlign="center">
                             <Typography variant="body1">
                                 Todos los derechos reservados de COMODY, AB Soluciones Empresariales 2021

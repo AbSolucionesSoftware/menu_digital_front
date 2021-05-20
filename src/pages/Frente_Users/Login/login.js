@@ -107,7 +107,7 @@ export default function LoginAdmin(props) {
 					<img alt="registrate" src={Imagen} className={classes.imagen} />
 				</Grid>
 			</Hidden>
-			<Grid xs={12} sm={6} md={6} lg={4} className={classes.color}>
+			<Grid item xs={12} sm={6} md={6} lg={4} className={classes.color}>
 				<form onSubmit={enviarDatosBD}>
 					<Box p={5} mt={15}>
 						<Typography align="center" variant="h4">

@@ -12,6 +12,7 @@ import BusquedaUser from '../pages/Users/Busqueda/busqueda'
 import Menu from '../pages/Users/Menu/menu';
 import Categorias from '../pages/Users/Categorias/categorias'
 import Clasificaciones from '../pages/Users/Clasificaciones/clasificaciones'
+import Sucursales from '../pages/Users/Sucursales/sucursales'
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
@@ -79,6 +80,11 @@ const routes = [
 			{
 				path: '/user/:idEmpresa/:busqueda',
 				component: BusquedaUser,
+				exact: true,
+			},
+			{
+				path: '/user/sucursales',
+				component: Sucursales,
 				exact: true,
 			},
 			{

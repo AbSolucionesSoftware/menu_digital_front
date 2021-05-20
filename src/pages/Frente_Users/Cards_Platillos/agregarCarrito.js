@@ -105,8 +105,6 @@ export default function AgregarCarrito(props) {
     //     })
     // };
 
-	
-
     let array = [ 
         {
             nombre,
@@ -167,7 +165,7 @@ export default function AgregarCarrito(props) {
 
     return (
         <div>
-            <Grid lg={12} className={classes.agregar}>
+            <Grid item lg={12} className={classes.agregar}>
                 <Box mt={1} display="flex" justifyContent="center" textAlign="center">
                     {!imagen ? null : (
                         <Avatar

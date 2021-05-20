@@ -39,7 +39,7 @@ export default function Primera() {
             <Container>
             <Grid container spacing={1} >
                 {/* SECCIONES DE TITULOS */}
-                <Grid xs={12} >
+                <Grid item xs={12} >
                     <Box textAlign="center" mt={1}>
                         <Typography variant="h4" color="primary" >
                             Gestiona tu propio menú en linea
@@ -61,8 +61,8 @@ export default function Primera() {
             
                 {/* INCIIO DE CONTENIDO PRINCIPAL */}
                 <Grid container >
-                    <Grid container lg={4} xs={12}>
-                        <Grid xs={10}>
+                    <Grid container item lg={4} xs={12}>
+                        <Grid item xs={10}>
                             <Box >
                                 <Typography component="div" variant="h5" color="primary">
                                     <Box textAlign="right" mt={2}>
@@ -76,7 +76,7 @@ export default function Primera() {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid xs={2}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <FastfoodIcon className={classes.large} color="primary"/>
@@ -84,7 +84,7 @@ export default function Primera() {
                             </Box>
                         </Grid>
 
-                        <Grid xs={10}>
+                        <Grid item xs={10}>
                             <Box >
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="right" mt={2}>
@@ -98,7 +98,7 @@ export default function Primera() {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid xs={2}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <EditIcon className={classes.large} color="primary"/>
@@ -106,7 +106,7 @@ export default function Primera() {
                             </Box>
                         </Grid>
 
-                        <Grid xs={10}>
+                        <Grid item xs={10}>
                             <Box >
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="right" mt={2}>
@@ -120,7 +120,7 @@ export default function Primera() {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid xs={2}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <ViewCarouselIcon className={classes.large} color="primary"/>
@@ -128,7 +128,7 @@ export default function Primera() {
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container lg={4} xs={12} >
+                    <Grid container item lg={4} xs={12} >
                         <Box mb={5}>
                             <Box display="flex" justifyContent="center" ml={5} className={classes.containerImg} >
                                 <img 
@@ -140,15 +140,15 @@ export default function Primera() {
                         </Box>
                     </Grid>
 
-                    <Grid container lg={4} xs={12}>
-                        <Grid xs={2}>
+                    <Grid container item lg={4} xs={12}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <WhatsAppIcon className={classes.large} color="primary"/>
                                 </IconButton>
                             </Box>
                         </Grid>
-                        <Grid xs={10}>
+                        <Grid item xs={10}>
                             <Box ml={3}>
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="left" mt={2}>
@@ -163,14 +163,14 @@ export default function Primera() {
                             </Box>
                         </Grid>
 
-                        <Grid xs={2}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <CropFreeIcon className={classes.large} color="primary"/>
                                 </IconButton>
                             </Box>
                         </Grid>
-                        <Grid xs={10}>
+                        <Grid item xs={10}>
                             <Box ml={3}>
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="left" mt={2}>
@@ -185,14 +185,14 @@ export default function Primera() {
                             </Box>
                         </Grid>
 
-                        <Grid xs={2}>
+                        <Grid item xs={2}>
                             <Box mt="50%">
                                 <IconButton>
                                     <RestaurantMenuIcon className={classes.large} color="primary"/>
                                 </IconButton>
                             </Box>
                         </Grid>
-                        <Grid xs={10}>
+                        <Grid item xs={10}>
                             <Box ml={3}>
                                 <Typography component="div" variant="h5" color="primary" >
                                     <Box textAlign="left" mt={2}>

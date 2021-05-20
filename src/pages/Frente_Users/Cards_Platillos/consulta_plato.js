@@ -24,14 +24,14 @@ export default function Consulta_platillos(props) {
 	 []);
     return (
         <Container maxWidth="xl">
-			<Grid lg={12} justify="center">
+			<Grid container item lg={12} justify="center">
 				<Box p={3} textAlign="center">
 					<Typography variant="h4" color="primary">
 						¡Nuestros platillos! 
 					</Typography>
 				</Box>
 			</Grid>
-            <Grid container lg={12}>
+            <Grid container item lg={12}>
                 <Cards_Platos empresa={empresa} productos={productos}/>
             </Grid>
         </Container>

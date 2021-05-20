@@ -37,7 +37,7 @@ export default function Tercera() {
 
     return (
             <Grid container >
-                <Grid lg={7} xs={12} >
+                <Grid item lg={7} xs={12} >
                     <Box className={classes.containerImage}>
                         <img 
                             className={classes.imagen}
@@ -46,7 +46,7 @@ export default function Tercera() {
                         />
                     </Box>
                 </Grid>
-                <Grid lg={5} xs={11}>
+                <Grid item lg={5} xs={11}>
                     <Typography component="div" variant="h4" color="primary">
                         <Box p={2} textAlign="left">
                             Grandes beneficios en tu propio Menú Digital

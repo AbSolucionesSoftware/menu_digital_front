@@ -124,7 +124,7 @@ function Navegacion(props) {
 	const classes = useStyles();
     return (
         <div>
-            <AppBar  className={classes.appbar}>
+            <AppBar className={classes.appbar}>
 					<Toolbar>
 					{/* {login  === "/login" ? null : ( */}
 						<>
@@ -163,7 +163,7 @@ function Navegacion(props) {
 								</IconButton>
 							</div>
 							<Hidden smDown>
-								<Grid lg={8} zeroMinWidth >
+								<Grid item lg={8} zeroMinWidth >
 									<Box display="flex" justifyContent="center" >
 										<Typography variant="h3" noWrap>
 											{nombre} 
@@ -269,7 +269,7 @@ function Navegacion(props) {
 							}
 						</List>
 					</Drawer>
-0				{/* )} */}
+-					{/* )} */}
 
 				<div>
 					<Hidden mdUp>

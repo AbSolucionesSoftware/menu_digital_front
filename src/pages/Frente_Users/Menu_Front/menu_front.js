@@ -83,7 +83,7 @@ export default function Menu_Front(props) {
 						<Banner empresa={empresa} />
 					</Box>
 
-					<Grid container justify="center" lg={12}>
+					<Grid container justify="center" item lg={12}>
 						<Box mt={3} textAlign="center">
 							<Avatar className={classes.large} alt="Remy Sharp"  src={empresa.logoImagenUrl} />
 						</Box>
@@ -98,7 +98,6 @@ export default function Menu_Front(props) {
 							<Consulta_platillos empresa={empresa} />
 						</Box>
 					</Hidden>
-					
 					
 					<BotonCarrito empresa={empresa}/>
 				</div>

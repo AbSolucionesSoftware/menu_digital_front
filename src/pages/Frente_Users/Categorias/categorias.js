@@ -88,8 +88,6 @@ function Categorias(props) {
     )
 }
 
-
-
 function Lista({categoria, props, empresa, slug}) {
     const [ancho, setAncho] = useState(null);
     const classes = useStyles();
@@ -103,7 +101,7 @@ function Lista({categoria, props, empresa, slug}) {
     };
 
     return(
-        <Grid className={classes.paper} lg={3} md={6} xs={12}>
+        <Grid key={categoria._id} className={classes.paper} item lg={3} md={6} xs={12}>
             <Button
                 className={classes.root}
                 aria-controls="customized-menu"
@@ -135,9 +133,9 @@ function Lista({categoria, props, empresa, slug}) {
                 onClose={handleClose}
             >
                 {
-                    categoria.subCategories.map((sub) => {
+                    categoria.subCategories.map((sub, index) => {
                         return(
-                            <StyledMenuItem id={sub._id}>
+                            <StyledMenuItem key={index} id={sub._id}>
                                 <ListItem button  
                                     onClick={() => {
                                             props.history.push(`/${slug}/${empresa}/subCategorias/${sub.subCategory}`)

@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
     cover: {
-      width: 180,
-      height: 180
+      width: 190,
+      height: 195
     },
     controls: {
       display: 'flex',

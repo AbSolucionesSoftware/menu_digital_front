@@ -4,6 +4,9 @@ import Editar_User from './editar_user'
 import TextField from '@material-ui/core/TextField';
 import { Box, Button, Drawer, Grid, makeStyles, Typography } from '@material-ui/core/'
 import clienteAxios from '../../../config/axios';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import Spin from '../../../components/Spin/spin';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +69,7 @@ export default function PanelUser() {
 			<Spin loading={loading} />
 
             <Grid>
-                <Grid lg={12}>
+                <Grid item lg={12}>
                     <Box textAlign="center" display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
                             <Typography variant="h4">
@@ -76,22 +79,10 @@ export default function PanelUser() {
                         
                     </Box>
                 </Grid>
-                <Grid lg={12}>
-                    {/* <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
-                        <Typography variant="h5">
-                            {datosEmpresa.nameCompany}
-                        </Typography>
-                    </Box> */}
-                    {/* <Box display="flex" justifyContent="center" flexWrap="wrap" p={2}>
-                        <Typography variant="h5">
-                           Tu usuario: {datosEmpresa.nameUser}
-                        </Typography>
-                    </Box> */}
-                </Grid>
-                <Grid lg={12}>
-                    <Grid container justify="center" lg={12}>
-                        <Box display="flex" justifyContent="center" flexWrap="wrap">
-                            <Box p={2} className={classes.containerImage}>
+                <Grid item lg={12}>
+                    <Grid container justify="center" item lg={12}>
+                        <Box display="flex" justifyContent="center" alignContent="center" >
+                            <Box textAlign="center" className={classes.containerImage}>
                                 <img alt="Imagen de Logo" className={classes.imagen} src={datosEmpresa.logoImagenUrl}/>
                             </Box>
                         </Box>
@@ -114,7 +105,90 @@ export default function PanelUser() {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid lg={12} >
+                <Grid item lg={12}>
+                    <Box p={1} textAlign="center">
+                        <Typography variant="h6">
+                            Ubicación
+                        </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        {
+                            datosEmpresa.calleNumeroPrin ? (
+                                <Box p={1}>
+                                    <TextField variant="outlined" label="Calle y Numero" value={`${datosEmpresa.calleNumeroPrin}`}/>
+                                </Box>
+                            ):(null)
+                        }
+                        {
+                            datosEmpresa.cpPrin ? (
+                                <Box p={1}>
+                                    <TextField variant="outlined" label="Codigo Postal" value={`${datosEmpresa.cpPrin}`}/>
+                                </Box>
+                            ):(null)
+                        }
+                        {
+                            datosEmpresa.coloniaPrin ? (
+                                <Box p={1}>
+                                    <TextField variant="outlined" label="Colonia" value={`${ datosEmpresa.coloniaPrin}`}/>
+                                </Box>
+                            ):(null)
+                        }
+                        {
+                            datosEmpresa.ciudadPrin ? (
+                                <Box p={1}>
+                                    <TextField variant="outlined" label="Ciudad" value={`${ datosEmpresa.ciudadPrin }`}/>
+                                </Box>
+                            ):(null)
+                        }
+                        {
+                            datosEmpresa.estado ? (
+                                <Box p={1}>
+                                    <TextField variant="outlined" label="Estado" value={`${datosEmpresa.estado}`}/>
+                                </Box>
+                            ):(null)
+                        }
+                    </Box>
+                </Grid>
+                <Grid item lg={12}>
+                    <Box p={1}  mt={2} textAlign="center">
+                        <Typography variant="h6">
+                            Tus Redes Sociales
+                        </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap">
+                        { datosEmpresa.redesSociales && datosEmpresa.redesSociales.facebook ? (
+                            <Box p={1}>
+                                <a target="_blank" href={datosEmpresa.redesSociales.facebook}>
+                                    <FacebookIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                        { datosEmpresa.redesSociales && datosEmpresa.redesSociales.instagram ? (
+                            <Box p={1}>
+                                <a target="_blank" href={datosEmpresa.redesSociales.instagram}>
+                                    <InstagramIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                        { datosEmpresa.redesSociales && datosEmpresa.redesSociales.twiter ? (
+                            <Box p={1}>
+                                <a target="_blank" href={datosEmpresa.redesSociales.twiter}>
+                                    <TwitterIcon style={{color: "black",fontSize: 60}}/>
+                                </a>
+                            </Box>
+                        ):(
+                            null
+                        )
+                        }
+                    </Box>
+                </Grid>
+                <Grid item lg={12}>
                     <Box display="flex" justifyContent="center" >
                         <Button
                             variant="contained" 
@@ -140,11 +214,10 @@ export default function PanelUser() {
                     setDatosEmpresa={setDatosEmpresa}
                     upload={upload}
                 />
-                <Box display="flex" justifyContent="center" mt={4}>
+                <Box display="flex" justifyContent="center" p={1}>
                     <Button
                         variant="contained" 
                         color="secondary"
-                        size="large"
                         onClick={handleDrawerClose}
                     >
                         Salir

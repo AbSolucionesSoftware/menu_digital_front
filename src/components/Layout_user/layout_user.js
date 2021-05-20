@@ -55,7 +55,6 @@ function HideOnScroll(props) {
 	  </Slide>
 	);
 }
-
 HideOnScroll.propTypes = {
 	children: PropTypes.element.isRequired,
 	window: PropTypes.func,
@@ -63,39 +62,28 @@ HideOnScroll.propTypes = {
 
 
 export default function LayoutUser(props) {
-	const classes = useStyles();
-	let thema = localStorage.getItem('tema');
-	let tema = JSON.parse(thema);
-	const { routes} = props;
 
-	useEffect(
-		() => {
-			if (tema === null) {
-				localStorage.setItem('tema', false);
-				return;
-			}
-		},
-		[ tema ]
-	);
+	const classes = useStyles();
+	const { routes } = props;
 
 	return (
 		<div className={classes.root}>
-		<ThemeProvider >
-		<CssBaseline />
-		<ImageProvider>
-			<nav className={classes.drawer} aria-label="mailbox folders">
-				<Navegacion_User />
-			</nav>
-			<div className={classes.content}>
-				<NavProvider>
-					<div style={{ minHeight: '100vh' }}>
-						<LoadRoutes routes={routes} />
+			<ThemeProvider >
+			<CssBaseline />
+				<ImageProvider>
+					<nav className={classes.drawer} aria-label="mailbox folders">
+						<Navegacion_User />
+					</nav>
+					<div className={classes.content}>
+						<NavProvider>
+							<div style={{ minHeight: '100vh' }}>
+								<LoadRoutes routes={routes} />
+							</div>
+							
+						</NavProvider>
 					</div>
-					
-				</NavProvider>
-			</div>
-		</ImageProvider>
-		</ThemeProvider>
+				</ImageProvider>
+			</ThemeProvider>
 		</div>
 
 	);
