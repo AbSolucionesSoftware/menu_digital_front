@@ -141,6 +141,7 @@ export default function Editar_User(props) {
         formData.append("nameCompany", datosEmpresa.nameCompany);
         formData.append("owner", datosEmpresa.owner);
         formData.append("phone", datosEmpresa.phone);
+<<<<<<< HEAD
         formData.append("priceEnvio", datosEmpresa.priceEnvio);
         formData.append("calleNumeroPrin", datosEmpresa.calleNumeroPrin);
         formData.append("cpPrin", datosEmpresa.cpPrin);
@@ -162,6 +163,13 @@ export default function Editar_User(props) {
             formData.append("redesSociales.twiter", redesSociales.twiter);
         }
 
+=======
+        if (datosEmpresa.priceEnvio === "") {
+            formData.append("priceEnvio", "0");
+        }else{
+            formData.append("priceEnvio", datosEmpresa.priceEnvio);
+        }
+>>>>>>> 985cbcbac933073a1ada48482033f6b8e3d50ce9
         if (datos.imagen) {
             formData.append("imagen", datos.imagen);
         }
@@ -259,7 +267,7 @@ export default function Editar_User(props) {
                 <Grid item lg={12}>
                     <Box textAlign="center" p={4}>
                         <Typography variant="h4">
-                            Editar Datos
+                            Editar mi empresa
                         </Typography>
                     </Box>
                 </Grid>
@@ -280,7 +288,27 @@ export default function Editar_User(props) {
                                     onChange={onChangeEmpresa}
                                 />
                             </Box>
+<<<<<<< HEAD
                             
+=======
+                            {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
+                                <Alert severity="info">Un identificador para poder distinguir tu Negocio en el navegador</Alert>
+                            </Box> */}
+                            {/* <Box p={2}>
+                                <TextField
+                                    defaultValue={datosEmpresa.slug}
+                                    className={classes.text}
+                                    id="slug"
+                                    label="Identificador"
+                                    placeholder="Identificador"
+                                    multiline
+                                    variant="outlined"
+                                    onChange={(e) =>
+                                        setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase()})
+                                    }
+                                />
+                            </Box> */}
+>>>>>>> 985cbcbac933073a1ada48482033f6b8e3d50ce9
                             <Box p={2}>
                                 <TextField
                                     error={!datosEmpresa.owner && validate}

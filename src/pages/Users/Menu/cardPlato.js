@@ -85,7 +85,7 @@ export default function CardPlato(props) {
                             </Box>
                         </Box>
                         <Box>
-                            <Publicar producto={producto}  setUpload={setUpload} upload={upload} />
+                            <Publicar producto={producto} setUpload={setUpload} upload={upload} />
                         </Box>
                     </Grid>
                 </Box>

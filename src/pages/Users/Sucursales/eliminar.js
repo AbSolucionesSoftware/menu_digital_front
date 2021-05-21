@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
 import clienteAxios from '../../../config/axios';
+import jwt_decode from 'jwt-decode';
 
-
-export default function Eliminar(props){
+export default function Eliminar({ idSucursal, update, setUpdate}){
 	const company = JSON.parse(localStorage.getItem('user'));
 
-	const { idSucursal } = props;
 	const token = localStorage.getItem('token');
 	const [ loading, setLoading ] = useState(false);
 
@@ -18,10 +17,12 @@ export default function Eliminar(props){
 
 	const handleClick = (resource) => {
 		setResourceDel({ open: !resourceDel.open, resource });
+		setUpdate(true);
 	};
 
 	const handleDeleteConfimation = (idSucursal) => {
 		setDeleteConfimation({ open: !deleteConfimation.open, id: idSucursal });
+		setUpdate(true);
 	};
 
 	const [ snackbar, setSnackbar ] = useState({
@@ -39,7 +40,11 @@ export default function Eliminar(props){
 				}
             })
 			.then((res) => {
+				setUpdate(true);
                 setLoading(false);
+				const decoded = jwt_decode(res.data.token);
+				localStorage.setItem('user', JSON.stringify(decoded));
+				window.location.reload();
                 setResourceDel({open: false, resource: ''});
 				setSnackbar({
 					open: true,
@@ -48,6 +53,7 @@ export default function Eliminar(props){
 				});
 			})
 			.catch((err) => {
+				setUpdate(!update);
                 setLoading(false);
 				setSnackbar({
 					open: true,
@@ -94,7 +100,7 @@ function AlertConfimationDelete({ deleteConfimation, handleDeleteConfimation, el
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de eliminar este Platillo?'}</DialogTitle>
+				<DialogTitle id="alert-dialog-title">{'¿Estás seguro de Eliminar esta Sucursal?'}</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleDeleteConfimation} color="primary">
 						Cancelar

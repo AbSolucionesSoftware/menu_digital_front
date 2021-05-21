@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     },
   });
 
-export default function Lista_sucursales({sucursal}) {
+export default function Lista_sucursales({sucursal, setUpdate, update}) {
 
     const classes = useStyles();
 
@@ -60,9 +60,9 @@ export default function Lista_sucursales({sucursal}) {
                     </CardContent>
                     <CardActions>
                         
-                        <Eliminar idSucursal={sucursal._id}/>
+                        <Eliminar update={update} setUpdate={setUpdate} idSucursal={sucursal._id}/>
                         
-                        <Modal_nueva_sucursal tipo="Editar" editarSucursal={sucursal} />
+                        <Modal_nueva_sucursal update={update} setUpdate={setUpdate} tipo="Editar" editarSucursal={sucursal} />
 
                     </CardActions>
                 </Card>

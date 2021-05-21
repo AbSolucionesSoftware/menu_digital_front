@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Eliminar from './services/eliminarClase'
 import EliminarSubTypes from './services/eliminarSubTypes'
+import Editar_clase from './services/editar_clase';
+import Editar_Subtypes from './services/editar_SubTypes'
+
 import clienteAxios from '../../../config/axios'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 import Spin from '../../../components/Spin/spin';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogActions, DialogContent,  Grid,  ListItemText, makeStyles, TextField, Typography } from '@material-ui/core';
 
 import { SketchPicker } from 'react-color';
 
@@ -15,7 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
-import { sub } from 'date-fns';
+
 
 NumberFormatCustom.propTypes = {
     inputRef: PropTypes.func.isRequired,
@@ -64,14 +67,13 @@ export default function Clasificaciones() {
 
     const classes = useStyles();
     const [ clasificacion, setClasificacion ] = useState([]);
-    const [ clases, setClases ] = useState([]);
     const [ types, setTypes ] = useState([]);
-    const [ subTypes, setSubTypes ] = useState({})
+    const [ subTypes, setSubTypes ] = useState([])
 
+    const [ active, setActive ] = useState(false);
     const [ upload, setUpload ] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [checked, setChecked] = useState(false);
     const [openC, setOpenC] = useState(false);
 
     const [background, setBackground] = useState('')
@@ -90,10 +92,6 @@ export default function Clasificaciones() {
       setOpen(false);
     };
 
-    const handleColor= () => {
-        setOpenC(true);
-    };
-
     const handleColorClose = () => {
         setOpenC(false);
     };
@@ -109,25 +107,6 @@ export default function Clasificaciones() {
         setBackground(color.hex);
     };
 
-    const handleSwitch = (e) => {
-        setChecked(e.target.checked);
-    }
-
-    const consultaClases = async () => {
-        await clienteAxios
-			.get(`/type`)
-			.then((res) => {
-                // setClases(res.data);
-                setUpload(true);
-			})
-			.catch((err) => {
-                setSnackbar({
-                    open: true,
-                    mensaje: "Ocurrio un problema en el servidor", 
-                    status: 'error'
-                });
-			});
-    }
 
     const consultaTypes = async () => {
         // setLoading(true);
@@ -139,7 +118,6 @@ export default function Clasificaciones() {
         }).then((res) => {
             setLoading(false);
             setTypes(res.data);
-
             setUpload(true);
         })
         .catch((err) => {
@@ -154,7 +132,7 @@ export default function Clasificaciones() {
     }
 
     const guardarClasificacion = async () => {
-        // setLoading(true)
+        setLoading(true)
         await clienteAxios
 			.post(`/classification/${company._id}`,{
                 "type": clasificacion.clasificacion
@@ -165,7 +143,7 @@ export default function Clasificaciones() {
             }).then((res) => {
                 setLoading(false);
                 setUpload(!upload);
-                // setClasificacion([]);
+                setClasificacion(null);
                 setSnackbar({
 					open: true,
 					mensaje: res.data.message,
@@ -193,7 +171,7 @@ export default function Clasificaciones() {
                     Authorization: `bearer ${token}`
                 }
             }).then((res) => {
-                setClasificacion([]);
+                setClasificacion(null);
                 setLoading(false);
                 setUpload(!upload);
                 setSnackbar({
@@ -213,23 +191,31 @@ export default function Clasificaciones() {
     }
 
     useEffect(() => {
-        // consultaClases()
         consultaTypes()
-    }, [ upload])
+    }, [upload])
 
     const render = types?.map((type, index) => {
         return(
             <Accordion key={index}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    className="summary-acordion"
                 >
-                    <Box  className={classes.column}>
-                        <Typography variant="h6">{type.type}</Typography>
-                    </Box>
-                    <Box >
-                        <Eliminar clase={type._id} upload={upload} setUpload={setUpload} />
+                    <Box
+                        width="100%"
+					display="flex"
+					onClick={(event) => event.stopPropagation()}
+					onFocus={(event) => event.stopPropagation()}
+                    >
+                        <Box className={classes.column}>
+                            <Typography variant="h6">{type.type}</Typography>
+                        </Box>
+                        <Box >
+                            <Eliminar clase={type._id} upload={upload} setUpload={setUpload} />
+                        </Box>
+                        <Box >
+                            <Editar_clase clase={type} upload={upload} setUpload={setUpload} />
+                        </Box>
                     </Box>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -289,9 +275,15 @@ export default function Clasificaciones() {
                                         }
                                     </Grid>
                                     <Grid item lg={5} xs={12}>
-                                        <Box display="flex" justifyItems="center" justifyContent="flex-end">
-                                            <EliminarSubTypes upload={upload} setUpload={setUpload} clase={type._id} subType={subType._id} />
+                                        <Box display="flex" flexDirection="row-reverse"> 
+                                            <Box display="flex" justifyItems="center" justifyContent="flex-end">
+                                                <EliminarSubTypes upload={upload} setUpload={setUpload} clase={type._id} subType={subType._id} />
+                                            </Box>
+                                            <Box display="flex" justifyItems="center" justifyContent="flex-end">
+                                                <Editar_Subtypes upload={upload} setUpload={setUpload} clase={type._id} subType={subType} />
+                                            </Box>
                                         </Box>
+                                        
                                     </Grid>
                                 </AccordionDetails>
                             )
@@ -326,7 +318,7 @@ export default function Clasificaciones() {
                     <Box p={2} textAlign="center">
                         <Box p={1}>
                             <Typography variant="h6">
-                                Elige entre las clasificaciones disponibles para tus productos
+                                Escribe y agrega las clasificacion que prefieras
                             </Typography>
                         </Box>
                         <Box>
@@ -339,22 +331,6 @@ export default function Clasificaciones() {
                                 variant="outlined"
                                 onChange={obtenerCampos}
                             />
-                        {/* <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple"></InputLabel>
-                            <Select
-                                name='type'
-                                onChange={obtenerCampos}
-                            >
-                                {clases.map((clase) => {
-                                    return(
-                                        <MenuItem key={clase._id} value={clase.typeClassification}>
-                                            {clase.typeClassification}
-                                        </MenuItem>
-                                    )
-                                })}
-                                
-                            </Select>
-                        </FormControl> */}
                         </Box>
                     </Box>
                 </Grid>
@@ -384,7 +360,6 @@ export default function Clasificaciones() {
                 open={open}
                 onClose={handleClose}
             >
-                {/* {console.log(subTypes)} */}
                 <Box p={2} textAlign="center">
                     <Typography variant="h6">
                         Agrega un nuevo valor
@@ -414,6 +389,7 @@ export default function Clasificaciones() {
                                 onChange={obtenerCampos}
                             />
                         </Box>
+                        {/* PARA LOS COLORES COSA QUE SE DESACTIVO POR MUCHOS DETALLES EN LOS COLORES */}
                         {/* <Box textAlign="center">
                             <Box display="flex" textAlign="center" alignItems="center" justifyContent="center">
                                 <Typography>

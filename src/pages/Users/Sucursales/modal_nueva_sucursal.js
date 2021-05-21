@@ -79,7 +79,7 @@ export default function Modal_nueva_sucursal(props) {
     }
 
     const nuevaSucursal = {
-        "costoEnvio": sucursal.costoEnvio,
+        "costoEnvio": sucursal.costoEnvio === "" ? "0" : sucursal.costoEnvio,
         "nombreSucursal": sucursal.nombreSucursal,
         "calleNumeroSucursal":sucursal.calleNumeroSucursal,
         "coloniaSucursal": sucursal.coloniaSucursal,
@@ -96,6 +96,12 @@ export default function Modal_nueva_sucursal(props) {
 
     const registroSucursal =  async () => {
         if (tipo === "Nueva") {
+            if (!sucursal.nombreSucursal || !sucursal.calleNumeroSucursal || !sucursal.coloniaSucursal || !sucursal.telefonoSucursal|| !sucursal.ciudadSucursal || !sucursal.cpSucursal) {
+                setValidate(true);
+                setLoading(false);
+                return;
+            }
+
             setLoading(true);
             await clienteAxios
                 .post(`/company/sucursal/${company._id}`, nuevaSucursal, {
@@ -106,8 +112,10 @@ export default function Modal_nueva_sucursal(props) {
                     setLoading(false);
                     const decoded = jwt_decode(res.data.token);
                     localStorage.setItem('user', JSON.stringify(decoded));
+                    setUpdate(!update);
                     messages('success', res.data.message);
                     handleClickModal();
+                    setSucursal([]);
                 })
                 .catch((err) => {
                     setLoading(false);
@@ -125,8 +133,10 @@ export default function Modal_nueva_sucursal(props) {
                     setLoading(false);
                     const decoded = jwt_decode(res.data.token);
                     localStorage.setItem('user', JSON.stringify(decoded));
+                    setUpdate(!update);
                     messages('success', res.data.message);
                     handleClickModal();
+                    setSucursal([]);
                 })
                 .catch((err) => {
                     setLoading(false);
@@ -189,8 +199,6 @@ export default function Modal_nueva_sucursal(props) {
                     <Box p={1}>
                         <TextField
                             defaultValue={sucursal.costoEnvio ? sucursal.costoEnvio : null}
-                            error={!sucursal.costoEnvio && validate}
-                            helperText={!sucursal.costoEnvio && validate ? 'Esta campo es requerido' : null}
                             label="Costo de Envio de Sucursal"
                             placeholder="Costo de Envio de Sucursal"
                             autoFocus
@@ -238,7 +246,7 @@ export default function Modal_nueva_sucursal(props) {
                         </Box>
                         <Box p={1}>
                             <TextField
-                                defaultValue={sucursal.cpSucursal ? sucursal.cpSucursall : null}
+                                defaultValue={sucursal.cpSucursal ? sucursal.cpSucursal : null}
                                 error={!sucursal.cpSucursal && validate}
                                 helperText={!sucursal.cpSucursal && validate ? 'Esta campo es requerido' : null}
                                 label="Codigo Postal"
