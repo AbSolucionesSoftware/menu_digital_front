@@ -66,8 +66,6 @@ export default function Editar_Subtypes({clase, upload, setUpload, subType}) {
     }
 
 
-    console.log(subTypes);
-
     const editarSubTypes = async (subType) => {
         // setLoading(true);
         await clienteAxios

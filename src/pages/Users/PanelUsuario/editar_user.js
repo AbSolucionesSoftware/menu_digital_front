@@ -141,8 +141,6 @@ export default function Editar_User(props) {
         formData.append("nameCompany", datosEmpresa.nameCompany);
         formData.append("owner", datosEmpresa.owner);
         formData.append("phone", datosEmpresa.phone);
-<<<<<<< HEAD
-        formData.append("priceEnvio", datosEmpresa.priceEnvio);
         formData.append("calleNumeroPrin", datosEmpresa.calleNumeroPrin);
         formData.append("cpPrin", datosEmpresa.cpPrin);
         formData.append("coloniaPrin", datosEmpresa.coloniaPrin);
@@ -163,13 +161,11 @@ export default function Editar_User(props) {
             formData.append("redesSociales.twiter", redesSociales.twiter);
         }
 
-=======
         if (datosEmpresa.priceEnvio === "") {
             formData.append("priceEnvio", "0");
         }else{
             formData.append("priceEnvio", datosEmpresa.priceEnvio);
         }
->>>>>>> 985cbcbac933073a1ada48482033f6b8e3d50ce9
         if (datos.imagen) {
             formData.append("imagen", datos.imagen);
         }
@@ -288,9 +284,6 @@ export default function Editar_User(props) {
                                     onChange={onChangeEmpresa}
                                 />
                             </Box>
-<<<<<<< HEAD
-                            
-=======
                             {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
                                 <Alert severity="info">Un identificador para poder distinguir tu Negocio en el navegador</Alert>
                             </Box> */}
@@ -308,7 +301,6 @@ export default function Editar_User(props) {
                                     }
                                 />
                             </Box> */}
->>>>>>> 985cbcbac933073a1ada48482033f6b8e3d50ce9
                             <Box p={2}>
                                 <TextField
                                     error={!datosEmpresa.owner && validate}

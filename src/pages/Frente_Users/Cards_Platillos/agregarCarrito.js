@@ -155,7 +155,7 @@ export default function AgregarCarrito(props) {
         }else{
             clasesTotal.forEach(res => {
                 subTotalClases += parseInt(res.totalClasificacion);
-                totalClases = subTotalClases;
+                totalClases = subTotalClases * contador;
             });
 
             subtotal = contador * producto.price

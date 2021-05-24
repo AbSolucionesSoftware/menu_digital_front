@@ -220,17 +220,18 @@ export default function RegistroPlatillo(props) {
 
 		if (producto !== undefined) {
 			setControl(false);
+			setPreview(producto.imagenProductUrl);
 			setPlatillos(producto);
 		} else {
 			setControl(true);
 		}
 	}, [ producto ]);
 
-	useEffect(() => {
-		if (producto) {
-			setPreview(producto.imagenProductUrl);
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (producto) {
+	// 		setPreview(producto.imagenProductUrl);
+	// 	}
+	// }, []);
 
 	return (
 		<div className={classes.root}>

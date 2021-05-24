@@ -22,10 +22,6 @@ export default function CardPlato(props) {
 		setOpen(false);
 	};
 
-    const publicarProduct = () => {
-
-    }
-
     const render = productos.map((producto, index) => {
         return(
         <Grid key={producto._id} item lg={5} xs={12} className={classes.paper}>

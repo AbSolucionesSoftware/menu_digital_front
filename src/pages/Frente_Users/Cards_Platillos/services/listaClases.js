@@ -28,7 +28,6 @@ export default function ListaClases({clases, load, setLoad, clasesTotal}) {
     const [ controlCheck, setControlCheck] = useState(true)
     const classes = useStyles();
 
-
     return (
         <div>
             <Box key={clases._id} display="flex" justifyContent="center" p={1}>

@@ -307,7 +307,7 @@ export default function Navegacion_User(props) {
 				<Box p={5} textAlign="center">
 					<Box p={1}>
 						<Typography variant="h6">
-							Comparte este enlace para poder compartir tu Menú
+							Comparte este enlace para compartir tu Menú
 						</Typography>
 					</Box>
 					<Box textAlign="center" p={2}>
@@ -321,7 +321,7 @@ export default function Navegacion_User(props) {
 						>
 						</TextField>
 					</Box>
-					<Grid container spacing={3}>
+					<Grid >
 						<Box>
 							<Typography variant="h6">
 								Comparte tu menú digital en WhatssAp

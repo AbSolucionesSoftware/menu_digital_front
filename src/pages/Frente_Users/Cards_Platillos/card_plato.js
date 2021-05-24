@@ -47,7 +47,6 @@ export default function Cards_Platos(props) {
 	const render = productos.map((producto, index) => {
 		return (
 			<div key={producto._id}>
-			{console.log(producto.public)}
 			{
 				producto.public === false ? (
 					null
