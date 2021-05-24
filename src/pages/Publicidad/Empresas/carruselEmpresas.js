@@ -18,7 +18,7 @@ import ItemsCarousel from 'react-items-carousel';
 const stylesLocal = makeStyles((theme) => ({
   containerImagen:{
       height: 300,
-      width: 250,
+      width: 280,
       display: "flex",
       justifyContent: "center",
       alignContent: "center",
@@ -26,8 +26,17 @@ const stylesLocal = makeStyles((theme) => ({
       // background: "white",
       borderRadius: 6
   },
+  containerImagenResponsive:{
+    height: 160,
+    width: 140,
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    // background: "white",
+    borderRadius: 6
+  },
   imagen:{
-      marginLeft: 30,
       maxWidth: "100%",
       maxHeight: "100%",
       display: "flex",
@@ -65,35 +74,60 @@ export default function Carrusel() {
       if (empresa.type === true || !empresa.logoImagenUrl || empresa.test === true) {
         return null;
       }else{
-        return( 
-          <Box key={empresa._id} className={classes.containerImagen}>
-            <Link to={`/${empresa.slug}`}>
-              {
-                localStorage.removeItem("carritoUsuario"),
-                localStorage.removeItem('usuario')
-              }
-              <img
-                className={classes.imagen}
-                alt='No imagen'
-                src={empresa.logoImagenUrl}
-              />
-            </Link>
-          </Box>
-           
+        return(
+          <>
+          <Hidden xsDown>
+            <Box p={2} key={empresa._id} className={classes.containerImagen}>
+              <Link to={`/${empresa.slug}`}>
+                {
+                  localStorage.removeItem("carritoUsuario"),
+                  localStorage.removeItem('usuario')
+                }
+                <img
+                  className={classes.imagen}
+                  alt='No imagen'
+                  src={empresa.logoImagenUrl}
+                />
+              </Link>
+            </Box>
+          </Hidden>
+          <Hidden smUp>
+            <Box p={1} key={empresa._id} className={classes.containerImagenResponsive}>
+              <Link to={`/${empresa.slug}`}>
+                {
+                  localStorage.removeItem("carritoUsuario"),
+                  localStorage.removeItem('usuario')
+                }
+                <img
+                  className={classes.imagen}
+                  alt='No imagen'
+                  src={empresa.logoImagenUrl}
+                />
+              </Link>
+            </Box>
+          </Hidden>
+          </>
+          
         )
       }
     })
 
     return (
-      <Grid container>
+      <>
         <Grid item lg={12} xs={12}>
           <Box mt={2} textAlign="center" >
             <Typography color="primary" style={{fontSize: 35, fontWeight: 600}}>
-              Empresas Afiliadas con Comody
+              Empresas afiliadas a Comody
             </Typography>
           </Box>
         </Grid>
-        <Grid item lg={12} xs={12}>
+
+        <Grid container justify="center">
+            {render}
+        </Grid>
+        
+
+        {/* <Grid item lg={12} xs={12}>
           <Hidden xsDown>
             <ItemsCarousel
               requestToChangeActive={setActiveItemIndex}
@@ -140,7 +174,7 @@ export default function Carrusel() {
               {render}
             </ItemsCarousel>
           </Hidden>
-        </Grid>
-      </Grid>
+        </Grid> */}
+      </>
   )
 } 
