@@ -146,18 +146,20 @@ export default function Editar_User(props) {
         formData.append("coloniaPrin", datosEmpresa.coloniaPrin);
         formData.append("ciudadPrin", datosEmpresa.ciudadPrin);
         formData.append("estado", datosEmpresa.estado);
-
-        if (redesSociales.facebook === undefined){
+        console.log(redesSociales);
+        if (redesSociales.facebook === undefined  || redesSociales.instagram  === ""){
             formData.append("redesSociales.facebook",  '');
-        }
-        if( redesSociales.instagram  === undefined){
-            formData.append("redesSociales.instagram", '');
-        }
-        if( redesSociales.twiter  === undefined){
-            formData.append("redesSociales.twiter", '');
         }else{
             formData.append("redesSociales.facebook", redesSociales.facebook);
+        }
+        if( redesSociales.instagram  === undefined || redesSociales.instagram  === ""){
+            formData.append("redesSociales.instagram", '');
+        }else{
             formData.append("redesSociales.instagram", redesSociales.instagram);
+        }
+        if( redesSociales.twiter  === undefined  || redesSociales.instagram  === ""){
+            formData.append("redesSociales.twiter", '');
+        }else{
             formData.append("redesSociales.twiter", redesSociales.twiter);
         }
 
@@ -249,6 +251,7 @@ export default function Editar_User(props) {
             [e.target.name]: e.target.value
         });
     }
+
 
     return (
         <div>

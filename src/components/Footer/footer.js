@@ -15,7 +15,7 @@ image: {
     maxWidth: '100%'
 },
 containerImage:{
-    height: 90,
+    height: 130,
     display: 'flex',
     justifyContent: 'center',
     marginTop: theme.spacing(3)
@@ -109,21 +109,18 @@ function Footer(props) {
                         </Grid>
                     </Hidden>
                     <Grid item lg={4} xs={12}>
-                        { empresa.redesSociales && empresa.redesSociales.length > 0  ? (
-                            <Box mt={2} p={1} textAlign="center"> 
-                                <Typography variant="body1">
-                                    Siguenos en nuestras redes
-                                </Typography>
-                            </Box>
-                        ):(
-                            null
-                        )
-                        }   
+
+                    <Box mt={2} p={1} textAlign="center"> 
+                        <Typography variant="h6">
+                           Encuentranos en nuestras redes:
+                        </Typography>
+                    </Box>
+                         
                     <Box display="flex" justifyContent="center" flexWrap="wrap">
                         { empresa.redesSociales && empresa.redesSociales.facebook ? (
                             <Box p={1}>
                                 <a target="_blank" href={empresa.redesSociales.facebook}>
-                                    <FacebookIcon style={{color: "black",fontSize: 60}}/>
+                                    <FacebookIcon style={{color: "white",fontSize: 60}}/>
                                 </a>
                             </Box>
                         ):(
@@ -133,7 +130,7 @@ function Footer(props) {
                         { empresa.redesSociales && empresa.redesSociales.instagram ? (
                             <Box p={1}>
                                 <a target="_blank" href={empresa.redesSociales.instagram}>
-                                    <InstagramIcon style={{color: "black",fontSize: 60}}/>
+                                    <InstagramIcon style={{color: "white",fontSize: 60}}/>
                                 </a>
                             </Box>
                         ):(
@@ -143,7 +140,7 @@ function Footer(props) {
                         { empresa.redesSociales && empresa.redesSociales.twiter ? (
                             <Box p={1}>
                                 <a target="_blank" href={empresa.redesSociales.twiter}>
-                                    <TwitterIcon style={{color: "black",fontSize: 60}}/>
+                                    <TwitterIcon style={{color: "white",fontSize: 60}}/>
                                 </a>
                             </Box>
                         ):(
