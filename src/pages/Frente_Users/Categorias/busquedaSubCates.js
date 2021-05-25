@@ -34,23 +34,26 @@ function BusquedaSubCates(props) {
 			})
 	}
 
-    const buscarProductosSubCategoria = () => {
-        setLoading(true)
-        clienteAxios
-            .post(`/product/search/subCategory/`, {subCategory: subCategoria, company: idEmpresa})
-            .then((res) => {
-                setLoading(false)
-                setProductos(res.data);
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
-    }
+    //CONSULTA CON PRODUCTOS POR SUBCATE
+    // const buscarProductosSubCategoria = () => {
+    //     setLoading(true)
+    //     clienteAxios
+    //         .post(`/product/search/subCategory/`, {subCategory: subCategoria, company: idEmpresa})
+    //         .then((res) => {
+    //             setLoading(false)
+    //             setProductos(res.data);
+    //         })
+    //         .catch((err) => {
+    //             setLoading(false)
+    //         })
+    // }
 
+
+    //CONSULTA CON PRODUCTOS AGRUPADOS POR SUB CATES
     const buscarProductosCategorias = () => {
         setLoading(true)
         clienteAxios
-            .post(`/product/search/company/category`,{company: idEmpresa, category: "Tacos"})
+            .post(`/product/search/company/category/`,{idCompany: idEmpresa, category: categoria})
             .then((res) => {
                 setLoading(false)
                 setProductosCate(res.data);
@@ -62,10 +65,11 @@ function BusquedaSubCates(props) {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        buscarProductosCategorias();
         consultarDatos();
-        buscarProductosSubCategoria();
     }, [])
 
+    console.log(productosCate);
 
     return (
         <div>
@@ -73,8 +77,8 @@ function BusquedaSubCates(props) {
             <Grid container>
                 <Grid item lg={11}  xs={12}>
                     <Box display="flex" justifyContent="center" p={2}>
-                        <Typography variant="h4">
-                            {subCategoria}
+                        <Typography variant="h4" style={{fontWeight: 600}}>
+                            {categoria}
                         </Typography>
                     </Box>
                 </Grid>
@@ -92,11 +96,20 @@ function BusquedaSubCates(props) {
                     </Box>
                 </Grid>
             </Grid>
-            <Grid item lg={12} xs={12}>
-                <Divider variant="inset" />
-            </Grid>
+            
             <Grid item lg={12}>
-                <Cards_Platos productos={productos}/>
+                {
+                    productosCate?.map((subCates) => (
+                        <Grid>
+                            <Box p={2} textAlign="center">
+                                <Typography variant="h5">
+                                    {subCates.nameSub}
+                                </Typography>
+                            </Box>
+                            <Cards_Platos productos={subCates.productosSub}/>
+                        </Grid>
+                    ))
+                }
             </Grid>
             <BotonCarrito empresa={empresa}/>
         </div>

@@ -55,16 +55,6 @@ function Categorias(props) {
 			})
 	}
 
-    // const consultarCates = async () => {
-	// 	await clienteAxios
-	// 		.get(`/product/categories/${empresa}`)
-	// 		.then((res) => {
-	// 			setCategorias(res.data);
-	// 		})
-	// 		.catch((err) => {
-	// 		})
-	// }
-
     useEffect(() => {
 		// consultarCates();
         consultaNuevaCategorias();
@@ -100,6 +90,8 @@ function Lista({categoria, props, empresa, slug}) {
         setAncho(null);
     };
 
+
+    //SE SUSTITUYO Y COMENTO LA RUTA DE CATEGORIAS PARA PODER TOMAR LA NUEVA CREADA CON TODO EL AGRUPAMIENTO DE PRODUCTOS
     return(
         <Grid key={categoria._id} className={classes.paper} item lg={3} md={6} xs={12}>
             <Button
@@ -109,12 +101,12 @@ function Lista({categoria, props, empresa, slug}) {
                 aria-haspopup="true"
                 variant="contained"
                 color="primary"
-                // onClick={() => {
-                //     props.history.push(`/${slug}/${empresa}/categorias/${categoria.categoria}`)
-                // }}  
-                onClick={(e) =>
-                    handleClick(e)
-                }
+                onClick={() => {
+                    props.history.push(`/${slug}/${empresa}/categorias/${categoria.category}`)
+                }}  
+                // onClick={(e) =>
+                //     handleClick(e)
+                // }
             >
                 <Box>
                     <RestaurantMenuIcon className={classes.large}/>
@@ -126,7 +118,7 @@ function Lista({categoria, props, empresa, slug}) {
                 </Box>
             </Button>
 
-            <StyledMenu
+            {/* <StyledMenu
                 id={categoria.category}
                 anchorEl={ancho}
                 open={Boolean(ancho)}
@@ -151,7 +143,7 @@ function Lista({categoria, props, empresa, slug}) {
                         )
                     })
                 }
-            </StyledMenu>
+            </StyledMenu> */}
         </Grid>
     )
 }

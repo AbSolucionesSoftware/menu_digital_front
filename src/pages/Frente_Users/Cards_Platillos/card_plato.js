@@ -46,7 +46,7 @@ export default function Cards_Platos(props) {
 
 	const render = productos.map((producto, index) => {
 		return (
-			<div key={producto._id}>
+			<>
 			{
 				producto.public === false ? (
 					null
@@ -54,7 +54,7 @@ export default function Cards_Platos(props) {
 					<>
 					<Hidden smDown>
 						<Grid  item lg={6} className={classes.paper}>
-							<Card className={classes.root}>
+							<Card className={classes.root} >
 								<Box display="flex" flexWrap="wrap">
 									<Grid item lg={5}>
 										<Hidden smDown>
@@ -120,8 +120,15 @@ export default function Cards_Platos(props) {
 					<Hidden mdUp>
 						<Grid item xs={12} className={classes.paper}>
 						{/* <Card> */}
-							<Grid container>
-								<Grid  item  xs={8} >
+							<Grid 
+								container 
+								onClick={
+								() => {
+									handleClickOpen()
+									setagregarProducto(producto)
+								}} 
+							>
+								<Grid item  xs={8}>
 									<Box display="flex" textAlign="justify"  variant="h2">
 										<Typography style={{fontWeight: 600}}>
 											{producto.name} 
@@ -168,7 +175,7 @@ export default function Cards_Platos(props) {
 				</>
 				)
 			}
-		</div>
+		</>
 		);
 	})
 

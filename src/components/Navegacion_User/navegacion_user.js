@@ -223,7 +223,7 @@ export default function Navegacion_User(props) {
 								Datos Empresa
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company.slug}`}>
+						<ListItem button component={Link} to={`/${company.slug}`} >
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography>
 								Ver mi menú digital
