@@ -55,7 +55,6 @@ export default function AgregarCarrito(props) {
     // const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
     // const [ totalExtra, setTotalExtra ] = useState(0);
     
-    // console.log(producto);
 
     useEffect(() => {
         producto.classifications?.map((clases) => (

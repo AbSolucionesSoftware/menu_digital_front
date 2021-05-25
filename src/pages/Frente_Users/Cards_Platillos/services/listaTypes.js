@@ -73,7 +73,6 @@ export default function ListTypes({clasesTotal, load, setLoad, type, Classificat
                         if (tiposArregloCarrito._idType === valor._idType) {
                             encontrado = true;
                             index = i;
-                            // console.log(encontrado);
                         }
                     }
                     if(encontrado){
@@ -103,7 +102,6 @@ export default function ListTypes({clasesTotal, load, setLoad, type, Classificat
                 
             }
         })
-        // console.log(clasesTotal);
     }
     
     return (

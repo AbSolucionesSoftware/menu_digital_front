@@ -69,7 +69,6 @@ function BusquedaSubCates(props) {
         consultarDatos();
     }, [])
 
-    console.log(productosCate);
 
     return (
         <div>

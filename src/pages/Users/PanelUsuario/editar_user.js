@@ -146,7 +146,6 @@ export default function Editar_User(props) {
         formData.append("coloniaPrin", datosEmpresa.coloniaPrin);
         formData.append("ciudadPrin", datosEmpresa.ciudadPrin);
         formData.append("estado", datosEmpresa.estado);
-        console.log(redesSociales);
         if (redesSociales.facebook === undefined  || redesSociales.instagram  === ""){
             formData.append("redesSociales.facebook",  '');
         }else{
