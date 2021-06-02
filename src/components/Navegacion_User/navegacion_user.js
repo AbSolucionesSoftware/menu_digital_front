@@ -119,64 +119,64 @@ export default function Navegacion_User(props) {
 						</ListItem>
 						<ListItem button component={Link} to="/user" onClick={handleDrawerToggle}>
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Datos Empresa
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${company.slug}`}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={'/user/sucursales'}>
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
-							<Typography>
-								Mis Sucursales
+							<Typography variant="h2">
+							Agregar/Ver/Editar Sucursales
 							</Typography>
 						</ListItem>
 
 						<ListItem button component={Link} to={'/user/pedidos'}>
 							<ListItemIcon><PlaylistAddCheckIcon/></ListItemIcon>
-							<Typography>
-								Mis Pedidos
+							<Typography variant="h2">
+							Agregar/Ver/Editar Pedidos
 							</Typography>
 						</ListItem>
 
 						<ListItem button onClick={handleClickOpen}>
 							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Compartir Menú
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={clickOpen}>
 							<ListItemIcon><CropFreeIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Generar Codigo QR
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
-							<Typography>
-								Productos Menú
+							<Typography variant="h2">
+							Agregar/Ver/Editar Productos
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/categoriasmenu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
-							<Typography>
-								Categorias Menú
+							<Typography variant="h2">
+							Agregar/Ver/Editar Categorías
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/clasificacionmenu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
-							<Typography>
-								Clasificaciones Menú
+							<Typography variant="h2">
+							Agregar/Ver/Editar Extras
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad" onClick={handleDrawerToggle}>
 							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
-							<Typography>
-								Publicidad
+							<Typography variant="h2">
+							Agregar/Ver/Editar Banners
 							</Typography>
 						</ListItem>
 						<ListItem 
@@ -192,7 +192,7 @@ export default function Navegacion_User(props) {
 							}}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Cerrar Sesión
 							</Typography>
 						</ListItem>
@@ -228,62 +228,62 @@ export default function Navegacion_User(props) {
 						</ListItem>
 						<ListItem button component={Link} to="/user">
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Datos Empresa
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={`/${company.slug}`} >
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={'/user/sucursales'}>
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
-							<Typography>
-								Mis Sucursales
+							<Typography variant="h2">
+							Agregar/Ver/Editar Sucursales
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to={'/user/pedidos'}>
 							<ListItemIcon><PlaylistAddCheckIcon/></ListItemIcon>
-							<Typography>
-								Mis Pedidos
+							<Typography variant="h2">
+							Agregar/Ver/Editar Pedidos
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={handleClickOpen}>
 							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Compartir Menú
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={clickOpen}>
 							<ListItemIcon><CropFreeIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Generar Codigo QR
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><FastfoodIcon /></ListItemIcon>
-							<Typography>
-								Productos Menú
+							<Typography variant="h2">
+							Agregar/Ver/Editar Productos
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/categoriasmenu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
-							<Typography>
-								Categorias Menú
+							<Typography variant="h2">
+							Agregar/Ver/Editar Categorías
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/clasificacionmenu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
-							<Typography>
-								Clasificaciones Menú
+							<Typography variant="h2" >
+							Agregar/Ver/Editar Clasificaciones
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
 							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
-							<Typography>
-								Publicidad
+							<Typography variant="h2">
+							Agregar/Ver/Editar Banners
 							</Typography>
 						</ListItem>
 						<ListItem 
@@ -297,7 +297,7 @@ export default function Navegacion_User(props) {
 							to={`/${company.slug}`}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
-							<Typography>
+							<Typography variant="h2">
 								Cerrar Sesión
 							</Typography>
 						</ListItem>

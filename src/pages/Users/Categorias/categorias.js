@@ -44,7 +44,7 @@ export default function Categorias() {
 		<div>
 			<Spin loading={loading} />
 			<Box textAlign="center" mb={5}>
-				<Typography variant="h4">Categorias</Typography>
+				<Typography variant="h4">Categorías</Typography>
 			</Box>
 			<ModalRegistroCategorias tipo="category" update={update} setUpdate={setUpdate} company={company} />
 			{render_categorias}
