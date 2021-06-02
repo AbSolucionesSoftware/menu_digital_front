@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.55ec301f.chunk.css",
+    "main.js": "/static/js/main.558c5290.chunk.js",
+    "main.js.map": "/static/js/main.558c5290.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.05140d18.js",
+    "runtime-main.js.map": "/static/js/runtime-main.05140d18.js.map",
+    "static/css/2.9d161b41.chunk.css": "/static/css/2.9d161b41.chunk.css",
+    "static/js/2.36d78c25.chunk.js": "/static/js/2.36d78c25.chunk.js",
+    "static/js/2.36d78c25.chunk.js.map": "/static/js/2.36d78c25.chunk.js.map",
+    "static/js/3.703308c2.chunk.js": "/static/js/3.703308c2.chunk.js",
+    "static/js/3.703308c2.chunk.js.map": "/static/js/3.703308c2.chunk.js.map",
+    "static/js/4.4475a96e.chunk.js": "/static/js/4.4475a96e.chunk.js",
+    "static/js/4.4475a96e.chunk.js.map": "/static/js/4.4475a96e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.9d161b41.chunk.css.map": "/static/css/2.9d161b41.chunk.css.map",
+    "static/css/main.55ec301f.chunk.css.map": "/static/css/main.55ec301f.chunk.css.map",
+    "static/js/2.36d78c25.chunk.js.LICENSE.txt": "/static/js/2.36d78c25.chunk.js.LICENSE.txt",
+    "static/js/3.703308c2.chunk.js.LICENSE.txt": "/static/js/3.703308c2.chunk.js.LICENSE.txt",
+    "static/js/4.4475a96e.chunk.js.LICENSE.txt": "/static/js/4.4475a96e.chunk.js.LICENSE.txt",
+    "static/media/404 Error with a cute animal-bro.2a34e6ae.png": "/static/media/404 Error with a cute animal-bro.2a34e6ae.png",
+    "static/media/Comody.46c969e7.jpeg": "/static/media/Comody.46c969e7.jpeg",
+    "static/media/ComodyBannerDos.02ceb58a.jpg": "/static/media/ComodyBannerDos.02ceb58a.jpg",
+    "static/media/No data.681e9af5.png": "/static/media/No data.681e9af5.png",
+    "static/media/PublicidadComody.ee8db860.png": "/static/media/PublicidadComody.ee8db860.png",
+    "static/media/PublicidadComodyDoble.8368fae4.png": "/static/media/PublicidadComodyDoble.8368fae4.png",
+    "static/media/RESTAUTANTE.28380a8c.jpeg": "/static/media/RESTAUTANTE.28380a8c.jpeg",
+    "static/media/Registro.a36ddc0c.png": "/static/media/Registro.a36ddc0c.png",
+    "static/media/c.ebcd240b.jpeg": "/static/media/c.ebcd240b.jpeg",
+    "static/media/comodyBanner.a0def3dd.jpg": "/static/media/comodyBanner.a0def3dd.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.05140d18.js",
+    "static/css/2.9d161b41.chunk.css",
+    "static/js/2.36d78c25.chunk.js",
+    "static/css/main.55ec301f.chunk.css",
+    "static/js/main.558c5290.chunk.js"
+  ]
+}
