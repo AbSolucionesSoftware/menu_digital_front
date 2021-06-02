@@ -7,6 +7,12 @@ const useStyles = makeStyles({
     root: {
       minWidth: 400,
     },
+    column: {
+        flexBasis: '70%',
+    },
+    column2: {
+        flexBasis: '15%',
+    },
 });
 
 export default function Detalle_Pedido({pedido}) {
