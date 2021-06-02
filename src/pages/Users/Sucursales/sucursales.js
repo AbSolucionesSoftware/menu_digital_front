@@ -54,7 +54,7 @@ export default function Sucursales() {
            <Grid container>
                 <Grid item lg={12}>
                         <Box display="flex" justifyContent="center" textAlign="center">
-                            <Typography variant="h5">
+                            <Typography variant="h4">
                                 Tus Sucursales
                             </Typography>
                         </Box>

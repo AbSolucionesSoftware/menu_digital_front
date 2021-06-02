@@ -13,3 +13,12 @@ export const formatoMexico = (number) => {
 		return  nueva.toString().replace(exp, rep);
 	}
 };
+
+export const formatoFecha = (fecha) => {
+	if (!fecha) {
+		return null;
+	} else {
+		var newdate = new Date(fecha);
+		return newdate.toLocaleDateString('es-MX', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
+	}
+};

@@ -9,6 +9,7 @@ import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import CropFreeIcon from '@material-ui/icons/CropFree';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
@@ -128,12 +129,20 @@ export default function Navegacion_User(props) {
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} >
+						<ListItem button component={Link} to={'/user/sucursales'}>
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
 							<Typography>
 								Mis Sucursales
 							</Typography>
 						</ListItem>
+
+						<ListItem button component={Link} to={'/user/pedidos'}>
+							<ListItemIcon><PlaylistAddCheckIcon/></ListItemIcon>
+							<Typography>
+								Mis Pedidos
+							</Typography>
+						</ListItem>
+
 						<ListItem button onClick={handleClickOpen}>
 							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
 							<Typography>
@@ -233,6 +242,12 @@ export default function Navegacion_User(props) {
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
 							<Typography>
 								Mis Sucursales
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to={'/user/pedidos'}>
+							<ListItemIcon><PlaylistAddCheckIcon/></ListItemIcon>
+							<Typography>
+								Mis Pedidos
 							</Typography>
 						</ListItem>
 						<ListItem button onClick={handleClickOpen}>

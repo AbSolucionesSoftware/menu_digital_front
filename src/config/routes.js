@@ -13,6 +13,7 @@ import Menu from '../pages/Users/Menu/menu';
 import Categorias from '../pages/Users/Categorias/categorias'
 import Clasificaciones from '../pages/Users/Clasificaciones/clasificaciones'
 import Sucursales from '../pages/Users/Sucursales/sucursales'
+import Pedidos from '../pages/Users/Pedidos/pedidos'
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
@@ -85,6 +86,11 @@ const routes = [
 			{
 				path: '/user/sucursales',
 				component: Sucursales,
+				exact: true,
+			},
+			{
+				path: '/user/pedidos',
+				component: Pedidos,
 				exact: true,
 			},
 			{

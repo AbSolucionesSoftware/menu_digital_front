@@ -1,8 +1,10 @@
-import { Box, Card,  Grid, Typography, Button, TextField, Accordion, AccordionSummary, AccordionDetails, IconButton, Chip, FormLabel, RadioGroup, FormControlLabel, Radio, FormControl } from '@material-ui/core'
+import { Box, Card,  Grid, Typography, Button, TextField, Accordion, AccordionSummary, AccordionDetails, IconButton, Chip,  RadioGroup, FormControlLabel, Radio, FormControl } from '@material-ui/core'
 import React, {  useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { formatoMexico }from '../../../config/reuserFunction';
 import PropTypes from 'prop-types';
+import clienteAxios from '../../../config/axios';
+
 
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import NumberFormat from 'react-number-format';
@@ -13,6 +15,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
@@ -70,14 +73,13 @@ export default function Carrito(props) {
     const [ pedidos, setPedidos] = useState(carrito)
     const [ envio, setEnvio] = useState('sucursal');
 
-    const classes = useStyles();
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
 
-    const datos = {
-        "nombre": "", 
-        "telefono": "",
-        "domicilio": "",
-        "colonia": ""
-    }
+    const classes = useStyles();
 
     function borrarCarrito() {
         localStorage.removeItem("carritoUsuario");
@@ -144,10 +146,11 @@ export default function Carrito(props) {
                     ))+ ` )`
                 )
             )) 
-        +` = $` + ((totalClases(pedido) * pedido.cantidad) + (pedido.precio*pedido.cantidad)) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`))
+        +` = $` + ((totalClases(pedido) * pedido.cantidad) + (pedido.precio*pedido.cantidad)) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
+        ))
     
 
-    
+    //FUNCION PARA PODER SACAR EL TOTAL DE LOS PEDIDOS EN CASO DE TENER UN ENVIO EXTRA
     const sucursal_elegida = () => {
         if (empresa.sucursalesActive) {
             empresa.sucursales?.forEach(res => {
@@ -158,6 +161,7 @@ export default function Carrito(props) {
         }
     }
     
+    //PARFA PODER SACAR LOS COSTOS DE LOS ENVIOS
     const costos_envios = () => {
         if (empresa.sucursalesActive) {
             return parseInt(datosSucursal.costoEnvio);
@@ -211,6 +215,36 @@ export default function Carrito(props) {
     const handleChangeSucursal = (event) => {
         setSucursalElegida(event.target.value);
        
+    };
+
+    const pedido = {
+        "nombreCliente": usuario ? usuario.nombre : "",
+        "tipoEnvio" : envio === "domicilio" ?  "Envio a Domicilio" : "Recogera en Sucursal",
+        "calleNumero": usuario ? usuario.domicilio : "",
+        "colonia": usuario ? usuario.colonia : "",
+        "telefono": usuario ?  usuario.telefono : "",
+        "estadoPedido": "Realizado",
+        "sucursal": empresa.sucursalesActive ? datosSucursal.nombreSucursal : "",
+        "pedido": carrito ? carrito : "",
+        "totalPedido": envio === "domicilio" ? (total + costos_envios()) : total
+    }
+
+    const crearPedido = async () => {
+        await clienteAxios
+		.post(`/pedido/newPedido/${empresa._id}`, pedido)
+        .then((res) => {
+            setSnackbar({
+                open: true,
+                mensaje: "Pedido realizado con Exito",
+                status: 'success'
+            });
+        }).catch((err) => {
+            setSnackbar({
+                open: true,
+                mensaje: "Algo salio mal, intentalo de Nuevo",
+                status: 'success'
+            });
+        });
     };
 
 
@@ -412,7 +446,10 @@ export default function Carrito(props) {
                                                             className={classes.buton}
                                                             variant="contained" 
                                                             color="primary"
-                                                            onClick={() => borrarCarrito()}
+                                                            onClick={() => {
+                                                                crearPedido()
+                                                                borrarCarrito()
+                                                            }}
                                                         >
                                                             Realizar Pedido
                                                         </Button>
@@ -434,7 +471,10 @@ export default function Carrito(props) {
                                                             variant="contained" 
                                                             color="primary"
                                                             size="large"
-                                                            onClick={() => borrarCarrito()}
+                                                            onClick={() => {
+                                                                crearPedido()
+                                                                borrarCarrito()
+                                                            }}
                                                         >
                                                             Realizar Pedido
                                                         </Button>
@@ -504,7 +544,10 @@ export default function Carrito(props) {
                                     className={classes.buton}
                                     variant="contained" 
                                     color="primary"
-                                    onClick={() => borrarCarrito()}
+                                    onClick={() => {
+                                        crearPedido()
+                                        borrarCarrito()
+                                    }}
                                 >
                                     Realizar Pedido
                                 </Button>
@@ -526,7 +569,10 @@ export default function Carrito(props) {
                                     variant="contained" 
                                     color="primary"
                                     size="large"
-                                    onClick={() => borrarCarrito()}
+                                    onClick={() => {
+                                        crearPedido()
+                                        borrarCarrito()
+                                    }}
                                 >
                                     Realizar Pedido
                                 </Button>
@@ -569,6 +615,12 @@ export default function Carrito(props) {
 
     return (
         <>
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label) => (
                 <Step key={label}>
