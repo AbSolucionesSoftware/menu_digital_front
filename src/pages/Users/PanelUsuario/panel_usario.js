@@ -8,6 +8,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Spin from '../../../components/Spin/spin';
+import Editar_empresa from './editar_empresa';
 
 const useStyles = makeStyles((theme) => ({
     imagen: {
@@ -207,14 +208,21 @@ export default function PanelUser() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <Editar_User 
+                <Editar_empresa 
                     handleDrawerClose={handleDrawerClose} 
                     setUpload={setUpload} 
                     datosEmpresa={datosEmpresa} 
                     setDatosEmpresa={setDatosEmpresa}
                     upload={upload}
                 />
-                <Box display="flex" justifyContent="center" p={1}>
+                {/* <Editar_User 
+                    handleDrawerClose={handleDrawerClose} 
+                    setUpload={setUpload} 
+                    datosEmpresa={datosEmpresa} 
+                    setDatosEmpresa={setDatosEmpresa}
+                    upload={upload}
+                /> */}
+                {/* <Box display="flex" justifyContent="center" p={1}>
                     <Button
                         variant="contained" 
                         color="secondary"
@@ -222,7 +230,7 @@ export default function PanelUser() {
                     >
                         Salir
                     </Button>
-                </Box>
+                </Box> */}
             </Drawer>
         </div>
     )
