@@ -13,13 +13,17 @@ import FastfoodIcon from '@material-ui/icons/Fastfood';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import { Alert, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
         width: "50%"
+    },
+    butonEnvio: {
+        width: "50%",
+        fontWeight: 600
     },
     table: {
         minWidth: "auto",
@@ -71,7 +75,7 @@ export default function Carrito(props) {
     const [sucursalElegida, setSucursalElegida] = useState([]);
     const [ datosSucursal, setDatosSucursal ] = useState([]);
     const [ pedidos, setPedidos] = useState(carrito)
-    const [ envio, setEnvio] = useState('sucursal');
+    const [ envio, setEnvio] = useState('domicilio');
 
     const [ snackbar, setSnackbar ] = useState({
 		open: false,
@@ -200,15 +204,15 @@ export default function Carrito(props) {
 		},[pedidos, carrito, total]
 	);
 
-    const handleAlignment = (event, envio) => {
-        setEnvio(envio);
+    const handleAlignment = (e) => {
+        setEnvio(e);
     };
 
     function getSteps() {
         if (empresa.sucursalesActive) {
-            return ['Tu Orden', 'Datos Cliente', 'Sucursal'];
+            return ['Tu Orden','Envio', 'Datos Cliente', 'Sucursal'];
         }else{
-            return ['Tu Orden', 'Datos Cliente'];
+            return ['Tu Orden', 'Envio', 'Datos Cliente'];
         }
     }
 
@@ -247,6 +251,20 @@ export default function Carrito(props) {
         });
     };
 
+    const [activeStep, setActiveStep] = React.useState(0);
+    const steps = getSteps();
+  
+    const handleNext = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+  
+    const handleBack = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+  
+    const handleReset = () => {
+      setActiveStep(0);
+    };
 
     function getStepContent(step) {
         switch (step) {
@@ -325,30 +343,88 @@ export default function Carrito(props) {
                     </Grid>
                 </Grid>
             );
-          case 1:
-            return (
+            case 1:
+                return (
+                    <>
+                    <Grid item lg={12}>
+                        <Box p={1} textAlign="center">
+                            <Button
+                                className={classes.butonEnvio}
+                                value={envio}
+                                variant="contained" 
+                                color="primary"
+                                startIcon={<DirectionsBikeIcon style={{fontSize: 40}} />}
+                                onClick={(e) => {
+                                    handleAlignment("domicilio");
+                                    handleNext();
+                                }}
+                            >
+                                Enviar a mi domicilio
+                            </Button>
+                        </Box>
+                        <Box p={1} textAlign="center">
+                            <Button
+                                className={classes.butonEnvio}
+                                variant="contained" 
+                                value="sucursal"
+                                color="primary"
+                                startIcon={<FastfoodIcon style={{fontSize: 40}} />}
+                                onClick={(e) => {
+                                    handleAlignment("sucursal");
+                                    handleNext()
+                                }}
+                            >
+                                Recogeré en sucursal
+                            </Button>
+                        </Box>
+                    </Grid>
+                    </>
+                );
+            case 2:
+                return (
                 <Grid>
                     <Box display="flex" justifyContent="center" >
                         <Card>
                             <Grid item lg={12}>
-                                <Box textAlign="center">
-                                <ToggleButtonGroup
-                                    value={envio}
-                                    exclusive
-                                    onChange={handleAlignment}
-                                    aria-label="text alignment"
-                                >
-                                    <ToggleButton value="sucursal"  >
-                                        <FastfoodIcon color="primary"/>
-                                        <Typography component={'span'}>Recoger en Sucursal</Typography>
-                                    </ToggleButton>
+                                {/* <Box pr={3} pl={3} pb={1} textAlign="center">
+                                    <Alert severity="warning" anchorO>
+                                        <Typography component="spam">
+                                            Deseas recoger en la sucursal elige la opcion apropiada
+                                        </Typography>
+                                    </Alert>
+                                </Box> */}
+                                {/* <Box textAlign="center">
+                                    <ToggleButtonGroup
+                                        value={envio}
+                                        exclusive
+                                        onChange={handleAlignment}
+                                        aria-label="text alignment"
+                                    >
 
-                                    <ToggleButton value="domicilio">
-                                        <DirectionsBikeIcon  color="primary"/>
-                                        <Typography component={'span'}>Servicio a Domicilio</Typography>
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                                </Box>
+                                        <ToggleButton value="domicilio">
+                                            <DirectionsBikeIcon  color="primary"/>
+                                            <Typography style={{fontWeight: 600}} component={'span'}>Servicio a domicilio</Typography>
+                                        </ToggleButton>
+
+                                        <ToggleButton value="sucursal"  >
+                                            <FastfoodIcon color="primary"/>
+                                            <Typography style={{fontWeight: 600}} component={'span'}>Recoger en la Sucursal</Typography>
+                                        </ToggleButton>
+                                    </ToggleButtonGroup>
+
+                                <FormControl component="fieldset">
+                                    <Box textAlign="center" p={2}>
+                                        <Typography variant="h6"> De que forma deseas tu pedido: </Typography>
+                                    </Box>
+
+                                    <Box p={1} display="flex" justifyContent="center" textAlign="center">
+                                        <RadioGroup aria-label="gender" name="gender1" value={envio} onChange={handleAlignment}>
+                                            <FormControlLabel value="domicilio" control={<Radio />} label="Domicilio" />
+                                            <FormControlLabel value="sucursal" control={<Radio />} label="Recoger Sucursal" />
+                                        </RadioGroup>
+                                    </Box>
+                                </FormControl>
+                                </Box> */}
                                 <Box>
                                     {/* <form noValidate autoComplete="off"> */}
                                         <Box mt={2} textAlign="center">
@@ -499,28 +575,30 @@ export default function Carrito(props) {
                     </Box>
                 </Grid>
             );
-            case 2:
+            case 3:
               return (
                 <>
-                <Box p={2}>
-                    <FormControl component="fieldset">
-                        <Box textAlign="center" p={2}>
-                            <Typography variant="h6"> A que sucursal desea realizar su pedido:</Typography>
-                        </Box>
+                <Grid item lg={12}>
+                    <Box display="flex" justifyContent="center" textAlign="center">
+                        <FormControl component="fieldset">
+                            <Box display="flex" justifyContent="center" textAlign="center" p={1}>
+                                <Typography variant="h6"> A que sucursal desea realizar su pedido:</Typography>
+                            </Box>
 
-                        <Box p={1} display="flex" justifyContent="center" textAlign="center">
-                            <RadioGroup aria-label="gender" name="gender1" value={sucursalElegida} onChange={handleChangeSucursal}>
-                                {
-                                    empresa.sucursales?.map((sucursal, index) => (
-                                        <> 
-                                            <FormControlLabel key={index} value={sucursal._id} control={<Radio />} label={sucursal.nombreSucursal} />
-                                        </>
-                                    ))
-                                }
-                            </RadioGroup>
-                        </Box>
-                    </FormControl>
-                </Box>
+                            <Box display="flex" justifyContent="center" textAlign="center"  p={1}>
+                                <RadioGroup aria-label="gender" name="gender1" value={sucursalElegida} onChange={handleChangeSucursal}>
+                                    {
+                                        empresa.sucursales?.map((sucursal, index) => (
+                                            <> 
+                                                <FormControlLabel key={index} value={sucursal._id} control={<Radio />} label={sucursal.nombreSucursal} />
+                                            </>
+                                        ))
+                                    }
+                                </RadioGroup>
+                            </Box>
+                        </FormControl>
+                    </Box>
+                </Grid>
                 {
                     envio === "domicilio" ? (
                         <Box textAlign="center" p={1}>
@@ -598,21 +676,7 @@ export default function Carrito(props) {
         }
     }
 
-    const [activeStep, setActiveStep] = React.useState(0);
-    const steps = getSteps();
-  
-    const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-  
-    const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-  
-    const handleReset = () => {
-      setActiveStep(0);
-    };
-
+    
     return (
         <>
             <MessageSnackbar
@@ -665,7 +729,9 @@ export default function Carrito(props) {
                                 </Box>
                             ) : (
                                 <Box p={1}>
-                                    <Button variant="contained" color="primary" onClick={handleNext}>
+                                    <Button variant="contained" color="primary" onClick={handleNext}
+                                        disabled={activeStep === 1 ? true : false}
+                                    >
                                         Siguiente
                                     </Button>
                                 </Box>
