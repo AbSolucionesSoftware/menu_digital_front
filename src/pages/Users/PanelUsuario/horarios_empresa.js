@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper';
-import { Box, Checkbox, FormControlLabel, Grid, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography } from '@material-ui/core'
+import { Box, Button, Checkbox, FormControlLabel, Grid, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography } from '@material-ui/core'
 import Dias from './dias';
+import clienteAxios from '../../../config/axios';
+import jwt_decode from 'jwt-decode';
 
 const useStyles = makeStyles({
     table: {
@@ -13,15 +15,12 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(dia, horarioInicial, horarioFinal, close) {
-    return { dia, horarioInicial, horarioFinal, close };
-}
-
-
 export default function Horarios_empresa() {
 
     const classes = useStyles();
-
+    const token = localStorage.getItem('token');
+    const [control, setControl] = useState(false);
+    const company = JSON.parse(localStorage.getItem('user'));
 
     const [ rows, setRows ] = useState([
         { 
@@ -110,16 +109,40 @@ export default function Horarios_empresa() {
 		}
 	];
 
+// console.log(rows);
+    const subirHorarios = async () => {
+        await clienteAxios
+			.put(`/company/horarios/${company._id}`, rows , {
+				headers: {
+					Authorization: `bearer ${token}`
+				}
+			})
+			.then((res) => {
+                // console.log(res);
+                const decoded = jwt_decode(res.data.token);
+				const token = res.data.token;
+				localStorage.setItem('token', token);
+				localStorage.setItem('user', JSON.stringify(decoded));
+				const user = JSON.parse(localStorage.getItem('user'));
+			})
+			.catch((err) => {
+                // setUpload(true);
+                // setLoading(false);
+			});
+    }
+
+
+    useEffect(() => {
+        if (company.horario.length !== 0) {
+            setRows(company.horario);
+            setControl(false);
+        }
+    }, [])
+
     const obtenerHorario = (e) => {
-        // console.log(e.lenght)
-        // console.log(e.target.value);//PARA LA HORA
         rows.forEach(dia => {
             console.log(dia.key);
         });
-        // setRows({
-        //     ...rows,
-        //     [e.target.name]: e.target.value
-        // });
     }
 
     // console.log(rows);
@@ -127,12 +150,16 @@ export default function Horarios_empresa() {
     return (
         <div>
             <Grid item lg={12}>
-                <Box p={2}>
+                {/* <Box p={2}>
                     <FormControlLabel
-                        control={<Switch  name="activeHorarios" />}
+                        control={
+                            <Switch 
+                                name="activeHorarios"
+
+                            />}
                         label="Activar Horarios"
                     />
-                </Box>
+                </Box> */}
                 <Grid>
                     <Box p={2}>
                     <TableContainer  component={Paper}>
@@ -156,6 +183,22 @@ export default function Horarios_empresa() {
                         </Table>
                     </TableContainer>
                     </Box>
+                </Grid>
+                <Grid item lg={12}>
+                    <Box p={2} textAlign="center">
+                        <Button
+                            color="primary"
+                            onClick={() => subirHorarios()}
+                            variant="contained"
+                        >
+                            {
+                                control === false ? 
+                                    "Actualizar horarios"
+                                : "Guardar Horarios"
+                            }
+                        </Button>
+                    </Box>
+
                 </Grid>
             </Grid>
         </div>

@@ -1,42 +1,66 @@
-import { Switch, TableCell, TableRow, TextField } from '@material-ui/core'
+import { FormControlLabel, Switch, TableCell, TableRow, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import clienteAxios from '../../../config/axios';
 
 export default function Dias({row, setRows, rows}) {
 
     const [diaSelec, setDiaSelec] = useState([]);
-    const [ diaCambio, setDiaCambio ] = useState({});
+    
+    const [diaActivo, setdiaActivo] = useState(false);
+
+    const index = rows.findIndex((item) => diaSelec === item.key);
+    const item = rows[index];
+
+    const [ diaCambio, setDiaCambio ] = useState(item);
+
+    
 
     const obtenerHorario = (e) => {
-        // const newData = [ ...rows];
-        // console.log(newData);
-		const index = rows.findIndex((item) => diaSelec === item.key);
-        const item = rows[index];
+        if ( e.target.name === "horarioInicial" ) {
+            const dia = {
+                dia: row.dia,
+                key: row.key,
+                horarioInicial: e.target.value ,
+                horarioFinal: row.horarioFinal,
+                close: false
+            }
+            rows.splice(diaSelec, 1, {...dia,dia});
+        }else{
+            const dia = {
+                dia: row.dia,
+                key: row.key,
+                horarioInicial: row.horarioInicial,
+                horarioFinal:e.target.value,
+                close: false
+            }
+            rows.splice(diaSelec, 1, {...dia,dia});
+        }
+        // if (e.target.name === "close") {
+        //     console.log("Si entra actualizar");
+        //     setDiaCambio({
+        //         ...item,
+        //         [e.target.name]: e.target.checked
+        //     });
+        //     console.log(diaCambio);
+        // }else{
+        // setDiaCambio({
+        //     ...row,
+        //     [e.target.name]: e.target.value
+        // });
+        // }
 
-        // setDiaCambio(item);  
-        console.log(e.target.value);
+        
+       /* console.log(rows); */
+     console.log(rows);
 
-        setDiaCambio({
-            ...item,
-            [e.target.name]: e.target.value
-        });
-
-        // console.log(diaSelec);
-        rows.splice(diaSelec, 1, {...diaCambio, ...diaSelec });
-        // console.log(rows);
     }
 
-    // useEffect(() => {
-    // }, [])
-    // console.log(rows);
+     console.log(rows);
+     // console.log(diaCambio); 
 
     const handleClick = (e) => {
         setDiaSelec(e);
-       
     };
-
-    const arrayDias = () => {
-        
-    }
 
     return (
         <TableRow
@@ -53,37 +77,32 @@ export default function Dias({row, setRows, rows}) {
             <TableCell>{row.dia}</TableCell>
             <TableCell>
                 <TextField
-                    id="horarioInicial"
+                    /* id="horarioInicial" */
                     name="horarioInicial"
-                    type="time"
                     defaultValue={row.horarioInicial}
-                    onClick={arrayDias}
-                    onChange={obtenerHorario}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}
-                    inputProps={{
-                    step: 300, // 5 min
-                    }}
+                    // onClick={arrayDias}
+                    onChange={(e) => obtenerHorario(e)}
                 />
             </TableCell>
             <TableCell>
                 <TextField
-                    id="horarioFinal"
+                   /*  id="horarioFinal" */
                     name="horarioFinal"
-                    type="time"
-                    onChange={obtenerHorario}
+                    onChange={(e) => obtenerHorario(e)}
                     defaultValue={row.horarioFinal}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}
-                    inputProps={{
-                    step: 300, // 5 min
-                    }}
                 />
             </TableCell>
             <TableCell>
-                <Switch defaultValue={row.close} name="activeHorarios" />
+                <FormControlLabel
+                    control={
+                        <Switch
+                           /*  onChange={(e) => obtenerHorario(e)} */
+                            color="primary"
+                            defaultChecked={row.close}
+                            name="close"
+                        />
+                    }
+                />
             </TableCell>
         </TableRow>
     )

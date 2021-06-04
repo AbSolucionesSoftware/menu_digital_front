@@ -63,7 +63,7 @@ export default function LoginAdmin(props) {
 				const token = res.data.token;
 				localStorage.setItem('token', token);
 				localStorage.setItem('user', JSON.stringify(decoded));
-				const user = JSON.parse(localStorage.getItem('user'))
+				const user = JSON.parse(localStorage.getItem('user'));
 
 				if (user.type === true) {
 					window.location.href = '/admin';
