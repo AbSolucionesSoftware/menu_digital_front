@@ -1,7 +1,7 @@
-import { Box, Checkbox, FormControlLabel, Grid, IconButton, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import Paper from '@material-ui/core/Paper';
-
+import { Box, Checkbox, FormControlLabel, Grid, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography } from '@material-ui/core'
+import Dias from './dias';
 
 const useStyles = makeStyles({
     table: {
@@ -17,19 +17,112 @@ function createData(dia, horarioInicial, horarioFinal, close) {
     return { dia, horarioInicial, horarioFinal, close };
 }
 
-const rows = [
-    createData('Lunes', "" ,"", false),
-    createData('Martes', "" ,"", false ),
-    createData('Miercoles',  "" ,"", false ),
-    createData('Jueves',  "" ,"", false ),
-    createData('Viernes',  "" ,"", false ),
-    createData('Sabado',  "" ,"", false ),
-    createData('Domingo', "" ,"", false ),
-];
 
 export default function Horarios_empresa() {
 
     const classes = useStyles();
+
+
+    const [ rows, setRows ] = useState([
+        { 
+            dia: "Lunes",
+            key: 0,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Martes",
+            key: 1,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Miercoles",
+            key: 2,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Jueves",
+            key: 3,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Viernes",
+            key: 4,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Sabado",
+            key: 5,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+        { 
+            dia: "Domingo",
+            key: 6,
+            horarioInicial: "",
+            horarioFinal: "",
+            close: false
+        },
+    
+    ])
+
+    const columns = [
+		{
+			title: 'Dia',
+			dataIndex: 'dia',
+			editable: false,
+			width: '25%'
+		},
+		{
+			title: 'Hora apertura',
+			dataIndex: 'horarioInicial',
+			editable: true,
+			width: '25%'
+		},
+		{
+			title: 'Hora de cierre',
+			dataIndex: 'horarioFinal',
+			editable: true,
+			width: '25%'
+		},
+		{
+			title: 'Dias abiertos',
+			dataIndex: 'close',
+			width: '10%',
+			render: (_, record) => (
+				<Switch
+					checked={record.close}
+					checkedChildren="Abierto"
+					unCheckedChildren="Cerrado"
+					// onChange={(value) => onChangeCloseDay(value, record)}
+				/>
+			)
+		}
+	];
+
+    const obtenerHorario = (e) => {
+        // console.log(e.lenght)
+        // console.log(e.target.value);//PARA LA HORA
+        rows.forEach(dia => {
+            console.log(dia.key);
+        });
+        // setRows({
+        //     ...rows,
+        //     [e.target.name]: e.target.value
+        // });
+    }
+
+    // console.log(rows);
 
     return (
         <div>
@@ -46,31 +139,17 @@ export default function Horarios_empresa() {
                         <Table  aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center" className={ classes.tituloTable }> Dias </TableCell>
-                                    <TableCell align="center" className={ classes.tituloTable }> Horario apertura </TableCell>
-                                    <TableCell align="center" className={ classes.tituloTable }> Hora de cierre </TableCell>
-                                    <TableCell align="center" className={ classes.tituloTable }> Dias abiertos </TableCell>
+                                    {columns?.map((colum) => {
+                                        return(
+                                            <TableCell align="center" className={ classes.tituloTable }>{colum.title}</TableCell>
+                                        )
+                                    })}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {rows?.map((row) => {
                                     return (
-                                        <TableRow
-                                            hover
-                                            // onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            // aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            // selected={isItemSelected}
-                                        >
-                                            <TableCell>{row.dia}</TableCell>
-                                            <TableCell>{row.horarioInicial}</TableCell>
-                                            <TableCell>{row.horarioFinal}</TableCell>
-                                            <TableCell>
-                                                <Switch defaultValue={row.close} name="activeHorarios" />
-                                            </TableCell>
-                                        </TableRow>
+                                        <Dias row={row} setRows={setRows} rows={rows} />
                                     )
                                 })}
                             </TableBody>
