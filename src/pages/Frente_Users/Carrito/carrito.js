@@ -242,6 +242,7 @@ export default function Carrito(props) {
                 mensaje: "Pedido realizado con Exito",
                 status: 'success'
             });
+            borrarCarrito();
         }).catch((err) => {
             setSnackbar({
                 open: true,
@@ -524,7 +525,6 @@ export default function Carrito(props) {
                                                             color="primary"
                                                             onClick={() => {
                                                                 crearPedido()
-                                                                borrarCarrito()
                                                             }}
                                                         >
                                                             Realizar Pedido
@@ -549,7 +549,6 @@ export default function Carrito(props) {
                                                             size="large"
                                                             onClick={() => {
                                                                 crearPedido()
-                                                                borrarCarrito()
                                                             }}
                                                         >
                                                             Realizar Pedido
@@ -624,7 +623,6 @@ export default function Carrito(props) {
                                     color="primary"
                                     onClick={() => {
                                         crearPedido()
-                                        borrarCarrito()
                                     }}
                                 >
                                     Realizar Pedido
@@ -649,7 +647,6 @@ export default function Carrito(props) {
                                     size="large"
                                     onClick={() => {
                                         crearPedido()
-                                        borrarCarrito()
                                     }}
                                 >
                                     Realizar Pedido
