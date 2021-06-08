@@ -21,21 +21,20 @@ import useStyles from './styles';
 
 import comody from '../../img/Comody.jpeg'
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { MenuContext } from '../../context/menuContext';
 
 const drawerWidth = 240;
 
  
 export default function Navegacion_User(props) {
 	const [ open, setOpen ] = useState(false);
-	const [ anchorEl, setAnchorEl ] = useState(null);
+	const { recargar, setRecargar } = useContext(MenuContext);
 
 	const [empresa, setEmpresa] = useState([]);
 
 	const company = JSON.parse(localStorage.getItem('user'));
 	const token = localStorage.getItem('token');
-
-    const isMenuOpen = Boolean(anchorEl);
 
 	var React = require('react');
 	var QRCode = require('qrcode.react');
@@ -49,7 +48,6 @@ export default function Navegacion_User(props) {
 			})
 			.then((res) => {
 				setEmpresa(res.data);
-				
 			})
 			.catch((err) => {
 			})
@@ -123,7 +121,7 @@ export default function Navegacion_User(props) {
 								Datos Empresa
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company.slug}`}>
+						<ListItem button component={Link} to={`/${company.slug}`} onClick={() => setRecargar(!recargar)}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography variant="h2">
 								Ver mi menú digital
@@ -158,25 +156,25 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user/menu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Productos
+								Agregar/Ver/Editar Productos
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/categoriasmenu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Categorías
+								Agregar/Ver/Editar Categorías
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/clasificacionmenu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Extras
+								Agregar/Ver/Editar Extras
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad" onClick={handleDrawerToggle}>
 							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Banners
+								Agregar/Ver/Editar Banners
 							</Typography>
 						</ListItem>
 						<ListItem 
@@ -184,11 +182,12 @@ export default function Navegacion_User(props) {
 							component={Link} 
 							to={`/${company.slug}`}
 							onClick={() => {
-								setTimeout(() => {  
-									localStorage.removeItem('token');
-									localStorage.removeItem('carritoUsuario');
+								localStorage.removeItem('token');
+								localStorage.removeItem('carritoUsuario');
+								setRecargar(!recargar);
+								setTimeout(() => { 
 									localStorage.removeItem('user');
-								 }, 1000)
+								}, 1000)
 							}}
 						>
 							<ListItemIcon><ExitToAppIcon/></ListItemIcon>
@@ -213,7 +212,7 @@ export default function Navegacion_User(props) {
 					<List>
 						<ListItem>
 							<Box className={classes.containerImage}>  
-								<img  className={classes.image} alt="logotipo" src={comody}/>
+								<img className={classes.image} alt="logotipo" src={comody}/>
 							</Box>
 						</ListItem>
 						<ListItem >
@@ -232,7 +231,7 @@ export default function Navegacion_User(props) {
 								Datos Empresa
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to={`/${company.slug}`} >
+						<ListItem button component={Link} to={`/${company.slug}`} onClick={() => setRecargar(!recargar)}>
 							<ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
 							<Typography variant="h2">
 								Ver mi menú digital
@@ -265,25 +264,25 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to="/user/menu">
 							<ListItemIcon><FastfoodIcon /></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Productos
+								Agregar/Ver/Editar Productos
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/categoriasmenu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Categorías
+								Agregar/Ver/Editar Categorías
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/clasificacionmenu">
 							<ListItemIcon>< RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2" >
-							Agregar/Ver/Editar Clasificaciones
+								Agregar/Ver/Editar Clasificaciones
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/publicidad">
 							<ListItemIcon><AddToQueueIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Banners
+								Agregar/Ver/Editar Banners
 							</Typography>
 						</ListItem>
 						<ListItem 
@@ -291,8 +290,11 @@ export default function Navegacion_User(props) {
 							component={Link} 
 							onClick={() => {
 								localStorage.removeItem('token');
-								localStorage.removeItem('user');
 								localStorage.removeItem('carritoUsuario');
+								setRecargar(!recargar);
+								setTimeout(() => { 
+									localStorage.removeItem('user');
+								}, 1000)
 							}}
 							to={`/${company.slug}`}
 						>

@@ -58,6 +58,9 @@ function NumberFormatDinero(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        minWidth: 600
+    },
     text:{
         width: "100%"
     },
@@ -261,14 +264,7 @@ export default function Editar_User(props) {
 				setSnackbar={setSnackbar}
 			/>
 			<Spin loading={loading} />
-            <Grid container>
-                <Grid item lg={12}>
-                    <Box textAlign="center" p={4}>
-                        <Typography variant="h4">
-                            Editar mi empresa
-                        </Typography>
-                    </Box>
-                </Grid>
+            <Grid  className={classes.root}>
                 <Grid item lg={12}>
                     <Box mt={2} textAlign="center">
                             <Box p={2}>
@@ -286,23 +282,6 @@ export default function Editar_User(props) {
                                     onChange={onChangeEmpresa}
                                 />
                             </Box>
-                            {/* <Box p={1} display="flex" justifyContent="center" flexWrap="wrap">
-                                <Alert severity="info">Un identificador para poder distinguir tu Negocio en el navegador</Alert>
-                            </Box> */}
-                            {/* <Box p={2}>
-                                <TextField
-                                    defaultValue={datosEmpresa.slug}
-                                    className={classes.text}
-                                    id="slug"
-                                    label="Identificador"
-                                    placeholder="Identificador"
-                                    multiline
-                                    variant="outlined"
-                                    onChange={(e) =>
-                                        setDatosEmpresa({ ...datosEmpresa, slug: e.target.value.replace(' ', '-').toLowerCase()})
-                                    }
-                                />
-                            </Box> */}
                             <Box p={2}>
                                 <TextField
                                     error={!datosEmpresa.owner && validate}
@@ -357,7 +336,7 @@ export default function Editar_User(props) {
 
                             {/* Datos DOMICILIARIOS */}
                             <Box textAlign="center" p={3}>
-                                <Typography variant="h6">
+                                <Typography component={'span'}  variant="h6">
                                    Datos Domiciliarios
                                 </Typography>
                             </Box>
@@ -442,7 +421,7 @@ export default function Editar_User(props) {
                             </Box>
                             {/* REDES SOCIALES */}
                             <Box textAlign="center" p={3}>
-                                <Typography variant="h6">
+                                <Typography component={'span'} variant="h6">
                                    Redes Sociales
                                 </Typography>
                             </Box>
@@ -489,7 +468,7 @@ export default function Editar_User(props) {
                             {/* ICONO DE LA IMAGEN */}
                             <Grid item lg={12}>
                                 <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
-                                    <Alert severity="info">
+                                    <Alert component={'span'} severity="info">
                                         Tamaño recomendado para su imagen: Alto: 600px, Ancho: 600px
                                     </Alert>
                                 </Box>
@@ -514,9 +493,9 @@ export default function Editar_User(props) {
                                                 <img alt="imagen del banner" src={preview} className={classes.imagen} />
                                             </Box>
                                         ) : isDragActive ? (
-                                            <Typography>Suelta tu imagen aquí...</Typography>
+                                            <Typography component={'span'} >Suelta tu imagen aquí...</Typography>
                                         ) : (
-                                            <Typography>
+                                            <Typography component={'span'} >
                                                 Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
                                             </Typography>
                                         )}
@@ -548,7 +527,7 @@ export default function Editar_User(props) {
             <Dialog open={open} onClose={handleClose}>
                 <Grid item lg={12}>
                     <Box p={3}>
-                        <Typography variant="h6">
+                        <Typography component={'span'} variant="h6">
                             Por favor ingrese su nueva contrasena
                         </Typography>
                     </Box>

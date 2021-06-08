@@ -6,6 +6,7 @@ import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import SearchIcon from '@material-ui/icons/Search';
 import Reservaciones from './reservaciones'
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 // import clienteAxios from '../../config/axios';
 
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -23,16 +24,13 @@ import useStyles from './styles';
 import { ImageContext } from '../../context/curso_context';
 
 import React, { useContext,  useState } from 'react';
+import { MenuContext } from '../../context/menuContext';
 
 function Navegacion(props) {
 
 	const [ open, setOpen ] = useState(false);
-	const [ anchorEl, setAnchorEl ] = useState(null);
-    const {  nombre,  } = useContext(ImageContext);
+	const { recargar, setRecargar, empresa} = useContext(MenuContext);
 	const token = localStorage.getItem('token');
-	const slug = localStorage.getItem('slug');
-	const id = localStorage.getItem('idEmpresa');
-	const login = props.location.pathname;
 	const [ busqueda, setBusqueda ] = useState('');
 	
 	var decoded = Jwt(token);
@@ -62,6 +60,12 @@ function Navegacion(props) {
 	const handleClose = () => {
 		setReservacion(false);
 	};
+
+	const [ openHorario, setOpenHorario ] = useState(false);
+
+	const handleClickOpen =() => {
+		setOpenHorario(!openHorario)
+	}
 
 	const styles = (theme) => ({
 		root: {
@@ -93,6 +97,7 @@ function Navegacion(props) {
 	});
 	
 	const cerrarSesiones = () => {
+		setRecargar(!recargar);
 		localStorage.removeItem('carritoUsuario');
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
@@ -106,12 +111,12 @@ function Navegacion(props) {
 		if (!busqueda) {
 			return;
 		}
-		props.history.push(`/${slug}/${id}/busqueda/${busqueda}`);
+		props.history.push(`/${empresa.slug}/${empresa._id}/busqueda/${busqueda}`);
 	};
 
 	const pressEnter = (e) => {
 		if(!e.target.defaultValue) return;
-		if(e.key === "Enter") props.history.push(`/${slug}/${id}/busqueda/${e.target.defaultValue}`);
+		if(e.key === "Enter") props.history.push(`/${empresa.slug}/${empresa._id}/busqueda/${e.target.defaultValue}`);
 	};
 
 	function Jwt(token) {
@@ -166,12 +171,12 @@ function Navegacion(props) {
 								<Grid item lg={8} zeroMinWidth >
 									<Box display="flex" justifyContent="center" >
 										<Typography variant="h3" noWrap>
-											{nombre} 
+											{empresa.nameCompany} 
 										</Typography>
 									</Box>
 								</Grid>					
 								<Grid>
-									<ListItem button component={Link} to={`/${slug}`} >
+									<ListItem button component={Link} to={`/${empresa.slug}`} >
 										<ListItemText primary="Inicio" />
 									</ListItem>
 								</Grid>
@@ -179,6 +184,13 @@ function Navegacion(props) {
 									<ListItem button onClick={handleOpen}>
 										<ListItemText primary="Reservar" />
 									</ListItem>
+								</Grid>
+								<Grid>
+									{empresa?.horariosActive === true ? (
+										<ListItem button onClick={handleClickOpen}>
+											<ListItemText primary="Horario" />
+										</ListItem>
+									) : null}
 								</Grid>
 							</Hidden>
 						</>
@@ -230,10 +242,10 @@ function Navegacion(props) {
 							<div />
 						)}
 						<List>
-							<ListItem button component={Link} to={`/${slug}`} >
-								<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
+							<ListItem button component={Link} to={`/${empresa.slug}`} >
+								<Typography style={{ fontWeight: 600}} variant="h5"> {empresa.nameCompany} </Typography>
 							</ListItem>
-							<ListItem button component={Link} to={`/${slug}`} onClick={handleDrawerClose}>
+							<ListItem button component={Link} to={`/${empresa.slug}`} onClick={handleDrawerClose}>
 								<ListItemIcon>
 									<HomeIcon />
 								</ListItemIcon>
@@ -245,6 +257,16 @@ function Navegacion(props) {
 								</ListItemIcon>
 								<ListItemText primary="Reservar" />
 							</ListItem>
+
+							{empresa?.horariosActive === true ? (
+								<ListItem button onClick={handleClickOpen}>
+									<ListItemIcon>
+										<AccessTimeIcon/>
+									</ListItemIcon>
+									<ListItemText primary="Horario" />
+								</ListItem>
+							) : null}
+
 							{decoded ? (
 								<ListItem onClick={handleDrawerClose}>
 									<ListItemIcon>
@@ -255,6 +277,7 @@ function Navegacion(props) {
 										color="inherit" 
 										component={Link} to="/" 
 										onClick={() => {
+											setRecargar(!recargar);
 											localStorage.removeItem('carritoUsuario');
 											localStorage.removeItem('token');
 											localStorage.removeItem('user');
@@ -269,7 +292,7 @@ function Navegacion(props) {
 							}
 						</List>
 					</Drawer>
--					{/* )} */}
+					{/* )} */}
 
 				<div>
 					<Hidden mdUp>
@@ -279,16 +302,47 @@ function Navegacion(props) {
 							onClose={handleClose}
 						>
 							<DialogTitle id="customized-dialog-title" onClose={handleClose} />
-							<Reservaciones slug={slug}/>
+							<Reservaciones slug={empresa.slug}/>
 						</Drawer>
 					</Hidden>
 					<Hidden smDown>
 						<Dialog open={reservacion} onClose={handleClose}>
 							<DialogTitle id="customized-dialog-title" onClose={handleClose} />
-							<Reservaciones  slug={slug}/>
+							<Reservaciones slug={empresa.slug}/>
 						</Dialog>
 					</Hidden>
 				</div>
+
+				<Dialog
+					open={openHorario} 
+					onClose={handleClickOpen}
+				>
+					<Grid item lg={12}>
+						<Box p={2} textAlign="center">
+							<Typography  variant="h6">
+								Nuestros Horarios de Atención
+							</Typography>
+						</Box>
+						<Box p={1} mb={2}>
+							{empresa?.horario?.map((dia) => (
+								<Box display="flex" alignItem="center" justifyContent="center">
+									<Typography style={{fontWeight: 600}} >
+										{dia.dia}:   
+									</Typography>
+									<Typography>
+										{dia.close === true ? (
+												dia.horarioInicial + "  a  " + dia.horarioFinal
+											) :
+											(
+												"Cerrado"
+											)
+										}
+									</Typography>
+								</Box>
+							))}
+						</Box>
+					</Grid>
+				</Dialog>
 		</div>
     )
 

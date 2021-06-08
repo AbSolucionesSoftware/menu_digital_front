@@ -72,7 +72,7 @@ export default function Editar_empresa({ handleDrawerClose, datosEmpresa, setDat
                 </div>
                 ) : (
                 <div>
-                    <Typography >{getStepContent(activeStep)}</Typography>
+                    <Typography component={'span'} > {getStepContent(activeStep)} </Typography>
                     <Box display="flex" justifyContent="center">
                             <Box p={1}>
                                 <Button

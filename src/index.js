@@ -4,6 +4,8 @@ import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { MenuGeneralProvider } from './context/menuContext';
+
 
 const theme = createMuiTheme({
   typography: {
@@ -41,7 +43,9 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App />
+    <MenuGeneralProvider>
+      <App />
+		</MenuGeneralProvider>
   </ThemeProvider>,
   document.getElementById('root')
 );

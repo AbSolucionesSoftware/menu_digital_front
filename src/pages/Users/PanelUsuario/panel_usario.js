@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Editar_User from './editar_user'
 
 import TextField from '@material-ui/core/TextField';
-import { Box, Button, Drawer, Grid, makeStyles, Typography } from '@material-ui/core/'
+import { Box, Button, Card, CardContent, Drawer, Grid, makeStyles, Typography } from '@material-ui/core/'
 import clienteAxios from '../../../config/axios';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
 	containerImage:{
 		width: 300,
 		height: 190
-	}
+	},
+    rootCard:{
+        minWidth: 300        
+    }
 }));
 
 export default function PanelUser() {
@@ -73,7 +76,7 @@ export default function PanelUser() {
                 <Grid item lg={12}>
                     <Box textAlign="center" display="flex" justifyContent="center" flexWrap="wrap">
                         <Box p={2}>
-                            <Typography variant="h4">
+                            <Typography component={'span'} variant="h4">
                                 Tu empresa en Comody
                             </Typography>
                         </Box>
@@ -108,7 +111,7 @@ export default function PanelUser() {
                 </Grid>
                 <Grid item lg={12}>
                     <Box p={1} textAlign="center">
-                        <Typography variant="h6">
+                        <Typography component={'span'} variant="h6">
                             Ubicación
                         </Typography>
                     </Box>
@@ -152,7 +155,7 @@ export default function PanelUser() {
                 </Grid>
                 <Grid item lg={12}>
                     <Box p={1}  mt={2} textAlign="center">
-                        <Typography variant="h6">
+                        <Typography component={'span'} variant="h6">
                             Tus Redes Sociales
                         </Typography>
                     </Box>
@@ -190,6 +193,31 @@ export default function PanelUser() {
                     </Box>
                 </Grid>
                 <Grid item lg={12}>
+                    <Box mt={1} textAlign="center">
+                        <Typography component={'span'} variant="h6">
+                            Horarios
+                        </Typography>
+                    </Box>
+                    <Box p={1} mb={2}>
+                        {datosEmpresa?.horario?.map((dia) => (
+                            <Box display="flex" alignItem="center" justifyContent="center">
+                                <Typography style={{fontWeight: 600}} >
+                                    {dia.dia}:   
+                                </Typography>
+                                <Typography>
+                                    {dia.close === true ? (
+                                            dia.horarioInicial + "  a  " + dia.horarioFinal
+                                        ) :
+                                        (
+                                            "Cerrado"
+                                        )
+                                    }
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
+                </Grid>
+                <Grid item lg={12}>
                     <Box display="flex" justifyContent="center" >
                         <Button
                             variant="contained" 
@@ -215,22 +243,6 @@ export default function PanelUser() {
                     setDatosEmpresa={setDatosEmpresa}
                     upload={upload}
                 />
-                {/* <Editar_User 
-                    handleDrawerClose={handleDrawerClose} 
-                    setUpload={setUpload} 
-                    datosEmpresa={datosEmpresa} 
-                    setDatosEmpresa={setDatosEmpresa}
-                    upload={upload}
-                /> */}
-                {/* <Box display="flex" justifyContent="center" p={1}>
-                    <Button
-                        variant="contained" 
-                        color="secondary"
-                        onClick={handleDrawerClose}
-                    >
-                        Salir
-                    </Button>
-                </Box> */}
             </Drawer>
         </div>
     )

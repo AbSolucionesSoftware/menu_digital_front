@@ -9,7 +9,7 @@ export const ImageProvider = ({ children }) => {
 	const [ slug , setSlug ] = useState([]);
 	const [ update, setUpdate ] = useState(true);
 	const [ preview, setPreview ] = useState(null);
-
+	
 	return (
 		<ImageContext.Provider value={{slug , setSlug, id , setId, nombre, setNombre, datos, setDatos, update, setUpdate, preview, setPreview }}>
 			{children}

@@ -1,4 +1,4 @@
-import { Box, Grid, Hidden, IconButton, makeStyles, Typography } from '@material-ui/core'
+import { Box, Button, Dialog, Grid, Hidden, IconButton, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
 import comody from '../../img/Comody.jpeg';
@@ -32,6 +32,7 @@ function Footer(props) {
     const slug = localStorage.getItem('slug');
 	const login = props.location.pathname;
 	const [empresa, setEmpresa] = useState([]);
+    const [open, setOpen] = useState(false);
 
     const consultarDatos = async () => {
 		await clienteAxios
@@ -47,6 +48,10 @@ function Footer(props) {
 
 			})
 	}
+
+    const handleClickOpen =() => {
+        setOpen(!open);
+    }
 
 	useEffect(() => {
 		consultarDatos();
@@ -110,46 +115,59 @@ function Footer(props) {
                     </Hidden>
                     <Grid item lg={4} xs={12}>
 
-                    <Box mt={2} p={1} textAlign="center"> 
-                        <Typography variant="h6">
-                           Encuentranos en nuestras redes:
-                        </Typography>
-                    </Box>
-                         
-                    <Box display="flex" justifyContent="center" flexWrap="wrap">
-                        { empresa.redesSociales && empresa.redesSociales.facebook ? (
-                            <Box p={1}>
-                                <a target="_blank" href={empresa.redesSociales.facebook}>
-                                    <FacebookIcon style={{color: "white",fontSize: 60}}/>
-                                </a>
-                            </Box>
-                        ):(
-                            null
-                        )
+                        <Box mt={2} p={1} textAlign="center"> 
+                            <Typography variant="h6">
+                            Encuentranos en nuestras redes:
+                            </Typography>
+                        </Box>
+                       
+                        <Box display="flex" justifyContent="center" flexWrap="wrap">
+                            { empresa.redesSociales && empresa.redesSociales.facebook ? (
+                                <Box p={1}>
+                                    <a target="_blank" href={empresa.redesSociales.facebook}>
+                                        <FacebookIcon style={{color: "white",fontSize: 60}}/>
+                                    </a>
+                                </Box>
+                            ):(
+                                null
+                            )
+                            }
+                            { empresa.redesSociales && empresa.redesSociales.instagram ? (
+                                <Box p={1}>
+                                    <a target="_blank" href={empresa.redesSociales.instagram}>
+                                        <InstagramIcon style={{color: "white",fontSize: 60}}/>
+                                    </a>
+                                </Box>
+                            ):(
+                                null
+                            )
+                            }
+                            { empresa.redesSociales && empresa.redesSociales.twiter ? (
+                                <Box p={1}>
+                                    <a target="_blank" href={empresa.redesSociales.twiter}>
+                                        <TwitterIcon style={{color: "white",fontSize: 60}}/>
+                                    </a>
+                                </Box>
+                            ):(
+                                null
+                            )
+                            }
+                        </Box>
+                        {
+                            empresa?.horariosActive === true ? (
+                                <Box display="flex" justifyContent="center" mt={3}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleClickOpen}
+                                    >
+                                        Horario de atencion
+                                    </Button>
+                                </Box>
+                            ) : null
                         }
-                        { empresa.redesSociales && empresa.redesSociales.instagram ? (
-                            <Box p={1}>
-                                <a target="_blank" href={empresa.redesSociales.instagram}>
-                                    <InstagramIcon style={{color: "white",fontSize: 60}}/>
-                                </a>
-                            </Box>
-                        ):(
-                            null
-                        )
-                        }
-                        { empresa.redesSociales && empresa.redesSociales.twiter ? (
-                            <Box p={1}>
-                                <a target="_blank" href={empresa.redesSociales.twiter}>
-                                    <TwitterIcon style={{color: "white",fontSize: 60}}/>
-                                </a>
-                            </Box>
-                        ):(
-                            null
-                        )
-                        }
-                    </Box>
+                        
                     </Grid>
-
                     <Grid item lg={12} xs={12}>
                         <Box textAlign="center">
                             <Typography variant="body1">
@@ -157,6 +175,37 @@ function Footer(props) {
                             </Typography>
                         </Box>
                     </Grid>
+
+                    <Dialog
+                         open={open} 
+                         onClose={handleClickOpen}
+                    >
+                        <Grid item lg={12}>
+                            <Box p={2} textAlign="center">
+                                <Typography  variant="h6">
+                                    Nuestros Horarios de Atención
+                                </Typography>
+                            </Box>
+                            <Box p={1} mb={2}>
+                                {empresa?.horario?.map((dia) => (
+                                    <Box display="flex" alignItem="center" justifyContent="center">
+                                        <Typography style={{fontWeight: 600}} >
+                                            {dia.dia}:   
+                                        </Typography>
+                                        <Typography>
+                                            {dia.close === true ? (
+                                                    dia.horarioInicial + "  a  " + dia.horarioFinal
+                                                ) :
+                                                (
+                                                    "Cerrado"
+                                                )
+                                            }
+                                        </Typography>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Grid>
+                    </Dialog>
                 </Grid>
 			);
 		}else{
@@ -165,6 +214,7 @@ function Footer(props) {
             )
 		}
 	}
+
 };
 
 export default withRouter(Footer);

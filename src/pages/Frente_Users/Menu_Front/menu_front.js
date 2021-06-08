@@ -36,19 +36,21 @@ export default function Menu_Front(props) {
 
 	const [empresa, setEmpresa] = useState([]);
 	const [ loading, setLoading ] = useState(true);
+	
     const {  setNombre, setId, setSlug  } = useContext(ImageContext);
 	
+
 	const consultarDatos = async () => {
 		await clienteAxios
 			.get(`/company/slug/company/${slug}`)
 			.then((res) => {
+				setLoading(false);
 				if (res.data === null) {
 					return 
 				}else{
 					setLoading(false);
 					setEmpresa(res.data);
 				}
-				
 			})
 			.catch((err) => {
 				setLoading(false);
@@ -58,12 +60,14 @@ export default function Menu_Front(props) {
 
 	useEffect(() => {
 		consultarDatos();
-	}, [])
+	}, [loading])
 
 
 	if (loading) {
 		return (
+			<>
 			<Spin loading={loading} />
+			</>
 		);
 	}
 

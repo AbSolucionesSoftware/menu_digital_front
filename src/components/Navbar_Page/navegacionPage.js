@@ -18,6 +18,7 @@ import useStyles from './styles';
 import { ImageContext } from '../../context/curso_context';
 
 import React, { useContext,  useState } from 'react';
+import { MenuContext } from '../../context/menuContext';
 
 function NavegacionPage(props) {
 
@@ -27,7 +28,7 @@ function NavegacionPage(props) {
 	const token = localStorage.getItem('token');
 	const slug = localStorage.getItem('slug');
 	const id = localStorage.getItem('idEmpresa');
-
+	const { recargar, setRecargar } = useContext(MenuContext);
 	const [ busqueda, setBusqueda ] = useState('');
 
 	
@@ -88,8 +89,8 @@ function NavegacionPage(props) {
 								<MenuIcon />
 							</IconButton>
 						</Hidden>
-							<Box component={Link} to={`/`} className={classes.containerImage}>  
-								<img  className={classes.image} alt="logotipo" src={Comody}/>
+							<Box component={Link} to={`/`} className={classes.containerImage} onClick={() => setRecargar(!recargar)}>  
+								<img  className={classes.image} alt="logotipo" src={Comody} />
 							</Box>
 						<Hidden smDown>
 							<Grid container justify="flex-end" >
@@ -184,7 +185,7 @@ function NavegacionPage(props) {
 							<ChevronLeftIcon />
 						</IconButton>
 						<Box component={Link} to={`/`}  onClick={handleDrawerClose} className={classes.containerImage}>  
-							<img className={classes.image} alt="logotipo" src={Comody}/>
+							<img className={classes.image} alt="logotipo" src={Comody} />
 						</Box>
 					</div>
 					<Divider />
@@ -249,6 +250,7 @@ function NavegacionPage(props) {
 									color="inherit" 
 									component={Link} to="/" 
 									onClick={() => {
+										setRecargar(!recargar);
 										localStorage.removeItem('carritoUsuario');
 										localStorage.removeItem('token');
 										localStorage.removeItem('user');

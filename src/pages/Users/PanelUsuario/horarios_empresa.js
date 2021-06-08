@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper';
-import { Box, Button, Checkbox, FormControlLabel, Grid, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography } from '@material-ui/core'
+import { Box, Button, FormControlLabel, Grid, makeStyles, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,} from '@material-ui/core'
 import Dias from './dias';
 import clienteAxios from '../../../config/axios';
 import jwt_decode from 'jwt-decode';
+import Spin from '../../../components/Spin/spin';
 
 const useStyles = makeStyles({
     table: {
@@ -15,15 +16,17 @@ const useStyles = makeStyles({
     }
 });
 
-export default function Horarios_empresa() {
-
+export default function Horarios_empresa({datosEmpresa, setUpload, upload}) {
     const classes = useStyles();
     const token = localStorage.getItem('token');
     const [control, setControl] = useState(false);
+    const [loading, setLoading] = useState(false);
     const company = JSON.parse(localStorage.getItem('user'));
 
-    const [ rows, setRows ] = useState([
-        { 
+    const [ rows, setRows ] = useState(
+        datosEmpresa.horario && datosEmpresa.horario.length !== 0 ? 
+            datosEmpresa.horario :
+        [{ 
             dia: "Lunes",
             key: 0,
             horarioInicial: "",
@@ -71,9 +74,8 @@ export default function Horarios_empresa() {
             horarioInicial: "",
             horarioFinal: "",
             close: false
-        },
-    
-    ])
+        }]
+    )
 
     const columns = [
 		{
@@ -109,8 +111,15 @@ export default function Horarios_empresa() {
 		}
 	];
 
-// console.log(rows);
+    useEffect(() => {
+        if (datosEmpresa.horario && datosEmpresa.horario.length !== 0) {
+            setControl(false);
+        }
+    }, []);
+
+
     const subirHorarios = async () => {
+        setLoading(true);
         await clienteAxios
 			.put(`/company/horarios/${company._id}`, rows , {
 				headers: {
@@ -118,65 +127,76 @@ export default function Horarios_empresa() {
 				}
 			})
 			.then((res) => {
-                // console.log(res);
-                const decoded = jwt_decode(res.data.token);
-				const token = res.data.token;
-				localStorage.setItem('token', token);
-				localStorage.setItem('user', JSON.stringify(decoded));
-				const user = JSON.parse(localStorage.getItem('user'));
+                setUpload(!upload);
+                setLoading(false);
 			})
 			.catch((err) => {
-                // setUpload(true);
-                // setLoading(false);
-			});
+                setLoading(false);
+                setUpload(!upload);
+            });
     }
 
-
-    useEffect(() => {
-        if (company.horario.length !== 0) {
-            setRows(company.horario);
-            setControl(false);
-        }
-    }, [])
-
-    const obtenerHorario = (e) => {
-        rows.forEach(dia => {
-            console.log(dia.key);
+    const horariosActive = async (active) => {
+        setLoading(true);
+        await clienteAxios
+		.put(`/company/action/publicHorarios/${company._id}`, 
+            {
+              "horariosActive": active
+            },
+            {
+				headers: {
+					Authorization: `bearer ${token}`
+				}
+			}
+        )
+        .then((res) => {
+            setLoading(false);
+            setUpload(!upload);
+        }).catch((err) => {
+            setUpload(!upload);
+            setLoading(false);
         });
-    }
-
-    // console.log(rows);
-
+    };
+    
+    
     return (
         <div>
+            <Spin loading={loading} />
             <Grid item lg={12}>
-                {/* <Box p={2}>
+                <Box p={2} display="flex" justifyContent="center" alignItems="center" textAlign="center">
                     <FormControlLabel
                         control={
-                            <Switch 
-                                name="activeHorarios"
-
-                            />}
-                        label="Activar Horarios"
+                            <Switch
+                                onChange={
+                                    () => {
+                                        horariosActive(!datosEmpresa.horariosActive)
+                                    }
+                                } 
+                                color="primary"
+                                defaultChecked={datosEmpresa.horariosActive ? datosEmpresa.horariosActive : false}
+                                name="checkedA"
+                            />
+                        }
+                        label={datosEmpresa.horariosActive ? 'Horarios Activos' : 'Horarios Desactivados'}
                     />
-                </Box> */}
+                </Box>
                 <Grid>
                     <Box p={2}>
                     <TableContainer  component={Paper}>
                         <Table  aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    {columns?.map((colum) => {
+                                    {columns?.map((colum, index) => {
                                         return(
-                                            <TableCell align="center" className={ classes.tituloTable }>{colum.title}</TableCell>
+                                            <TableCell key={index} align="center" className={ classes.tituloTable }>{colum.title}</TableCell>
                                         )
                                     })}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows?.map((row) => {
+                                {rows?.map((row, index) => {
                                     return (
-                                        <Dias row={row} setRows={setRows} rows={rows} />
+                                        <Dias key={index} setRows={setRows} rows={rows} row={row} />
                                     )
                                 })}
                             </TableBody>
@@ -193,7 +213,7 @@ export default function Horarios_empresa() {
                         >
                             {
                                 control === false ? 
-                                    "Actualizar horarios"
+                                "Actualizar horarios"
                                 : "Guardar Horarios"
                             }
                         </Button>

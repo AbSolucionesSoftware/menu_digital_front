@@ -1,12 +1,12 @@
 import ReactDOM from 'react-dom';
 import { Box, Grid,  Hidden,  IconButton,  makeStyles, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import clienteAxios from '../../../config/axios';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Link } from 'react-router-dom';
 import ItemsCarousel from 'react-items-carousel';
-
+import { MenuContext } from '../../../context/menuContext';
 // import Carousel from 'react-multi-carousel';
 // import 'react-multi-carousel/lib/styles.css';
 // import './empresas.scss'
@@ -50,8 +50,7 @@ const stylesLocal = makeStyles((theme) => ({
 
 export default function Carrusel() {
   
-    const [activeItemIndex, setActiveItemIndex] = useState(0);
-    const chevronWidth = 30;
+	  const { recargar, setRecargar } = useContext(MenuContext);
 
     const [ empresas, setEmpresas ] = useState([]);
     const classes = stylesLocal();
@@ -77,7 +76,7 @@ export default function Carrusel() {
         return(
           <>
           <Hidden xsDown>
-            <Box p={2} key={empresa._id} className={classes.containerImagen}>
+            <Box p={2} key={empresa._id} className={classes.containerImagen} onClick={ () => setRecargar(!recargar)}>
               <Link to={`/${empresa.slug}`}>
                 {
                   localStorage.removeItem("carritoUsuario"),
@@ -92,7 +91,7 @@ export default function Carrusel() {
             </Box>
           </Hidden>
           <Hidden smUp>
-            <Box p={1} key={empresa._id} className={classes.containerImagenResponsive}>
+            <Box p={1} key={empresa._id} className={classes.containerImagenResponsive} onClick={ () => setRecargar(!recargar)}>
               <Link to={`/${empresa.slug}`}>
                 {
                   localStorage.removeItem("carritoUsuario"),
