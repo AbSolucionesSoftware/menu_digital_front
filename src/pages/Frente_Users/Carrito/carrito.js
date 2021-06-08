@@ -242,7 +242,9 @@ export default function Carrito(props) {
                 mensaje: "Pedido realizado con Exito",
                 status: 'success'
             });
-            borrarCarrito();
+            setTimeout(() => { 
+                borrarCarrito();
+            }, 1500)
         }).catch((err) => {
             setSnackbar({
                 open: true,
