@@ -1,7 +1,7 @@
 import { Box, Card,  Grid, Typography, Button, TextField, Accordion, AccordionSummary, AccordionDetails, IconButton, Chip,  RadioGroup, FormControlLabel, Radio, FormControl } from '@material-ui/core'
-import React, {  useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { formatoMexico }from '../../../config/reuserFunction';
+import { fechaActual, formatoFecha, fechaCaducidad, formatoMexico }from '../../../config/reuserFunction';
 import PropTypes from 'prop-types';
 import clienteAxios from '../../../config/axios';
 
@@ -16,6 +16,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import { Alert, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
+import { MenuContext } from '../../../context/menuContext';
+import { set } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     buton:{
@@ -63,18 +65,20 @@ function NumberFormatCustom(props) {
 
 
 export default function Carrito(props) {
-    const {setOpen, empresa} = props;
+    const { setOpen, empresa } = props;
     const carrito = JSON.parse(localStorage.getItem('carritoUsuario'));
-
+    const varDescuento = JSON.parse(localStorage.getItem('codigoDescuento'));
+    
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
     const [ upload, setUpload ] = useState(false);
-    const [update, setUpdate] = useState(false);
     const [ total, setTotal] = useState(0);
 
     const [sucursalElegida, setSucursalElegida] = useState([]);
     const [ datosSucursal, setDatosSucursal ] = useState([]);
-    const [ pedidos, setPedidos] = useState(carrito)
+    const [ cuponesBase, setCuponesBase ] = useState([]);
+    const [ cuponInsertado, setCuponInsertado ] = useState([])
+    const [ pedidos, setPedidos] = useState(carrito);
     const [ envio, setEnvio] = useState('domicilio');
 
     const [ snackbar, setSnackbar ] = useState({
@@ -85,8 +89,57 @@ export default function Carrito(props) {
 
     const classes = useStyles();
 
+    //TRAER CUPONES DE LA BASE DE DATOS PARA COMENZAR LA CONDICION
+    const getCupones = async () => {
+        await clienteAxios
+		.get(`/coupon/actionCoupons/${empresa._id}`)
+        .then((res) => {
+            setCuponesBase(res.data)
+        }).catch((err) => {
+            
+        });
+    };
+
+
+    
+    const canjearCodigo = (codigoInsertado) => {
+        var descuento = 0;
+        var subtotal = 0;
+        var porcentaje = 0;
+        //al dar actualizar actualiza el precio
+        if (!varDescuento) {
+            cuponesBase.forEach(codigo => {
+                if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true) {
+                    const expirationDate = (fechaCaducidad(codigo.expirationDate));
+                    if (formatoFecha(fechaActual()) === formatoFecha(expirationDate)) {
+                        return setSnackbar({
+                            open: true,
+                            mensaje: "Lo sentimos este codigo ya expiro",
+                            status: 'error'
+                        });
+                    }else{
+                        porcentaje = parseInt(codigo.discountCoupon);
+                        descuento = (porcentaje/100);
+                        const arrayDescuento = {
+                            "bloqueo": true, 
+                            "codigo": codigo.couponName, 
+                            "porcentaje": descuento
+                        };
+                        return localStorage.setItem("codigoDescuento", JSON.stringify(arrayDescuento));
+                    }
+                }else{
+                     
+                }
+            });
+        }else{
+            localStorage.removeItem("codigoDescuento");
+        }
+    }
+
+
     function borrarCarrito() {
         localStorage.removeItem("carritoUsuario");
+        localStorage.removeItem("codigoDescuento");
         setOpen(false);
         setTimeout(() => { 
         localStorage.removeItem('usuario');
@@ -120,8 +173,6 @@ export default function Carrito(props) {
                 [e.target.name]: e.target.value
             });
         }
-        
-		
         localStorage.setItem('usuario', JSON.stringify({...usuario, [e.target.name]: e.target.value.replace('#', 'No. ')}))
 	};
 
@@ -174,35 +225,47 @@ export default function Carrito(props) {
         }
     }
     
-    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : (render_tipos)}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+ costos_envios() +`` : '' } %0ATotal de mi pedido:  $${formatoMexico(envio === "domicilio" ? (total + costos_envios()) : total)}%0A 
+    const mensaje = (`¡Hola! me comunico desde *COMODY* y me gustaria realizar el siguiente pedido:%0A%0A${pedidos === null ? null : (render_tipos)}  ${envio === 'domicilio' ? `%0ACosto de envio: $`+ costos_envios() +`` : '' } %0ATotal de mi pedido:  $${envio === "domicilio" ? (total + costos_envios()) : total}%0A${!varDescuento ? '' : 'Codigo aplicado: ' + varDescuento.codigo + '%0A'  }
         ${envio === 'domicilio' ? (`%0AA mi domicilio `+(!usuario ? "" : (usuario.domicilio))+` , Col. `+(!usuario ? "" : (usuario.colonia))+`.%0A `) : `%0A Recogeré mi pedido en sucursal. %0A` }
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`);
 
-
     useEffect(() => {
+        getCupones();
         sucursal_elegida();
-			var subtotal = 0;
-			var total = 0;
 
-            var subTotalClases = 0;
-            var totalClasificacion = 0;
+        var subtotal = 0;
+        var total = 0;
 
-            if(pedidos === null){
-                return null
-            }else{
-                pedidos.forEach((res) => {
-                    subtotal += res.precio * res.cantidad;
-                    total = subtotal;
-                    res.clases.forEach(clases => {
-                        subTotalClases += (clases.totalClasificacion * res.cantidad)
-                        totalClasificacion = subTotalClases ;
-                    });
+        var subTotalClases = 0;
+        var totalClasificacion = 0;
+
+        var subTotalDescuento = 0;
+        var totalConClases = 0;
+        var porDescuento = !varDescuento ? 0 : varDescuento.porcentaje;
+
+        if(pedidos === null){
+            return null
+        }else{
+            pedidos.forEach((res) => {
+                subtotal += res.precio * res.cantidad;
+                total = subtotal;
+                res.clases.forEach(clases => {
+                    subTotalClases += (clases.totalClasificacion * res.cantidad)
+                    totalClasificacion = subTotalClases ;
+                });
             })
-                
-                setTotal(total+totalClasificacion);
+            if (varDescuento && varDescuento.bloqueo === true) {
+                totalConClases = total + totalClasificacion;
+                subTotalDescuento = (totalConClases * porDescuento);
+                setTotal(totalConClases - subTotalDescuento);
+            }else{
+                setTotal(total + totalClasificacion);
             }
+        }
 		},[pedidos, carrito, total]
 	);
+
+
 
     const handleAlignment = (e) => {
         setEnvio(e);
@@ -249,7 +312,7 @@ export default function Carrito(props) {
             setSnackbar({
                 open: true,
                 mensaje: "Algo salio mal, intentalo de Nuevo",
-                status: 'success'
+                status: 'error'
             });
         });
     };
@@ -336,11 +399,34 @@ export default function Carrito(props) {
                         })
                     )
                     }
+
+                    <Grid container item lg={12}>
+                        <Box p={1} mt={1 }>
+                            <TextField
+                                label="Código Pormocional" 
+                                variant="outlined"
+                                defaultValue={!varDescuento ? "" : varDescuento.codigo}
+                                disabled={!varDescuento ? null : varDescuento.bloqueo}
+                                color="primary"
+                                onChange={(e) => setCuponInsertado(e.target.value)}
+                            />
+                        </Box>
+                        <Box display="flex" alignContent="center" alignItems="center" justifyContent="center" textAlign="center">
+                            <Button
+                                variant="contained" 
+                                color="primary"
+                                onClick={() => canjearCodigo(cuponInsertado)}
+                            >
+                                {!varDescuento ? "Aplicar" : "Elimnar"}
+                            </Button>
+                        </Box>
+                    </Grid>
+
                     <Grid item lg={12}>
                         <Box p={1} display="flex" justifyContent="center">
                             <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
                                 TOTAL: $
-                                {formatoMexico(envio === "domicilio" ? (total + parseInt(empresa.priceEnvio)) : total)}
+                                {formatoMexico(total)}
                             </Typography>
                         </Box>
                     </Grid>
@@ -389,45 +475,6 @@ export default function Carrito(props) {
                     <Box display="flex" justifyContent="center" >
                         <Card>
                             <Grid item lg={12}>
-                                {/* <Box pr={3} pl={3} pb={1} textAlign="center">
-                                    <Alert severity="warning" anchorO>
-                                        <Typography component="spam">
-                                            Deseas recoger en la sucursal elige la opcion apropiada
-                                        </Typography>
-                                    </Alert>
-                                </Box> */}
-                                {/* <Box textAlign="center">
-                                    <ToggleButtonGroup
-                                        value={envio}
-                                        exclusive
-                                        onChange={handleAlignment}
-                                        aria-label="text alignment"
-                                    >
-
-                                        <ToggleButton value="domicilio">
-                                            <DirectionsBikeIcon  color="primary"/>
-                                            <Typography style={{fontWeight: 600}} component={'span'}>Servicio a domicilio</Typography>
-                                        </ToggleButton>
-
-                                        <ToggleButton value="sucursal"  >
-                                            <FastfoodIcon color="primary"/>
-                                            <Typography style={{fontWeight: 600}} component={'span'}>Recoger en la Sucursal</Typography>
-                                        </ToggleButton>
-                                    </ToggleButtonGroup>
-
-                                <FormControl component="fieldset">
-                                    <Box textAlign="center" p={2}>
-                                        <Typography variant="h6"> De que forma deseas tu pedido: </Typography>
-                                    </Box>
-
-                                    <Box p={1} display="flex" justifyContent="center" textAlign="center">
-                                        <RadioGroup aria-label="gender" name="gender1" value={envio} onChange={handleAlignment}>
-                                            <FormControlLabel value="domicilio" control={<Radio />} label="Domicilio" />
-                                            <FormControlLabel value="sucursal" control={<Radio />} label="Recoger Sucursal" />
-                                        </RadioGroup>
-                                    </Box>
-                                </FormControl>
-                                </Box> */}
                                 <Box>
                                     {/* <form noValidate autoComplete="off"> */}
                                         <Box mt={2} textAlign="center">
@@ -630,7 +677,7 @@ export default function Carrito(props) {
                                     Realizar Pedido
                                 </Button>
                             </a>
-                        ) :   sucursalElegida.length === 0||  !carrito || !usuario || !usuario.nombre || !usuario.telefono || !usuario.domicilio || !usuario.colonia  ? (
+                        ) :  sucursalElegida.length === 0||  !carrito || !usuario || !usuario.nombre || !usuario.telefono || !usuario.domicilio || !usuario.colonia  ? (
                             <Button
                                 disabled={true}
                                 variant="contained" 

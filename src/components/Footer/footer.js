@@ -64,7 +64,7 @@ function Footer(props) {
 			return(
                 <Grid container className={classes.fondo}>
                     <Grid item lg={4} xs={12}>
-                        <Box ml={9} dsiplay="flex" textAlign="center" justifyContent="center" alignItems="center">
+                        <Box dsiplay="flex" textAlign="center" justifyContent="center" alignItems="center" alignContent="center">
                             <Box mt={2} p={1} >
                                 <Typography variant="h4">
                                     {empresa.nameCompany}
@@ -72,16 +72,16 @@ function Footer(props) {
                             </Box>
                             <Box display="flex" textAlign="center" justifyContent="center" alignItems="center">
                                 <Box mr={2}>
-                                    <PhoneForwardedIcon style={{fontSize: 35}}/>
+                                    <PhoneForwardedIcon style={{fontSize: 30}}/>
                                 </Box>
-                                <Typography variant="h6">
+                                <Typography variant="body1">
                                     {empresa.phone}
                                 </Typography>
                             </Box>
                             {
                                 empresa.calleNumeroPrin && empresa.coloniaPrin ? (
-                                    <Box p={1}>
-                                        <Typography variant="h6"> 
+                                    <Box mt={1}>
+                                        <Typography variant="body1"> 
                                             Dom. {empresa.calleNumeroPrin}, Col. {empresa.coloniaPrin}
                                         </Typography>
                                     </Box>
@@ -89,13 +89,47 @@ function Footer(props) {
                             }
                             {
                                 empresa.cpPrin && empresa.ciudadPrin &&  empresa.estado ? (
-                                    <Box p={1}>
-                                        <Typography variant="h6">
+                                    <Box>
+                                        <Typography variant="body1">
                                             CP. {empresa.cpPrin}, {empresa.ciudadPrin}, {empresa.estado}
                                         </Typography>
                                     </Box>
                                 ):(null)
                             }
+
+                            <Box display="flex" justifyContent="center" flexWrap="wrap">
+                                { empresa.redesSociales && empresa.redesSociales.facebook ? (
+                                    <Box p={1}>
+                                        <a target="_blank" href={empresa.redesSociales.facebook}>
+                                            <FacebookIcon style={{color: "white",fontSize: 45}}/>
+                                        </a>
+                                    </Box>
+                                ):(
+                                    null
+                                )
+                                }
+                                { empresa.redesSociales && empresa.redesSociales.instagram ? (
+                                    <Box p={1}>
+                                        <a target="_blank" href={empresa.redesSociales.instagram}>
+                                            <InstagramIcon style={{color: "white",fontSize: 45}}/>
+                                        </a>
+                                    </Box>
+                                ):(
+                                    null
+                                )
+                                }
+                                { empresa.redesSociales && empresa.redesSociales.twiter ? (
+                                    <Box p={1}>
+                                        <a target="_blank" href={empresa.redesSociales.twiter}>
+                                            <TwitterIcon style={{color: "white",fontSize: 45}}/>
+                                        </a>
+                                    </Box>
+                                ):(
+                                    null
+                                )
+                                }
+                            </Box>
+
                         </Box>
                     </Grid>
                     <Hidden xsDown>
@@ -114,67 +148,44 @@ function Footer(props) {
                         </Grid>
                     </Hidden>
                     <Grid item lg={4} xs={12}>
-
-                        <Box mt={2} p={1} textAlign="center"> 
-                            <Typography variant="h6">
-                            Encuentranos en nuestras redes:
-                            </Typography>
-                        </Box>
-                       
-                        <Box display="flex" justifyContent="center" flexWrap="wrap">
-                            { empresa.redesSociales && empresa.redesSociales.facebook ? (
-                                <Box p={1}>
-                                    <a target="_blank" href={empresa.redesSociales.facebook}>
-                                        <FacebookIcon style={{color: "white",fontSize: 60}}/>
-                                    </a>
-                                </Box>
-                            ):(
-                                null
-                            )
-                            }
-                            { empresa.redesSociales && empresa.redesSociales.instagram ? (
-                                <Box p={1}>
-                                    <a target="_blank" href={empresa.redesSociales.instagram}>
-                                        <InstagramIcon style={{color: "white",fontSize: 60}}/>
-                                    </a>
-                                </Box>
-                            ):(
-                                null
-                            )
-                            }
-                            { empresa.redesSociales && empresa.redesSociales.twiter ? (
-                                <Box p={1}>
-                                    <a target="_blank" href={empresa.redesSociales.twiter}>
-                                        <TwitterIcon style={{color: "white",fontSize: 60}}/>
-                                    </a>
-                                </Box>
-                            ):(
-                                null
-                            )
-                            }
-                        </Box>
                         {
                             empresa?.horariosActive === true ? (
-                                <Box display="flex" justifyContent="center" mt={3}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleClickOpen}
-                                    >
-                                        Horario de atencion
-                                    </Button>
-                                </Box>
+                                    <>
+                                        <Box p={1} textAlign="center">
+                                            <Typography  variant="h6">
+                                                Nuestros Horarios de Atención
+                                            </Typography>
+                                        </Box>
+                                        <Box p={1}>
+                                            {empresa?.horario?.map((dia) => (
+                                                <Box display="flex" alignItem="center" justifyContent="center">
+                                                    <Typography style={{fontWeight: 600}} variant="body1" >
+                                                        {dia.dia}:   
+                                                    </Typography>
+                                                    <Typography variant="body1">
+                                                        {dia.close === true ? (
+                                                                dia.horarioInicial + "  a  " + dia.horarioFinal
+                                                            ) :
+                                                            (
+                                                                "Cerrado"
+                                                            )
+                                                        }
+                                                    </Typography>
+                                                </Box>
+                                            ))}
+                                        </Box>
+                                    </>
                             ) : null
                         }
                         
                     </Grid>
-                    <Grid item lg={12} xs={12}>
+                    {/* <Grid item lg={12} xs={12}>
                         <Box textAlign="center">
                             <Typography variant="body1">
                                 Todos los derechos reservados de COMODY, AB Soluciones Empresariales 2021
                             </Typography>
                         </Box>
-                    </Grid>
+                    </Grid> */}
 
                     <Dialog
                          open={open} 

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-
-import { Box, Button, Card, ClickAwayListener, Container, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Menu, MenuItem, MenuList, Paper, Typography, withStyles } from '@material-ui/core'
-import LastPageIcon from '@material-ui/icons/LastPage';
+import React, { useContext, useEffect, useState } from 'react'
+import { Box, Button, Container, Grid, Hidden, Menu, MenuItem, Typography, withStyles } from '@material-ui/core'
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
-
 import useStyles from  './styles';
 import clienteAxios from '../../../config/axios';
-import { PlayCircleFilledWhiteRounded } from '@material-ui/icons';
 import { withRouter } from 'react-router';
+import { verificarDiasLaborales } from '../../../config/reuserFunction';
+import { MenuContext } from '../../../context/menuContext';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const StyledMenu = withStyles({
     paper: {
@@ -41,7 +40,8 @@ const StyledMenu = withStyles({
   }))(MenuItem);
 
 function Categorias(props) {
-    const {empresa, slug} = props;
+    const { empresa } = useContext(MenuContext);
+    const [diaLaboral, setDiaLaboral] = useState();
     const idEmpresa = localStorage.getItem('idEmpresa');
     const [categorias , setCategorias] = useState([]);
 
@@ -58,12 +58,17 @@ function Categorias(props) {
     useEffect(() => {
 		// consultarCates();
         consultaNuevaCategorias();
-	}, [])
+        setDiaLaboral(verificarDiasLaborales(empresa));
+	}, [empresa])
 
+    function Alert(props) {
+
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
     
+    }
     const render = categorias.map((categoria, index) => {
         return(
-            <Lista key={index} slug={slug} empresa={empresa} categoria={categoria} props={props} />
+            <Lista key={index} slug={empresa.slug} diaLaboral={diaLaboral} empresa={empresa} categoria={categoria} props={props} />
         )
     })
 
@@ -71,6 +76,15 @@ function Categorias(props) {
         <div>
             <Container maxWidth="xl">
                 <Grid container justify="center">
+                    {
+                        diaLaboral === true ? (
+                            <Hidden mdUp>
+                                <Box p={1}>
+                                    <Alert severity="warning">Lo sentimos el dia de hoy no Laboramos</Alert>
+                                </Box>
+                            </Hidden>
+                        ) : null
+                    }
                     {render}
                 </Grid>
 			</Container>
@@ -78,45 +92,62 @@ function Categorias(props) {
     )
 }
 
-function Lista({categoria, props, empresa, slug}) {
-    const [ancho, setAncho] = useState(null);
-    const classes = useStyles();
-
-    const handleClick = (event) => {
-        setAncho(event.currentTarget);
-    };
+function Lista({categoria, empresa, props, diaLaboral, slug}) {
     
-    const handleClose = () => {
-        setAncho(null);
-    };
-
+    const classes = useStyles();
 
     //SE SUSTITUYO Y COMENTO LA RUTA DE CATEGORIAS PARA PODER TOMAR LA NUEVA CREADA CON TODO EL AGRUPAMIENTO DE PRODUCTOS
     return(
         <Grid key={categoria._id} className={classes.paper} item lg={3} md={6} xs={12}>
-            <Button
-                className={classes.root}
-                aria-controls="customized-menu"
-                style={{textTransform: 'none'}}
-                aria-haspopup="true"
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                    props.history.push(`/${slug}/${empresa}/categorias/${categoria.category}`)
-                }}  
-                // onClick={(e) =>
-                //     handleClick(e)
-                // }
-            >
-                <Box>
-                    <RestaurantMenuIcon className={classes.large}/>
-                </Box>
-                <Box>
-                    <Typography variant="h5">
-                        {categoria.category}
-                    </Typography>
-                </Box>
-            </Button>
+            {
+                diaLaboral === true ? (
+                    <>
+                    
+                        <Button
+                            className={classes.root}
+                            aria-controls="customized-menu"
+                            style={{textTransform: 'none'}}
+                            aria-haspopup="true"
+                            variant="contained"
+                            color="primary"
+                            disabled={true}
+                        >
+                            <Box>
+                                <RestaurantMenuIcon className={classes.large}/>
+                            </Box>
+                            <Box>
+                                <Typography variant="h5">
+                                    {categoria.category}
+                                </Typography>
+                            </Box>
+                        </Button>
+                    </>
+                ) : (
+                    <Button
+                        className={classes.root}
+                        aria-controls="customized-menu"
+                        style={{textTransform: 'none'}}
+                        aria-haspopup="true"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            props.history.push(`/${slug}/${empresa._id}/categorias/${categoria.category}`)
+                        }}  
+                        // onClick={(e) =>
+                        //     handleClick(e)
+                        // }
+                    >
+                        <Box>
+                            <RestaurantMenuIcon className={classes.large}/>
+                        </Box>
+                        <Box>
+                            <Typography variant="h5">
+                                {categoria.category}
+                            </Typography>
+                        </Box>
+                    </Button>
+                )
+            }
 
             {/* <StyledMenu
                 id={categoria.category}

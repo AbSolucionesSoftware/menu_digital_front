@@ -1,22 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import AgregarCarrito from './agregarCarrito';
-import {formatoMexico} from '../../../config/reuserFunction'
+import {formatoMexico, verificarDiasLaborales} from '../../../config/reuserFunction'
 
-import { Avatar, Box, Button, Dialog,  Divider,  Drawer,  Grid, Hidden, IconButton, Tooltip, withStyles } from '@material-ui/core';
+import { Box, Button, Dialog,  Divider,  Drawer,  Grid, Hidden, IconButton, Tooltip, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import Typography from '@material-ui/core/Typography';
 
-import comody from '../../../img/c.jpeg'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import './styles.scss';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
+import { useContext } from 'react';
+import { MenuContext } from '../../../context/menuContext';
 
 export default function Cards_Platos(props) {
 	const {productos} = props;
+	const { empresa } = useContext(MenuContext);
+	
+	const [diaLaboral, setDiaLaboral] = useState();
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const sesion = Sesion(props, false);
@@ -30,6 +33,14 @@ export default function Cards_Platos(props) {
     const handleClose = (value) => {
         setOpen(false);
     };
+
+	useEffect(() => {
+
+		setDiaLaboral(verificarDiasLaborales(empresa));
+		
+	}, [empresa]);
+
+	
 
 	// const [ extras, setExtras] = useState([]);
 	// var variables
@@ -93,23 +104,39 @@ export default function Cards_Platos(props) {
 											</Grid>
 											{sesion ? (
 												null
-											) : ( 
-												<Grid  item  lg={12}>
-													<Box p={1}>
-														<Button
-															variant="contained" 
-															color="primary" 
-															onClick={() => {
-															handleClickOpen()
-															setagregarProducto(producto)
-															// extrasProductos(producto)
-															}}
-														>
-															Agregar a orden
-															{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
-														</Button>
-													</Box>
-												</Grid>
+											) : (
+												diaLaboral ? (
+													<Grid  item  lg={12}>
+														<Box p={1}>
+															<Button
+																variant="contained" 
+																color="primary"
+																disabled={true}
+															>
+																Día no Laboral
+																{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
+															</Button>
+														</Box>
+													</Grid>
+												):(
+													<Grid  item  lg={12}>
+														<Box p={1}>
+															<Button
+																variant="contained" 
+																color="primary" 
+																onClick={() => {
+																handleClickOpen()
+																setagregarProducto(producto)
+																// extrasProductos(producto)
+																}}
+															>
+																Agregar a orden
+																{/* <AddShoppingCartIcon color="secondary" className={classes.largeCar} /> */}
+															</Button>
+														</Box>
+													</Grid>
+												) 
+												
 											)}
 										</Box>
 									</Grid>	

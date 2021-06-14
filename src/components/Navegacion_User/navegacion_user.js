@@ -11,6 +11,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import SupervisorAccountTwoToneIcon from '@material-ui/icons/SupervisorAccountTwoTone';
+import AssistantIcon from '@material-ui/icons/Assistant';
+
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
@@ -127,6 +129,18 @@ export default function Navegacion_User(props) {
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
+						<ListItem button onClick={handleClickOpen}>
+							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
+							<Typography variant="h2">
+								Compartir Menú
+							</Typography>
+						</ListItem>
+						<ListItem button onClick={clickOpen}>
+							<ListItemIcon><CropFreeIcon/></ListItemIcon>
+							<Typography variant="h2">
+								Generar Codigo QR
+							</Typography>
+						</ListItem>
 						<ListItem button component={Link} to={'/user/sucursales'}>
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
 							<Typography variant="h2">
@@ -141,18 +155,13 @@ export default function Navegacion_User(props) {
 							</Typography>
 						</ListItem>
 
-						<ListItem button onClick={handleClickOpen}>
-							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
+						<ListItem button component={Link} to={'/user/cupones'}>
+							<ListItemIcon><AssistantIcon/></ListItemIcon>
 							<Typography variant="h2">
-								Compartir Menú
+							Agregar/Ver/Editar Códigos
 							</Typography>
 						</ListItem>
-						<ListItem button onClick={clickOpen}>
-							<ListItemIcon><CropFreeIcon/></ListItemIcon>
-							<Typography variant="h2">
-								Generar Codigo QR
-							</Typography>
-						</ListItem>
+
 						<ListItem button component={Link} to="/user/menu" onClick={handleDrawerToggle}>
 							<ListItemIcon><RestaurantMenuIcon/></ListItemIcon>
 							<Typography variant="h2">
@@ -237,6 +246,18 @@ export default function Navegacion_User(props) {
 								Ver mi menú digital
 							</Typography>
 						</ListItem>
+						<ListItem button onClick={handleClickOpen}>
+							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
+							<Typography variant="h2">
+								Compartir Menú
+							</Typography>
+						</ListItem>
+						<ListItem button onClick={clickOpen}>
+							<ListItemIcon><CropFreeIcon/></ListItemIcon>
+							<Typography variant="h2">
+								Generar Codigo QR
+							</Typography>
+						</ListItem>
 						<ListItem button component={Link} to={'/user/sucursales'}>
 							<ListItemIcon><HomeWorkIcon/></ListItemIcon>
 							<Typography variant="h2">
@@ -249,16 +270,10 @@ export default function Navegacion_User(props) {
 							Agregar/Ver/Editar Pedidos
 							</Typography>
 						</ListItem>
-						<ListItem button onClick={handleClickOpen}>
-							<ListItemIcon><WhatsAppIcon/></ListItemIcon>
+						<ListItem button component={Link} to={'/user/cupones'}>
+							<ListItemIcon><AssistantIcon/></ListItemIcon>
 							<Typography variant="h2">
-								Compartir Menú
-							</Typography>
-						</ListItem>
-						<ListItem button onClick={clickOpen}>
-							<ListItemIcon><CropFreeIcon/></ListItemIcon>
-							<Typography variant="h2">
-								Generar Codigo QR
+							Agregar/Ver/Editar Códigos
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">

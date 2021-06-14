@@ -14,6 +14,7 @@ import Categorias from '../pages/Users/Categorias/categorias'
 import Clasificaciones from '../pages/Users/Clasificaciones/clasificaciones'
 import Sucursales from '../pages/Users/Sucursales/sucursales'
 import Pedidos from '../pages/Users/Pedidos/pedidos'
+import Cupones from '../pages/Users/Cupones/cupones'
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
@@ -91,6 +92,11 @@ const routes = [
 			{
 				path: '/user/pedidos',
 				component: Pedidos,
+				exact: true,
+			},
+			{
+				path: '/user/cupones',
+				component: Cupones,
 				exact: true,
 			},
 			{

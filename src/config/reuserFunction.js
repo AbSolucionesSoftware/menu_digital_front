@@ -1,3 +1,4 @@
+
 export const formatoMexico = (number) => {
 	if (!number) {
 		return null;
@@ -14,11 +15,60 @@ export const formatoMexico = (number) => {
 	}
 };
 
-export const formatoFecha = (fecha) => {
+export const fechaActual = () => {
+	var fecha = new Date();
+    const añoActual = fecha.getFullYear();
+    const hoy = fecha.getDate();
+    const mesActual = fecha.getMonth() + 1;
+
+    const fechaActual = añoActual + "-" + mesActual + "-" +  hoy;
+	return fechaActual;
+}
+
+export const fechaCaducidad = (fecha) => {
 	if (!fecha) {
 		return null;
 	} else {
 		var newdate = new Date(fecha);
-		return newdate.toLocaleDateString('es-MX', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
+		const añoActual = newdate.getFullYear();
+		const mesActual = newdate.getMonth() + 1;
+		const hoy = newdate.getDate() + 1;
+		const fechaCaducidad = añoActual + "-" + mesActual + "-" +  (hoy+1);
+		return fechaCaducidad;
 	}
 };
+
+export const formatoFecha = (fecha) => {
+	if (!fecha) {
+		return null;
+	} else {
+		var newdate = new Date(fecha.replace('-', '/'));
+		// weekday: 'short',
+		return newdate.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: `numeric` });
+	}
+};
+
+export const verificarDiasLaborales = (datosContx) => {
+	const numero_dia = new Date().getDay();
+
+	if (datosContx?.horariosActive) {
+		if(datosContx !== undefined){
+			const dia_no_laboral = datosContx.horario?.filter(hora => hora.close === false && hora.key === (numero_dia -1));
+
+			if(dia_no_laboral){
+				if (dia_no_laboral.length > 0) {
+					return true;
+				}
+			}else{
+				return false;
+			}
+
+		}else{
+			return false;
+		}
+	}else{
+		return false;
+	}
+
+}
+

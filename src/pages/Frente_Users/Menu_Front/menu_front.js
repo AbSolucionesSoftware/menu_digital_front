@@ -32,13 +32,11 @@ export default function Menu_Front(props) {
 	const classes = useStyles();
 
 	const slug = props.match.params.slug;
-	const login = props.location.pathname;
 
 	const [empresa, setEmpresa] = useState([]);
 	const [ loading, setLoading ] = useState(true);
-	
+
     const {  setNombre, setId, setSlug  } = useContext(ImageContext);
-	
 
 	const consultarDatos = async () => {
 		await clienteAxios
@@ -66,7 +64,7 @@ export default function Menu_Front(props) {
 	if (loading) {
 		return (
 			<>
-			<Spin loading={loading} />
+				<Spin loading={loading} />
 			</>
 		);
 	}
@@ -77,6 +75,7 @@ export default function Menu_Front(props) {
 		if (empresa.public === true) {
 			return(
 				<div> 
+					
 					<Spin loading={loading} />
 						{setNombre(empresa.nameCompany)}
 						{setId(empresa._id)}
