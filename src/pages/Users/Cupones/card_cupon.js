@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActions, CardContent, FormControlLabel, makeStyl
 import React, { useState } from 'react';
 import clienteAxios from '../../../config/axios';
 import Eliminar from './eliminar';
-import { formatoFecha } from '../../../config/reuserFunction'
+import { formatoFechaDiagonales } from '../../../config/reuserFunction'
 import Registro_cupon from './registro_cupon';
 import Spin from '../../../components/Spin/spin';
 
@@ -76,7 +76,7 @@ export default function Card_cupon({ cupon, update, setUpdate }) {
                         </Box>
                         <Box >
                             <Typography color="textSecondary" gutterBottom>
-                                Fecha de Vencimiento: {formatoFecha(cupon.expirationDate)}
+                                Fecha de Vencimiento: {formatoFechaDiagonales(cupon.expirationDate)}
                             </Typography>
                         </Box>
                     </Box>

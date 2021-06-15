@@ -38,15 +38,25 @@ export const fechaCaducidad = (fecha) => {
 	}
 };
 
+
 export const formatoFecha = (fecha) => {
 	if (!fecha) {
 		return null;
 	} else {
-		var newdate = new Date(fecha.replace('-', '/'));
-		// weekday: 'short',
-		return newdate.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: `numeric` });
+		var newdate = new Date(fecha);
+		return newdate.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
 	}
 };
+
+export const formatoFechaDiagonales = (fecha) => {
+	if (!fecha) {
+		return null;
+	} else {
+		var newdate = new Date(fecha.replace('-', '/'));
+		return newdate.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+	}
+};
+
 
 export const verificarDiasLaborales = (datosContx) => {
 	const numero_dia = new Date().getDay();
