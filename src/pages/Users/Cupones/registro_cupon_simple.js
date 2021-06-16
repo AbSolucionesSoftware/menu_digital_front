@@ -58,7 +58,7 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
                 openDialog();
                 setSnackbar({
                     open: true,
-                    mensaje: err.data.message,
+                    mensaje: "Lo siento este nombre de código ya existe",
                     status: 'error'
                 });
             });
@@ -87,7 +87,7 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
                 setUpdate(!update);
                 setSnackbar({
                     open: true,
-                    mensaje: err.data.message,
+                    mensaje: "Lo siento este nombre de código ya existe",
                     status: 'error'
                 });
             });

@@ -51,10 +51,14 @@ export default function Cupones() {
             <Grid item lg={12}>
                 <Box display="flex" justifyContent="center" textAlign="center">
                     <Typography variant="h4">
-                        Códigos Promocionales
+                        Códigos de Descuento
                     </Typography>
                 </Box>
-               
+                <Box textAlign="center" display="flex" justifyContent="center" alignItems="center" p={1}>
+                    <Alert severity="warning"> 
+                        Los códigos de descuento que se apliquen serán sobre el total de la cuenta del usuario, sin afectar los costos de envió.
+                    </Alert>
+                </Box>
             </Grid>
 
             <Grid container justify="center">
