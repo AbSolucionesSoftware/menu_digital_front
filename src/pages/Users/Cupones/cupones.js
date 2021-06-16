@@ -5,7 +5,8 @@ import { useContext } from 'react'
 import clienteAxios from '../../../config/axios'
 import { MenuContext } from '../../../context/menuContext'
 import Card_cupon from './card_cupon'
-import Registro_cupon from './registro_cupon'
+import Registro_cupon_simple from './registro_cupon_simple';
+import Regsitro_cupon_productos from './regsitro_cupon_productos';
 
 
 export default function Cupones() {
@@ -53,15 +54,16 @@ export default function Cupones() {
                         Códigos Promocionales
                     </Typography>
                 </Box>
-                <Box textAlign="center" display="flex" justifyContent="center" alignItems="center" p={1}>
-                    <Alert severity="warning"> 
-                        Los códigos promocionales que se apliquen seran sobre el total de la cuenta del usuario, sin afectar los costos de envio.
-                    </Alert>
-                </Box>
+               
             </Grid>
 
             <Grid container justify="center">
-                <Registro_cupon tipo={'Nuevo'} setUpdate={setUpdate} update={update} />
+                <Box>
+                    <Registro_cupon_simple tipo={'Nuevo'} setUpdate={setUpdate} update={update} />
+                </Box>
+                <Box>
+                    <Regsitro_cupon_productos tipo={'Nuevo'} setUpdate={setUpdate} update={update} />
+                </Box>
             </Grid>
 
             <Grid container justify="center">

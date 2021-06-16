@@ -293,8 +293,10 @@ export default function Carrito(props) {
         "estadoPedido": "Realizado",
         "sucursal": empresa.sucursalesActive ? datosSucursal.nombreSucursal : "",
         "pedido": carrito ? carrito : "",
-        "totalPedido": envio === "domicilio" ? (total + costos_envios()) : total
+        "totalPedido": envio === "domicilio" ? (total + costos_envios()) : total,
+        "cupon": !varDescuento ? "" : varDescuento.codigo
     }
+    
 
     const crearPedido = async () => {
         await clienteAxios

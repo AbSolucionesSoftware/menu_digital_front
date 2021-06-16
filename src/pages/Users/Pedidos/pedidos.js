@@ -171,6 +171,7 @@ export default function Pedidos() {
                             <TableCell align="center" className={ classes.tituloTable }>Tipo Envio</TableCell>
                             <TableCell align="center" className={ classes.tituloTable }>Domicilio</TableCell>
                             <TableCell align="center" className={ classes.tituloTable }>Estatus</TableCell>
+                            <TableCell align="center" className={ classes.tituloTable }>Codigo Promo.</TableCell>
                             <TableCell align="center" className={ classes.tituloTable }>Total</TableCell>
                             <TableCell align="center" className={ classes.tituloTable }>Detalles</TableCell>
                         </TableRow>
@@ -197,6 +198,7 @@ export default function Pedidos() {
                                     }    
                                     </TableCell>
                                     <TableCell align="center"> {pedido.estadoPedido} </TableCell>
+                                    <TableCell align="center"> {pedido.cupon} </TableCell>
                                     <TableCell align="center"> ${formatoMexico(pedido.totalPedido)} </TableCell>
                                     <TableCell align="center">  
                                         <Button

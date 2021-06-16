@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import clienteAxios from '../../../config/axios';
 import Eliminar from './eliminar';
 import { formatoFechaDiagonales } from '../../../config/reuserFunction'
-import Registro_cupon from './registro_cupon';
+import Registro_cupon from './registro_cupon_simple';
 import Spin from '../../../components/Spin/spin';
 
 const useStyles = makeStyles((theme) => ({

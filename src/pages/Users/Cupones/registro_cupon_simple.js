@@ -1,4 +1,5 @@
 import { Box, Grid,TextField, Button, Dialog, DialogContent, Typography} from '@material-ui/core'
+import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
@@ -8,7 +9,7 @@ import { fechaActual } from '../../../config/reuserFunction';
 import { MenuContext } from '../../../context/menuContext';
 
 
-export default function Registro_cupon({update, setUpdate, tipo, cupon}) {
+export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) {
     const { setRecargar} = useContext(MenuContext);
 
     const company = JSON.parse(localStorage.getItem('user'));
@@ -120,13 +121,13 @@ export default function Registro_cupon({update, setUpdate, tipo, cupon}) {
 			/>
             <Spin loading={loading} />
             <Grid>
-                <Box p={1}>
+                <Box p={2}>
                     <Button
                         onClick={() => openDialog()}
                         variant={tipo === "Nuevo" ? "outlined" : "contained"} 
                         color={tipo === "Nuevo" ? "primary" : "secondary"} 
                     >
-                        {tipo === "Nuevo" ? "Registrar Código" : "Editar"} 
+                        {tipo === "Nuevo" ? "Registrar Código General" : "Editar"} 
                     </Button>
                 </Box>
             </Grid>
@@ -135,6 +136,7 @@ export default function Registro_cupon({update, setUpdate, tipo, cupon}) {
                 open={open}
                 onClose={openDialog}
             >
+                
                 <DialogContent>
                     <Grid container item lg={12} justify="center">
                         <Box>
@@ -143,6 +145,11 @@ export default function Registro_cupon({update, setUpdate, tipo, cupon}) {
                             </Typography>
                         </Box>
                     </Grid>
+                    <Box textAlign="center" display="flex" justifyContent="center" alignItems="center" p={1}>
+                        <Alert severity="warning"> 
+                            Los códigos promocionales que se apliquen seran sobre el total de la cuenta del usuario, sin afectar los costos de envio.
+                        </Alert>
+                    </Box>
                     <Grid container item lg={12} justify="center">
                         <Box display="flex" alignContent="center" textAlign="center" justifyContent="center" flexWrap="wrap">
                             <Box p={2}>
