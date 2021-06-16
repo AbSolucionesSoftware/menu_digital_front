@@ -158,7 +158,7 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to={'/user/cupones'}>
 							<ListItemIcon><AssistantIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Códigos
+							Agregar/Ver/Editar Códigos de Descuento
 							</Typography>
 						</ListItem>
 
@@ -273,7 +273,7 @@ export default function Navegacion_User(props) {
 						<ListItem button component={Link} to={'/user/cupones'}>
 							<ListItemIcon><AssistantIcon/></ListItemIcon>
 							<Typography variant="h2">
-							Agregar/Ver/Editar Códigos
+							Agregar/Ver/Editar Códigos de Descuento
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/user/menu">
