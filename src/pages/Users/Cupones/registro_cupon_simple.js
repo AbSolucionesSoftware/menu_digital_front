@@ -24,6 +24,13 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
 		mensaje: '',
 		status: ''
 	});
+
+    const datosCuponArray = {
+        "couponName" : datosCupon.couponName,
+        "couponLimitado": false,
+        "discountCoupon": datosCupon.discountCoupon,
+        "expirationDate": datosCupon.expirationDate,
+    }
     
     const registrarCodigo = async () => {
         setLoading(true);
@@ -36,7 +43,7 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
         if (tipo === "Actualizar") {
             await clienteAxios
             .put(
-                `/coupon/action/coupon/${datosCupon._id}`, datosCupon,  
+                `/coupon/action/coupon/${datosCupon._id}`, datosCuponArray,  
                 {
                     headers: {
                         Authorization: `bearer ${token}`
@@ -65,7 +72,7 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
         }else{
             await clienteAxios
             .post(
-                `/coupon/actionCoupons/${company._id}`, datosCupon,  
+                `/coupon/actionCoupons/${company._id}`, datosCuponArray,  
                 {
                     headers: {
                         Authorization: `bearer ${token}`

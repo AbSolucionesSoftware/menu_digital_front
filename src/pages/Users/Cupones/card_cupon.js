@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import clienteAxios from '../../../config/axios';
 import Eliminar from './eliminar';
 import { formatoFechaDiagonales } from '../../../config/reuserFunction'
-import Registro_cupon from './registro_cupon_simple';
+import Registro_cupon_simple from './registro_cupon_simple';
 import Spin from '../../../components/Spin/spin';
+import Regsitro_cupon_productos from './regsitro_cupon_productos';
 
 const useStyles = makeStyles((theme) => ({
     details: {
@@ -17,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Card_cupon({ cupon, update, setUpdate }) {
-
+    const company = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
+
     const [loading, setLoading] = useState(false);
     const classes = useStyles();
     const [ snackbar, setSnackbar ] = useState({
@@ -69,6 +71,9 @@ export default function Card_cupon({ cupon, update, setUpdate }) {
                         <Typography  variant="h5" component="h2">
                             Código: {cupon.couponName}
                         </Typography>
+                        <Typography>
+                            Tipo de Codigo: {cupon?.couponLimitado === true ? "Por productos" : "Compra General"}
+                        </Typography>
                         <Box mt={2}>
                             <Typography color="textSecondary" gutterBottom>
                                 Descuento: {cupon.discountCoupon}%
@@ -101,9 +106,15 @@ export default function Card_cupon({ cupon, update, setUpdate }) {
                 <CardContent>
                     <Box display="flex" alignContent="center" textAlign="center" justifyContent="center">
                         <Box p={1}>
-                            <Eliminar cupon={cupon._id} update={update} setUpdate={setUpdate} />
+                            <Eliminar cupon={cupon._id} type={cupon?.couponLimitado} update={update} setUpdate={setUpdate} />
                         </Box>
-                        <Registro_cupon tipo={'Actualizar'} cupon={cupon} />
+                        {
+                            cupon?.couponLimitado === true ? (
+                                <Regsitro_cupon_productos tipo={'Actualizar'} cupon={cupon} />
+                            ) : (
+                                <Registro_cupon_simple tipo={'Actualizar'} cupon={cupon} />
+                            )
+                        }
                     </Box>
                 </CardContent>
             </Card>

@@ -148,7 +148,8 @@ export default function RegistroPlatillo(props) {
 			formData.append('price', platillos.price);
 			formData.append('description', platillos.description);
 			formData.append('imagen', datos.imagen);
-
+			console.log(platillos);
+			console.log(formData);
 			await clienteAxios
 				.post(`/product/${company._id}`, formData, {
 					headers: {

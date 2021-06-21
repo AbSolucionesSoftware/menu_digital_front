@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default function Filtro_Categorias({setCategoria}) {
+export default function Filtro_Categorias({setCategoria, categoria, recargar, setRecargar}) {
     const classes = useStyles();
     const empresa = JSON.parse(localStorage.getItem('user'));
 
@@ -27,9 +27,27 @@ export default function Filtro_Categorias({setCategoria}) {
     useEffect(() => {
         consultaNuevaCategorias();
 	}, [])
-
+    // const onCategoria = (cate) => {
+    //     setCategoria(cate);
+    // }
     const render = categorias.map((categoria, index) => (
-        <Lista categoria={categoria} setCategoria={setCategoria}/>
+        <MenuItem
+            key={index}
+            aria-controls="customized-menu"
+            style={{textTransform: 'none'}}
+            aria-haspopup="true"
+            variant="contained"
+            color="primary"
+            value={categoria.category}
+            onClick={() =>
+                {
+                    setCategoria(categoria.category)
+                    setRecargar(!recargar)
+                }
+            }
+        >
+            {categoria.category}
+        </MenuItem>
     ))
 
     return (
@@ -37,9 +55,9 @@ export default function Filtro_Categorias({setCategoria}) {
             <Grid>
                 <Box p={1}>
                     <FormControl variant="outlined">
-                        <InputLabel >Categorias</InputLabel>
+                        <InputLabel value="Categorias" >Categorias</InputLabel>
                         <Select
-                            // value=""
+                            value={categoria}
                             className={classes.select}
                             label="Categorias"
                         >
@@ -53,31 +71,3 @@ export default function Filtro_Categorias({setCategoria}) {
     )
 }
 
-function Lista({categoria, setCategoria}) {
-    
-
-    const onCategoria = (cate) => {
-        setCategoria(cate);
-    }
-
-    return(
-        <MenuItem
-            aria-controls="customized-menu"
-            style={{textTransform: 'none'}}
-            aria-haspopup="true"
-            variant="contained"
-            color="primary"
-            value={categoria.category}
-            // onChange={(e) => console.log(e.target.value)}
-            // setCategoria(categoria.category)
-            // onClick={() => {
-            //     props.history.push(`/${slug}/${empresa._id}/categorias/${categoria.category}`)
-            // }}  
-            onClick={() =>
-                onCategoria(categoria.category)
-            }
-        >
-            {categoria.category}
-        </MenuItem>
-    )
-}

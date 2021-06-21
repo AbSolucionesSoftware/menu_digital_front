@@ -109,7 +109,7 @@ export default function Carrito(props) {
         //al dar actualizar actualiza el precio
         if (!varDescuento) {
             cuponesBase.forEach(codigo => {
-                if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true) {
+                if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true && codigo.couponLimitado === false) {
                     const expirationDate = (fechaCaducidad(codigo.expirationDate));
                     if (formatoFecha(fechaActual()) === formatoFecha(expirationDate)) {
                         return setSnackbar({

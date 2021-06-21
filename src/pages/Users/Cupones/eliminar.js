@@ -7,10 +7,11 @@ import clienteAxios from '../../../config/axios';
 import { MenuContext } from '../../../context/menuContext';
 
 
-export default function Eliminar({cupon}){
+export default function Eliminar({cupon, type}){
 
 	const token = localStorage.getItem('token');
-
+    const company = JSON.parse(localStorage.getItem('user'));
+	
 	const { setRecargar} = useContext(MenuContext);
 	
 	const [ loading, setLoading ] = useState(false);
@@ -36,31 +37,60 @@ export default function Eliminar({cupon}){
 
 	const eliminarPlatilloBD = async (idPlatillo) => {
 		setLoading(true);
-        await clienteAxios
-			.delete(`/coupon/action/coupon/${idPlatillo}`, {
-                headers: {
-					Authorization: `bearer ${token}`
-				}
-            })
-			.then((res) => {
-				setRecargar(true);
-                setLoading(false);
-                setResourceDel({open: false, resource: ''});
-				setSnackbar({
-					open: true,
-					mensaje: res.data.message,
-					status: 'success'
+		if (type === false) {
+			await clienteAxios
+				.delete(`/coupon/action/coupon/${idPlatillo}`, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
+				})
+				.then((res) => {
+					setRecargar(true);
+					setLoading(false);
+					setResourceDel({open: false, resource: ''});
+					setSnackbar({
+						open: true,
+						mensaje: res.data.message,
+						status: 'success'
+					});
+				})
+				.catch((err) => {
+					setRecargar(true);
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: err.data.message,
+						status: 'error'
+					});
 				});
-			})
-			.catch((err) => {
-				setRecargar(true);
-                setLoading(false);
-				setSnackbar({
-					open: true,
-					mensaje: err.data.message,
-					status: 'error'
+		}else{
+			await clienteAxios
+				.delete(`/coupon/action/CouponEspecial/company/${company._id}/coupon/${idPlatillo}`, {
+					headers: {
+						Authorization: `bearer ${token}`
+					}
+				})
+				.then((res) => {
+					setRecargar(true);
+					setLoading(false);
+					setResourceDel({open: false, resource: ''});
+					setSnackbar({
+						open: true,
+						mensaje: res.data.message,
+						status: 'success'
+					});
+				})
+				.catch((err) => {
+					setRecargar(true);
+					setLoading(false);
+					setSnackbar({
+						open: true,
+						mensaje: err.data.message,
+						status: 'error'
+					});
 				});
-			});
+		}
+		
 	}
 	
     
