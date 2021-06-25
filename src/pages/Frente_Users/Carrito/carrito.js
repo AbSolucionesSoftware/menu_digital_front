@@ -72,6 +72,7 @@ export default function Carrito(props) {
     const [ cliente, setCliente] = useState([]);
 	const [ validate, setValidate ] = useState(false);
     const [ upload, setUpload ] = useState(false);
+    const [control, setControl] = useState(false);
     const [ total, setTotal] = useState(0);
 
     const [ sucursalElegida, setSucursalElegida] = useState([]);
@@ -95,11 +96,24 @@ export default function Carrito(props) {
         await clienteAxios
 		.get(`/coupon/actionCoupons/${empresa._id}`)
         .then((res) => {
-            setCuponesBase(res.data)
+            setCuponesBase(res.data);
         }).catch((err) => {
             
         });
     };
+
+    const verificarCuponesExistentes = async () => {
+        for (let i = 0; i < cuponesBase.length; i++) {
+            if (cuponesBase[i]?.couponLimitado === false) {
+                if(cuponesBase[i]?.activeCoupon === true){
+                    setControl(true);
+                }
+            }else{
+                return null
+            }
+           
+        }
+    }
 
     const canjearCodigo = async (codigoInsertado) => {
         var descuento = 0;
@@ -137,43 +151,6 @@ export default function Carrito(props) {
             localStorage.removeItem("codigoDescuento");
         }
 
-        // if (!varDescuento) {
-        //     cuponesBase.forEach(codigo => {
-        //         if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true && codigo.couponLimitado === false) {
-
-        //             const expirationDate = (fechaCaducidad(codigo.expirationDate));
-
-        //             var caducidad = new Date(expirationDate); //31 de diciembre de 2015
-        //             var actual = new Date(fechaActual());
-
-        //             if (caducidad < actual) {
-        //                 return setSnackbar({
-        //                     open: true,
-        //                     mensaje: "Lo sentimos este codigo ya expiro",
-        //                     status: 'error'
-        //                 });
-        //             }else{
-        //                 porcentaje = parseInt(codigo.discountCoupon);
-        //                 descuento = (porcentaje/100);
-        //                 const arrayDescuento = {
-        //                     "bloqueo": true, 
-        //                     "codigo": codigo.couponName, 
-        //                     "porcentaje": descuento
-        //                 };
-        //                 setSnackbar({
-        //                     open: true,
-        //                     mensaje: "Código aplicado",
-        //                     status: 'success'
-        //                 });
-        //                 return localStorage.setItem("codigoDescuento", JSON.stringify(arrayDescuento));
-        //             }
-        //         }else{
-                    
-        //         }
-        //     });
-        // }else{
-        //     localStorage.removeItem("codigoDescuento");
-        // }
     }
 
 
@@ -271,6 +248,7 @@ export default function Carrito(props) {
         %0AA nombre de ${!usuario ? "" : usuario.nombre}, mi telefono ${!usuario ? "" : usuario.telefono}.%0A %0AGracias`);
 
     useEffect(() => {
+        verificarCuponesExistentes();
         getCupones();
         sucursal_elegida();
 
@@ -312,15 +290,14 @@ export default function Carrito(props) {
 
     function getSteps() {
         if (empresa.sucursalesActive) {
-            return ['Tu Orden','Envio', 'Datos Cliente', 'Sucursal'];
+            return ['Tu Orden', 'Código Promoción', 'Envio', 'Datos Cliente', 'Sucursal'];
         }else{
-            return ['Tu Orden', 'Envio', 'Datos Cliente'];
+            return ['Tu Orden', 'Código Promoción', 'Envio', 'Datos Cliente'];
         }
     }
 
     const handleChangeSucursal = (event) => {
         setSucursalElegida(event.target.value);
-       
     };
 
     const pedido = {
@@ -441,28 +418,6 @@ export default function Carrito(props) {
                     )
                     }
 
-                    <Grid container item lg={12}>
-                        <Box p={1} mt={1 }>
-                            <TextField
-                                label="Código Pormocional" 
-                                variant="outlined"
-                                defaultValue={!varDescuento ? "" : varDescuento.codigo}
-                                disabled={!varDescuento ? null : varDescuento.bloqueo}
-                                color="primary"
-                                onChange={(e) => setCuponInsertado(e.target.value)}
-                            />
-                        </Box>
-                        <Box display="flex" alignContent="center" alignItems="center" justifyContent="center" textAlign="center">
-                            <Button
-                                variant="contained" 
-                                color="primary"
-                                onClick={() => canjearCodigo(cuponInsertado)}
-                            >
-                                {!varDescuento ? "Aplicar" : "Elimnar"}
-                            </Button>
-                        </Box>
-                    </Grid>
-
                     <Grid item lg={12}>
                         <Box p={1} display="flex" justifyContent="center">
                             <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
@@ -473,7 +428,48 @@ export default function Carrito(props) {
                     </Grid>
                 </Grid>
             );
-            case 1:
+            case 1 :
+                return (
+                    <>
+                        <Grid justify="center" item lg={12}>
+                            <Box textAlign='center'>
+                                <Typography variant='h6'>
+                                    Inserta código promocional de descuento de compra.
+                                </Typography>
+                            </Box>
+                            <Box p={1} textAlign='center'>
+                                <TextField
+                                    label="Código Pormocional" 
+                                    variant="outlined"
+                                    defaultValue={!varDescuento ? "" : varDescuento.codigo}
+                                    disabled={control === false ? (true) : (!varDescuento ? null : varDescuento.bloqueo) }
+                                    color="primary"
+                                    onChange={(e) => setCuponInsertado(e.target.value)}
+                                />
+                            </Box>
+                            
+                            <Box p={1} textAlign='center'>
+                                <Button
+                                    variant="contained" 
+                                    color="primary"
+                                    disabled={control === false ? (true) : (false)}
+                                    onClick={() => {
+                                        canjearCodigo(cuponInsertado)
+                                    }}
+                                >
+                                    {!varDescuento ? "Aplicar" : "Elimnar"}
+                                </Button>
+                            </Box>
+                            <Box p={1} display="flex" justifyContent="center">
+                                <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
+                                    TOTAL: $
+                                    {formatoMexico(total)}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </>
+                );
+            case 2:
                 return (
                     <>
                     <Grid item lg={12}>
@@ -510,7 +506,7 @@ export default function Carrito(props) {
                     </Grid>
                     </>
                 );
-            case 2:
+            case 3:
                 return (
                 <Grid>
                     <Box display="flex" justifyContent="center" >
@@ -664,7 +660,7 @@ export default function Carrito(props) {
                     </Box>
                 </Grid>
             );
-            case 3:
+            case 4:
               return (
                 <>
                 <Grid item lg={12}>
@@ -817,7 +813,7 @@ export default function Carrito(props) {
                             ) : (
                                 <Box p={1}>
                                     <Button variant="contained" color="primary" onClick={handleNext}
-                                        disabled={activeStep === 1 ? true : false}
+                                        disabled={activeStep === 2 ? true : false}
                                     >
                                         Siguiente
                                     </Button>
