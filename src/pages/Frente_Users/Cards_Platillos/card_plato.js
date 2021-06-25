@@ -32,6 +32,7 @@ export default function Cards_Platos(props) {
 
     const handleClose = (value) => {
         setOpen(false);
+		localStorage.removeItem("codigoIndividual");
     };
 
 	useEffect(() => {
@@ -226,18 +227,19 @@ export default function Cards_Platos(props) {
 						nombre={agregarProducto.name} 
 						precio={agregarProducto.price}
 						producto={agregarProducto}
-						setOpen={setOpen}  
+						setOpen={setOpen}
 					/>
 				</Drawer>
 			</Hidden>
 			<Hidden smDown>
                 <Dialog open={open} onClose={handleClose}>
 					<AgregarCarrito 
+						
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
 						precio={agregarProducto.price}
 						producto={agregarProducto}
-						setOpen={setOpen}  
+						setOpen={setOpen} 
 					/>
                 </Dialog>
             </Hidden>

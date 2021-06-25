@@ -74,10 +74,11 @@ export default function Carrito(props) {
     const [ upload, setUpload ] = useState(false);
     const [ total, setTotal] = useState(0);
 
-    const [sucursalElegida, setSucursalElegida] = useState([]);
+    const [ sucursalElegida, setSucursalElegida] = useState([]);
     const [ datosSucursal, setDatosSucursal ] = useState([]);
     const [ cuponesBase, setCuponesBase ] = useState([]);
-    const [ cuponInsertado, setCuponInsertado ] = useState([])
+    const [ cuponInsertado, setCuponInsertado ] = useState([]);
+
     const [ pedidos, setPedidos] = useState(carrito);
     const [ envio, setEnvio] = useState('domicilio');
 
@@ -100,46 +101,86 @@ export default function Carrito(props) {
         });
     };
 
-
-    
-    const canjearCodigo = (codigoInsertado) => {
+    const canjearCodigo = async (codigoInsertado) => {
         var descuento = 0;
         var subtotal = 0;
         var porcentaje = 0;
-        //al dar actualizar actualiza el precio
         if (!varDescuento) {
-            cuponesBase.forEach(codigo => {
-                if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true && codigo.couponLimitado === false) {
-                    const expirationDate = (fechaCaducidad(codigo.expirationDate));
-                    if (formatoFecha(fechaActual()) === formatoFecha(expirationDate)) {
-                        return setSnackbar({
-                            open: true,
-                            mensaje: "Lo sentimos este codigo ya expiro",
-                            status: 'error'
-                        });
-                    }else{
-                        porcentaje = parseInt(codigo.discountCoupon);
-                        descuento = (porcentaje/100);
-                        const arrayDescuento = {
-                            "bloqueo": true, 
-                            "codigo": codigo.couponName, 
-                            "porcentaje": descuento
-                        };
-                        return localStorage.setItem("codigoDescuento", JSON.stringify(arrayDescuento));
-                    }
-                }else{
-                     
-                }
-            });
+            await clienteAxios
+                .get(`/coupon/actionVerificar/empresa/${empresa._id}/coupon/${codigoInsertado}`)
+                    .then((res) => {
+                        if (res.data.valor === false) {
+                            setSnackbar({
+                                open: true,
+                                mensaje: res.data.message,
+                                status: 'error'
+                            });
+                        }else{
+                            porcentaje = parseInt(res.data.cupon.discountCoupon);
+                            descuento = (porcentaje/100);
+                            const arrayDescuento = {
+                                "bloqueo": true, 
+                                "codigo": res.data.cupon.couponName, 
+                                "porcentaje": descuento
+                            };
+                            setSnackbar({
+                                open: true,
+                                mensaje: "Código aplicado",
+                                status: 'success'
+                            });
+                            return localStorage.setItem("codigoDescuento", JSON.stringify(arrayDescuento));
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
         }else{
             localStorage.removeItem("codigoDescuento");
         }
+
+        // if (!varDescuento) {
+        //     cuponesBase.forEach(codigo => {
+        //         if (codigo.couponName === codigoInsertado && codigo.activeCoupon === true && codigo.couponLimitado === false) {
+
+        //             const expirationDate = (fechaCaducidad(codigo.expirationDate));
+
+        //             var caducidad = new Date(expirationDate); //31 de diciembre de 2015
+        //             var actual = new Date(fechaActual());
+
+        //             if (caducidad < actual) {
+        //                 return setSnackbar({
+        //                     open: true,
+        //                     mensaje: "Lo sentimos este codigo ya expiro",
+        //                     status: 'error'
+        //                 });
+        //             }else{
+        //                 porcentaje = parseInt(codigo.discountCoupon);
+        //                 descuento = (porcentaje/100);
+        //                 const arrayDescuento = {
+        //                     "bloqueo": true, 
+        //                     "codigo": codigo.couponName, 
+        //                     "porcentaje": descuento
+        //                 };
+        //                 setSnackbar({
+        //                     open: true,
+        //                     mensaje: "Código aplicado",
+        //                     status: 'success'
+        //                 });
+        //                 return localStorage.setItem("codigoDescuento", JSON.stringify(arrayDescuento));
+        //             }
+        //         }else{
+                    
+        //         }
+        //     });
+        // }else{
+        //     localStorage.removeItem("codigoDescuento");
+        // }
     }
 
 
     function borrarCarrito() {
         localStorage.removeItem("carritoUsuario");
         localStorage.removeItem("codigoDescuento");
+        localStorage.removeItem("codigoIndividual");
         setOpen(false);
         setTimeout(() => { 
         localStorage.removeItem('usuario');
@@ -201,7 +242,7 @@ export default function Carrito(props) {
                     ))+ ` )`
                 )
             )) 
-        +` = $` + ((totalClases(pedido) * pedido.cantidad) + (pedido.precio*pedido.cantidad)) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
+        +` = $` + (pedido.total) + (pedido.notas.notas ?  ` (`+ pedido.notas.notas +`)` : "")+ `%0A`
         ))
     
 
@@ -247,25 +288,23 @@ export default function Carrito(props) {
             return null
         }else{
             pedidos.forEach((res) => {
-                subtotal += res.precio * res.cantidad;
+                subtotal += res.total;
                 total = subtotal;
-                res.clases.forEach(clases => {
-                    subTotalClases += (clases.totalClasificacion * res.cantidad)
-                    totalClasificacion = subTotalClases ;
-                });
+                // res.clases.forEach(clases => {
+                //     subTotalClases += (clases.totalClasificacion * res.cantidad)
+                //     totalClasificacion = subTotalClases ;
+                // });
             })
             if (varDescuento && varDescuento.bloqueo === true) {
-                totalConClases = total + totalClasificacion;
-                subTotalDescuento = (totalConClases * porDescuento);
-                setTotal(totalConClases - subTotalDescuento);
+                // totalConClases = total + totalClasificacion;
+                subTotalDescuento = (total * porDescuento);
+                setTotal(total - subTotalDescuento);
             }else{
-                setTotal(total + totalClasificacion);
+                setTotal(total);
             }
         }
 		},[pedidos, carrito, total]
 	);
-
-
 
     const handleAlignment = (e) => {
         setEnvio(e);
@@ -357,7 +396,7 @@ export default function Carrito(props) {
                                             <Typography component={'span'} variant="h2" >{producto.nombre}</Typography>
                                         </Box>
                                         <Box display="flex" alignItems="center" className={classes.column2}>
-                                            ${(totalClases(producto) * producto.cantidad) + (producto.precio * producto.cantidad)}
+                                            ${formatoMexico(producto.total)}
                                         </Box>
                                         <Box  display="flex" alignItems="center" className={classes.column2} >
                                             <IconButton

@@ -32,8 +32,8 @@ export const fechaCaducidad = (fecha) => {
 		var newdate = new Date(fecha);
 		const añoActual = newdate.getFullYear();
 		const mesActual = newdate.getMonth() + 1;
-		const hoy = newdate.getDate() + 1;
-		const fechaCaducidad = añoActual + "-" + mesActual + "-" +  (hoy+1);
+		const hoy = newdate.getDate();
+		const fechaCaducidad = añoActual + "-" + mesActual + "-" +  hoy;
 		return fechaCaducidad;
 	}
 };

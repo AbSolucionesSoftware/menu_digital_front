@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MessageSnackbar from '../../../components/Snackbar/snackbar'
 import Filtro_Categorias from './services/categorias'
 import Spin from '../../../components/Spin/spin'
 import TablaProductosDescuentos from './services/table_Productos'
 import {  Box, Button, Drawer, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import clienteAxios from '../../../config/axios';
+import { MenuContext } from '../../../context/menuContext'
 
 const useStyles = makeStyles({
     table: {
@@ -26,21 +27,23 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 
 
-export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon}) {
+export default function Registro_cupon_productos({ tipo, cupon}) {
     const company = JSON.parse(localStorage.getItem('user'));
+    const { cargarCupones, setCargarCupones } = useContext(MenuContext);
 
     const [categoria, setCategoria] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [productosCate, setProductosCate] = useState([]);
+
+    const [ open, setOpen] = useState(false);
+    const [ loading, setLoading] = useState(false);
     const [ recargar, setRecargar ] = useState(false);
     const [ control, setControl ] = useState(false);
-    const [validate, setValidate] = useState(false)
+    const [ validate, setValidate] = useState(false);
 
     const [ datosCupon, setDatosCupon ] = useState([]);
     const [ selected, setSelected ] = useState([]);
     const [ select, setSelect ] = useState([]);
-    const [productoGuardados, setProductoGuardados] = useState([])
+    const [ productoGuardados, setProductoGuardados] = useState([])
 
 
     const classes = useStyles();
@@ -60,8 +63,15 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
         clienteAxios
             .post(`/product/search/category/`,{company: company._id, category: categoria})
             .then((res) => {
-                setLoading(false)
-                setProductosCate(res.data);
+                setLoading(false);
+
+                const productosDisponibles = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    if ( res.data[i].idCoupon === cupon?._id || !res.data[i].idCoupon) {
+                        productosDisponibles.push(res.data[i])
+                    }
+                }
+                setProductosCate(productosDisponibles);
             })
             .catch((err) => {
                 setLoading(false)
@@ -76,7 +86,7 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
 
     const datosCuponArray = {
         "couponName" : datosCupon.couponName,
-        "couponLimitado": false,
+        "couponLimitado": true,
         "discountCoupon": datosCupon.discountCoupon,
         "expirationDate": datosCupon.expirationDate,
         "productos": productoGuardados.productos
@@ -94,33 +104,61 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
             });
             return null;
         }
+        if (tipo === "Actualizar") {
             await clienteAxios
-                .post(`/coupon/action/newCouponLimited/${company._id}`, datosCuponArray ,)
+                .put(`/coupon/action/CouponEspecial/company/${company._id}/coupon/${cupon._id}`, datosCuponArray,)
                 .then((res) => {
+                    setCargarCupones(true);
                     setSnackbar({
                         open: true,
-                        mensaje: res.data.message,
+                        mensaje: "Cupon editado correctamente",
                         status: 'success'
                     });
-                    setUpdate(!update);
+                    setCategoria([]);
+                    setProductosCate([]);
+                    setSelected([]);
                     setLoading(false);
                 })
                 .catch((err) => {
                     setLoading(false);
-                    setUpdate(!update);
+                    console.log(err);
                     setSnackbar({
                         open: true,
-                        mensaje: err.data.message,
+                        mensaje: "Ocurrio un problema en el servidor",
                         status: 'error'
                     });
                 })
-
+        }else{
+            await clienteAxios
+                .post(`/coupon/action/newCouponLimited/${company._id}`, datosCuponArray ,)
+                .then((res) => {
+                    setCargarCupones(true);
+                    setSnackbar({
+                        open: true,
+                        mensaje: "Código registrado correctamente",
+                        status: 'success'
+                    });
+                    setSelected([]);
+                    setCategoria([]);
+                    setProductosCate([]);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    setSnackbar({
+                        open: true,
+                        mensaje: "Ocurrio un problema en el servidor",
+                        status: 'error'
+                    });
+                })
+        }
     }
 
-    
     useEffect(() => {
         if (cupon) {
             setDatosCupon(cupon);
+            setControl(true);
         }
         buscarProductosCategorias(categoria);
     }, [recargar])
@@ -136,13 +174,15 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
 			/>
             <Spin loading={loading} />
             <Grid>
-                <Box p={2}>
+                <Box p={1}>
                     <Button
-                        onClick={() => handleOpenRegistro()}
+                        onClick={() => {
+                            handleOpenRegistro()
+                        }}
                         variant={tipo === "Nuevo" ? "outlined" : "contained"} 
                         color={tipo === "Nuevo" ? "primary" : "secondary"} 
                     >
-                        {tipo === "Nuevo" ? "Registrar codigo limitado" : "Editar"} 
+                        {tipo === "Nuevo" ? "Registrar Codigo Productos" : "Editar"} 
                     </Button>
                 </Box>
             </Grid>
@@ -181,10 +221,12 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
                             </Box>
                         </Box>
                         <Box p={2}>
-                            <TablaProductosDescuentos 
-                                productosCate={productosCate} 
+                            <TablaProductosDescuentos
+                                setProductosCate={setProductosCate}
+                                productosCate={productosCate}
                                 selected={selected} 
                                 setSelected={setSelected} 
+                                cupon={cupon}
                                 productoGuardados={productoGuardados} 
                                 setProductoGuardados={setProductoGuardados}
                                 control={control}
@@ -251,6 +293,17 @@ export default function Regsitro_cupon_productos({update, setUpdate, tipo, cupon
                                 color={tipo === "Nuevo" ? "primary" : "secondary"} 
                             >
                                 {tipo === "Nuevo" ? "Registrar Código" : "Editar Código"} 
+                            </Button>
+                        </Box>
+                        <Box textAlign="center" p={1}>
+                            <Button
+                                onClick={() => {
+                                    handleOpenRegistro()
+                                }}
+                                variant={"outlined"} 
+                                color={"primary"} 
+                            >
+                                Salir
                             </Button>
                         </Box>
                     </Grid>

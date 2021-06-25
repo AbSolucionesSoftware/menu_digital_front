@@ -6,11 +6,11 @@ import clienteAxios from '../../../config/axios'
 import { MenuContext } from '../../../context/menuContext'
 import Card_cupon from './card_cupon'
 import Registro_cupon_simple from './registro_cupon_simple';
-import Regsitro_cupon_productos from './regsitro_cupon_productos';
+import Registro_cupon_productos from './regsitro_cupon_productos';
 
 
 export default function Cupones() {
-	const { recargar, setRecargar} = useContext(MenuContext);
+	const { recargar, setRecargar, cargarCupones, setCargarCupones} = useContext(MenuContext);
 
     const company = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
@@ -36,8 +36,9 @@ export default function Cupones() {
 
     useEffect(() => {
         setRecargar(false);
+        setCargarCupones(false);
         getCodigos();
-    }, [update, recargar]);
+    }, [cargarCupones, recargar, update ]);
 
     const render_cupones = codigoEmpresa?.map((cupon, index) => {
         return(
@@ -54,11 +55,11 @@ export default function Cupones() {
                         Códigos de Descuento
                     </Typography>
                 </Box>
-                <Box textAlign="center" display="flex" justifyContent="center" alignItems="center" p={1}>
+                {/* <Box textAlign="center" display="flex" justifyContent="center" alignItems="center" p={1}>
                     <Alert severity="warning"> 
                         Los códigos de descuento que se apliquen serán sobre el total de la cuenta del usuario, sin afectar los costos de envió.
                     </Alert>
-                </Box>
+                </Box> */}
             </Grid>
 
             <Grid container justify="center">
@@ -66,7 +67,7 @@ export default function Cupones() {
                     <Registro_cupon_simple tipo={'Nuevo'} setUpdate={setUpdate} update={update} />
                 </Box>
                 <Box>
-                    <Regsitro_cupon_productos tipo={'Nuevo'} setUpdate={setUpdate} update={update} />
+                    <Registro_cupon_productos tipo={'Nuevo'}  />
                 </Box>
             </Grid>
 

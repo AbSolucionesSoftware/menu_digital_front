@@ -128,13 +128,13 @@ export default function Registro_cupon_simple({update, setUpdate, tipo, cupon}) 
 			/>
             <Spin loading={loading} />
             <Grid>
-                <Box p={2}>
+                <Box p={1}>
                     <Button
                         onClick={() => openDialog()}
                         variant={tipo === "Nuevo" ? "outlined" : "contained"} 
                         color={tipo === "Nuevo" ? "primary" : "secondary"} 
                     >
-                        {tipo === "Nuevo" ? "Registrar Código General" : "Editar"} 
+                        {tipo === "Nuevo" ? "Registrar Código de Compra" : "Editar"} 
                     </Button>
                 </Box>
             </Grid>

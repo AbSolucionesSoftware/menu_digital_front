@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { MenuContext } from '../../../../context/menuContext';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,7 +16,6 @@ import { Avatar, Chip } from '@material-ui/core';
 const headCells = [
 	{ id: '_id', label: 'Nombre' },
 	{ id: 'imagen', label: 'Imagen' },
-	{ id: 'promocion', label: 'Promoción' },
 ];
 
 function EnhancedTableHead(props) {
@@ -81,9 +81,9 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function TablaProductosDescuentos({productosCate, setSelected, selected, control, setControl, setProductoGuardados, productoGuardados }) {
+export default function TablaProductosDescuentos({productosCate, setProductosCate, setSelected, selected, control, setControl, setProductoGuardados, productoGuardados, cupon }) {
 	const classes = useStyles();
-	
+
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
 
@@ -102,7 +102,6 @@ export default function TablaProductosDescuentos({productosCate, setSelected, se
 		}
 		// setSelected([]);
 	};
-
 
 	const handleClick = (event, _id) => {
 		const selectedIndex = selected.indexOf(_id);
@@ -126,31 +125,26 @@ export default function TablaProductosDescuentos({productosCate, setSelected, se
 		setSelected(newSelected);
 	};
 
-	// const checkUpdated = () => {
-	// 	const bd_selected = [];
-	// 	const bd_select = [];
-	// 	producto.classifications.forEach((bd_classification) => {
-	// 		bd_classification.types.map((bd_types) => {
-	// 			types.forEach((type) => {
-	// 				if (type._id === bd_types._idType) {
-	// 					bd_selected.push(bd_types.name);
-	// 					bd_select.push({ name: bd_types.name, price: bd_types.price, _idType: bd_types._id });
-	// 				}
-	// 			});
-	// 		});
-	// 	});
-	// 	setSelected(bd_selected);
-	// 	setSelect(bd_select);
-	// };
+	const checkUpdated = () => {
+		const bd_selected = [];
+		const bd_select = [];
+		cupon?.productosId.forEach((bd_productosGuardado) => {
+			bd_select.push({_id: bd_productosGuardado._id});
+			bd_selected.push(bd_productosGuardado._id);
+		});
+		setProductoGuardados({ ...productoGuardados, productos: bd_select });
+		setSelected(bd_selected);
+	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (control) {
-	// 			checkUpdated();
-	// 		}
-	// 	},
-	// 	[ control ]
-	// );
+	
+	useEffect(
+		() => {
+			if (control === true) {
+				checkUpdated();
+			}
+		},
+		[ control ]
+	);
 
 	const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
@@ -183,38 +177,35 @@ export default function TablaProductosDescuentos({productosCate, setSelected, se
 							{productosCate.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((producto, index) => {
 								const isItemSelected = isSelected(producto._id);
 								const labelId = `enhanced-table-checkbox-${index}`;
-
-								return (
-									<TableRow
-										hover
-										role="checkbox"
-										aria-checked={isItemSelected}
-										tabIndex={-1}
-										key={producto._id}
-										selected={isItemSelected}
-									>
-										<TableCell padding="checkbox">
-											{producto.couponName ? (null) : (
+									return (
+										<TableRow
+											hover
+											role="checkbox"
+											aria-checked={isItemSelected}
+											tabIndex={-1}
+											key={producto._id}
+											selected={isItemSelected}
+										>
+											<TableCell padding="checkbox">
 												<Checkbox
 													checked={isItemSelected}
 													inputProps={{ 'aria-labelledby': labelId }}
 													onClick={(event) => handleClick(event, producto._id)}
 												/>
-											)}
-										</TableCell>
-										<TableCell component="th" id={labelId} scope="row" padding="none">
-											{producto.name}
-										</TableCell>
-										<TableCell align="right">
-											<Avatar alt="Remy Sharp" src={producto.imagenProductUrl} />
-										</TableCell>
-										<TableCell align="right">
-											{producto.couponName ? (<Chip label="Promo Activa" style={{color: 'green'}} variant="outlined" />) : (
-												null
-											)}
-										</TableCell>
-									</TableRow>
-								);
+											</TableCell>
+											<TableCell component="th" id={labelId} scope="row" padding="none">
+												{producto.name}
+											</TableCell>
+											<TableCell align="right">
+												<Avatar alt="Remy Sharp" src={producto.imagenProductUrl} />
+											</TableCell>
+											{/* <TableCell align="right">
+												{producto.couponName ? (<Chip label="Promo Activa" style={{color: 'green'}} variant="outlined" />) : (
+													null
+												)}
+											</TableCell> */}
+										</TableRow>
+									);
 							})}
 							{emptyRows > 0 && (
 								<TableRow style={{ height: 53 * emptyRows }}>

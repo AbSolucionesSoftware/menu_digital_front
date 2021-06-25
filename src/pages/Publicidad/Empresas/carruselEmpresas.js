@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import { Box, Grid,  Hidden,  IconButton,  makeStyles, Typography } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import clienteAxios from '../../../config/axios';
+import Spin from '../../../components/Spin/spin';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Link } from 'react-router-dom';
@@ -53,15 +54,20 @@ export default function Carrusel() {
 	  const { recargar, setRecargar } = useContext(MenuContext);
 
     const [ empresas, setEmpresas ] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     const classes = stylesLocal();
 
     const consultarDatos = async () => {
+      setLoading(true);
       await clienteAxios
         .get('/company/fullCompanys/')
         .then((res) => {
+          setLoading(false);
           setEmpresas(res.data);
         })
         .catch((err) => {
+          setLoading(false);
         })
     }
 
@@ -113,6 +119,7 @@ export default function Carrusel() {
 
     return (
       <>
+        <Spin loading={loading} />
         <Grid item lg={12} xs={12}>
           <Box mt={2} textAlign="center" >
             <Typography color="primary" style={{fontSize: 35, fontWeight: 600}}>
@@ -124,8 +131,6 @@ export default function Carrusel() {
         <Grid container justify="center">
             {render}
         </Grid>
-        
-
         {/* <Grid item lg={12} xs={12}>
           <Hidden xsDown>
             <ItemsCarousel
