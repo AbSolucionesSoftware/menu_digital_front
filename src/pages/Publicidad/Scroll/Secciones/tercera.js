@@ -1,8 +1,9 @@
-import { Box, Container, Divider, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Container, Divider, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { Fragment } from 'react'
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 import imagen from '../../img/PublicidadComodyDoble.png'
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -21,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left"
     },
     containerImg:{
-        width: "100%",
-        height: '100%'
+        width: "70%",
+        height: '70%'
     },
     imagen:{
         maxHeight: '100%',
@@ -86,13 +87,23 @@ export default function Tercera() {
                                 Todos los pedidos llegaran a tu WhatsApp, con las características y notas que tus clientes deseen agregar
                             </Box>
                         </Box>
-                        <Box p={1} display="flex" alignItems="center" className={classes.margenes}>
-                            <Box  display="flex" alignItems="center" p={1}>
-                                <DoneAllIcon color="primary" />
-                            </Box>
-                            <Box>
-                                Tendrás tu espacio dentro de nuestra publicidad para tener un mayor crecimiento ante los usuarios
-                            </Box>
+                        <Box p={1} textAlign="center" >
+                           <Typography textAlign="center" variant="h6">
+                               <b>Comienza desde ahora y registrate complemetamente GRATIS en nuestra plataforma digital</b>
+                           </Typography>
+                        </Box>
+                        <Box>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                component={Link}
+                                to="/register"
+                            >
+                               <Typography variant="h6">
+                                <b>Registrarme</b> 
+                               </Typography>
+                            </Button>
                         </Box>
                     </Typography>
                 </Grid>

@@ -74,16 +74,16 @@ function BusquedaSubCates(props) {
         <div>
             <Spin loading={loading} />
             <Grid container>
-                <Grid item lg={11}  xs={12}>
+                {/* <Grid item lg={11}  xs={12}>
                     <Box display="flex" justifyContent="center" p={2}>
                         <Typography variant="h4" style={{fontWeight: 600}}>
                             {categoria}
                         </Typography>
                     </Box>
-                </Grid>
+                </Grid> */}
                 
-                <Grid item lg={1} xs={12}>
-                    <Box display="flex" justifyContent="center" p={1}>
+                <Grid item lg={12} xs={12}>
+                    <Box display="flex" justifyContent="flex-end" p={1}>
                         <Button
                             color="primary"
                             variant="contained"
@@ -100,9 +100,9 @@ function BusquedaSubCates(props) {
                 {
                     productosCate?.map((subCates) => (
                         <Grid>
-                            <Box p={2} textAlign="center">
+                            <Box p={2} mt={2} textAlign="center">
                                 <Typography variant="h5">
-                                    {subCates.nameSub}
+                                    <b>{subCates.nameSub}</b>
                                 </Typography>
                             </Box>
                             <Cards_Platos productos={subCates.productosSub}/>

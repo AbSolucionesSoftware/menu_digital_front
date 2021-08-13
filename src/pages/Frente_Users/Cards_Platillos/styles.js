@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 600,
     },
+    appBar: {
+      position: 'relative',
+    },
     rootTitulo:{
       width: 350
     },
@@ -14,13 +17,17 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
-    
     content: {
       flex: '1 0 auto',
     },
     cover: {
       width: 220,
       height: 220
+    },
+    coverResponsive: {
+      width:  110,
+      height: 110,
+      borderRadius: 6
     },
     controls: {
       display: 'flex',
@@ -39,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     paddin:{
       padding: 0
     }
-
     //-------RESPONSIVOS-------
     ,titulo:{
       width: "auto",

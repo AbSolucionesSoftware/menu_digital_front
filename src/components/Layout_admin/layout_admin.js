@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import Reacts from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import Navegacion_Admin from '../Navegacion_Admin/navegacion_admin';
-import Footer from '../Footer/footer'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import { AppBar, CssBaseline, Slide, useScrollTrigger } from '@material-ui/core';
-
+import { Slide, useScrollTrigger } from '@material-ui/core';
 import { NavProvider } from '../../context/context_nav';
+import Navegacion_Admin from '../Navegacion_Admin/navegacion_admin';
 
 const drawerWidth = 240;
 
@@ -47,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 function HideOnScroll(props) {
 	const { children, window } = props;
 	const trigger = useScrollTrigger({ target: window ? window() : undefined });
-  
+
 	return (
 	  <Slide appear={false} direction="down" in={!trigger}>
 		{children}
@@ -61,36 +58,26 @@ HideOnScroll.propTypes = {
 };
 
 
+
 export default function LayoutAdmin(props) {
 	const classes = useStyles();
-	let thema = localStorage.getItem('tema');
-	let tema = JSON.parse(thema);
 	const { routes } = props;
 
-	useEffect(
-		() => {
-			if (tema === null) {
-				localStorage.setItem('tema', false);
-				return;
-			}
-		},
-		[ tema ]
-	);
 
 	return (
 		<div className={classes.root}>
-		<ThemeProvider>
-			<nav className={classes.drawer} aria-label="mailbox folders">
-				<Navegacion_Admin />
-			</nav>
-			<div className={classes.content}>
+			<ThemeProvider>
 				<NavProvider>
-					<div style={{ minHeight: '90vh' }}>
-						<LoadRoutes routes={routes} />
+					<nav className={classes.drawer} aria-label="mailbox folders">
+						<Navegacion_Admin />
+					</nav>
+					<div className={classes.content}>
+						<div style={{ minHeight: '90vh' }}>
+							<LoadRoutes routes={routes} />
+						</div>
 					</div>
 				</NavProvider>
-			</div>
-		</ThemeProvider>
+			</ThemeProvider>
 		</div>
 
 	);

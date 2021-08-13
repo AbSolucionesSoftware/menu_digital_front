@@ -133,9 +133,6 @@ function Lista({categoria, empresa, props, diaLaboral, slug}) {
                         onClick={() => {
                             props.history.push(`/${slug}/${empresa._id}/categorias/${categoria.category}`)
                         }}  
-                        // onClick={(e) =>
-                        //     handleClick(e)
-                        // }
                     >
                         <Box>
                             <RestaurantMenuIcon className={classes.large}/>

@@ -6,11 +6,11 @@ import clienteAxios from '../../../config/axios'
 import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 import imagen from  '../../../img/Registro.png'
-import { DataUsageOutlined, DragIndicatorSharp } from '@material-ui/icons'
+// import { DataUsageOutlined, DragIndicatorSharp } from '@material-ui/icons'
 import { withRouter } from 'react-router';
 
 import PropTypes from 'prop-types';
-import MaskedInput from 'react-text-mask';
+// import MaskedInput from 'react-text-mask';
 import NumberFormat from 'react-number-format';
 
 function NumberFormatCustom(props) {
@@ -156,12 +156,12 @@ function Registro_User(props) {
                                             error={!registro.nombreCompania && validate}
                                             helperText={!registro.nombreCompania && validate ? 'Esta campo es requerido' : null}
 								            value={registro.nombreCompania ? registro.nombreCompania : ''}
-                                            className={classes.text}
                                             id="nombreCompania"
                                             name="nombreCompania"
                                             label="Nombre de Compania"
                                             placeholder="Nombre de Compania"
                                             multiline
+                                            className={classes.text}
                                             variant="outlined"
                                             onChange={(e) =>
                                                 setRegistro({ ...registro, nombreCompania: e.target.value })

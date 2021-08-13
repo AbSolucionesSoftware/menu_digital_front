@@ -1,5 +1,5 @@
-import { AppBar,Button, IconButton, Toolbar, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid, Hidden } from '@material-ui/core'
-import { HashLink } from 'react-router-hash-link';
+import { AppBar, IconButton, Toolbar, ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid, Hidden, InputBase } from '@material-ui/core'
+// import { HashLink } from 'react-router-hash-link';
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
@@ -8,14 +8,15 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
-import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
-import DvrIcon from '@material-ui/icons/Dvr';
+// import ContactMailIcon from '@material-ui/icons/ContactMail';
+// import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+// import DvrIcon from '@material-ui/icons/Dvr';
+import SearchIcon from '@material-ui/icons/Search';
 
 import Comody from '../../img/Comody.jpeg'
 
 import useStyles from './styles';
-import { ImageContext } from '../../context/curso_context';
+// import { ImageContext } from '../../context/curso_context';
 
 import React, { useContext,  useState } from 'react';
 import { MenuContext } from '../../context/menuContext';
@@ -23,8 +24,8 @@ import { MenuContext } from '../../context/menuContext';
 function NavegacionPage(props) {
 
 	const [ open, setOpen ] = useState(false);
-	const [ anchorEl, setAnchorEl ] = useState(null);
-    const {  nombre,  } = useContext(ImageContext);
+	// const [ anchorEl, setAnchorEl ] = useState(null);
+    // const {  nombre,  } = useContext(ImageContext);
 	const token = localStorage.getItem('token');
 	const slug = localStorage.getItem('slug');
 	const id = localStorage.getItem('idEmpresa');
@@ -92,6 +93,23 @@ function NavegacionPage(props) {
 							<Box component={Link} to={`/`} className={classes.containerImage} onClick={() => setRecargar(!recargar)}>  
 								<img  className={classes.image} alt="logotipo" src={Comody} />
 							</Box>
+							{/* <div className={classes.search}>
+								<InputBase
+									placeholder="¿Qué quieres comer hoy?"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+									value={busqueda}
+									onChange={obtenerBusqueda}
+									onKeyPress={pressEnter}
+								/>
+								<div className={classes.grow} />
+								<IconButton size="small" color="inherit"  onClick={() => buscarBD()} >
+									<SearchIcon />
+								</IconButton>
+							</div> */}
 						<Hidden smDown>
 							<Grid container justify="flex-end" >
 								<Grid>
@@ -100,7 +118,7 @@ function NavegacionPage(props) {
 									</ListItem>
 								</Grid>
 								
-								<HashLink to="/#contacto" style={{textDecoration: "none", color:"white"}}>
+								{/* <HashLink to="/#contacto" style={{textDecoration: "none", color:"white"}}>
 									<ListItem>
 										<ListItemText primary="Contacto" />
 									</ListItem>
@@ -114,7 +132,12 @@ function NavegacionPage(props) {
 									<ListItem>
 										<ListItemText primary="Paquetes" />
 									</ListItem>
-								</HashLink>
+								</HashLink> */}
+								<Grid>
+									<ListItem button component={Link} to={`/register`}>
+										<ListItemText primary="Registrarme" />
+									</ListItem>
+								</Grid>
 								<Grid>
 									<ListItem button component={Link} to={`/login`}>
 										<ListItemText primary="Entrar" />
@@ -122,52 +145,6 @@ function NavegacionPage(props) {
 								</Grid>
 							</Grid>
 						</Hidden>
-
-						{/* <div className={classes.search}>
-							
-							<InputBase
-								placeholder="¿Qué quieres comer hoy?"
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput
-								}}
-								inputProps={{ 'aria-label': 'search' }}
-								value={busqueda}
-								onChange={obtenerBusqueda}
-								onKeyPress={pressEnter}
-							/>
-							<div className={classes.grow} />
-							<IconButton size="small" color="inherit"  onClick={() => buscarBD()} >
-								<SearchIcon />
-							</IconButton>
-						</div>
-						<Hidden smDown>
-							<Grid lg={8} zeroMinWidth >
-								<Box display="flex" justifyContent="center" >
-									<Typography variant="h3" noWrap>
-										{nombre} 
-									</Typography>
-								</Box>
-							</Grid>
-						
-
-							<Grid  >
-							<ListItem button component={Link} to={`/${slug}`} >
-								<ListItemText primary="Inicio" />
-							</ListItem>
-							</Grid>
-						</Hidden>
-
-						<div className={classes.grow} />
-						<Hidden smDown>
-							{decoded ? (
-								<Button color="inherit" component={Link} to="/user" className={classes.marginButton}>
-									<AccountCircleSharpIcon/> Mi cuenta
-								</Button>
-							) : (
-								<div />
-							)}
-						</Hidden> */}
 					</Toolbar>
 				</AppBar>
                 {/* {renderMenu} */}
@@ -200,16 +177,13 @@ function NavegacionPage(props) {
 						<div />
 					)}
 					<List>
-						{/* <ListItem button component={Link} to={`/`} >
-							<Typography style={{ fontWeight: 600}} variant="h5"> {nombre} </Typography>
-						</ListItem> */}
 						<ListItem button component={Link} to={`/`} >
 							<ListItemIcon>
 								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary="Inicio" />
 						</ListItem>
-						<HashLink to="/#contacto" style={{textDecoration: "none", color:"black"}}>
+						{/* <HashLink to="/#contacto" style={{textDecoration: "none", color:"black"}}>
 							<ListItem onClick={handleDrawerClose}>
 								<ListItemIcon>
 									<ContactMailIcon />
@@ -232,7 +206,13 @@ function NavegacionPage(props) {
 								</ListItemIcon>
 								<ListItemText primary="Paquetes" />
 							</ListItem>
-						</HashLink>
+						</HashLink> */}
+						<ListItem button component={Link} to={`/register`} >
+							<ListItemIcon>
+								<ExitToAppIcon/>
+							</ListItemIcon>
+							<ListItemText primary="Registrarme" />
+						</ListItem>
 						<ListItem button component={Link} to={`/login`} >
 							<ListItemIcon>
 								<ExitToAppIcon/>

@@ -1,9 +1,10 @@
-import { Avatar, Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, Grid, Hidden, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import No_Page from '../../../components/noPage'
 import LoginAdmin from '../Login/login'
 import HomePublicidad from '../../Publicidad/Home/home'
 
+import InformacionEmpresa from './InformacionEmpresa';
 import BotonCarrito from '../Carrito/botonCarrito'
 import Banner from '../Banner/banner';
 import Categorias from '../Categorias/categorias';
@@ -86,11 +87,9 @@ export default function Menu_Front(props) {
 						<Banner empresa={empresa} />
 					</Box>
 
-					<Grid container justify="center" item lg={12}>
-						<Box mt={3} textAlign="center">
-							<Avatar className={classes.large} alt="Remy Sharp"  src={empresa.logoImagenUrl} />
-						</Box>
-					</Grid>
+					<Box p={2}>
+						<InformacionEmpresa empresa={empresa} />
+					</Box>
 
 					<Box mt={1}> 	
 						<Categorias empresa={empresa._id} slug={empresa.slug} />

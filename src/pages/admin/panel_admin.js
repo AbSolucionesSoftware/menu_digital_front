@@ -1,20 +1,19 @@
-import { Box, Button, Drawer, Grid, makeStyles, SwipeableDrawer, Typography } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import { Box, Grid, Typography } from '@material-ui/core'
+import React, { useState, useEffect, useContext } from 'react'
 import { withRouter } from 'react-router';
 import Spin from '../../components/Spin/spin';
 import clienteAxios from '../../config/axios';
-
-
+import { NavContext } from '../../context/context_nav'
 // import Registro_Menu from './Registro_Menus/registro_menu'
 import Cards_Restaurate from './Card_Restaurante/card_restaurante'
 
  function Panel_Admin(props) {
-	const token = localStorage.getItem('token');
-    const [ open, setOpen] = useState(false);
-	const [empresas, setEmpresas] = useState([]);
-	const [loading, setLoading] = useState(false);
-    const [ upload, setUpload] = useState(false);
 
+	const token = localStorage.getItem('token');
+	const [ empresas, setEmpresas] = useState([]);
+	const [ loading, setLoading] = useState(false);
+    const [ upload, setUpload] = useState(false);
+    const { setDtxEmpresas} = useContext(NavContext);
 
     const consultarDatos = async () => {
 		setLoading(true);
@@ -27,20 +26,18 @@ import Cards_Restaurate from './Card_Restaurante/card_restaurante'
 			.then((res) => {
 		        setLoading(false);
                 setUpload(true);
+                setDtxEmpresas(res.data);
 				setEmpresas(res.data);
 			})
 			.catch((err) => {
 		        setLoading(true);
                 setUpload(true);
 			})
-	}
-
+	};
 
     useEffect(() => {
-
 		consultarDatos();
-
-	}, [upload])
+	}, [upload]);
 
 
     return (

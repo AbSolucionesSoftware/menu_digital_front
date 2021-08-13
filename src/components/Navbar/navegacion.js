@@ -1,7 +1,8 @@
-import { AppBar, Badge, Button, fade, Hidden, IconButton,  
-		Popover, InputBase, makeStyles, Toolbar, Typography, MenuItem, 
+import { AppBar,  Button, Hidden, IconButton,  
+		 InputBase,  Toolbar, Typography,
 		ListItemIcon, ListItemText, Divider, Drawer, ListItem, List, Box, Grid, Dialog, withStyles 
-		} from '@material-ui/core'
+		} 
+	from '@material-ui/core'
 import {Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import SearchIcon from '@material-ui/icons/Search';
@@ -168,10 +169,10 @@ function Navegacion(props) {
 								</IconButton>
 							</div>
 							<Hidden smDown>
-								<Grid item lg={8} zeroMinWidth >
+								<Grid item lg={7} zeroMinWidth >
 									<Box display="flex" justifyContent="center" >
 										<Typography variant="h3" noWrap>
-											{empresa.nameCompany} 
+											{/* {empresa.nameCompany}  */}
 										</Typography>
 									</Box>
 								</Grid>					

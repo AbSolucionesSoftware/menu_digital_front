@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom';
-import { Box, Grid,  Hidden,  IconButton,  makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid,  Hidden,  makeStyles, Typography } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import clienteAxios from '../../../config/axios';
 import Spin from '../../../components/Spin/spin';
@@ -18,8 +17,8 @@ import { MenuContext } from '../../../context/menuContext';
 
 const stylesLocal = makeStyles((theme) => ({
   containerImagen:{
-      height: 300,
-      width: 280,
+      height: 250,
+      width: 250,
       display: "flex",
       justifyContent: "center",
       alignContent: "center",
@@ -123,7 +122,7 @@ export default function Carrusel() {
         <Grid item lg={12} xs={12}>
           <Box mt={2} textAlign="center" >
             <Typography color="primary" style={{fontSize: 35, fontWeight: 600}}>
-              Empresas afiliadas a Comody
+              Empresas afiliadas a COMODY
             </Typography>
           </Box>
         </Grid>

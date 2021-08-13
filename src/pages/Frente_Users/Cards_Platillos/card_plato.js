@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import AgregarCarrito from './agregarCarrito';
+import AgregarCarrito from './AgregarCarrito/agregarCarrito';
 import {formatoMexico, verificarDiasLaborales} from '../../../config/reuserFunction'
-
-import { Box, Button, Dialog,  Divider,  Drawer,  Grid, Hidden, IconButton, Tooltip, withStyles } from '@material-ui/core';
+import { Box, Button, Dialog,  Divider,  Drawer,  Grid, Hidden, IconButton, Paper, Tooltip, AppBar, Toolbar } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-
 import Typography from '@material-ui/core/Typography';
-
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
+import CloseIcon from '@material-ui/icons/Close';
 import './styles.scss';
 import Sesion from '../../../components/Verificacion_sesion/verificacion_sesion';
 import { useContext } from 'react';
@@ -146,58 +144,64 @@ export default function Cards_Platos(props) {
 						</Grid>
 					</Hidden>
 					<Hidden mdUp>
-						<Grid item xs={12} className={classes.paper}>
-						{/* <Card> */}
-							<Grid 
-								container 
-								onClick={
-								() => {
-									handleClickOpen()
-									setagregarProducto(producto)
-								}} 
-							>
-								<Grid item  xs={8}>
-									<Box display="flex" textAlign="justify"  variant="h2">
-										<Typography style={{fontWeight: 600}}>
-											{producto.name} 
+						<Grid
+							style={{ paddingBottom: 12 }}
+							container 
+							onClick={
+							() => {
+								handleClickOpen()
+								setagregarProducto(producto)
+							}} 
+						>
+							<Grid item xs={4}>
+								<Box pl={1} pt={1}>
+								<Paper elevation={3} className={classes.coverResponsive}>
+									<CardMedia
+										id={producto._id}
+										className={classes.coverResponsive}
+										image={producto.imagenProductUrl}
+										title="Imagen de producto"
+									/>
+								</Paper>
+								</Box>
+							</Grid>
+							<Grid item xs={8}>
+								<Box display="flex" textAlign="left" alignItems="center" variant="h2">
+									<Box flexGrow={1}>
+										<Typography >
+											<b>{producto.name} </b>
 										</Typography>
 									</Box>
-									<Box mt={1} display="flex" textAlign="justify" >
-										<Typography variant="h2">
+									<Box style={{ padding: '0%'}}>
+										<IconButton 
+											style={{ padding: '0%', paddingRight: 6}}
+											variant="contained" 
+											color="primary" 
+											onClick={() => {
+												handleClickOpen()
+												setagregarProducto(producto)
+											}} 
+										>
+											<AddCircleIcon style={{ padding: '0%', fontSize: 40}}/>
+										</IconButton>
+									</Box>
+								</Box>
+								<Grid item xs zeroMinWidth>
+									<Box mt={1} display="flex" textAlign="left" >
+										<Typography noWrap variant="h2">
 											{producto.description} 
 										</Typography>
 									</Box>
-								</Grid>		
-								<Grid  item  xs={2}>
-									<Grid >
-										<Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
-											<Typography variant="h5" style={{fontWeight: 600}}>
-												${formatoMexico(producto.price)} 
-											</Typography>
-										</Box>
-									</Grid>
 								</Grid>
-								<Grid item xs={2}>
-									<Grid item xs zeroMinWidth>
-										<Box display="flex" alignItems="center" justifyContent="center">
-											<IconButton 
-												variant="contained" 
-												color="primary" 
-												onClick={() => {
-													handleClickOpen()
-													setagregarProducto(producto)
-												}} 
-											>
-												<AddCircleIcon style={{fontSize: 40}}/>
-											</IconButton>
-										</Box>
-									</Grid>
-								</Grid>
+								<Box mt={1} display="flex" textAlign="left" >
+									<Typography variant="h4">
+										<b>${formatoMexico(producto.price)}</b>
+									</Typography>
+								</Box>
 							</Grid>
-							<Grid  item  lg={12} xs={12}>
-								<Divider variant="inset:" />
-							</Grid>
-						{/* </Card> */}
+						</Grid>
+						<Grid  item  lg={12} xs={12}>
+							<Divider variant="inset:" />
 						</Grid>
 					</Hidden>
 				</>
@@ -222,6 +226,11 @@ export default function Cards_Platos(props) {
 						paper: classes.drawerPaper
 					}}
 				> 
+					<Grid container justify="flex-end">
+						<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+							<CloseIcon style={{fontSize: 35}} />
+						</IconButton>
+					</Grid>
 					<AgregarCarrito 
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
@@ -233,8 +242,14 @@ export default function Cards_Platos(props) {
 			</Hidden>
 			<Hidden smDown>
                 <Dialog open={open} onClose={handleClose}>
+					<AppBar className={classes.appBar}>
+						<Toolbar>
+							<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+								<CloseIcon />
+							</IconButton>
+						</Toolbar>
+					</AppBar>
 					<AgregarCarrito 
-						
 						imagen={agregarProducto.imagenProductUrl} 
 						nombre={agregarProducto.name} 
 						precio={agregarProducto.price}

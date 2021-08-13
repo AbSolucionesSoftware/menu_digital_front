@@ -4,9 +4,9 @@ import LayoutUser from '../components/Layout_user/layout_user'
 
 import Panel_Admin from '../pages/admin/panel_admin'
 import Registro_User from '../pages/admin/Registro_User/registro_user'
+import PublicidadAdminBanner from '../pages/admin/BannerPublicidad/Publicidad'; 
 
 import Publicidad from '../pages/Users/Publicidad/publicidad';
-import RegistroProducto from '../pages/Users/Menu/services/registroProducto'
 import PanelUser from '../pages/Users/PanelUsuario/panel_usario';
 import BusquedaUser from '../pages/Users/Busqueda/busqueda'
 import Menu from '../pages/Users/Menu/menu';
@@ -18,8 +18,8 @@ import Cupones from '../pages/Users/Cupones/cupones'
 
 import Home from '../pages/Frente_Users/home'
 import LoginAdmin from '../pages/Frente_Users/Login/login';
-import Carrito from '../pages/Frente_Users/Carrito/carrito';
-import Busqueda from '../pages/Frente_Users/Busqueda/busqueda';
+import Registro from '../pages/Frente_Users/Login/register';
+import Bienvenida from '../pages/Frente_Users/Login/bienvenida';
 import Menu_Front from '../pages/Frente_Users/Menu_Front/menu_front';
 import BusquedaSubCates from '../pages/Frente_Users/Categorias/busquedaSubCates';
 import ResultadoBusqueda from '../pages/Frente_Users/Busqueda/busqueda';
@@ -42,6 +42,11 @@ const routes = [
 			{
 				path: '/admin/registro',
 				component: Registro_User,
+				exact: true,
+			},
+			{
+				path: '/admin/bannerAdmin',
+				component: PublicidadAdminBanner,
 				exact: true,
 			},
 			{
@@ -112,6 +117,16 @@ const routes = [
 			{
 				path: '/',
 				component: HomePublicidad,
+				exact: true
+			},
+			{
+				path: '/register',
+				component: Registro,
+				exact: true
+			},
+			{
+				path: '/bienvenida',
+				component: Bienvenida,
 				exact: true
 			},
 			{

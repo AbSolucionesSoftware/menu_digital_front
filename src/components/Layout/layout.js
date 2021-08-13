@@ -86,7 +86,7 @@ export default function LayoutUsers(props) {
 							<AppBar>
 								<Toolbar>
 									{
-										navs === "/" || navs === "/login" ? (
+										navs === "/" || navs === "/login" || navs === "/register" || navs === "/bienvenida" ? (
 											<NavegacionPage />
 										):(
 											<Navegacion />
@@ -96,7 +96,7 @@ export default function LayoutUsers(props) {
 							</AppBar>
 						</HideOnScroll>
 						<Toolbar />
-						<div style={{ minHeight: '90vh' }}>
+						<div style={{ minHeight: '85vh' }}>
 							<LoadRoutes routes={routes} />
 						</div>
 					</NavProvider>

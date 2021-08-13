@@ -86,10 +86,16 @@ export default function Navegacion_Admin(props) {
 								Empresas con Menú
 							</Typography>
 						</ListItem>
-						<ListItem button component={Link} to="/admin/registro"  onClick={handleDrawerToggle}>
+						<ListItem button component={Link} to="/admin/registro" onClick={handleDrawerToggle}>
 							<ListItemIcon><PersonAddIcon/></ListItemIcon>
 							<Typography>
 								Registro
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/admin/bannerAdmin" onClick={handleDrawerToggle}>
+							<ListItemIcon><PersonAddIcon/></ListItemIcon>
+							<Typography>
+								Publicidad Banner
 							</Typography>
 						</ListItem>
 						<ListItem 
@@ -134,6 +140,12 @@ export default function Navegacion_Admin(props) {
 							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
 							<Typography>
 								Empresas con Menú
+							</Typography>
+						</ListItem>
+						<ListItem button component={Link} to="/admin/bannerAdmin">
+							<ListItemIcon><SupervisorAccountTwoToneIcon/></ListItemIcon>
+							<Typography>
+								Publicidad Banner
 							</Typography>
 						</ListItem>
 						<ListItem button component={Link} to="/admin/registro">

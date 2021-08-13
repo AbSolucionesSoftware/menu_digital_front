@@ -1,40 +1,17 @@
-import { Avatar, Box, Button, Grid, TextField, Tooltip } from '@material-ui/core'
+import { Avatar, Box, Button, CardMedia, Grid, Paper, TextField, Tooltip } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ListaClases from './services/listaClases'
-import MessageSnackbar from '../../../components/Snackbar/snackbar'
+import ListaClases from '../services/listaClases'
+import MessageSnackbar from '../../../../components/Snackbar/snackbar'
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { Alert } from '@material-ui/lab';
-import { ImageContext } from '../../../context/curso_context';
-import { Class } from '@material-ui/icons';
-import { formatoMexico } from '../../../config/reuserFunction';
-import clienteAxios from '../../../config/axios';
-import { MenuContext } from '../../../context/menuContext';
+import { ImageContext } from '../../../../context/curso_context';
+import clienteAxios from '../../../../config/axios';
 
-const useStyles = makeStyles((theme) => ({
-    controls: {
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: theme.spacing(1),
-        paddingBottom: theme.spacing(1),
-    },
-    large: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
-    },
-    agregar:{
-        minWidth: 300
-    },
-    column: {
-        flexBasis: '100%',
-    }
-}))
-
-
+import useStyles from './styles';
 
 export default function AgregarCarrito(props) {
     const {nombre, precio, imagen, setOpen, producto}  = props;
@@ -44,8 +21,6 @@ export default function AgregarCarrito(props) {
     const { setUpdate, setDatos} = useContext(ImageContext);
     const classes = useStyles();
     const [clasesTotal, setClasesTotal] = useState([])
-    // const [ types, setTypes] = useState([]);
-    // const [ carrito, setCarrito] = useState([]);
     const [ notas, setNotas] = useState("");
 
     const [ cuponesBase, setCuponesBase ] = useState([]);
@@ -53,7 +28,6 @@ export default function AgregarCarrito(props) {
     const [ estadoCupon, setEstadoCupon ] = useState([]);
 
     const [ disable, setDisable] = useState(false)
-	const [abrir, setAbrir] = useState(false);
     const [load, setLoad] = useState(false)
 
     const [ contador , setContador] = useState(1)
@@ -65,11 +39,9 @@ export default function AgregarCarrito(props) {
 		status: ''
 	});
 
-    
     // const [ extras, setExtras] = useState(producto.extrasActive === true ? producto.extras.split(",") : []);
     // const [ totalExtra, setTotalExtra ] = useState(0);
    
-
     useEffect(() => {
         producto.classifications?.map((clases) => (
             clasesTotal.push(
@@ -139,7 +111,6 @@ export default function AgregarCarrito(props) {
                 setOpen(false);
             }
             localStorage.removeItem("codigoIndividual");
-
         }
 	}
 
@@ -151,8 +122,7 @@ export default function AgregarCarrito(props) {
             clases={clases} 
             clasesTotal={clasesTotal} 
         />
-    ))
-
+    ));
 
     const canjearCodigo = async (cuponInsertado) => {
         if (varDescuento) {
@@ -184,21 +154,17 @@ export default function AgregarCarrito(props) {
                     console.log(err);
                 })
         }
-    }
-
-
+    };
     const calcularTotal = () => {
         var subtotal = 0;
         var subTotalClases = 0;
         var totalClases = 0;
-
 
         var porcentaje = 0;
         var descuento = 0
         var descuentoAplicado = 0;
         var subTotal2 = 0;
           
-
         if(producto === null){
             return null
         }else{
@@ -226,7 +192,6 @@ export default function AgregarCarrito(props) {
         calcularTotal();
     },[load]);
 
-    
     return (
         <div>
             <MessageSnackbar
@@ -238,35 +203,25 @@ export default function AgregarCarrito(props) {
             <Grid item lg={12} className={classes.agregar}>
                 <Box mt={1} display="flex" justifyContent="center" textAlign="center">
                     {!imagen ? null : (
-                        <Avatar
-                            className={classes.large}
-                            alt="Imagen de prducto" 
-                            src={imagen} 
-                        />
+                        // <Avatar
+                        //     className={classes.large}
+                        //     alt="Imagen de prducto" 
+                        //     src={imagen} 
+                        // />
+                        <Paper elevation={3} className={classes.cover}>
+                            <CardMedia
+                                id={producto._id}
+                                className={classes.cover}
+                                image={imagen}
+                                title="Imagen de producto"
+                            />
+                        </Paper>
                     )}
                 </Box>
-                <Box mt={2} display="flex" justifyContent="center" textAlign="center">
-                    <Box p={1}>
-                        <IconButton aria-label="play/pause" onClick={()=> Quitar() }>
-                            <RemoveIcon style={{fontSize: 20}} />
-                        </IconButton>
-                    </Box>
-                    <Box p={2}>
-                        <Typography component={'span'} variant="h3">
-                            {contador}
-                        </Typography>
-                    </Box>
-                    <Box p={1}>
-                        <IconButton aria-label="play/pause" onClick={()=> Agregar() }>
-                            <AddIcon style={{fontSize: 20}} />
-                        </IconButton>
-                    </Box>
-                </Box>
-                
                 <Box p={1} display="flex" justifyContent="center">
-                    <Typography component={'span'} variant="h5" style={{ fontWeight: 600}}>
-                        TOTAL: $
-                        {total}
+                    <Typography component={'span'} style={{fontSize: 25}}>
+                        <b>TOTAL: $
+                        {total}</b>
                     </Typography>
                 </Box>
                 {!producto?.couponName ? null : (
@@ -310,31 +265,45 @@ export default function AgregarCarrito(props) {
                         }
                     />
                 </Box>
-
-                <Box p={1} textAlign="center">
-                    <Tooltip title="Agregar a Carrito" aria-label="add">
-                        <Button 
-                            size="large"
-                            onClick={() => agregarCarrito()}
-                            variant="contained" 
-                            color="primary"
-                            disabled={disable}
-                        >
-                            <AddShoppingCartIcon /> Agregar a Orden
-                        </Button>
-                    </Tooltip>
-                </Box>
-                <Box p={1} textAlign="center">
-                    <Button
-                        className={classes.buton}
-                        variant="contained" 
-                        color="primary"
-                        size="large"
-                        onClick={() => setOpen(false)}
-                    >
-                        Salir
-                    </Button>
-                </Box>
+            </Grid>
+            <Grid container>
+                <Grid item xs={5}>
+                    <Paper elevation={3}>
+                        <Box display="flex" justifyContent="center" textAlign="center">
+                            <Box p={1}>
+                                <IconButton aria-label="play/pause" onClick={()=> Quitar() }>
+                                    <RemoveIcon style={{fontSize: 25}} />
+                                </IconButton>
+                            </Box>
+                            <Box p={2}>
+                                <Typography component={'span'} variant="h3">
+                                    {contador}
+                                </Typography>
+                            </Box>
+                            <Box p={1}>
+                                <IconButton aria-label="play/pause" onClick={()=> Agregar() }>
+                                    <AddIcon style={{fontSize: 25}} />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    </Paper>
+                </Grid>
+                <Grid item xs={7}>
+                    <Box mt={1}>
+                        {/* <Tooltip title="Agregar a Carrito" aria-label="add"> */}
+                            <Button 
+                                onClick={() => agregarCarrito()}
+                                variant="contained" 
+                                color="primary"
+                                style={{width: '98%', height: '100%'}}
+                                disabled={disable}
+                                size="large"
+                            >
+                                <AddShoppingCartIcon /> Agregar a Orden
+                            </Button>
+                        {/* </Tooltip> */}
+                    </Box>
+                </Grid>
             </Grid>
         </div>
     )
