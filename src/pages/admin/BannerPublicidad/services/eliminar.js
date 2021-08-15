@@ -1,13 +1,14 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
 import Spin from '../../../../components/Spin/spin';
 import clienteAxios from '../../../../config/axios';
+import { ImageContext } from '../../../../context/curso_context';
 
 
-export default function Eliminar(props){
-	const { banner } = props;
+export default function Eliminar({ banner }){
 	const [ loading, setLoading ] = useState(false);
+	const {  update, setUpdate} = useContext(ImageContext);
 	const token = localStorage.getItem('token');
     const [ resourceDel, setResourceDel ] = useState({ open: false, resource: '' });
 	const [ deleteConfimation, setDeleteConfimation ] = useState({ open: false, id: '' });
@@ -18,6 +19,7 @@ export default function Eliminar(props){
 	};
 
 	const handleDeleteConfimation = (idBanner) => {
+		setUpdate(!update);
 		setDeleteConfimation({ open: !deleteConfimation.open, id: idBanner });
 	};
 
@@ -37,6 +39,7 @@ export default function Eliminar(props){
             })
 			.then((res) => {
 				setLoading(false);
+				setUpdate(!update);
 				setSnackbar({
 					open: true,
 					mensaje: "Banner eliminado exitosamente!",
@@ -45,6 +48,7 @@ export default function Eliminar(props){
 			})
 			.catch((err) => {
 				setLoading(false);
+				setUpdate(!update);
 				setSnackbar({
 					open: true,
 					mensaje:'Al parecer no se a podido conectar al servidor.', 

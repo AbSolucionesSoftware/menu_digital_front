@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 // import MaskedInput from 'react-text-mask';
 import NumberFormat from 'react-number-format';
 import Spin from '../../../components/Spin/spin';
+import MessageSnackbar from '../../../components/Snackbar/snackbar';
 
 function NumberFormatCustom(props) {
     const { inputRef, onChange, ...other } = props;
@@ -63,7 +64,11 @@ export default function Registro(props) {
     const [ registro, setRegistro ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ validate, setValidate ] = useState(false);
-
+    const [ snackbar, setSnackbar ] = useState({
+		open: false,
+		mensaje: '',
+		status: ''
+	});
     const classes = useStyles();
 
     const array = {
@@ -91,14 +96,23 @@ export default function Registro(props) {
             .post('/company', array,)
             .then((res) => {
                 setLoading(false);
-                console.log(registro);
                 props.history.push(`/bienvenida`);
                 setRegistro([]);
             }
         ).catch((err) => {
             if (err.response) {
+                setSnackbar({
+                    open: true,
+                    mensaje: 'Al parecer el identificador o el nomnbre de usuario que ingresaste ya existe dentro de COMODY',
+                    status: 'error'
+                });
                 setLoading(false);
             }  else {
+                setSnackbar({
+                    open: true,
+                    mensaje: 'Erro en el servidor',
+                    status: 'error'
+                });
                 setLoading(false);
             }
         });
@@ -110,6 +124,12 @@ export default function Registro(props) {
 
     return (
         <Grid container justify='center'>
+            <MessageSnackbar
+				open={snackbar.open}
+				mensaje={snackbar.mensaje}
+				status={snackbar.status}
+				setSnackbar={setSnackbar}
+			/>
             <Spin loading={loading} />
             <Paper elevation={3}>
                 <Box display="flex" justifyContent="center" alignContent="center" alignItems="center">

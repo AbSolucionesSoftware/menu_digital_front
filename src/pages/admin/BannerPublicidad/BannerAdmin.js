@@ -1,10 +1,11 @@
 import { Box, Button, Card, Drawer, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import clienteAxios from '../../../config/axios';
 import RegistroBanner from './services/registroBanner';
 import Eliminar from './services/eliminar';
 import Spin from '../../../components/Spin/spin';
+import { ImageContext } from '../../../context/curso_context';
 const useStyles = makeStyles((theme) => ({
     root:{
         marginTop: 10,
@@ -34,7 +35,7 @@ export default function Banner() {
     const user = JSON.parse(localStorage.getItem('user'))
 	const [ loading, setLoading ] = useState(false);
     const [ banners, setBanners ] = useState([]);
-
+    const { update, setUpdate } = useContext(ImageContext);
     const [editarBanner, setEditarBanner ] = useState();
     const classes = useStyles();
 
@@ -51,8 +52,9 @@ export default function Banner() {
     const traerBanner = async () => {
         setLoading(true);
         await clienteAxios
-			.get(`/adminBanner/banner-company/${user._id}`)
+			.get(`/adminBanner/banner-company`)
 			.then((res) => {
+                setUpdate(false);
                 setLoading(false);
                 setBanners(res.data);
 			})
@@ -63,7 +65,7 @@ export default function Banner() {
 
     useEffect(() => {
         traerBanner(); 
-    }, [])
+    }, [update])
 
 
     const render = banners.map((banner, index) => {
@@ -73,7 +75,7 @@ export default function Banner() {
                     <Grid item lg={12} xs={12}>
                         <Box display="flex" justifyContent="center">
                             <Box p={1} display="flex" justifyContent="center">
-                                <Button 
+                                {/* <Button 
                                     variant="contained" 
                                     color="primary"
                                     onClick={() => {
@@ -82,10 +84,10 @@ export default function Banner() {
                                     }}
                                 >
                                     Editar
-                                </Button>
+                                </Button> */}
                             </Box>
                             <Box p={1} display="flex" justifyContent="center">
-                                <Eliminar  banner={banner._id} />
+                                <Eliminar banner={banner._id} />
                             </Box>
                         </Box>
                         <Box textAlign="center">
@@ -115,7 +117,7 @@ export default function Banner() {
                 open={open}
                 onClose={handleDrawerClose}
             >
-                <RegistroBanner  handleDrawerClose={handleDrawerClose} editarBanner={editarBanner}  />
+                <RegistroBanner handleDrawerClose={handleDrawerClose} editarBanner={editarBanner}  />
                 <Box textAlign="center" mt={4}>
                     <Button
                         variant="contained" 

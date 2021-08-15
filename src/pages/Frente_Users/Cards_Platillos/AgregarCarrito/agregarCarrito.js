@@ -295,7 +295,7 @@ export default function AgregarCarrito(props) {
                                 onClick={() => agregarCarrito()}
                                 variant="contained" 
                                 color="primary"
-                                style={{width: '98%', height: '100%'}}
+                                style={{height: 58}}
                                 disabled={disable}
                                 size="large"
                             >

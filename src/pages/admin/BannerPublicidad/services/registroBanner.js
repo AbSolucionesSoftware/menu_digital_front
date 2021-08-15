@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, Grid, Select, Typography } from '@material-ui/core'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import useStyles from '../styles';
 
 import clienteAxios from '../../../../config/axios';
@@ -7,12 +7,12 @@ import Spin from '../../../../components/Spin/spin';
 import { useDropzone } from 'react-dropzone';
 import { Alert } from '@material-ui/lab';
 import MessageSnackbar from '../../../../components/Snackbar/snackbar';
+import { ImageContext } from '../../../../context/curso_context';
 
-export default function RegistroBanner( props ) {
-	const {editarBanner, handleDrawerClose} = props;
-
+export default function RegistroBanner({editarBanner, handleDrawerClose}) {
 	const token = localStorage.getItem('token');
     const company = JSON.parse(localStorage.getItem('user'));
+	const {  update, setUpdate } = useContext(ImageContext);
 	const [ preview, setPreview ] = useState('');
 	const [ datos, setDatos] = useState([]);
 	const [ control, setControl ] = useState(false);
@@ -47,6 +47,7 @@ export default function RegistroBanner( props ) {
 		consultarDatos();
 		if (editarBanner) {
 			setControl(true);
+			setEmpresaAsociada(editarBanner.empresaAsociada);
 			setPreview(editarBanner.imgBannerAdminUrl);
 			setDatos({
 				...datos,
@@ -78,7 +79,6 @@ export default function RegistroBanner( props ) {
 
     const subirImagen = async () => {
 		if (control === false) {
-			
 			if (!datos.imagen || !preview) {
 				return;
 			} else if (preview && preview.includes('https://prueba-tienda.s3.us-west-1.amazonaws.com')) {
@@ -99,7 +99,6 @@ export default function RegistroBanner( props ) {
 					}
 				})
 				.then((res) => {
-					console.log('si entra en la peticion');
 					handleDrawerClose(false);
 					setLoading(false);
 					setSnackbar({
@@ -107,16 +106,17 @@ export default function RegistroBanner( props ) {
 						mensaje: 'Banner registrado exitosamente!',
 						status: 'success'
 					});
+					setUpdate(!update);
 				})
 				.catch((err) => {
-					console.log('No entra en la peticion');
-					handleDrawerClose(false)
+					handleDrawerClose(false);
 					setLoading(false);
 					setSnackbar({
 						open: true,
 						mensaje: 'Al parecer no se a podido conectar al servidor.',
 						status: 'error'
 					});
+					setUpdate(!update);
 				});
 		}else{
 			if (!datos.imagen || !preview) {
@@ -127,6 +127,7 @@ export default function RegistroBanner( props ) {
 
 			const formData = new FormData();
 			formData.append("imagen", datos.imagen);
+			formData.append("empresaAsociada", empresaAsociada.empresaAsociada);
 			formData.append("empresaAsociada", empresaAsociada.empresaAsociada);
 
 			setLoading(true);
@@ -145,6 +146,7 @@ export default function RegistroBanner( props ) {
 						status: 'success'
 					});
 					handleDrawerClose(true);
+					setUpdate(!update);
 				})
 				.catch((err) => {
 					setLoading(false);
@@ -154,11 +156,12 @@ export default function RegistroBanner( props ) {
 						status: 'error'
 					});
 					handleDrawerClose(true);
+					setUpdate(!update);
 				});
 		}
 		
 	};
-
+	console.log(empresaAsociada);
     return (
         <div>
 			<MessageSnackbar
@@ -192,7 +195,7 @@ export default function RegistroBanner( props ) {
 								<Select
 									style={{width: '100%'}}
 									native
-									// value={10}
+									defaultValue={empresaAsociada ? empresaAsociada : ""}
 									onChange={handleChange}
 									label="Age"
 									inputProps={{

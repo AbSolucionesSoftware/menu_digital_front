@@ -29,7 +29,7 @@ export default function Bienvenida() {
         
             <Grid container justify="center">
                 <Grid item lg={5} style={{height: '100%'}} >
-                    <Paper elevation={3} style={{height: '100%'}}>
+                    <Paper elevation={3} style={{height: '100%', marginTop: 15}}>
                         <Box display="flex" justifyContent="center" alignContent="center" alignItems="center">
                             <Box textAlign='center' p={1} className={classes.containerImage}>  
                                 <img className={classes.image} alt="logotipo" src={Comody} />
@@ -54,7 +54,7 @@ export default function Bienvenida() {
                         <Box textAlign="center" p={1}>
                             <Typography variant='h6'>
                                 En caso de tener problemas al iniciar sesion, con tu usuario o contraseña, te invitamos a contactarnos
-                                al correo de soporte: comody@gmail.com
+                                al correo de soporte: contacto@comody.mx
                             </Typography>
                         </Box>
                         <Box textAlign="center" p={1}>

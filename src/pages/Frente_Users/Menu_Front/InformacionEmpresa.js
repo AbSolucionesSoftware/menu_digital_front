@@ -75,14 +75,24 @@ export default function InformacionEmpresa({empresa}) {
                         </Box>
                     </Grid>
                     <Grid item xs={9}>
-                        <Box mt={2}>
+                        <Box>
                             <Box p={1} textAlign="left">
                                 <Typography style={{fontSize: 24}}>
                                     <b>{empresa.nameCompany}</b>
                                 </Typography>
                             </Box>
                         </Box>
-                    </Grid>
+                        <Paper>
+                            <Box textAlign="left" display="flex" alignItems="center">
+                                <Box>
+                                    <RoomIcon style={{fontSize: 25}}/>
+                                </Box>
+                                <Typography  style={{fontSize: 18 }}>
+                                    Ubicados en {empresa.ciudadPrin} {empresa.estado}
+                                </Typography>
+                            </Box>
+                        </Paper>
+                        </Grid>
                 </Hidden>
             </Grid>
         </div>

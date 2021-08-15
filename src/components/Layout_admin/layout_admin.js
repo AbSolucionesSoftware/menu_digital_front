@@ -5,6 +5,7 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { Slide, useScrollTrigger } from '@material-ui/core';
 import { NavProvider } from '../../context/context_nav';
 import Navegacion_Admin from '../Navegacion_Admin/navegacion_admin';
+import { ImageProvider } from '../../context/curso_context';
 
 const drawerWidth = 240;
 
@@ -67,6 +68,7 @@ export default function LayoutAdmin(props) {
 	return (
 		<div className={classes.root}>
 			<ThemeProvider>
+			<ImageProvider>
 				<NavProvider>
 					<nav className={classes.drawer} aria-label="mailbox folders">
 						<Navegacion_Admin />
@@ -77,6 +79,7 @@ export default function LayoutAdmin(props) {
 						</div>
 					</div>
 				</NavProvider>
+			</ImageProvider>
 			</ThemeProvider>
 		</div>
 
